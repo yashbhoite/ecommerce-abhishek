@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+          width: 580px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        h3 {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #f5f5f5;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .photo-product img {
+            width: 100px;
+            height: 100px;
+            margin-right: 10px;
+            margin-top: 10px;
+            object-fit: cover;
+            border-radius: 1rem;
+            border: 1px solid;
+        }
+
+        button {
+            padding: 5px 10px;
+            border: 2px solid #007bff;
+            background-color: #f5f5f5;
+            color: #007bff;
+            /* border: none; */
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: medium;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            color: #f5f5f5;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+          .section{
+            margin: 0px 0px 20px 0px !important;
+          }
+            .photo-product img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        @media (max-width: 576px) {
+          .section{
+            margin: 0px 0px 20px 0px !important;
+          }
+            .photo-product img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="row">
+            <!-- General Information -->
+            <div class="col-md-6 col-lg-6 section">
+                <h3>General Information</h3>
+                <label for="product-name">Product Name</label>
+                <input type="text" id="product-name" value="Mens Jacket">
+
+                <label for="description">Description</label>
+                <textarea id="description" rows="4">
+Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad facilis molestias. Repellendus iste cum sit illum iure possimus? Sed repellendus a voluptatibus laudantium et molestias in architecto.                </textarea>
+            </div>
+
+            <!-- Product Media -->
+            <div class="col-md-6 col-lg-6 section" style="border: 2px dashed rgba(116, 114, 114, 0.422);">
+                <h3>Product Media</h3>
+                <div class="photo-product d-flex flex-wrap">
+                    <img src="assets/images/product-images/green_jacket.jpg" alt="Watch Image 1">
+                    <img src="assets/images/product-images/green_jacket_2.jpg" alt="Watch Image 2">
+                    <img src="assets/images/product-images/green_jacket_3.jpg" alt="Watch Image 3">
+                    <img src="assets/images/product-images/green_jacket.jpg" alt="Watch Image 1">
+                    <img src="assets/images/product-images/green_jacket_2.jpg" alt="Watch Image 2">
+                    <img src="assets/images/product-images/green_jacket_3.jpg" alt="Watch Image 3">
+                </div>
+                <button>Add More Image</button>
+            </div>
+
+            <!-- Pricing -->
+            <div class="col-md-6 col-lg-6 section">
+                <div class="row">
+                <h3>Pricing</h3>
+                <div class="col-lg-6 col-md-6">
+                  <label for="base-price">Base Price</label>
+                <input type="text" id="base-price" value="$118.89" >
+                </div>
+
+                <div class="col-lg-6 col-md-6">
+                  <label for="discount-percentage">Discount Percentage (%)</label>
+                <input type="text" id="discount-percentage" value="25%" >
+                </div>
+
+                <div class="col-lg-6 col-md-6">
+                  <label for="sku">SKU</label>
+                <input type="text" id="sku" value="113902" >
+                </div>
+
+                <div class="col-lg-6 col-md-6">
+                  <label for="quantity">Stock quantity</label>
+                <input type="number" id="quantity" placeholder="Type product quantity">
+                </div>
+                <button style="width: 50%; margin-top: 20px;" class="mx-auto">Add Product</button>
+                </div>
+            </div>
+
+            <!-- Category -->
+            <div class="col-md-6 col-lg-6 section">
+                <h3>Category</h3>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <label for="product-category">Product Category</label>
+                <select id="product-category">
+                    <option>Shirt</option>
+                    <option>Jeans</option>
+                    <option>Jackets</option>
+                </select>
+                  </div>
+                  <div class="col-lg-6">
+                    <label for="product-tags">Product Gender</label>
+                    <div class="tags">
+                        <input type="radio" name="tag" id="tag1" checked>
+                        <label for="tag1">Men</label>
+                        <input type="radio" name="tag" id="tag2">
+                        <label for="tag2">Women</label>
+                        <input type="radio" name="tag" id="tag3">
+                        <label for="tag3">Kids</label>
+                    </div>
+                  </div>
+                </div>
+
+                <label for="product-tags" style="margin-top: 10px;">Product Size</label>
+                <div class="tags">
+                    <input type="checkbox" name="tag" id="tag1" checked>
+                    <label for="tag1">XS</label>
+                    <input type="checkbox" name="tag" id="tag2">
+                    <label for="tag2">S</label>
+                    <input type="checkbox" name="tag" id="tag3">
+                    <label for="tag3">M</label>
+                    <input type="checkbox" name="tag" id="tag1" checked>
+                    <label for="tag1">L</label>
+                    <input type="checkbox" name="tag" id="tag2">
+                    <label for="tag2">XL</label>
+                    <input type="checkbox" name="tag" id="tag3">
+                    <label for="tag3">XXL</label>
+                </div>
+                <label for="product-tags" style="margin-top: 10px;">Available colors</label>
+                <div class="tags">
+                    <input type="checkbox" name="tag" id="tag1" checked>
+                    <label for="tag1">Red</label>
+                    <input type="checkbox" name="tag" id="tag2">
+                    <label for="tag2">Blue</label>
+                    <input type="checkbox" name="tag" id="tag3">
+                    <label for="tag3">Black</label>
+                    <input type="checkbox" name="tag" id="tag1" checked>
+                    <label for="tag1">Green</label>
+                    <input type="checkbox" name="tag" id="tag2">
+                    <label for="tag2">Yellow</label>
+                    <input type="checkbox" name="tag" id="tag3">
+                    <label for="tag3">White</label>
+                </div>
+                
+            </div>
+
+            <!-- Inventory -->
+          
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

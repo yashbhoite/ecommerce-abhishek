@@ -6544,7 +6544,7 @@ body.home15-funiture-template {
 }
 .newsletter-section .input-group__btn {
   white-space: nowrap;
-  width: 1%;
+  /* width: 1%; */
   display: table-cell;
   vertical-align: middle;
   margin: 0;
