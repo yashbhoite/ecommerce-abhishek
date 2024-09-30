@@ -307,8 +307,9 @@
 	#popup-container .width60 { width:100%; }
 	
 	.hero--large { height:488px; }
-	.hero { background-position:50% 50% !important; background-attachment:scroll !important; }
-	
+	.hero { background-position:50% 50% !important;}
+	.hero1 {background-attachment: scroll !important;}
+		
 	.footer-3 .footer-links .h4, .home4-fullwidth .footer-links .h4 { border-bottom-color:#454545; }
 	.home11-grid .footer-3 .footer-links .h4, .home11-grid .home4-fullwidth .footer-links .h4 { border-bottom-color:#4da4a4; }
 	
