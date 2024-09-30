@@ -6798,6 +6798,7 @@ align-items: center;
 }
 
 .carousel-view {
+  width: 100vw;
 display: flex;
 justify-content: space-between;
 align-items: center;
@@ -6845,3 +6846,21 @@ border-radius:8px;
 .item-list video{
   height: 350px;
 }
+
+@media (min-width: 426px) and (max-width: 769px) {
+  .top-header p{
+    width: 246px;
+  }
+  .top-headerdiv{
+    margin-left: 32%;
+  }
+}
+@media (max-width: 426px) {
+  .accountlogo {
+    margin-top: -15px;
+  }
+  .logo h3{
+    margin-left: 50px;
+  }
+}
+
