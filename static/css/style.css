@@ -359,10 +359,10 @@ button,
 select,
 textarea {
   background: transparent;
-  border: 1px solid #d7d7d7;
+  border: 1px solid #1ba098;
   transition: all 0.4s ease-out 0s;
   -webkit-transition: all 0.4s ease-out 0s;
-  color: #424242;
+  color: #deb992;
 }
 input:focus,
 input:active,
@@ -418,7 +418,7 @@ hr {
 }
 
 .border-bottom {
-  border-bottom: 1px solid #f5f5f5 !important;
+  border-bottom: 1px solid #1ba098 !important;
 }
 
 /*======================================================================
@@ -582,9 +582,9 @@ th {
 .btn:focus,
 .shopify-payment-button__button--unbranded:hover,
 .shopify-payment-button__button--unbranded:focus {
-  background-color: #1a1a1a;
+  background-color: #deb992;
   opacity: 0.8;
-  color: #1ba098;
+  color: #081525;
   text-decoration: none;
 }
 .btn--small {
@@ -595,7 +595,7 @@ th {
   font-weight: 600;
 }
 .btn--secondary {
-  background-color: #ededed;
+  background-color: #deb992;
   color: #081525;
   border: 1px solid #081525;
 }
@@ -845,7 +845,7 @@ textarea:-ms-input-placeholder {
   font-size: 22px;
   text-decoration: none;
 }
-.site-header__cart-count {
+/* .site-header__cart-count {
   font-size: 11px;
   display: inline-block;
   color: #fff;
@@ -858,7 +858,7 @@ textarea:-ms-input-placeholder {
   position: absolute;
   right: -5px;
   bottom: 0;
-}
+} */
 #header-cart {
   z-index: 333;
   width: 320px;
@@ -4246,7 +4246,7 @@ table {
   margin: 0;
   color: #081525;
   padding: 25px 0;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .page-template .addressFooter {
@@ -4856,11 +4856,12 @@ table {
 .cart th {
   font-weight: 400;
   padding: 10px 0 8px;
-  background: #f2f2f2;
+  background: #081525;
   text-transform: uppercase;
   padding-left: 15px;
   padding-right: 15px;
   letter-spacing: 1px;
+  color: #deb992;
 }
 .cart td {
   padding: 10px;
@@ -4880,6 +4881,9 @@ table {
   font-size: 1.15385em;
   min-width: 100px;
 }
+.cart .list-view-item__title a{
+  color: #deb992;
+}
 .cart__image-wrapper {
   width: 120px;
 }
@@ -4892,6 +4896,7 @@ table {
   height: 36px;
   width: 40px;
   float: left;
+  color: #deb992;
 }
 .cart .qtyField a .icon {
   line-height: 33px;
@@ -4918,7 +4923,7 @@ table {
   margin-bottom: 30px;
 }
 .cart__footer .solid-border {
-  border: 1px solid #e8e9eb;
+  border: 1px solid #1ba098;
   padding: 20px;
   margin-bottom: 20px;
 }
@@ -4927,11 +4932,14 @@ table {
 .cart__footer h5 label,
 .cart__footer .h5 label,
 .cart__footer .cart__subtotal-title {
-  color: #081525;
+  color: #deb992;
   text-transform: uppercase;
   font-size: 14px;
   font-family: Poppins, Helvetica, Tahoma, Arial, sans-serif;
   letter-spacing: 0.02em;
+}
+.solid-border span{
+  color: #deb992;
 }
 .cart-note__input {
   min-height: 50px;
@@ -4951,9 +4959,11 @@ table {
   font-style: italic;
   font-size: 13px;
   padding: 12px 0;
+  color: #869ba9;
 }
 .cart_tearm label {
   cursor: pointer;
+  color: #869ba9;
 }
 input.checkbox {
   height: auto;
@@ -4964,22 +4974,43 @@ input.checkbox {
 #cartCheckout {
   width: 100%;
   padding: 15px;
+  background-color: #deb992;
+  color: #081525;
+  font-weight: 700;
+  
+}
+#cartCheckout:hover{
+  background-color: transparent !important;
+  color: #deb992 !important;
+  border: 1px solid #1ba098;
+}
+.form-group label{
+  color: #869ba9;
+}
+.form-group input{
+  border: 1px solid #1ba098;
 }
 .cart-variant1 .cart .cart__price-wrapper {
   text-align: center;
 }
+.cart__price-wrapper{
+  color: #deb992;
+}
 .cart-variant1 .cart table {
-  border: 1px solid #f2f2f2;
+  border: 1px solid #1ba098;
 }
 .cart-variant1 .cart table td {
-  border: 1px solid #f2f2f2;
+  border: 1px solid #1ba098;
 }
 .cart-variant1 .cart th.text-right,
 .cart-variant1 .cart .text-right.cart-price {
   text-align: center !important;
 }
+.cart-price{
+  color: #deb992;
+}
 .cart__meta-text {
-  color: #a2a2a2;
+  color: #1ba098;
   font-size: 12px;
 }
 
@@ -5668,7 +5699,7 @@ body.home8-jewellery {
 }
 .home9-parallax #siteNav > li > a:hover,
 .home9-parallax .site-header__search .search-trigger,
-.home9-parallax .site-header__cart .icon {
+.home9-parallax .icon {
   color: #fff;
 }
 .home9-parallax .stickyNav #siteNav > li > a,
@@ -5677,11 +5708,11 @@ body.home8-jewellery {
 .home9-parallax .stickyNav .site-header__cart .icon {
   color: #081525;
 }
-.home9-parallax .stickyNav .site-header__cart-count {
+.home9-parallax .stickyNav {
   color: #fff;
   background-color: #081525;
 }
-.home9-parallax .site-header__cart-count {
+.home9-parallax  {
   color: #081525;
   background-color: #fff;
 }
