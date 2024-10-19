@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.secret_key = 'yash'
 upload_folder = 'static/images/pics/'
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
+app.config['upload_folder'] = upload_folder
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
@@ -29,11 +29,6 @@ def allowed_file(filename):
 @app.route('/')
 def index():
     return render_template("index.html")
-
-
-@app.route('/addproduct')
-def addproduct():
-    return render_template("add_product.html")
 
 @app.route('/cart')
 def cart():
@@ -133,9 +128,14 @@ def register():
 def wishlist():
     return render_template("wishlist.html")
 
-@app.route('/shop-fullwidth')
+@app.route('/shopfullwidth')
 def shopfullwidth():
-    return render_template("shop-fullwidth.html")
+    connection = sqlite3.connect('product.db')
+    my_cursor = connection.cursor()
+    lala = my_cursor.execute("SELECT * from products").fetchall()
+    connection.commit()
+    connection.close()
+    return render_template("shop-fullwidth.html",lala=lala)
 
 
 
@@ -152,12 +152,73 @@ def shopfullwidth():
 #         session.pop("successful", None)
 #     return render_template("Buy.html", lala=lala, temp=temp)
 
+#this to for add product
+@app.route('/productadddb', methods=['post'])
+def productadddb():
+    productname = request.form['productname']
+    description = request.form['description']
+    baseprice = request.form['base-price']
+    discountpercentage1 = request.form['discountpercentage1']
+    discountpercentage2 = request.form['discountpercentage2']
+    discountpercentage3 = request.form['discountpercentage3']
+    sku = request.form['sku']
+    quantity = request.form['quantity']
+    productcategory = request.form.get('product-category')
+    gender = request.form.get('gender')
+    size = request.form.getlist('size')
+    color = request.form.getlist('color')
+    sizes = ','.join(size)
+    colors = ','.join(color)
+    input1 = request.files['input1']
+    input2 = request.files['input2']
+    input3 = request.files['input3']
+    input4 = request.files['input4']
+    input5 = request.files['input5']
+    
+    pic = secure_filename(input1.filename)
+    pic1 = str(uuid.uuid1()) + "_" + pic
+    saver = request.files['input1']
+    saver.save(os.path.join(app.config['upload_folder'], pic1))
+    input1 = pic1
 
+    pic = secure_filename(input2.filename)
+    pic1 = str(uuid.uuid1()) + "_" + pic
+    saver = request.files['input2']
+    saver.save(os.path.join(app.config['upload_folder'], pic1))
+    input2 = pic1
 
+    pic = secure_filename(input3.filename)
+    pic1 = str(uuid.uuid1()) + "_" + pic
+    saver = request.files['input3']
+    saver.save(os.path.join(app.config['upload_folder'], pic1))
+    input3 = pic1
+
+    pic = secure_filename(input4.filename)
+    pic1 = str(uuid.uuid1()) + "_" + pic
+    saver = request.files['input4']
+    saver.save(os.path.join(app.config['upload_folder'], pic1))
+    input4 = pic1
+
+    pic = secure_filename(input5.filename)
+    pic1 = str(uuid.uuid1()) + "_" + pic
+    saver = request.files['input5']
+    saver.save(os.path.join(app.config['upload_folder'], pic1))
+    input5 = pic1
+
+    connection = sqlite3.connect('product.db')
+    my_cursor = connection.cursor()
+    my_cursor.execute("INSERT INTO products VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (productname,description,colors,baseprice,discountpercentage1,discountpercentage2,discountpercentage3,sku,quantity,productcategory,gender,sizes,input1,input2,input3,input4,input5))
+    connection.commit()
+    connection.close()
+    return redirect(url_for('shopfullwidth'))
+
+@app.route('/addproduct')
+def addproduct():
+    return render_template("add_product.html")
 
 
 
 if(__name__) == '__main__':
-    if not os.path.exists(app.config['UPLOAD_FOLDER']):
-        os.makedirs(app.config['UPLOAD_FOLDER'])
+    if not os.path.exists(app.config['upload_folder']):
+        os.makedirs(app.config['upload_folder'])
     app.run(debug=True)

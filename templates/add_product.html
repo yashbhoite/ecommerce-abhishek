@@ -135,26 +135,61 @@
             <!-- General Information -->
             <div class="col-md-6 col-lg-6 section">
                 <h3>General Information</h3>
-                <label for="product-name">Product Name</label>
-                <input type="text" id="product-name" value="Mens Jacket">
+                <label for="productname">Product Name</label>
+                <input type="text" id="productname" name="productname" value="Mens Jacket">
                 <label for="description">Description</label>
-                <textarea id="description" rows="4">
+                <textarea id="description" name="description" rows="4">
 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad facilis molestias. Repellendus iste cum sit illum iure possimus? Sed repellendus a voluptatibus laudantium et molestias in architecto.                </textarea>
             </div>
 
             <!-- Product Media -->
-            <!-- <div class="col-md-6 col-lg-6 section" style="border: 2px dashed rgba(116, 114, 114, 0.422);">
+            <div class="col-md-6 col-lg-6 section" style="border: 2px dashed rgba(116, 114, 114, 0.422);">
                 <h3>Product Media</h3>
                 <div class="photo-product d-flex flex-wrap">
-                    <img src="../static/images/product-images/green_jacket.jpg" alt="Watch Image 1">
-                    <img src="../static/images/product-images/green_jacket_2.jpg" alt="Watch Image 2">
-                    <img src="../static/images/product-images/green_jacket_3.jpg" alt="Watch Image 3">
-                    <img src="../static/images/product-images/green_jacket.jpg" alt="Watch Image 1">
-                    <img src="../static/images/product-images/green_jacket_2.jpg" alt="Watch Image 2">
-                    <img src="../static/images/product-images/green_jacket_3.jpg" alt="Watch Image 3">
+                    <div id="upload">
+                        <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="imgupload mt-3">
+                            <input 
+               onchange="Filevalidation1()" id="input1" name="input1" type="file" class="file" data-browse-on-zone-click="true"
+                                data-preview="true" placeholder="Image 1">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="imgupload mt-3">
+                            <input 
+               onchange="Filevalidation2()" id="input2" name="input2" type="file" class="file" data-browse-on-zone-click="true"
+                                data-preview="true" placeholder="Image 1">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="imgupload mt-3">
+                            <input 
+               onchange="Filevalidation3()" id="input3" name="input3" type="file" class="file" data-browse-on-zone-click="true"
+                                data-preview="true" placeholder="Image 1">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="imgupload mt-3">
+                            <input 
+               onchange="Filevalidation4()" id="input4" name="input4" type="file" class="file" data-browse-on-zone-click="true"
+                                data-preview="true" placeholder="Image 1">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="imgupload mt-3">
+                            <input 
+               onchange="Filevalidation5()" id="input5" name="input5" type="file" class="file" data-browse-on-zone-click="true"
+                                data-preview="true" placeholder="Image 1">
+                        </div>
+                    </div>
+                    
+                    
                 </div>
-                <button>Add More Image</button>
-            </div> -->
+                </div>
+                </div>
+                
+            </div>
 
             <!-- Pricing -->
             <div class="col-md-6 col-lg-6 section">
@@ -162,32 +197,32 @@ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad fac
                 <h3>Pricing</h3>
                 <div class="col-lg-6 col-md-6">
                   <label for="base-price">Base Price</label>
-                <input type="number" id="base-price" value="$118.89" >
+                <input type="number" id="base-price" name="base-price" value="$118.89" >
                 </div>
 
                 <div class="col-lg-6 col-md-6">
-                  <label for="discount-percentage">Discount Percentage 1(%)</label>
-                <input type="number" id="discount-percentage" value="25%" >
+                  <label for="discountpercentage1">Discount Percentage 1(%)</label>
+                <input type="number" id="discountpercentage1" name="discountpercentage1" value="25%" >
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <label for="discount-percentage">Discount Percentage 2(%)</label>
-                  <input type="number" id="discount-percentage" value="25%" >
+                    <label for="discountpercentage2">Discount Percentage 2(%)</label>
+                  <input type="number" id="discountpercentage2" name="discountpercentage2" value="25%" >
                   </div>
                   <div class="col-lg-6 col-md-6">
-                    <label for="discount-percentage">Discount Percentage 3(%)</label>
-                  <input type="number" id="discount-percentage" value="25%" >
+                    <label for="discountpercentage3">Discount Percentage 3(%)</label>
+                  <input type="number" id="discountpercentage3" name="discountpercentage3" value="25%" >
                   </div>
 
                 <div class="col-lg-6 col-md-6">
                   <label for="sku">SKU</label>
-                <input type="number" id="sku" value="113902" >
+                <input type="number" id="sku" name="sku" value="113902" >
                 </div>
 
                 <div class="col-lg-6 col-md-6">
                   <label for="quantity">Stock quantity</label>
-                <input type="number" id="quantity" placeholder="Type product quantity">
+                <input type="number" id="quantity" name="quantity" placeholder="Type product quantity">
                 </div>
-                <button style="width: 50%; margin-top: 20px;" class="mx-auto">Add Product</button>
+                <button style="width: 50%; margin-top: 20px;" class="mx-auto" type="submit">Add Product</button>
                 </div>
             </div>
 
@@ -197,7 +232,7 @@ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad fac
                 <div class="row">
                   <div class="col-lg-6">
                     <label for="product-category">Product Category</label>
-                <select id="product-category">
+                <select id="product-category" name="product-category">
                     <option value="Shirt">Shirt</option>
                     <option value="Jeans">Jeans</option>
                     <option value="Jackets">Jackets</option>
@@ -206,11 +241,11 @@ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad fac
                   <div class="col-lg-6">
                     <label for="product-tags">Product Gender</label>
                     <div class="tags">
-                        <input type="radio" name="tag" id="tag1" checked>
+                        <input type="radio" name="gender" id="tag1" value="Men" checked>
                         <label for="Men">Men</label>
-                        <input type="radio" name="tag" id="tag2">
+                        <input type="radio" name="gender" id="tag2" value="Women">
                         <label for="Women">Women</label>
-                        <input type="radio" name="tag" id="tag3">
+                        <input type="radio" name="gender" id="tag3" value="Kids">
                         <label for="Kids">Kids</label>
                     </div>
                   </div>
@@ -218,32 +253,32 @@ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad fac
 
                 <label for="product-tags" style="margin-top: 10px;">Product Size</label>
                 <div class="tags">
-                    <input type="checkbox" name="tag" id="tag1" checked>
+                    <input type="checkbox" name="size" value="XS" id="tag1" checked>
                     <label for="XS">XS</label>
-                    <input type="checkbox" name="tag" id="tag2">
+                    <input type="checkbox" name="size" value="S" id="tag2">
                     <label for="S">S</label>
-                    <input type="checkbox" name="tag" id="tag3">
+                    <input type="checkbox" name="size" value="M" id="tag3">
                     <label for="M">M</label>
-                    <input type="checkbox" name="tag" id="tag1" checked>
+                    <input type="checkbox" name="size" value="L" id="tag1" checked>
                     <label for="L">L</label>
-                    <input type="checkbox" name="tag" id="tag2">
+                    <input type="checkbox" name="size" value="XL" id="tag2">
                     <label for="XL">XL</label>
-                    <input type="checkbox" name="tag" id="tag3">
+                    <input type="checkbox" name="size" value="XXL" id="tag3">
                     <label for="XXL">XXL</label>
                 </div>
                 <label for="product-tags" style="margin-top: 10px;">Available colors</label>
                 <div class="tags">
-                    <input type="checkbox" name="tag" id="tag1" checked>
+                    <input type="checkbox" name="color" value="Red" id="tag1" checked>
                     <label for="tag1">Red</label>
-                    <input type="checkbox" name="tag" id="tag2">
+                    <input type="checkbox" name="color" value="Blue" id="tag2">
                     <label for="tag2">Blue</label>
-                    <input type="checkbox" name="tag" id="tag3">
+                    <input type="checkbox" name="color" value="Black" id="tag3">
                     <label for="tag3">Black</label>
-                    <input type="checkbox" name="tag" id="tag1" checked>
+                    <input type="checkbox" name="color" value="Green" id="tag1" checked>
                     <label for="tag1">Green</label>
-                    <input type="checkbox" name="tag" id="tag2">
+                    <input type="checkbox" name="color" value="Yellow" id="tag2">
                     <label for="tag2">Yellow</label>
-                    <input type="checkbox" name="tag" id="tag3">
+                    <input type="checkbox" name="color" value="White" id="tag3">
                     <label for="tag3">White</label>
                 </div>
                 
@@ -255,5 +290,104 @@ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad fac
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        Filevalidation1 = () => {
+            const fi = document.getElementById('input1');
+            // Check if any file is selected.
+            if (fi.files.length > 0) {
+                for (const i = 0; i <= fi.files.length - 1; i++) {
+     
+                    const fsize = fi.files.item(i).size;
+                    const file = Math.round((fsize / 1024));
+                    // The size of the file.
+                    if (file >= 1024) {
+                        alert(
+                          "File too Big, please select a file less than 1mb");
+                          $('#input1').val('');
+                    }
+                     
+                }
+            }
+        }
+        Filevalidation2 = () => {
+            const fi = document.getElementById('input2');
+            // Check if any file is selected.
+            if (fi.files.length > 0) {
+                for (const i = 0; i <= fi.files.length - 1; i++) {
+     
+                    const fsize = fi.files.item(i).size;
+                    const file = Math.round((fsize / 1024));
+                    // The size of the file.
+                    if (file >= 1024) {
+                        alert(
+                          "File too Big, please select a file less than 1mb");
+                          $('#input2').val('');
+                    }
+                     
+                }
+            }
+        }
+        Filevalidation3 = () => {
+            const fi = document.getElementById('input3');
+            // Check if any file is selected.
+            if (fi.files.length > 0) {
+                for (const i = 0; i <= fi.files.length - 1; i++) {
+     
+                    const fsize = fi.files.item(i).size;
+                    const file = Math.round((fsize / 1024));
+                    // The size of the file.
+                    if (file >= 1024) {
+                        alert(
+                          "File too Big, please select a file less than 1mb");
+                          $('#input3').val('');
+                    }
+                     
+                }
+            }
+        }
+        Filevalidation4 = () => {
+            const fi = document.getElementById('input4');
+            // Check if any file is selected.
+            if (fi.files.length > 0) {
+                for (const i = 0; i <= fi.files.length - 1; i++) {
+     
+                    const fsize = fi.files.item(i).size;
+                    const file = Math.round((fsize / 1024));
+                    // The size of the file.
+                    if (file >= 1024) {
+                        alert(
+                          "File too Big, please select a file less than 1mb");
+                          $('#input4').val('');
+                    }
+                     
+                }
+            }
+        }
+        Filevalidation5 = () => {
+            const fi = document.getElementById('input5');
+            // Check if any file is selected.
+            if (fi.files.length > 0) {
+                for (const i = 0; i <= fi.files.length - 1; i++) {
+     
+                    const fsize = fi.files.item(i).size;
+                    const file = Math.round((fsize / 1024));
+                    // The size of the file.
+                    if (file >= 1024) {
+                        alert(
+                          "File too Big, please select a file less than 1mb");
+                          $('#input5').val('');
+                    }
+                     
+                }
+            }
+        }
+
+
+
+        var alert_message = '{{ message }}'
+          if (alert_message != '') {
+              alert(alert_message);
+          } 
+      </script>
 </body>
 </html>
