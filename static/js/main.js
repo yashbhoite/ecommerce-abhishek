@@ -619,20 +619,51 @@
 	/*-----------------------------------
 	 13. Price Range Slider
 	-------------------------------------*/
-	function price_slider(){
+	function price_slider(minPrice, maxPrice) {
 		$("#slider-range").slider({
 			range: true,
-			min: 12,
-			max: 200,
-			values: [0, 100],
+			min: 0, // Minimum price
+			max: 5000, // Maximum price
+			values: [minPrice, maxPrice], // Set initial values for slider
 			slide: function(event, ui) {
-				$("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+				$("#min_price_input").val(ui.values[0]); // Update min input
+				$("#max_price_input").val(ui.values[1]); // Update max input
+				$("#amount").val("₹" + ui.values[0] + " - ₹" + ui.values[1]); // Update display amount
 			}
 		});
-		$("#amount").val("$" + $("#slider-range").slider("values", 0) +
-		" - $" + $("#slider-range").slider("values", 1));
+	
+		// Set initial values in the input fields
+		$("#min_price_input").val($("#slider-range").slider("values", 0));
+		$("#max_price_input").val($("#slider-range").slider("values", 1));
+		$("#amount").val("₹" + $("#slider-range").slider("values", 0) + " - ₹" + $("#slider-range").slider("values", 1));
 	}
-	price_slider();
+	
+	$(document).ready(function() {
+		// Get min and max values from input fields
+		const minPrice = parseInt($("#min_price_input").val(), 10) || 0;
+		const maxPrice = parseInt($("#max_price_input").val(), 10) || 5000;
+	
+		// Initialize the price slider
+		price_slider(minPrice, maxPrice);
+		
+		// Update slider when input fields change
+		$("#min_price_input").on("change", function() {
+			var minValue = parseInt($(this).val(), 10);
+			var maxValue = parseInt($("#max_price_input").val(), 10);
+			if (minValue >= 0 && minValue <= maxValue) {
+				$("#slider-range").slider("values", 0, minValue); // Update slider
+			}
+		});
+	
+		$("#max_price_input").on("change", function() {
+			var maxValue = parseInt($(this).val(), 10);
+			var minValue = parseInt($("#min_price_input").val(), 10);
+			if (maxValue >= minValue && maxValue <= 5000) {
+				$("#slider-range").slider("values", 1, maxValue); // Update slider
+			}
+		});
+	});
+	
 	
 	/*-----------------------------------
 	 14. Color Swacthes

@@ -231,23 +231,31 @@ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad fac
                 <h3>Category</h3>
                 <div class="row">
                   <div class="col-lg-6">
-                    <label for="product-category">Product Category</label>
-                <select id="product-category" name="product-category">
-                    <option value="Shirt">Shirt</option>
-                    <option value="Jeans">Jeans</option>
-                    <option value="Jackets">Jackets</option>
-                </select>
-                  </div>
-                  <div class="col-lg-6">
                     <label for="product-tags">Product Gender</label>
                     <div class="tags">
                         <input type="radio" name="gender" id="tag1" value="Men" checked>
                         <label for="Men">Men</label>
                         <input type="radio" name="gender" id="tag2" value="Women">
                         <label for="Women">Women</label>
-                        <input type="radio" name="gender" id="tag3" value="Kids">
-                        <label for="Kids">Kids</label>
                     </div>
+                  </div>
+                  <div class="col-lg-6" id="div1">
+                    <label for="product-category-men">Product Category</label>
+                <select id="product-category-men" name="product-category-men">
+                    <option value="Shirt">Shirts</option>
+                    <option value="Tshirts">Tshirts</option>
+                    <option value="Trousers">Trousers</option>
+                    <option value="Shoes">Shoes</option>
+                </select>
+                  </div>
+                  <div class="col-lg-6" id="div2">
+                    <label for="product-category-women">Product Category</label>
+                <select id="product-category-women" name="product-category-women">
+                    <option value="WesternWear">Western Wear</option>
+                    <option value="EthnicWear">Ethnic Wear</option>
+                    <option value="Lingerie&Nightwear">Lingerie & Nightwear</option>
+                    <option value="Sportswear">Sportswear</option>
+                </select>
                   </div>
                 </div>
 
@@ -381,6 +389,34 @@ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad fac
                 }
             }
         }
+
+        function toggleDivs() {
+            const selectedGender = document.querySelector('input[name="gender"]:checked').value;
+            const div1 = document.getElementById('div1');
+            const div2 = document.getElementById('div2');
+            const categoryMen = document.getElementById('product-category-men');
+            const categoryWomen = document.getElementById('product-category-women');
+
+            if (selectedGender === "Women") {
+                div1.style.display = 'none';
+                div2.style.display = 'block';
+                categoryMen.disabled = true; 
+                categoryWomen.disabled = false;
+            } else {
+                div1.style.display = 'block';
+                div2.style.display = 'none';
+                categoryMen.disabled = false;
+                categoryWomen.disabled = true;
+            }
+        }
+
+        // Attach the function to each radio button's change event
+        document.querySelectorAll('input[name="gender"]').forEach(radio => {
+            radio.addEventListener('change', toggleDivs);
+        });
+
+        // Initialize the visibility on page load
+        document.addEventListener('DOMContentLoaded', toggleDivs);
 
 
 

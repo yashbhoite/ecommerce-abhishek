@@ -132,11 +132,58 @@ def wishlist():
 def shopfullwidth():
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
-    lala = my_cursor.execute("SELECT * from products").fetchall()
+    lala = my_cursor.execute("SELECT * from products where gender='Men' ").fetchall()
     connection.commit()
     connection.close()
     return render_template("shop-fullwidth.html",lala=lala)
 
+@app.route('/shopfullwidth/<string:id>')
+def shopfullwidthcategories(id):
+    print(id)
+    connection = sqlite3.connect('product.db')
+    my_cursor = connection.cursor()
+    lala = my_cursor.execute("SELECT * from products where category=? ",(id,)).fetchall()
+    connection.commit()
+    connection.close()
+    return render_template("shop-fullwidth.html",lala=lala)
+
+@app.route('/shopwomen')
+def shopfullwidthwomen():
+    connection = sqlite3.connect('product.db')
+    my_cursor = connection.cursor()
+    lala = my_cursor.execute("SELECT * from products where gender='Women' ").fetchall()
+    connection.commit()
+    connection.close()
+    return render_template("shop-fullwidth-women.html",lala=lala)
+
+@app.route('/shopwomen/<string:id>')
+def shopwomencategories(id):
+    connection = sqlite3.connect('product.db')
+    my_cursor = connection.cursor()
+    lala = my_cursor.execute("SELECT * from products where category=? ",(id,)).fetchall()
+    connection.commit()
+    connection.close()
+    return render_template("shop-fullwidth-women.html",lala=lala)
+
+@app.route('/filter', methods=['POST'])
+def filter_products():
+    min_price = request.form.get('min_price', type=int)
+    max_price = request.form.get('max_price', type=int)
+    current_url = request.form.get('current_url')
+    print('url is---------------------')
+    print(current_url)
+    connection = sqlite3.connect('product.db')
+    my_cursor = connection.cursor()
+    # Example: Filter products from the database based on the price range
+    filtered_products = my_cursor.execute(
+        "SELECT * FROM products WHERE price BETWEEN ? AND ? AND gender=?", (min_price, max_price,current_url)
+    ).fetchall()
+
+    # Render the filtered products back to the template
+    if current_url=='Men':
+        return render_template('shop-fullwidth.html', lala=filtered_products, min_price=min_price, max_price=max_price)
+    else:
+        return render_template('shop-fullwidth-women.html', lala=filtered_products, min_price=min_price, max_price=max_price)
 
 
 # @app.route('/buy')
@@ -163,7 +210,9 @@ def productadddb():
     discountpercentage3 = request.form['discountpercentage3']
     sku = request.form['sku']
     quantity = request.form['quantity']
-    productcategory = request.form.get('product-category')
+    product_category_men = request.form.get('product-category-men')
+    product_category_women = request.form.get('product-category-women')
+    productcategory = product_category_men or product_category_women
     gender = request.form.get('gender')
     size = request.form.getlist('size')
     color = request.form.getlist('color')
