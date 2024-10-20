@@ -212,6 +212,18 @@ def productadddb():
     connection.close()
     return redirect(url_for('shopfullwidth'))
 
+@app.route('/product/<string:id>')
+def productinfo(id):
+    connection = sqlite3.connect('product.db')
+    my_cursor = connection.cursor()
+    name = my_cursor.execute(
+        "Select * from products where sku=?", (id,)).fetchone()
+    sizes = my_cursor.execute(
+        "Select size from products where sku=?", (id,)).fetchone()
+    size_list = sizes[0].split(',') if sizes else []
+    return render_template("product-layout-1.html", name=name,size_list=size_list)
+
+
 @app.route('/addproduct')
 def addproduct():
     return render_template("add_product.html")
