@@ -154,7 +154,7 @@ iframe {
 }
 
 a {
-  color: #555555;
+  color: #869ba9;
   text-decoration: none;
   -ms-transition: all 0.5s ease-in-out;
   -webkit-transition: all 0.5s ease-in-out;
@@ -165,7 +165,7 @@ a:focus {
 }
 a:active,
 a:hover {
-  color: #081525;
+  color: #deb992;
   outline: 0;
 }
 a:hover,
@@ -414,7 +414,7 @@ input[type="radio"]:focus {
 hr {
   margin: 20px 0;
   border: 0;
-  border-bottom: 1px solid #e8e9eb;
+  border-bottom: 1px solid #1ba098;
 }
 
 .border-bottom {
@@ -4238,8 +4238,8 @@ table {
   23. Pages
 ========================================================================*/
 .page.section-header {
-  background: #f9f9f9;
-  border: 1px solid #e8e9eb;
+  background: #081525;
+  /* border: 1px solid #e8e9eb; */
 }
 .page.section-header h1 {
   text-transform: uppercase;
@@ -4304,7 +4304,9 @@ table {
 .contact-form textarea {
   height: 120px;
 }
-
+.login-form:hover{
+  color: #deb992 !important;
+}
 #accordionExample .title {
   margin: 35px 0 20px;
 }
@@ -4727,7 +4729,7 @@ table {
 
 /* Checkout Page ------------------------------------------------*/
 .customer-box h3 {
-  color: #fff;
+  color: #deb992;
   font-size: 17px;
   font-weight: 400;
   line-height: normal;
@@ -4735,6 +4737,7 @@ table {
   padding: 15px;
   text-transform: uppercase;
   background-color: #081525;
+  border: 1px solid #1ba098;
 }
 .customer-box h3 i {
   margin-right: 5px;
@@ -4747,14 +4750,17 @@ table {
   margin-bottom: 30px;
 }
 .order-table .table thead th {
-  background-color: #fff;
+  background-color: #081525;
   font-size: 13px;
   padding: 8px 5px 5px;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #1ba098;
+  color: #deb992;
 }
 .order-table .table td {
   font-size: 13px;
   padding: 8px 5px 5px;
+  border: 1px solid #1ba098;
+  color: #deb992;
 }
 .card {
   border-radius: 0;
@@ -4786,6 +4792,13 @@ table {
   font-size: 18px;
   font-size: 700;
   padding: 10px 20px;
+  color: #deb992;
+  border: 1px solid #1ba098;
+}
+.order-button-payment .btn:hover{
+  background-color: #deb992;
+  color: #081525;
+  border: 1px solid #081525;
 }
 .customer-box .discount-coupon,
 .customer-box .customer-info {
@@ -4794,7 +4807,7 @@ table {
 }
 .create-ac-content,
 .your-order-payment {
-  border: 1px solid #ddd;
+  border: 1px solid #1ba098;
   padding: 20px;
 }
 .create-ac-content .form-check {

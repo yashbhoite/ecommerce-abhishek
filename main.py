@@ -1,6 +1,6 @@
 from email import message
 from unicodedata import name
-from flask import Flask, redirect, render_template, request, url_for, session
+from flask import Flask, redirect, render_template, request, url_for, session, jsonify
 import sqlite3
 import uuid as uuid
 import os
@@ -34,20 +34,31 @@ def index():
 def cart():
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT productimage, productname, productsize, productprice, productquantity, totalprice FROM cart")
+    cursor.execute("SELECT productimage, productname, productsize, productprice, productquantity, totalprice, productcolor FROM cart")
     cart_items = cursor.fetchall()
+    # Calculate subtotal (sum of totalprice)
+    cursor.execute("SELECT SUM(totalprice) FROM cart")
+    subtotal = cursor.fetchone()[0]
+    if subtotal is None:
+        subtotal = 0
+
+    # Set shipping charges and calculate grand total
+    shipping_charges = 100  # Fixed shipping charge
+    grand_total = subtotal + shipping_charges
+
     conn.close()
     
-    return render_template('cart-variant1.html', cart_items=cart_items)
+    return render_template('cart-variant1.html', cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total)
 
-@app.route('/add-to-cart', methods=['POST'])
-def add_to_cart():
+@app.route('/add-to-cart/<string:id>', methods=['POST'])
+def add_to_cart(id):
     productname = request.form['productname']
     productprice = float(request.form['productprice'])
     productsize = request.form['productsize']
     productquantity = int(request.form['productquantity'])
     totalprice = productprice * productquantity
     productimage = request.form['productimage']  # Get the image URL from the hidden field
+    productcolor= request.form['productcolor']
 
     # Handle file upload
     # if 'productimage' not in request.files:
@@ -69,15 +80,37 @@ def add_to_cart():
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
     cursor.execute(
-        'INSERT INTO cart (productimage,productname, productsize, productprice, productquantity, totalprice) VALUES (?, ?, ?, ?, ?, ?)',
-        (productimage, productname, productsize, productprice, productquantity, totalprice)
+        'INSERT INTO cart (productimage,productname, productsize, productprice, productquantity, totalprice, productcolor) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor)
     )
     conn.commit()
     conn.close()
 
     session['message'] = "Cart items updated!"
 
-    return redirect(url_for('product'))
+    return redirect(url_for('productinfo', id=id))
+
+@app.route('/update-cart-item', methods=['POST'])
+def update_cart_item():
+    data = request.get_json()
+    product_name = data.get('productName')
+    product_size = data.get('productSize')
+    new_quantity = data.get('newQuantity')
+    new_total_price = data.get('newTotalPrice')
+
+    # Update the cart table in the database
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE cart
+        SET productquantity = ?, totalprice = ?
+        WHERE productname = ? AND productsize = ?
+    """, (new_quantity, new_total_price, product_name, product_size))
+    conn.commit()
+    conn.close()
+
+    return jsonify({'status': 'success'})
+
 
 @app.route('/remove-from-cart/<productname>/<productsize>', methods=['GET'])
 def remove_from_cart(productname, productsize):
@@ -107,6 +140,10 @@ def contactus():
 def login():
     return render_template("login.html")
 
+@app.route('/register')
+def register():
+    return render_template("register.html")
+
 @app.route('/myaccount')
 def myaccount():
     return render_template("Myaccount.html")
@@ -120,9 +157,32 @@ def product():
     return render_template('product-layout-1.html', productname=productname, productprice=productprice, message=message)
 
 
-@app.route('/register')
-def register():
-    return render_template("register.html")
+@app.route('/adduser', methods=['GET', 'POST'])
+def adduser():
+    if request.method == 'POST':
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        email = request.form['email']
+        password = request.form['password']
+
+        # Check if the user with the same email exists
+        conn = sqlite3.connect('product.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users WHERE email=?", (email,))
+        existing_user = cursor.fetchone()
+
+        if existing_user:
+            conn.close()
+            return render_template('register.html', error="Email already exists")
+
+        # Insert new user
+        cursor.execute("INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)",
+                       (firstname, lastname, email, password))
+        conn.commit()
+        conn.close()
+
+        return render_template('register.html', success="Registration successful! Redirecting to homepage...")
+    return render_template('register.html')
 
 @app.route('/wishlist')
 def wishlist():
@@ -270,12 +330,122 @@ def productinfo(id):
     sizes = my_cursor.execute(
         "Select size from products where sku=?", (id,)).fetchone()
     size_list = sizes[0].split(',') if sizes else []
-    return render_template("product-layout-1.html", name=name,size_list=size_list)
+    return render_template("product-layout-1.html", name=name,size_list=size_list,id=id)
 
 
 @app.route('/addproduct')
 def addproduct():
     return render_template("add_product.html")
+
+@app.route('/checkout')
+def checkout():
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT productimage, productname, productsize, productprice, productquantity, totalprice, productcolor FROM cart")
+    cart_items = cursor.fetchall()
+    # Calculate subtotal (sum of totalprice)
+    cursor.execute("SELECT SUM(totalprice) FROM cart")
+    subtotal = cursor.fetchone()[0]
+    if subtotal is None:
+        subtotal = 0
+
+    # Set shipping charges and calculate grand total
+    shipping_charges = 100  # Fixed shipping charge
+    grand_total = subtotal + shipping_charges
+
+    conn.close()
+    
+    return render_template('checkout.html', cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total)
+
+@app.route('/confirm-address', methods=['POST'])
+def confirm_address():
+    email = request.form['email']
+    firstname = request.form['firstname']
+    lastname = request.form['lastname']
+    mobile = request.form['mobile']
+    address = request.form['address']
+    city = request.form['city']
+    pincode = request.form['pincode']
+    state = request.form['state']
+    country = request.form['country']
+    
+    # Insert into useradr table
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+
+    # Check if user with the same email exists
+    cursor.execute("SELECT * FROM useradr WHERE email = ?", (email,))
+    user = cursor.fetchone()
+
+    if user:
+        # Update existing user's address details
+        cursor.execute('''
+            UPDATE useradr SET firstname=?, lastname=?, mobile=?, address=?, city=?, pincode=?, state=?, country=? WHERE email=?
+        ''', (firstname, lastname, mobile, address, city, pincode, state, country, email))
+    else:
+        # Insert new user address
+        cursor.execute('''
+            INSERT INTO useradr (email, firstname, lastname, mobile, address, city, pincode, state, country)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (email, firstname, lastname, mobile, address, city, pincode, state, country))
+
+    
+    cursor.execute("SELECT productimage, productname, productsize, productprice, productquantity, totalprice, productcolor FROM cart")
+    cart_items = cursor.fetchall()
+    # Calculate subtotal (sum of totalprice)
+    cursor.execute("SELECT SUM(totalprice) FROM cart")
+    subtotal = cursor.fetchone()[0]
+    if subtotal is None:
+        subtotal = 0
+
+    # Set shipping charges and calculate grand total
+    shipping_charges = 100  # Fixed shipping charge
+    grand_total = subtotal + shipping_charges
+
+    conn.commit()
+    conn.close()
+
+    # Send back the message with the form values
+    message = "Address has been confirmed!"
+    return render_template(
+        'checkout.html', 
+        message=message, 
+        email=email, firstname=firstname, lastname=lastname, mobile=mobile, 
+        address=address, city=city, pincode=pincode, state=state, country=country, cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total
+    )
+
+@app.route('/place-order', methods=['POST'])
+def place_order():
+    # Get form data
+    email = request.form['email']
+    firstname = request.form['firstname']
+    lastname = request.form['lastname']
+    mobile = request.form['mobile']
+    address = request.form['address']
+    city = request.form['city']
+    state = request.form['state']
+    pincode = request.form['pincode']
+
+    # Get cart items (from hidden input in table)
+    cart_items = json.loads(request.form['cart_items'])
+
+    # Insert data into the orders table for each cart item
+    for item in cart_items:
+        productname = item['productname']
+        size = item['size']
+        color = item['color']
+        quantity = item['quantity']
+        totalprice = item['totalprice']
+
+        # Insert into orders table
+        conn = sqlite3.connect('product.db')
+        cursor = conn.cursor()
+        cursor.execute('''INSERT INTO orders (firstname, lastname, email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', 
+                        (firstname, lastname, email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice))
+        conn.commit()
+
+    return jsonify({'success': True})
 
 
 
