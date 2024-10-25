@@ -621,13 +621,15 @@
                         </div>
                         <!--Categories-->
                         <!--Price Filter-->
-                        <div class="sidebar_widget filterBox filter-widget">
-                            <div class="widget-title">
-                            	<h2>Price</h2>
-                            </div>
-                            <form action="/filter" method="post" class="price-filter" id="price-filter-form">
-                                <input type="hidden" name="current_url" id="current_url" value="Women">
+                        <div class="sidebar_widget filterBox filter-widget" id="color-filter">
+                            <div class="widget-title"><h2>Filter Products</h2></div>
+                            
+                            <!-- Form for both color and price filters -->
+                            <form id="filter-form" method="get" action="/filter">
                                 
+                                <!-- Price Filter Section -->
+                                <div class="widget-title"><h2>Price</h2></div>
+                                <input type="hidden" name="current_url" value="Women">
                                 <div id="slider-range"></div>
                                 <div class="row">
                                     <div class="col-6">
@@ -642,30 +644,47 @@
                                             <input id="max_price_input" type="number" name="max_price" value="{{ max_price if max_price is not none else 5000 }}" min="0" step="1" style="width: 80px;">
                                         </p>
                                     </div>
-                                    <div class="col-12 text-right margin-25px-top">
-                                        <button type="submit" class="btn btn-secondary btn--small">Filter</button>
+                                </div>
+                                
+                                <!-- Color Filter Section -->
+                                <div class="widget-title"><h2>Color</h2></div>
+                                <input type="hidden" name="color" id="colorInput" value="">
+                                <div class="filter-color swacth-list clearfix">
+                                    <span class="swacth-btn black {% if color == 'Black' %}selected-color{% endif %}" data-color="Black"></span>
+                                    <span class="swacth-btn white {% if color == 'White' %}selected-color{% endif %}" data-color="White"></span>
+                                    <span class="swacth-btn red {% if color == 'Red' %}selected-color{% endif %}" data-color="Red"></span>
+                                </div>
+                        
+                                <!-- Size Filter Section -->
+                                <div class="widget-title"><h2>Size</h2></div>
+                                <input type="hidden" name="size" id="sizeInput" value="">
+                                <div class="filter-color swacth-list clearfix" id="size-filter">
+                                   
+                                    <ul>
+                                        <div class="row">
+                                        <li><span class="swacth-btn" data-size="X">X</span></li>
+                                        <li><span class="swacth-btn" data-size="XL">XL</span></li>
+                                        <li><span class="swacth-btn" data-size="XLL">XLL</span></li>
+                                        <li><span class="swacth-btn" data-size="M">M</span></li>
+                                        <li><span class="swacth-btn" data-size="L">L</span></li>
+                                        <li><span class="swacth-btn" data-size="S">S</span></li>
+                                        <li><span class="swacth-btn" data-size="XXXL">XXXL</span></li>
+                                        <li><span class="swacth-btn" data-size="XXL">XXL</span></li>
+                                        <li><span class="swacth-btn" data-size="XS">XS</span></li>
                                     </div>
+                                    </ul>
+                               
+                                </div>
+                                
+                                <!-- Filter Button -->
+                                <div class="col-12 text-right margin-25px-top">
+                                    <button type="submit" class="btn btn-secondary btn--small">Filter</button>
                                 </div>
                             </form>
                         </div>
                         <!--End Price Filter-->
                         <!--Size Swatches-->
-                        <div class="sidebar_widget filterBox filter-widget size-swacthes">
-                            <div class="widget-title"><h2>Size</h2></div>
-                            <div class="filter-color swacth-list">
-                            	<ul>
-                                    <li><span class="swacth-btn checked">X</span></li>
-                                    <li><span class="swacth-btn">XL</span></li>
-                                    <li><span class="swacth-btn">XLL</span></li>
-                                    <li><span class="swacth-btn">M</span></li>
-                                    <li><span class="swacth-btn">L</span></li>
-                                    <li><span class="swacth-btn">S</span></li>
-                                    <li><span class="swacth-btn">XXXL</span></li>
-                                    <li><span class="swacth-btn">XXL</span></li>
-                                    <li><span class="swacth-btn">XS</span></span></li>
-                                </ul>
-                            </div>
-                        </div>
+                   
                         <!--End Size Swatches-->
                         <!--Color Swatches-->
                         <div class="sidebar_widget filterBox filter-widget">

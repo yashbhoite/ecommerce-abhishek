@@ -619,65 +619,77 @@
 	/*-----------------------------------
 	 13. Price Range Slider
 	-------------------------------------*/
-	function price_slider(minPrice, maxPrice) {
-		$("#slider-range").slider({
-			range: true,
-			min: 0, // Minimum price
-			max: 5000, // Maximum price
-			values: [minPrice, maxPrice], // Set initial values for slider
-			slide: function(event, ui) {
-				$("#min_price_input").val(ui.values[0]); // Update min input
-				$("#max_price_input").val(ui.values[1]); // Update max input
-				$("#amount").val("₹" + ui.values[0] + " - ₹" + ui.values[1]); // Update display amount
-			}
-		});
-	
-		// Set initial values in the input fields
-		$("#min_price_input").val($("#slider-range").slider("values", 0));
-		$("#max_price_input").val($("#slider-range").slider("values", 1));
-		$("#amount").val("₹" + $("#slider-range").slider("values", 0) + " - ₹" + $("#slider-range").slider("values", 1));
-	}
-	
+
+
 	$(document).ready(function() {
-		// Get min and max values from input fields
-		const minPrice = parseInt($("#min_price_input").val(), 10) || 0;
-		const maxPrice = parseInt($("#max_price_input").val(), 10) || 5000;
+		// Initialize the color swatch selection
+		$("#color-filter .swacth-list .swacth-btn").on("click", function(event) {
+			// Ensure the click event only handles color buttons and not size
+			if ($(this).closest('#size-filter').length === 0) {
+				console.log('Color button clicked');
+				var selectedColor = $(this).data("color");
 	
-		// Initialize the price slider
-		price_slider(minPrice, maxPrice);
-		
-		// Update slider when input fields change
-		$("#min_price_input").on("change", function() {
-			var minValue = parseInt($(this).val(), 10);
-			var maxValue = parseInt($("#max_price_input").val(), 10);
-			if (minValue >= 0 && minValue <= maxValue) {
-				$("#slider-range").slider("values", 0, minValue); // Update slider
+				// Remove the selected class from all color buttons
+				$("#color-filter .swacth-list .swacth-btn").removeClass("selected-color");
+	
+				// Add the class to the clicked button
+				$(this).addClass("selected-color");
+	
+				// Update the hidden input value for the selected color
+				$("#colorInput").val(selectedColor);
+	
+				console.log('Selected color:', selectedColor);
 			}
 		});
 	
-		$("#max_price_input").on("change", function() {
-			var maxValue = parseInt($(this).val(), 10);
-			var minValue = parseInt($("#min_price_input").val(), 10);
-			if (maxValue >= minValue && maxValue <= 5000) {
-				$("#slider-range").slider("values", 1, maxValue); // Update slider
-			}
+		// Initialize the size swatch selection
+		$("#size-filter .swacth-btn").on("click", function(event) {
+			console.log('Size button clicked');
+			var selectedSize = $(this).data("size");
+	
+			// Remove the selected class from all size buttons
+			$("#size-filter .swacth-btn").removeClass("selected-size");
+	
+			// Add the class to the clicked button
+			$(this).addClass("selected-size");
+	
+			// Update the hidden input value for the selected size
+			$("#sizeInput").val(selectedSize);
+	
+			console.log('Selected size:', selectedSize);
 		});
 	});
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	/*-----------------------------------
 	 14. Color Swacthes
 	-------------------------------------*/
-	function color_swacthes(){
-		$.each($(".swacth-list"), function() {
-			var n = $(".swacth-btn");
-			n.on("click", function() {
-				$(this).parent().find(n).removeClass("checked");
-				$(this).addClass("checked")
-			})
-		});
-	}
-	color_swacthes();
+	// function color_swacthes() {
+	// 	$(".filterBox .swacth-list .swacth-btn").on("click", function() {
+	// 		// Remove 'checked' class from all buttons in this specific filter list
+	// 		$(this).closest(".swacth-list").find(".swacth-btn").removeClass("checked");
+			
+	// 		// Add 'checked' class to the clicked button
+	// 		$(this).addClass("checked");
+	
+	// 		// Get the selected color from the 'data-color' attribute
+	// 		var selectedColor = $(this).attr("data-color");
+	
+	// 		// Update the hidden input field in the form
+	// 		$("#colorInput").val(selectedColor);
+	
+	// 		// Automatically submit the form to filter products by the selected color
+	// 		$(this).closest("form").submit();
+	// 	});
+	// }
+	// color_swacthes();
 	
 	/*-----------------------------------
 	  15. Footer links for mobiles

@@ -254,26 +254,67 @@ def shopwomencategories(id):
     connection.close()
     return render_template("shop-fullwidth-women.html",lala=lala)
 
-@app.route('/filter', methods=['POST'])
+@app.route('/filter', methods=['GET'])
 def filter_products():
-    min_price = request.form.get('min_price', type=int)
-    max_price = request.form.get('max_price', type=int)
-    current_url = request.form.get('current_url')
-    print('url is---------------------')
-    print(current_url)
+    selected_color = request.args.get('color')
+    selected_size = request.args.get('size')  # Selected size from the form
+    min_price = request.args.get('min_price', type=int)
+    max_price = request.args.get('max_price', type=int)
+    current_url = request.args.get('current_url')
+
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
-    # Example: Filter products from the database based on the price range
-    filtered_products = my_cursor.execute(
-        "SELECT * FROM products WHERE price BETWEEN ? AND ? AND gender=?", (min_price, max_price,current_url)
-    ).fetchall()
+
+    # Build the base query without the size filter
+    query = "SELECT * FROM products WHERE price BETWEEN ? AND ?"
+    params = [min_price, max_price]
+
+    if selected_color:
+        query += " AND color = ?"
+        params.append(selected_color)
+
+    query += " AND gender = ?"
+    params.append(current_url)
+
+    # Fetch the products that match other filters first
+    filtered_products = my_cursor.execute(query, params).fetchall()
+    connection.close()
+
+    # Now filter the products by size in Python
+    if selected_size:
+        filtered_products = [
+            product for product in filtered_products
+            if selected_size in product[11].split(',')
+        ]
 
     # Render the filtered products back to the template
-    if current_url=='Men':
-        return render_template('shop-fullwidth.html', lala=filtered_products, min_price=min_price, max_price=max_price)
+    if current_url == 'Men':
+        return render_template('shop-fullwidth.html', lala=filtered_products, min_price=min_price, max_price=max_price, color=selected_color, size=selected_size)
     else:
-        return render_template('shop-fullwidth-women.html', lala=filtered_products, min_price=min_price, max_price=max_price)
+        return render_template('shop-fullwidth-women.html', lala=filtered_products, min_price=min_price, max_price=max_price, color=selected_color, size=selected_size)
 
+
+
+
+#the code is to filter based on colour
+
+@app.route('/products', methods=['GET'])
+def show_products():
+    selected_color = request.args.get('color')
+    print('------color--------')
+    print(selected_color)
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+    if selected_color:
+        cursor.execute("SELECT * FROM products WHERE color = ? and gender='Men'", (selected_color,))
+    else:
+        cursor.execute("SELECT * FROM products")
+    
+    # Fetch all matching products
+    products = cursor.fetchall()
+    conn.close()
+
+    return render_template('shop-fullwidth.html', lala=products)
 
 # @app.route('/buy')
 # def buy():

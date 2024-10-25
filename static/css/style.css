@@ -6999,3 +6999,17 @@ border-radius:8px;
   }
 }
 
+.color-btn:active {
+  border-color: red; /* Border color on click */
+}
+
+.selected-color {
+  border: 3px solid #ff9800; /* Add a distinct border color */
+  box-shadow: 0 0 10px rgba(255, 152, 0, 0.6); /* Add a glowing effect */
+  transform: scale(1.3); /* Slightly enlarge the selected color swatch */
+}
+.selected-size {
+  border: 3px solid #ff9800; /* Add a distinct border color */
+  box-shadow: 0 0 10px rgba(255, 152, 0, 0.6); /* Add a glowing effect */
+  transform: scale(1.3); /* Slightly enlarge the selected color swatch */
+}
