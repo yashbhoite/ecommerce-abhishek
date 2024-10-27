@@ -257,15 +257,19 @@ def shopwomencategories(id):
 @app.route('/filter', methods=['GET'])
 def filter_products():
     selected_color = request.args.get('color')
-    selected_size = request.args.get('size')  # Selected size from the form
+    selected_size = request.args.get('size')
     min_price = request.args.get('min_price', type=int)
     max_price = request.args.get('max_price', type=int)
     current_url = request.args.get('current_url')
+    selected_brands = request.args.getlist('brands')
+      # Get list of selected brands
+    print("-------------------------brands---------------------------------")
+    print(selected_brands)
 
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
 
-    # Build the base query without the size filter
+    # Base query
     query = "SELECT * FROM products WHERE price BETWEEN ? AND ?"
     params = [min_price, max_price]
 
@@ -276,23 +280,27 @@ def filter_products():
     query += " AND gender = ?"
     params.append(current_url)
 
-    # Fetch the products that match other filters first
+    # Add brand filtering to the query if brands are selected
+    if selected_brands:
+        query += " AND vendor IN ({})".format(', '.join(['?'] * len(selected_brands)))
+        params.extend(selected_brands)
+
+    # Execute the query and fetch filtered products
     filtered_products = my_cursor.execute(query, params).fetchall()
     connection.close()
 
-    # Now filter the products by size in Python
+    # Additional size filtering in Python if size is selected
     if selected_size:
         filtered_products = [
             product for product in filtered_products
-            if selected_size in product[11].split(',')
+            if selected_size in product[12].split(',')
         ]
 
-    # Render the filtered products back to the template
+    # Render filtered products
     if current_url == 'Men':
-        return render_template('shop-fullwidth.html', lala=filtered_products, min_price=min_price, max_price=max_price, color=selected_color, size=selected_size)
+        return render_template('shop-fullwidth.html', lala=filtered_products, min_price=min_price, max_price=max_price, color=selected_color, size=selected_size, brands=selected_brands)
     else:
-        return render_template('shop-fullwidth-women.html', lala=filtered_products, min_price=min_price, max_price=max_price, color=selected_color, size=selected_size)
-
+        return render_template('shop-fullwidth-women.html', lala=filtered_products, min_price=min_price, max_price=max_price, color=selected_color, size=selected_size, brands=selected_brands)
 
 
 
@@ -346,6 +354,7 @@ def productadddb():
     gender = request.form.get('gender')
     size = request.form.getlist('size')
     color = request.form.getlist('color')
+    vendor = request.form.get('vendor')
     sizes = ','.join(size)
     colors = ','.join(color)
     input1 = request.files['input1']
@@ -386,7 +395,7 @@ def productadddb():
 
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
-    my_cursor.execute("INSERT INTO products VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (productname,description,colors,baseprice,discountpercentage1,discountpercentage2,discountpercentage3,sku,quantity,productcategory,gender,sizes,input1,input2,input3,input4,input5))
+    my_cursor.execute("INSERT INTO products VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (productname,description,colors,vendor,baseprice,discountpercentage1,discountpercentage2,discountpercentage3,sku,quantity,productcategory,gender,sizes,input1,input2,input3,input4,input5))
     connection.commit()
     connection.close()
     return redirect(url_for('shopfullwidth'))
