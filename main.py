@@ -65,7 +65,7 @@ def add_to_cart(id):
         return redirect(url_for('login'))
 
     productname = request.form['productname']
-    productprice = float(request.form['productprice'])
+    productprice = request.form['productprice']
     productsize = request.form['productsize']
     productquantity = int(request.form['productquantity'])
     totalprice = productprice * productquantity
@@ -216,7 +216,13 @@ def adduser():
 
 @app.route('/wishlist')
 def wishlist():
-    return render_template("wishlist.html")
+    connection = sqlite3.connect('product.db')
+    my_cursor = connection.cursor()
+    orders = my_cursor.execute("SELECT firstname,lastname,email,mobile,city,state,pincode,razorpay_order_id, GROUP_CONCAT(DISTINCT productname) AS product_names, GROUP_CONCAT(DISTINCT size) AS sizes, GROUP_CONCAT(DISTINCT color) AS colors, SUM(quantity) AS total_quantity, SUM(totalprice) AS total_price FROM orders GROUP BY razorpay_order_id;").fetchall()
+    print(orders)
+    connection.commit()
+    connection.close()
+    return render_template("wishlist.html",orders=orders)
 
 @app.route('/shopfullwidth')
 def shopfullwidth():
@@ -396,7 +402,7 @@ def productadddb():
 
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
-    my_cursor.execute("INSERT INTO products VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (productname,description,colors,vendor,baseprice,discountpercentage1,discountpercentage2,discountpercentage3,sku,quantity,productcategory,gender,sizes,input1,input2,input3,input4,input5))
+    my_cursor.execute("INSERT INTO products VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (productname,description,colors,baseprice,discountpercentage1,discountpercentage2,discountpercentage3,sku,quantity,productcategory,gender,sizes,input1,input2,input3,input4,input5,vendor))
     connection.commit()
     connection.close()
     return redirect(url_for('shopfullwidth'))
@@ -426,6 +432,7 @@ def checkout():
 
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
+    user = cursor.execute("SELECT * FROM useradr WHERE email = ?", (user_email,))
     
     # Fetch cart items specific to the logged-in user
     cursor.execute("SELECT productimage, productname, productsize, productprice, productquantity, totalprice, productcolor FROM cart WHERE user_email = ?", (user_email,))
@@ -443,7 +450,7 @@ def checkout():
 
     conn.close()
     
-    return render_template('checkout.html', cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total)
+    return render_template('checkout.html', cart_items=cart_items,userdetails=user, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total)
 
 @app.route('/confirm-address', methods=['POST'])
 def confirm_address():
@@ -499,10 +506,50 @@ def confirm_address():
     message = "Address has been confirmed!"
     return render_template(
         'checkout.html', 
-        message=message, 
+        message=message, userdetails=user,
         email=email, firstname=firstname, lastname=lastname, mobile=mobile, 
         address=address, city=city, pincode=pincode, state=state, country=country, 
         cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total
+    )
+
+@app.route('/userdetails', methods=['POST'])
+def userdetails():
+    # Get form data
+    email = session.get('user_email')  # Use session email for cart filtering
+    password = request.form['password']
+    # Insert into useradr table
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+    user = tuple()
+
+    # Check if user with the same email exists
+    truepass = cursor.execute("SELECT password FROM users WHERE email = ?", (email,)).fetchone()
+    if(password==truepass):
+        user = cursor.execute("SELECT * FROM useradr WHERE email = ?", (email,)).fetchone()
+
+
+    if user:
+        
+        cursor.execute("SELECT productimage, productname, productsize, productprice, productquantity, totalprice, productcolor FROM cart WHERE user_email = ?", (email,))
+        cart_items = cursor.fetchall()
+
+        # Calculate subtotal (sum of totalprice for logged-in user's cart items)
+        cursor.execute("SELECT SUM(totalprice) FROM cart WHERE user_email = ?", (email,))
+        subtotal = cursor.fetchone()[0]
+        if subtotal is None:
+            subtotal = 0
+
+    # Set shipping charges and calculate grand total
+        shipping_charges = 100  # Fixed shipping charge
+        grand_total = subtotal + shipping_charges
+
+        conn.commit()
+        conn.close()
+
+        # Send back the message with the form values and cart items
+        return render_template(
+            'checkout.html',email=email,userdetails=user,
+            cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total
     )
 
 

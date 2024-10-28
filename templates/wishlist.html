@@ -95,45 +95,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for order in orders %}
                                     <tr>
-                                    	<td class="product-remove text-center" valign="middle">Kartik Sharma</td>
+                                    	<td class="product-remove text-center" valign="middle">{{order[0]}} {{order[1]}}</td>
                                         <td class="product-thumbnail text-center">
-                                            123456890
+                                            {{order[3]}}
                                         </td>
-                                        <td class="product-name text-center">abcd@gmail.com</td>
-                                        <td class="product-price text-center"><span class="amount">Adidas Jacket</span></td>
+                                        <td class="product-name text-center">{{order[2]}}</td>
+                                        <td class="product-price text-center"><span class="amount">{{order[8]}}</span></td>
                                         <td class="stock text-center">
-                                            <span class="in-stock">XYZ building, 3rd floor, flat 301, Thane, Maharashtra - 400607</span>
+                                            <span class="in-stock">{{order[4]}} {{order[5]}} {{order[6]}}</span>
                                         </td>
-                                        <td class="product-subtotal text-center">5000/-</td>
+                                        <td class="product-subtotal text-center"> ₹ {{order[12]}}</td>
                                         <td class="product-subtotal text-center">UPI</td>
                                     </tr>
-                                    <tr>
-                                    	<td class="product-remove text-center" valign="middle">Kartik Sharma</td>
-                                        <td class="product-thumbnail text-center">
-                                            123456890
-                                        </td>
-                                        <td class="product-name text-center">abcd@gmail.com</td>
-                                        <td class="product-price text-center"><span class="amount">Adidas Jacket</span></td>
-                                        <td class="stock text-center">
-                                            <span class="in-stock">XYZ building, 3rd floor, flat 301, Thane, Maharashtra - 400607</span>
-                                        </td>
-                                        <td class="product-subtotal text-center">5000/-</td>
-                                        <td class="product-subtotal text-center">UPI</td>
-                                    </tr>
-                                    <tr>
-                                    	<td class="product-remove text-center" valign="middle">Kartik Sharma</td>
-                                        <td class="product-thumbnail text-center">
-                                            123456890
-                                        </td>
-                                        <td class="product-name text-center">abcd@gmail.com</td>
-                                        <td class="product-price text-center"><span class="amount">Adidas Jacket</span></td>
-                                        <td class="stock text-center">
-                                            <span class="in-stock">XYZ building, 3rd floor, flat 301, Thane, Maharashtra - 400607</span>
-                                        </td>
-                                        <td class="product-subtotal text-center">5000/-</td>
-                                        <td class="product-subtotal text-center">UPI</td>
-                                    </tr>
+                                    {% endfor %}
+                                    
+        
                                 </tbody>
                             </table>
                         </div>

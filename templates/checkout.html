@@ -608,7 +608,7 @@
                         <div id="customer-login" class="collapse customer-content">
                             <div class="customer-info">
                                 <p class="coupon-text">If you have shopped with us before, please enter your details in the boxes below. If you are a new customer, please proceed to the Billing &amp; Shipping section.</p>
-                                <form>
+                                <form method="POST" action="/userdetails">
                                     <div class="row">
                                         <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                             <label for="exampleInputEmail1">Email address <span class="required-f">*</span></label>
@@ -616,7 +616,7 @@
                                         </div>
                                         <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                             <label for="exampleInputPassword1">Password <span class="required-f">*</span></label>
-                                            <input type="password" id="exampleInputPassword1">
+                                            <input type="password" name="password" id="exampleInputPassword1">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -660,7 +660,7 @@
                             <div class="row">
                                 <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label for="email">Email address <span class="required-f">*</span></label>
-                                    <input type="email" class="no-margin" name="email" id="email" value="{{ email or '' }}" required>
+                                    <input type="email" class="no-margin" name="email" id="email" value="{{userdetails[0]}}" required>
                                 </div>
                                 <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label for="firstname">First Name <span class="required-f">*</span></label>
