@@ -942,28 +942,105 @@
 </script>
 {% endif %}
 
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <script>
-    document.getElementById('placeOrderBtn').addEventListener('click', function(event) {
+    document.getElementById('placeOrderBtn').addEventListener('click', function (event) {
         event.preventDefault();  // Prevent default form submission
-    
+
+        // Validate address form fields
+        const firstname = document.getElementById('firstname').value.trim();
+        const lastname = document.getElementById('lastname').value.trim();
+        const mobile = document.getElementById('mobile').value.trim();
+        const address = document.getElementById('address').value.trim();
+        const city = document.getElementById('city').value.trim();
+        const state = document.getElementById('state').value.trim();
+        const pincode = document.getElementById('pincode').value.trim();
+
+        // Check if any of the required fields are empty
+        if (!firstname || !lastname || !mobile || !address || !city || !state || !pincode) {
+            alert('Please confirm the address before placing the order.');
+            return;
+        }
+
         // Collect address form data
         const formData = new FormData(document.getElementById('addressForm'));
-    
-        // Submit the form data (address) to /place-order using Fetch API
-        fetch('/place-order', {
+
+        // Collect cart table data
+        const cartItems = [];
+        const tableRows = document.querySelectorAll('#cartTable tbody tr');
+
+        tableRows.forEach(row => {
+            const product = {
+                productname: row.cells[0].textContent.trim(),
+                size: row.cells[2].textContent.trim(),
+                color: row.cells[3].textContent.trim(),
+                quantity: row.cells[4].textContent.trim(),
+                totalprice: row.cells[5].textContent.replace('$', '').trim(),
+            };
+            cartItems.push(product);
+        });
+
+        // Create Razorpay order
+        fetch('/create-order', {
             method: 'POST',
-            body: formData
+            headers: { 'Content-Type': 'application/json' },
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Order placed successfully!');
-                window.location.href = '/';
-            } else {
-                alert('Error placing order: ' + data.message);
-            }
-        })
-        .catch(error => console.error('Error:', error));
+            .then(response => response.json())
+            .then(data => {
+                const options = {
+                    "key": data.key_id,
+                    "amount": data.amount,
+                    "currency": data.currency,
+                    "name": "Your Store Name",
+                    "description": "Order Payment",
+                    "order_id": data.razorpay_order_id,
+                    "handler": function (response) {
+                        // Verify payment on the backend
+                        fetch('/verify-payment', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(response)
+                        })
+                            .then(res => res.json())
+                            .then(verifyData => {
+                                if (verifyData.success) {
+                                    // On successful verification, add IDs to form data
+                                    formData.append('razorpay_payment_id', verifyData.razorpay_payment_id);
+                                    formData.append('razorpay_order_id', verifyData.razorpay_order_id);
+                                    formData.append('cart_items', JSON.stringify(cartItems));
+
+                                    fetch('/place-order', {
+                                        method: 'POST',
+                                        body: formData
+                                    })
+                                        .then(saveResponse => saveResponse.json())
+                                        .then(saveData => {
+                                            if (saveData.success) {
+                                                alert('Order placed successfully!');
+                                                window.location.href = '/';
+                                            } else {
+                                                alert('Error saving order: ' + saveData.message);
+                                            }
+                                        });
+                                } else {
+                                    alert("Payment Failed: " + verifyData.message);
+                                }
+                            });
+                    },
+                    "prefill": {
+                        "name": "{{ firstname }} {{ lastname }}",
+                        "email": "{{ email }}",
+                        "contact": "{{ mobile }}"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
+                    }
+                };
+                const rzp1 = new Razorpay(options);
+                rzp1.open();
+            })
+            .catch(error => console.error('Error:', error));
     });
 </script>
 

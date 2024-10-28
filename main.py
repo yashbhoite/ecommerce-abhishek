@@ -1,3 +1,4 @@
+import razorpay
 from email import message
 from unicodedata import name
 from flask import Flask, redirect, render_template, request, url_for, session, jsonify
@@ -520,6 +521,10 @@ def place_order():
     city = request.form['city']
     state = request.form['state']
     pincode = request.form['pincode']
+    
+    # Get payment IDs
+    razorpay_payment_id = request.form.get('razorpay_payment_id')
+    razorpay_order_id = request.form.get('razorpay_order_id')
 
     # Fetch only the cart items for the logged-in user
     conn = sqlite3.connect('product.db')
@@ -535,14 +540,63 @@ def place_order():
         quantity = item[3]
         totalprice = item[4]
 
-        cursor.execute('''INSERT INTO orders (firstname, lastname, email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice)
-                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                       (firstname, lastname, user_email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice))
+        cursor.execute('''INSERT INTO orders (firstname, lastname, email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice, razorpay_payment_id, razorpay_order_id)
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                       (firstname, lastname, user_email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice, razorpay_payment_id, razorpay_order_id))
 
     conn.commit()
     conn.close()
 
     return jsonify({'success': True})
+
+
+
+@app.route('/create-order', methods=['POST'])
+def create_order():
+    import razorpay
+    client = razorpay.Client(auth=("rzp_test_TswE6aK7d5KSvI", "iBZrxVF76YTwnUA1GL9etnDg"))
+
+    # Set a static amount (100 paise = 1 INR) for the test order
+    payment_amount = 100  # Amount in paise
+
+    # Create Razorpay order with fixed amount
+    order = client.order.create({
+        "amount": payment_amount,
+        "currency": "INR",
+        "payment_capture": 1  # Auto-capture payment
+    })
+
+    return jsonify({
+        "key_id": "rzp_test_TswE6aK7d5KSvI",
+        "amount": order["amount"],
+        "currency": order["currency"],
+        "razorpay_order_id": order["id"]
+    })
+
+
+@app.route('/verify-payment', methods=['POST'])
+def verify_payment():
+    data = request.get_json()
+    client = razorpay.Client(auth=("rzp_test_TswE6aK7d5KSvI", "iBZrxVF76YTwnUA1GL9etnDg"))
+    
+    try:
+        # Verify signature
+        client.utility.verify_payment_signature({
+            'razorpay_order_id': data['razorpay_order_id'],
+            'razorpay_payment_id': data['razorpay_payment_id'],
+            'razorpay_signature': data['razorpay_signature']
+        })
+        
+        # Return success along with the order and payment IDs
+        return jsonify({
+            "success": True,
+            "razorpay_payment_id": data['razorpay_payment_id'],
+            "razorpay_order_id": data['razorpay_order_id']
+        })
+    
+    except razorpay.errors.SignatureVerificationError as e:
+        print("Signature verification failed:", e)
+        return jsonify({"success": False, "message": "Payment verification failed."})
 
 
 
