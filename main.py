@@ -176,7 +176,35 @@ def register():
 
 @app.route('/myaccount')
 def myaccount():
-    return render_template("Myaccount.html")
+    # Retrieve the logged-in user's email
+    email = session.get('user_email')
+
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+
+    # Query to get only "Placed" order details from the orders table for the logged-in user
+    cursor.execute("""
+        SELECT productname, size, color, quantity, totalprice 
+        FROM orders 
+        WHERE email = ? AND status = 'Placed'
+    """, (email,))
+    order_items = cursor.fetchall()
+
+    # Query to get address details from the useradr table for the logged-in user
+    cursor.execute("""
+        SELECT email, firstname, lastname, mobile, address, city, pincode, state, country 
+        FROM useradr 
+        WHERE email = ?
+    """, (email,))
+    address_data = cursor.fetchone()  # Fetch a single record
+
+
+    conn.close()
+
+    return render_template('myaccount.html', order_items=order_items, address_data=address_data)
+
+
+
 
 
 @app.route('/product')
@@ -512,45 +540,85 @@ def confirm_address():
         cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total
     )
 
+
+@app.route('/update-address', methods=['POST'])
+def update_address():
+    email = request.form['email']
+    firstname = request.form['firstname']
+    lastname = request.form['lastname']
+    mobile = request.form['mobile']
+    address = request.form['address']
+    city = request.form['city']
+    pincode = request.form['pincode']
+    state = request.form['state']
+    country = request.form['country']
+
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+
+  # Update address in useradr table
+    cursor.execute('''
+        UPDATE useradr 
+        SET firstname = ?, lastname = ?, mobile = ?, address = ?, city = ?, pincode = ?, state = ?, country = ?
+        WHERE email = ?
+    ''', (firstname, lastname, mobile, address, city, pincode, state, country, email))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({'success': True, 'message': 'Address updated successfully'})
+
+
 @app.route('/userdetails', methods=['POST'])
 def userdetails():
     # Get form data
     email = session.get('user_email')  # Use session email for cart filtering
     password = request.form['password']
-    # Insert into useradr table
+    
+    # Connect to database
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
-    user = tuple()
+    
+    # Initialize variables
+    user = None
+    cart_items = []
+    subtotal = 0
+    shipping_charges = 100  # Fixed shipping charge
 
-    # Check if user with the same email exists
+    # Check if the user with the provided email and password exists in users table
     truepass = cursor.execute("SELECT password FROM users WHERE email = ?", (email,)).fetchone()
-    if(password==truepass):
+    if truepass and password == truepass[0]:
+        # Fetch user details from useradr table if they exist
         user = cursor.execute("SELECT * FROM useradr WHERE email = ?", (email,)).fetchone()
 
-
-    if user:
-        
+        # Fetch cart items for the user
         cursor.execute("SELECT productimage, productname, productsize, productprice, productquantity, totalprice, productcolor FROM cart WHERE user_email = ?", (email,))
         cart_items = cursor.fetchall()
 
         # Calculate subtotal (sum of totalprice for logged-in user's cart items)
         cursor.execute("SELECT SUM(totalprice) FROM cart WHERE user_email = ?", (email,))
-        subtotal = cursor.fetchone()[0]
-        if subtotal is None:
-            subtotal = 0
+        subtotal = cursor.fetchone()[0] or 0  # Set to 0 if subtotal is None
 
-    # Set shipping charges and calculate grand total
-        shipping_charges = 100  # Fixed shipping charge
+        # Calculate grand total
         grand_total = subtotal + shipping_charges
 
-        conn.commit()
         conn.close()
 
-        # Send back the message with the form values and cart items
+        # Render checkout page with user details and cart information
         return render_template(
-            'checkout.html',email=email,userdetails=user,
-            cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total
-    )
+            'checkout.html',
+            email=email,
+            userdetails=user,
+            cart_items=cart_items,
+            subtotal=subtotal,
+            shipping_charges=shipping_charges,
+            grand_total=grand_total
+        )
+    else:
+        # If password doesn't match, return an error
+        conn.close()
+        return render_template('checkout.html', error="Invalid email or password.")
+
 
 
 @app.route('/place-order', methods=['POST'])
@@ -558,9 +626,7 @@ def place_order():
     if 'user_email' not in session:
         return jsonify({'success': False, 'message': 'User not logged in'})
 
-    user_email = session['user_email']  # Get logged-in user's email
-
-    # Get form data from the address form
+    user_email = session['user_email']
     firstname = request.form['firstname']
     lastname = request.form['lastname']
     mobile = request.form['mobile']
@@ -568,33 +634,64 @@ def place_order():
     city = request.form['city']
     state = request.form['state']
     pincode = request.form['pincode']
-    
-    # Get payment IDs
-    razorpay_payment_id = request.form.get('razorpay_payment_id')
-    razorpay_order_id = request.form.get('razorpay_order_id')
+    payment_method = request.form.get('payment_method')  # COD or Online
 
-    # Fetch only the cart items for the logged-in user
+    # Get optional Razorpay IDs
+    razorpay_payment_id = request.form.get('razorpay_payment_id') if payment_method == 'Online' else None
+    razorpay_order_id = request.form.get('razorpay_order_id') if payment_method == 'Online' else None
+    payment_info = "COD" if payment_method == 'COD' else "Online"
+    status = "Placed"  # Static status for successful orders
+
+    # Fetch cart items for the logged-in user
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
     cursor.execute("SELECT productname, productsize, productcolor, productquantity, totalprice FROM cart WHERE user_email = ?", (user_email,))
     cart_items = cursor.fetchall()
 
-    # Insert data into the orders table for each cart item
+    # Insert order into orders table for each cart item
     for item in cart_items:
-        productname = item[0]
-        size = item[1]
-        color = item[2]
-        quantity = item[3]
-        totalprice = item[4]
-
-        cursor.execute('''INSERT INTO orders (firstname, lastname, email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice, razorpay_payment_id, razorpay_order_id)
-                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                       (firstname, lastname, user_email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice, razorpay_payment_id, razorpay_order_id))
+        cursor.execute('''INSERT INTO orders (firstname, lastname, email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice, razorpay_payment_id, razorpay_order_id, payment_info, status)
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                       (firstname, lastname, user_email, mobile, address, city, state, pincode, item[0], item[1], item[2], item[3], item[4], razorpay_payment_id, razorpay_order_id, payment_info, status))
 
     conn.commit()
     conn.close()
 
     return jsonify({'success': True})
+
+
+
+@app.route('/cancel-order', methods=['POST'])
+def cancel_order():
+    # Retrieve the logged-in user's email
+    email = session.get('user_email')
+    if not email:
+        return jsonify({'success': False, 'message': 'User not logged in'})
+
+    # Retrieve the unique identifiers for the order to be cancelled from the request
+    productname = request.json.get('productname')
+    size = request.json.get('size')
+    color = request.json.get('color')
+    quantity = request.json.get('quantity')
+    totalprice = request.json.get('totalprice')
+
+    # Connect to the database and update the status to 'Cancelled' for the specific order
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE orders 
+        SET status = 'Cancelled' 
+        WHERE email = ? AND productname = ? AND size = ? 
+              AND color = ? AND quantity = ? AND totalprice = ?
+    """, (email, productname, size, color, quantity, totalprice))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({'success': True, 'message': 'Order cancelled successfully'})
+
+
 
 
 

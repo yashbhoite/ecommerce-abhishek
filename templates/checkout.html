@@ -660,45 +660,45 @@
                             <div class="row">
                                 <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label for="email">Email address <span class="required-f">*</span></label>
-                                    <input type="email" class="no-margin" name="email" id="email" value="{{userdetails[0]}}" required>
+                                    <input type="email" class="no-margin" name="email" id="email" value="{{ userdetails[0] if userdetails else '' }}" required>
                                 </div>
                                 <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label for="firstname">First Name <span class="required-f">*</span></label>
-                                    <input type="text" id="firstname" name="firstname" value="{{ firstname or '' }}" required>
+                                    <input type="text" id="firstname" name="firstname" value="{{ userdetails[1] if userdetails else '' }}" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label for="lastname">Last Name <span class="required-f">*</span></label>
-                                    <input type="text" id="lastname" name="lastname" value="{{ lastname or '' }}" required>
+                                    <input type="text" id="lastname" name="lastname" value="{{ userdetails[2] if userdetails else '' }}" required>
                                 </div>
                                 <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label for="mobile">Mobile <span class="required-f">*</span></label>
-                                    <input type="text" id="mobile" name="mobile" value="{{ mobile or '' }}" required>
+                                    <input type="text" id="mobile" name="mobile" value="{{ userdetails[3] if userdetails else '' }}" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label for="address">Address <span class="required-f">*</span></label>
-                                    <input type="text" id="address" name="address" value="{{ address or '' }}" required>
+                                    <input type="text" id="address" name="address" value="{{ userdetails[4] if userdetails else '' }}" required>
                                 </div>
                                 <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label for="city">City <span class="required-f">*</span></label>
-                                    <input type="text" id="city" name="city" value="{{ city or '' }}" required>
+                                    <input type="text" id="city" name="city" value="{{ userdetails[5] if userdetails else '' }}" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label for="pincode">Pincode <span class="required-f">*</span></label>
-                                    <input type="text" id="pincode" name="pincode" value="{{ pincode or '' }}" required>
+                                    <input type="text" id="pincode" name="pincode" value="{{ userdetails[6] if userdetails else '' }}" required>
                                 </div>
                                 <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label for="state">State <span class="required-f">*</span></label>
-                                    <input type="text" id="state" name="state" value="{{ state or '' }}" required>
+                                    <input type="text" id="state" name="state" value="{{ userdetails[7] if userdetails else '' }}" required>
                                 </div>
                                 <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label for="country">Country <span class="required-f">*</span></label>
-                                    <input type="text" id="country" name="country" value="{{ country or '' }}" required>
+                                    <input type="text" id="country" name="country" value="{{ userdetails[8] if userdetails else '' }}" required>
                                 </div>
                             </div>
                             <div class="row">
@@ -762,24 +762,29 @@
                                     <div id="accordion" class="payment-section">
                                         <div class="card mb-2">
                                             <div class="card-header">
-                                                <a class="card-link" data-toggle="collapse" href="#collapseOne">Cash On Delivery</a>
+                                                <label>
+                                                    <input type="radio" name="payment_method" value="COD" required> Cash On Delivery
+                                                </label>
                                             </div>
                                             <div id="collapseOne" class="collapse" data-parent="#accordion">
                                                 <div class="card-body">
-                                                    <p class="no-margin font-15">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won't be shipped until the funds have cleared in our account.</p>
+                                                    <p class="no-margin font-15">Make your payment directly into our bank account...</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="card mb-2">
                                             <div class="card-header">
-                                                <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">Online Payment</a>
+                                                <label>
+                                                    <input type="radio" name="payment_method" value="Online" required> Online Payment
+                                                </label>
                                             </div>
                                             <div id="collapseTwo" class="collapse" data-parent="#accordion">
                                                 <div class="card-body">
-                                                    <p class="no-margin font-15">Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
+                                                    <p class="no-margin font-15">Please send your cheque to Store Name, Store Street...</p>
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                         <!-- <div class="card margin-15px-bottom border-radius-none">
                                             <div class="card-header">
                                                 <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree"> PayPal </a>
@@ -946,46 +951,62 @@
 
 <script>
     document.getElementById('placeOrderBtn').addEventListener('click', function (event) {
-        event.preventDefault();  // Prevent default form submission
+    event.preventDefault();
 
-        // Validate address form fields
-        const firstname = document.getElementById('firstname').value.trim();
-        const lastname = document.getElementById('lastname').value.trim();
-        const mobile = document.getElementById('mobile').value.trim();
-        const address = document.getElementById('address').value.trim();
-        const city = document.getElementById('city').value.trim();
-        const state = document.getElementById('state').value.trim();
-        const pincode = document.getElementById('pincode').value.trim();
+    // Validate address form fields
+    const firstname = document.getElementById('firstname').value.trim();
+    const lastname = document.getElementById('lastname').value.trim();
+    const mobile = document.getElementById('mobile').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const city = document.getElementById('city').value.trim();
+    const state = document.getElementById('state').value.trim();
+    const pincode = document.getElementById('pincode').value.trim();
+    
+    if (!firstname || !lastname || !mobile || !address || !city || !state || !pincode) {
+        alert('Please confirm the address before placing the order.');
+        return;
+    }
 
-        // Check if any of the required fields are empty
-        if (!firstname || !lastname || !mobile || !address || !city || !state || !pincode) {
-            alert('Please confirm the address before placing the order.');
-            return;
-        }
+    // Check selected payment method
+    const paymentMethod = document.querySelector('input[name="payment_method"]:checked');
+    if (!paymentMethod) {
+        alert('Please select a payment method.');
+        return;
+    }
 
-        // Collect address form data
-        const formData = new FormData(document.getElementById('addressForm'));
+    const paymentType = paymentMethod.value;  // "COD" or "Online"
+    const formData = new FormData(document.getElementById('addressForm'));
 
-        // Collect cart table data
-        const cartItems = [];
-        const tableRows = document.querySelectorAll('#cartTable tbody tr');
-
-        tableRows.forEach(row => {
-            const product = {
-                productname: row.cells[0].textContent.trim(),
-                size: row.cells[2].textContent.trim(),
-                color: row.cells[3].textContent.trim(),
-                quantity: row.cells[4].textContent.trim(),
-                totalprice: row.cells[5].textContent.replace('$', '').trim(),
-            };
-            cartItems.push(product);
+    // Collect cart data
+    const cartItems = [];
+    const tableRows = document.querySelectorAll('#cartTable tbody tr');
+    tableRows.forEach(row => {
+        cartItems.push({
+            productname: row.cells[0].textContent.trim(),
+            size: row.cells[2].textContent.trim(),
+            color: row.cells[3].textContent.trim(),
+            quantity: row.cells[4].textContent.trim(),
+            totalprice: row.cells[5].textContent.replace('₹', '').trim()
         });
+    });
+    formData.append('cart_items', JSON.stringify(cartItems));
+    formData.append('payment_method', paymentType);
 
-        // Create Razorpay order
-        fetch('/create-order', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-        })
+    if (paymentType === 'COD') {
+        // COD: Submit directly to /place-order without Razorpay
+        fetch('/place-order', { method: 'POST', body: formData })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Order placed successfully!');
+                    window.location.href = '/';
+                } else {
+                    alert('Error placing order: ' + data.message);
+                }
+            });
+    } else {
+        // Online: Proceed with Razorpay payment
+        fetch('/create-order', { method: 'POST', headers: { 'Content-Type': 'application/json' } })
             .then(response => response.json())
             .then(data => {
                 const options = {
@@ -993,55 +1014,35 @@
                     "amount": data.amount,
                     "currency": data.currency,
                     "name": "Your Store Name",
-                    "description": "Order Payment",
                     "order_id": data.razorpay_order_id,
                     "handler": function (response) {
-                        // Verify payment on the backend
-                        fetch('/verify-payment', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(response)
-                        })
-                            .then(res => res.json())
-                            .then(verifyData => {
-                                if (verifyData.success) {
-                                    // On successful verification, add IDs to form data
-                                    formData.append('razorpay_payment_id', verifyData.razorpay_payment_id);
-                                    formData.append('razorpay_order_id', verifyData.razorpay_order_id);
-                                    formData.append('cart_items', JSON.stringify(cartItems));
+                        formData.append('razorpay_payment_id', response.razorpay_payment_id);
+                        formData.append('razorpay_order_id', response.razorpay_order_id);
 
-                                    fetch('/place-order', {
-                                        method: 'POST',
-                                        body: formData
-                                    })
-                                        .then(saveResponse => saveResponse.json())
-                                        .then(saveData => {
-                                            if (saveData.success) {
-                                                alert('Order placed successfully!');
-                                                window.location.href = '/';
-                                            } else {
-                                                alert('Error saving order: ' + saveData.message);
-                                            }
-                                        });
+                        fetch('/place-order', { method: 'POST', body: formData })
+                            .then(saveResponse => saveResponse.json())
+                            .then(saveData => {
+                                if (saveData.success) {
+                                    alert('Order placed successfully!');
+                                    window.location.href = '/';
                                 } else {
-                                    alert("Payment Failed: " + verifyData.message);
+                                    alert('Error saving order: ' + saveData.message);
                                 }
                             });
                     },
                     "prefill": {
-                        "name": "{{ firstname }} {{ lastname }}",
-                        "email": "{{ email }}",
-                        "contact": "{{ mobile }}"
+                        "name": `${firstname} ${lastname}`,
+                        "contact": mobile
                     },
-                    "theme": {
-                        "color": "#3399cc"
-                    }
+                    "theme": { "color": "#3399cc" }
                 };
                 const rzp1 = new Razorpay(options);
                 rzp1.open();
             })
             .catch(error => console.error('Error:', error));
-    });
+    }
+});
+
 </script>
 
     

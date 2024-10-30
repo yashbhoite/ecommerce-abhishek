@@ -613,47 +613,104 @@
                 <table class="orders-grid">
                     <thead>
                         <tr>
-                            <th>Order</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Total</th>
+                            <th>Product Name</th>
+                            <th>Size</th>
+                            <th>Color</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for item in order_items %}
                         <tr>
-                            <td>1</td>
-                            <td>Aug 22, 2018</td>
-                            <td>Pending</td>
-                            <td> ₹3000</td>
-                            <td><button class="action-btn">View</button></td>
+                            <td class="productname">{{ item[0] }}</td>
+                            <td class="size">{{ item[1] }}</td>
+                            <td class="color">{{ item[2] }}</td>
+                            <td class="quantity">{{ item[3] }}</td>
+                            <td class="totalprice">₹{{ item[4] }}</td>
+                            <td><button class="action-btn cancel-btn">Cancel</button></td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>July 22, 2018</td>
-                            <td>Approved</td>
-                            <td> ₹200</td>
-                            <td><button class="action-btn">View</button></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>June 12, 2017</td>
-                            <td>On Hold</td>
-                            <td> ₹990</td>
-                            <td><button class="action-btn">View</button></td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
+                
+                
+                
             </section>
     
-            <section id="address-section" class="address-section" style="display:none;">
-                <h2>Billing Address</h2>
-                <p><strong>Alex Tuntuni</strong></p>
-                <p>1355 Market St, Suite 900</p>
-                <p>San Francisco, CA 94103</p>
-                <p>Mobile: (123) 456-7890</p>
-                <button class="action-btn">Edit Address</button>
-            </section>
+           <section id="address-section" class="address-section" style="display:none;">
+    <h2>Billing Address</h2>
+    {% if address_data %}
+        <p><strong>{{ address_data[1] }} {{ address_data[2] }}</strong></p> <!-- Firstname Lastname -->
+        <p>{{ address_data[4] }}, {{ address_data[5] }}</p> <!-- Address, City -->
+        <p>{{ address_data[7] }} - {{ address_data[6] }}</p> <!-- State - Pincode -->
+        <p>Mobile: {{ address_data[3] }}</p> <!-- Mobile -->
+        <button class="action-btn" id="editAddressBtn">Edit Address</button>
+    {% else %}
+        <p>No address found.</p>
+    {% endif %}
+
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 sm-margin-30px-bottom" id="editAddressForm" style="display:none;">
+        <div class="create-ac-content bg-light-gray padding-20px-all">
+            <form method="POST" action="/update-address" id="addressForm">
+                <div class="row">
+                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <label for="email">Email address <span class="required-f">*</span></label>
+                        <input type="email" class="no-margin" name="email" id="email" value="{{ address_data[0] if address_data else '' }}" required>
+                    </div>
+                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <label for="firstname">First Name <span class="required-f">*</span></label>
+                        <input type="text" id="firstname" name="firstname" value="{{ address_data[1] if address_data else '' }}" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <label for="lastname">Last Name <span class="required-f">*</span></label>
+                        <input type="text" id="lastname" name="lastname" value="{{ address_data[2] if address_data else '' }}" required>
+                    </div>
+                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <label for="mobile">Mobile <span class="required-f">*</span></label>
+                        <input type="text" id="mobile" name="mobile" value="{{ address_data[3] if address_data else '' }}" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <label for="address">Address <span class="required-f">*</span></label>
+                        <input type="text" id="address" name="address" value="{{ address_data[4] if address_data else '' }}" required>
+                    </div>
+                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <label for="city">City <span class="required-f">*</span></label>
+                        <input type="text" id="city" name="city" value="{{ address_data[5] if address_data else '' }}" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <label for="pincode">Pincode <span class="required-f">*</span></label>
+                        <input type="text" id="pincode" name="pincode" value="{{ address_data[6] if address_data else '' }}" required>
+                    </div>
+                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <label for="state">State <span class="required-f">*</span></label>
+                        <input type="text" id="state" name="state" value="{{ address_data[7] if address_data else '' }}" required>
+                    </div>
+                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <label for="country">Country <span class="required-f">*</span></label>
+                        <input type="text" id="country" name="country" value="{{ address_data[8] if address_data else '' }}" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 order-button-payment" style="margin-top: 0px; text-align: center;">
+                        <button type="submit" class="btn btn-primary mt-3">Confirm Address</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</section>
+
+
+
         </div>
     <!--End Body Content-->
     <script>
@@ -871,6 +928,65 @@
      <script src="../static/js/main.js"></script>
 </div>
 </div>
+
+<script>
+    document.querySelectorAll('.cancel-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const row = this.closest('tr');
+            const data = {
+                productname: row.querySelector('.productname').textContent.trim(),
+                size: row.querySelector('.size').textContent.trim(),
+                color: row.querySelector('.color').textContent.trim(),
+                quantity: row.querySelector('.quantity').textContent.trim(),
+                totalprice: row.querySelector('.totalprice').textContent.replace('₹', '').trim()
+            };
+
+            fetch('/cancel-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    alert(result.message);
+                    location.reload();
+                } else {
+                    alert('Error cancelling order');
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    document.getElementById('editAddressBtn').addEventListener('click', function() {
+        document.getElementById('editAddressForm').style.display = 'block';
+        document.getElementById('address-section').style.display = 'block';
+    });
+
+    document.getElementById('addressForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        const formData = new FormData(this);
+
+        fetch('/update-address', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                alert(result.message);
+                location.reload(); // Reload the page to reflect changes
+            } else {
+                alert('Error updating address');
+            }
+        });
+    });
+</script>
+
+
+
 </body>
 
 <!-- belle/shop-fullwidth.html   11 Nov 2019 12:39:06 GMT -->
