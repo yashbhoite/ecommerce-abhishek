@@ -248,9 +248,25 @@ def wishlist():
     my_cursor = connection.cursor()
     orders = my_cursor.execute("SELECT firstname,lastname,email,mobile,city,state,pincode,razorpay_order_id, GROUP_CONCAT(DISTINCT productname) AS product_names, GROUP_CONCAT(DISTINCT size) AS sizes, GROUP_CONCAT(DISTINCT color) AS colors, SUM(quantity) AS total_quantity, SUM(totalprice) AS total_price FROM orders GROUP BY razorpay_order_id;").fetchall()
     print(orders)
+    product = my_cursor.execute("SELECT * FROM products").fetchall()
+
     connection.commit()
     connection.close()
-    return render_template("wishlist.html",orders=orders)
+    return render_template("wishlist.html",orders=orders, product=product)
+
+@app.route('/edit-product/<sku>', methods=['GET'])
+def edit_product(sku):
+    # Connect to the database
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+
+    # Fetch the product data based on the SKU
+    cursor.execute("SELECT * FROM products WHERE sku = ?", (sku,))
+    product = cursor.fetchone()
+    conn.close()
+
+    # Pass the product data to add_product.html
+    return render_template('add_product.html', product=product)
 
 @app.route('/shopfullwidth')
 def shopfullwidth():
@@ -435,6 +451,67 @@ def productadddb():
     connection.close()
     return redirect(url_for('shopfullwidth'))
 
+@app.route('/productupdatedb/<sku>', methods=['POST'])
+def productupdatedb(sku):
+    productname = request.form['productname']
+    description = request.form['description']
+    baseprice = request.form['base-price']
+    discountpercentage1 = request.form['discountpercentage1']
+    discountpercentage2 = request.form['discountpercentage2']
+    discountpercentage3 = request.form['discountpercentage3']
+    quantity = request.form['quantity']
+    product_category_men = request.form.get('product-category-men')
+    product_category_women = request.form.get('product-category-women')
+    productcategory = product_category_men or product_category_women
+    gender = request.form.get('gender')
+    size = request.form.getlist('size')
+    color = request.form.getlist('color')
+    vendor = request.form.get('vendor')
+    sizes = ','.join(size)
+    colors = ','.join(color)
+    
+    # Handling uploaded files for update
+    input_files = []
+    for i in range(1, 6):
+        file = request.files.get(f'input{i}')
+        if file and file.filename:
+            pic = secure_filename(file.filename)
+            pic1 = str(uuid.uuid1()) + "_" + pic
+            file.save(os.path.join(app.config['upload_folder'], pic1))
+            input_files.append(pic1)
+        else:
+            # Use existing images if no new file is uploaded
+            input_files.append(request.form.get(f'existing_input{i}'))
+    
+    # Update product in the database
+    connection = sqlite3.connect('product.db')
+    my_cursor = connection.cursor()
+    my_cursor.execute("""
+        UPDATE products SET name=?, description=?, color=?, price=?, per1=?, 
+        per2=?, per3=?, quantity=?, category=?, gender=?, size=?, 
+        img1=?, img2=?, img3=?, img4=?, img5=?, vendor=? WHERE sku=?
+    """, (productname, description, colors, baseprice, discountpercentage1, discountpercentage2, discountpercentage3,
+          quantity, productcategory, gender, sizes, *input_files, vendor, sku))
+    connection.commit()
+    connection.close()
+    
+    return redirect(url_for('shopfullwidth'))
+
+@app.route('/delete-product/<sku>', methods=['DELETE'])
+def delete_product(sku):
+    try:
+        conn = sqlite3.connect('product.db')
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM products WHERE sku = ?", (sku,))
+        conn.commit()
+        conn.close()
+        return jsonify({"success": True})
+    except Exception as e:
+        print(f"Error deleting product: {e}")
+        return jsonify({"success": False})
+
+
+
 @app.route('/product/<string:id>')
 def productinfo(id):
     connection = sqlite3.connect('product.db')
@@ -449,7 +526,7 @@ def productinfo(id):
 
 @app.route('/addproduct')
 def addproduct():
-    return render_template("add_product.html")
+    return render_template("add_product.html", product=None)
 
 @app.route('/checkout')
 def checkout():
@@ -690,6 +767,7 @@ def cancel_order():
     conn.close()
 
     return jsonify({'success': True, 'message': 'Order cancelled successfully'})
+
 
 
 

@@ -498,7 +498,7 @@ th {
 }
 
 .display-table {
-  display: table;
+  /* display: table; */
   table-layout: fixed;
   width: 100%;
   margin: 0 !important;
@@ -4715,9 +4715,12 @@ table {
 .wishlist-table .table-bordered th {
   vertical-align: middle;
   white-space: nowrap;
+  border: 1px solid #1ba098;
+  color: #deb992;
 }
 .wishlist-table .table-bordered th {
   text-transform: uppercase;
+  color: #deb992;
 }
 .wishlist-table .product-thumbnail img {
   max-width: 100px;
@@ -5026,6 +5029,9 @@ input.checkbox {
   color: #1ba098;
   font-size: 12px;
 }
+
+
+
 
 /*======================================================================
   25. Quick View
@@ -6645,7 +6651,7 @@ body.home15-funiture-template {
   padding: 35px 0;
 }
 .newsletter-section .footer-newsletter {
-  width: 60%;
+  width: 40%;
 }
 .newsletter-section .section-header {
   margin: 0 20px 0 0;

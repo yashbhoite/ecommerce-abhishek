@@ -2,209 +2,348 @@
 <html class="no-js" lang="en">
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Order History</title>
-<meta name="description" content="description">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Favicon -->
-<!-- <link rel="shortcut icon" href="../static/images/favicon.png" /> -->
-<!-- Plugins CSS -->
-<link rel="stylesheet" href="../static/css/plugins.css">
-<!-- Bootstap CSS -->
-<link rel="stylesheet" href="../static/css/bootstrap.min.css">
-<!-- Main Style CSS -->
-<link rel="stylesheet" href="../static/css/style.css">
-<link rel="stylesheet" href="../static/css/responsive.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Order History</title>
+    <meta name="description" content="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <!-- <link rel="shortcut icon" href="../static/images/favicon.png" /> -->
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="../static/css/plugins.css">
+    <!-- Bootstap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/responsive.css">
 </head>
-<body class="page-template belle">
-<div class="pageWrapper">
-	<!--Search Form Drawer-->
-	<div class="search">
-        <div class="search__form">
-            <form class="search-bar__form" action="#">
-                <button class="go-btn search__button" type="submit"><i class="icon anm anm-search-l"></i></button>
-                <input class="search__input" type="search" name="q" value="" placeholder="Search entire store..." aria-label="Search" autocomplete="off">
-            </form>
-            <button type="button" class="search-trigger close-btn"><i class="icon anm anm-times-l"></i></button>
-        </div>
-    </div>
-    <!--End Search Form Drawer-->
 
-    
-    <!--Body Content-->
-    <div id="page-content">
-    	<!--Page Title-->
-    	<div class="page section-header text-center">
-			<div class="page-title">
-        		<div class="wrapper"><h1 class="page-width">Order History</h1></div>
-      		</div>
-              <div class="newsletter-section">
-                <div class="container">
-                    <div class="row">
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-7 w-100 d-flex justify-content-start align-items-center">
+<body class="page-template belle">
+    <div class="pageWrapper">
+        <!--Search Form Drawer-->
+        <div class="search">
+            <div class="search__form">
+                <form class="search-bar__form" action="#">
+                    <button class="go-btn search__button" type="submit"><i class="icon anm anm-search-l"></i></button>
+                    <input class="search__input" type="search" name="q" value="" placeholder="Search entire store..."
+                        aria-label="Search" autocomplete="off">
+                </form>
+                <button type="button" class="search-trigger close-btn"><i class="icon anm anm-times-l"></i></button>
+            </div>
+        </div>
+        <!--End Search Form Drawer-->
+
+
+        <!--Body Content-->
+        <div id="page-content">
+            <!--Page Title-->
+            <div class="page section-header text-center">
+                <div class="page-title">
+                    <div class="wrapper">
+                        <h1 class="page-width">Order History</h1>
+                    </div>
+                </div>
+                <div class="newsletter-section">
+                    <div class="container">
+                        <div class="row">
+                            <div
+                                class="col-12 col-sm-12 col-md-12 col-lg-7 w-100 d-flex justify-content-start align-items-center">
                                 <div class="display-table">
                                     <div class="display-table-cell footer-newsletter">
-                                        
+
                                         <form action="#" method="post">
                                             <div class="input-group">
-                                                <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required="">
+                                                <input type="text" class="input-group__field newsletter__input"
+                                                    name="text" value="" placeholder="Search for orders" required="">
                                                 <span class="input-group__btn">
-                                                    <button type="submit" class="btn newsletter__submit" name="commit" id="Subscribe"><span class="newsletter__submit-text--large">Search</span></button>
+                                                    <button type="submit" class="btn newsletter__submit" name="commit"
+                                                        id="Subscribe"><span
+                                                            class="newsletter__submit-text--large">Search</span></button>
                                                 </span>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-7 w-100 d-flex justify-content-start align-items-center" style="margin-top: 1%;">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-7 w-100 d-flex justify-content-start align-items-center"
+                                style="margin-top: 1%;">
                                 <div class="display-table">
                                     <div class="display-table-cell footer-newsletter">
-                                        
-                                           
-                                                <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
-                                                <span class="input-group__btn">
-                                                   <a href="/addproduct" target="_blank"> <button type="submit" class="btn newsletter__submit" name="commit" id="Subscribe"><span class="newsletter__submit-text--large">Add Product</span></button></a>
-                                                </span>
+
+
+                                        <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
+                                        <span class="input-group__btn">
+                                            <a href="/addproduct" target="_blank"> <button type="submit"
+                                                    class="btn newsletter__submit" name="commit" id="Subscribe"><span
+                                                        class="newsletter__submit-text--large">Add
+                                                        Product</span></button></a>
+                                        </span>
                                     </div>
+                                    <div class="display-table-cell footer-newsletter">
+
+
+                                        <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
+                                        <span class="input-group__btn">
+                                             <button type="submit"
+                                                    class="btn newsletter__submit" name="commit" onclick="showEditProduct()" id="editProductBtn"><span
+                                                        class="newsletter__submit-text--large">Edit
+                                                        Product</span></button>
+                                        </span>
+                                    </div>
+
+                                    <div class="display-table-cell footer-newsletter">
+
+
+                                        <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
+                                        <span class="input-group__btn">
+                                            <button type="submit"
+                                                    class="btn newsletter__submit" name="commit" onclick="showOrderHistory()" id="ordersBtn"><span
+                                                        class="newsletter__submit-text--large">Orders
+                                                    </span></button>
+                                        </span>
+                                    </div>
+
                                 </div>
+
                             </div>
-                            
-                        </div>
-                </div>    
-            </div>
-		</div>
-        <!--End Page Title-->
-        
-        <div class="container">
-        	<div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
-                	<form action="#">
-                        <div class="wishlist-table table-content table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                    	<th class="product-name text-center alt-font">Customer name</th>
-                                        <th class="product-price text-center alt-font">Phone No.</th>
-                                        <th class="product-subtotal text-center alt-font">Email</th>
-                                        <th class="product-name alt-font text-center">Product</th>
-                                        <th class="product-name alt-font text-center">Billing Address</th>
-                                        <th class="product-price text-center alt-font">Order Value</th>
-                                        <th class="stock-status text-center alt-font">Payment Method</th>
-                                        
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for order in orders %}
-                                    <tr>
-                                    	<td class="product-remove text-center" valign="middle">{{order[0]}} {{order[1]}}</td>
-                                        <td class="product-thumbnail text-center">
-                                            {{order[3]}}
-                                        </td>
-                                        <td class="product-name text-center">{{order[2]}}</td>
-                                        <td class="product-price text-center"><span class="amount">{{order[8]}}</span></td>
-                                        <td class="stock text-center">
-                                            <span class="in-stock">{{order[4]}} {{order[5]}} {{order[6]}}</span>
-                                        </td>
-                                        <td class="product-subtotal text-center"> ₹ {{order[12]}}</td>
-                                        <td class="product-subtotal text-center">UPI</td>
-                                    </tr>
-                                    {% endfor %}
-                                    
-        
-                                </tbody>
-                            </table>
-                        </div>
-                    </form>                   
-               	</div>
-            </div>
-        </div>
-        
-    </div>
-    <!--End Body Content-->
-    
-    <!--Footer-->
-    <footer id="footer">
-      
-        <div class="site-footer">
-        	<div class="container">
-     			<!--Footer Links-->
-            	<div class="footer-top">
-                	<div class="row">
-                    	<div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
-                        	<h4 class="h4">Quick Shop</h4>
-                            <ul>
-                            	<li><a href="#">Women</a></li>
-                                <li><a href="#">Men</a></li>
-                                <li><a href="#">Kids</a></li>
-                                <li><a href="#">Sportswear</a></li>
-                                <li><a href="#">Sale</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
-                        	<h4 class="h4">Informations</h4>
-                            <ul>
-                            	<li><a href="#">About us</a></li>
-                                <li><a href="#">Careers</a></li>
-                                <li><a href="#">Privacy policy</a></li>
-                                <li><a href="#">Terms &amp; condition</a></li>
-                                <li><a href="#">My Account</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
-                        	<h4 class="h4">Customer Services</h4>
-                            <ul>
-                            	<li><a href="#">Request Personal Data</a></li>
-                                <li><a href="#">FAQ's</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Orders and Returns</a></li>
-                                <li><a href="#">Support Center</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 contact-box">
-                        	<h4 class="h4">Contact Us</h4>
-                            <ul class="addressFooter">
-                            	<li><i class="icon anm anm-map-marker-al"></i><p>55 Gallaxy Enque,<br>2568 steet, 23568 NY</p></li>
-                                <li class="phone"><i class="icon anm anm-phone-s"></i><p>+91 123456789</p></li>
-                                <li class="email"><i class="icon anm anm-envelope-l"></i><p>sales@yousite.com</p></li>
-                            </ul>
+
+
                         </div>
                     </div>
                 </div>
-                <!--End Footer Links-->
-                <hr>
-                <div class="footer-bottom">
-                	
-                    	<!--Footer Copyright-->
+            </div>
+            <!--End Page Title-->
+
+            <div class="container" id="orderHistoryTable" style="display: block;">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
+                        <h2 style="color: #deb992;">Orders History</h2>
+
+                        <form action="#">
+                            <div class="wishlist-table table-content table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="product-name text-center alt-font">Customer name</th>
+                                            <th class="product-price text-center alt-font">Phone No.</th>
+                                            <th class="product-subtotal text-center alt-font">Email</th>
+                                            <th class="product-name alt-font text-center">Product</th>
+                                            <th class="product-name alt-font text-center">Billing Address</th>
+                                            <th class="product-price text-center alt-font">Order Value</th>
+                                            <th class="stock-status text-center alt-font">Payment Method</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in orders %}
+                                        <tr>
+                                            <td class="product-remove text-center" valign="middle">{{order[0]}}
+                                                {{order[1]}}</td>
+                                            <td class="product-thumbnail text-center">
+                                                {{order[3]}}
+                                            </td>
+                                            <td class="product-name text-center">{{order[2]}}</td>
+                                            <td class="product-price text-center"><span
+                                                    class="amount">{{order[8]}}</span></td>
+                                            <td class="stock text-center">
+                                                <span class="in-stock">{{order[4]}} {{order[5]}} {{order[6]}}</span>
+                                            </td>
+                                            <td class="product-subtotal text-center"> ₹ {{order[12]}}</td>
+                                            <td class="product-subtotal text-center">UPI</td>
+                                        </tr>
+                                        {% endfor %}
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container" id="editProductTable" style="display: none;">
+                <div class="row">
+                    
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
+                        <h2 style="color: #deb992;">Edit Product</h2>
+                        <form action="#">
+                            <div class="wishlist-table table-content table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="product-name text-center alt-font">Product name</th>
+                                            <th class="product-price text-center alt-font">SKU</th>
+                                            <th class="product-subtotal text-center alt-font">Color</th>
+                                            <th class="product-name alt-font text-center">Price</th>
+                                            <th class="product-name alt-font text-center">Quantity</th>
+                                            <th class="product-price text-center alt-font">Category</th>
+                                            <th class="stock-status text-center alt-font">Size</th>
+                                            <th class="stock-status text-center alt-font">Vendor</th>
+                                            <th>EDIT</th>
+                                            <th>DELETE</th>
+                                            
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for pro in product %}
+                                        <tr>
+                                            <td class="product-remove text-center" valign="middle">{{pro[0]}}
+                                            </td>
+                                            <td class="product-thumbnail text-center">
+                                                {{pro[7]}}
+                                            </td>
+                                            <td class="product-name text-center">{{pro[2]}}</td>
+                                            <td class="product-price text-center"><span
+                                                    class="amount"> ₹ {{pro[3]}}</span></td>
+                                            <td class="stock text-center">
+                                            {{pro[8]}}
+                                            </td>
+                                            <td class="product-subtotal text-center">{{pro[9]}}</td>
+                                            <td class="product-subtotal text-center">{{pro[11]}}</td>
+                                            <td class="product-subtotal text-center">{{pro[17]}}</td>
+                                            <td><a href="{{ url_for('edit_product', sku=pro[7]) }}" class="action-btn cancel-btn">Edit</a></td>
+                                            <td><button class="action-btn cancel-btn" onclick="deleteProduct('{{ pro[7] }}')">DELETE</button></td>
+                                        </tr>
+                                        {% endfor %}
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--End Body Content-->
+
+        <!--Footer-->
+        <footer id="footer">
+
+            <div class="site-footer">
+                <div class="container">
+                    <!--Footer Links-->
+                    <div class="footer-top">
                         <div class="row">
-	                	<div class="text-lg-center"> <a href="templateshub.net">Designed by WebSharks</a></div>
-                        <!--End Footer Copyright-->
-                        <!--Footer Payment Icon-->
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                                <h4 class="h4">Quick Shop</h4>
+                                <ul>
+                                    <li><a href="#">Women</a></li>
+                                    <li><a href="#">Men</a></li>
+                                    <li><a href="#">Kids</a></li>
+                                    <li><a href="#">Sportswear</a></li>
+                                    <li><a href="#">Sale</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                                <h4 class="h4">Informations</h4>
+                                <ul>
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="#">Careers</a></li>
+                                    <li><a href="#">Privacy policy</a></li>
+                                    <li><a href="#">Terms &amp; condition</a></li>
+                                    <li><a href="#">My Account</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                                <h4 class="h4">Customer Services</h4>
+                                <ul>
+                                    <li><a href="#">Request Personal Data</a></li>
+                                    <li><a href="#">FAQ's</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="#">Orders and Returns</a></li>
+                                    <li><a href="#">Support Center</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 contact-box">
+                                <h4 class="h4">Contact Us</h4>
+                                <ul class="addressFooter">
+                                    <li><i class="icon anm anm-map-marker-al"></i>
+                                        <p>55 Gallaxy Enque,<br>2568 steet, 23568 NY</p>
+                                    </li>
+                                    <li class="phone"><i class="icon anm anm-phone-s"></i>
+                                        <p>+91 123456789</p>
+                                    </li>
+                                    <li class="email"><i class="icon anm anm-envelope-l"></i>
+                                        <p>sales@yousite.com</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
+                    <!--End Footer Links-->
+                    <hr>
+                    <div class="footer-bottom">
+
+                        <!--Footer Copyright-->
+                        <div class="row">
+                            <div class="text-lg-center"> <a href="templateshub.net">Designed by WebSharks</a></div>
+                            <!--End Footer Copyright-->
+                            <!--Footer Payment Icon-->
+                        </div>
                         <!--End Footer Payment Icon-->
-            
+
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
-    <!--End Footer-->
-    <!--Scoll Top-->
-    <span id="site-scroll"><i class="icon anm anm-angle-up-r"></i></span>
-    <!--End Scoll Top-->
+        </footer>
+        <!--End Footer-->
+        <!--Scoll Top-->
+        <span id="site-scroll"><i class="icon anm anm-angle-up-r"></i></span>
+        <!--End Scoll Top-->
+
+        <!-- Including Jquery -->
+        <script src="../static/js/vendor/jquery-3.3.1.min.js"></script>
+        <script src="../static/js/vendor/jquery.cookie.js"></script>
+        <script src="../static/js/vendor/modernizr-3.6.0.min.js"></script>
+        <script src="../static/js/vendor/wow.min.js"></script>
+        <!-- Including Javascript -->
+        <script src="../static/js/bootstrap.min.js"></script>
+        <script src="../static/js/plugins.js"></script>
+        <script src="../static/js/popper.min.js"></script>
+        <script src="../static/js/lazysizes.js"></script>
+        <script src="../static/js/main.js"></script>
+    </div>
+
+    <script>
+        function showEditProduct() {
+            document.getElementById("editProductTable").style.display = "block";
+            document.getElementById("orderHistoryTable").style.display = "none";
+        }
     
-     <!-- Including Jquery -->
-     <script src="../static/js/vendor/jquery-3.3.1.min.js"></script>
-     <script src="../static/js/vendor/jquery.cookie.js"></script>
-     <script src="../static/js/vendor/modernizr-3.6.0.min.js"></script>
-     <script src="../static/js/vendor/wow.min.js"></script>
-     <!-- Including Javascript -->
-     <script src="../static/js/bootstrap.min.js"></script>
-     <script src="../static/js/plugins.js"></script>
-     <script src="../static/js/popper.min.js"></script>
-     <script src="../static/js/lazysizes.js"></script>
-     <script src="../static/js/main.js"></script>
-</div>
+        function showOrderHistory() {
+            document.getElementById("editProductTable").style.display = "none";
+            document.getElementById("orderHistoryTable").style.display = "block";
+        }
+    </script>
+
+
+<script>
+    function deleteProduct(sku) {
+        if (confirm("Are you sure you want to delete this product?")) {
+            fetch(`/delete-product/${sku}`, {
+                method: 'DELETE',
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Product deleted successfully!");
+                    location.reload();  // Reloads the page to reflect the deleted item
+                } else {
+                    alert("Failed to delete product. Please try again.");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    }
+    </script>
+    
+
 </body>
 
 <!-- belle/wishlist.html   11 Nov 2019 12:22:27 GMT -->
+
 </html>

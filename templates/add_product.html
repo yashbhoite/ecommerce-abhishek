@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +25,7 @@
         }
 
         .section {
-          width: 580px;
+            width: 580px;
             background-color: #fff;
             padding: 20px;
             border-radius: 10px;
@@ -100,6 +101,7 @@
             margin-right: 5px;
             margin-bottom: 5px;
         }
+
         input[type="radio"] {
             margin-right: 5px;
             margin-bottom: 5px;
@@ -107,9 +109,10 @@
 
         /* Responsive design */
         @media (max-width: 768px) {
-          .section{
-            margin: 0px 0px 20px 0px !important;
-          }
+            .section {
+                margin: 0px 0px 20px 0px !important;
+            }
+
             .photo-product img {
                 width: 80px;
                 height: 80px;
@@ -117,9 +120,10 @@
         }
 
         @media (max-width: 576px) {
-          .section{
-            margin: 0px 0px 20px 0px !important;
-          }
+            .section {
+                margin: 0px 0px 20px 0px !important;
+            }
+
             .photo-product img {
                 width: 60px;
                 height: 60px;
@@ -127,187 +131,212 @@
         }
     </style>
 </head>
+
 <body>
-    
+
     <div class="container">
         <div class="row">
-            <form class="form" action="/productadddb" method="post" enctype="multipart/form-data">
-            <!-- General Information -->
-            <div class="col-md-6 col-lg-6 section">
-                <h3>General Information</h3>
-                <label for="productname">Product Name</label>
-                <input type="text" id="productname" name="productname" value="Mens Jacket">
-                <label for="description">Description</label>
-                <textarea id="description" name="description" rows="4">
-Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad facilis molestias. Repellendus iste cum sit illum iure possimus? Sed repellendus a voluptatibus laudantium et molestias in architecto.                </textarea>
-            </div>
+            <form class="form"
+                action="{{ url_for('productadddb') if not product else url_for('productupdatedb', sku=product[7]) }}"
+                method="post" enctype="multipart/form-data" style="display: flex; flex-wrap: wrap;">
+                <!-- General Information -->
+                <div class="col-md-6 col-lg-6 section" style="width: 565px !important;">
+                    <h3>General Information</h3>
+                    <label for="productname">Product Name</label>
+                    <input type="text" id="productname" name="productname" value="{{ product[0] if product else '' }}">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description"
+                        rows="4">{{ product[1] if product else '' }}</textarea>
+                </div>
 
-            <!-- Product Media -->
-            <div class="col-md-6 col-lg-6 section" style="border: 2px dashed rgba(116, 114, 114, 0.422);">
-                <h3>Product Media</h3>
-                <div class="photo-product d-flex flex-wrap">
-                    <div id="upload">
-                        <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="imgupload mt-3">
-                            <input 
-               onchange="Filevalidation1()" id="input1" name="input1" type="file" class="file" data-browse-on-zone-click="true"
-                                data-preview="true" placeholder="Image 1">
+                <!-- Product Media -->
+                <div class="col-md-6 col-lg-6 section"
+                    style="border: 2px dashed rgba(116, 114, 114, 0.422); width: 565px;">
+                    <h3>Product Media</h3>
+                    <div class="photo-product d-flex flex-wrap">
+                        <div id="upload">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <input type="hidden" name="existing_input1"
+                                        value="{{ product[12] if product else '' }}">
+                                    <input type="hidden" name="existing_input2"
+                                        value="{{ product[13] if product else '' }}">
+                                    <input type="hidden" name="existing_input3"
+                                        value="{{ product[14] if product else '' }}">
+                                    <input type="hidden" name="existing_input4"
+                                        value="{{ product[15] if product else '' }}">
+                                    <input type="hidden" name="existing_input5"
+                                        value="{{ product[16] if product else '' }}">
+
+                                    <div class="imgupload mt-3">
+                                        <input onchange="Filevalidation1()" id="input1" name="input1" type="file"
+                                            class="file" data-browse-on-zone-click="true" data-preview="true"
+                                            placeholder="Image 1">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="imgupload mt-3">
+                                        <input onchange="Filevalidation2()" id="input2" name="input2" type="file"
+                                            class="file" data-browse-on-zone-click="true" data-preview="true"
+                                            placeholder="Image 1">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="imgupload mt-3">
+                                        <input onchange="Filevalidation3()" id="input3" name="input3" type="file"
+                                            class="file" data-browse-on-zone-click="true" data-preview="true"
+                                            placeholder="Image 1">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="imgupload mt-3">
+                                        <input onchange="Filevalidation4()" id="input4" name="input4" type="file"
+                                            class="file" data-browse-on-zone-click="true" data-preview="true"
+                                            placeholder="Image 1">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="imgupload mt-3">
+                                        <input onchange="Filevalidation5()" id="input5" name="input5" type="file"
+                                            class="file" data-browse-on-zone-click="true" data-preview="true"
+                                            placeholder="Image 1">
+                                    </div>
+                                </div>
+
+
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="imgupload mt-3">
-                            <input 
-               onchange="Filevalidation2()" id="input2" name="input2" type="file" class="file" data-browse-on-zone-click="true"
-                                data-preview="true" placeholder="Image 1">
+
+                </div>
+
+                <!-- Pricing -->
+                <div class="col-md-6 col-lg-6 section" style="width: 565px !important;">
+                    <div class="row">
+                        <h3>Pricing</h3>
+                        <div class="col-lg-6 col-md-6">
+                            <label for="base-price">Base Price</label>
+                            <input type="number" id="base-price" name="base-price"
+                                value="{{ product[3] if product else '' }}">
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <label for="discountpercentage1">Discount Percentage 1(%)</label>
+                            <input type="number" id="discountpercentage1" name="discountpercentage1"
+                                value="{{ product[4] if product else '' }}">
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <label for="discountpercentage2">Discount Percentage 2(%)</label>
+                            <input type="number" id="discountpercentage2" name="discountpercentage2"
+                                value="{{ product[5] if product else '' }}">
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <label for="discountpercentage3">Discount Percentage 3(%)</label>
+                            <input type="number" id="discountpercentage3" name="discountpercentage3"
+                                value="{{ product[6] if product else '' }}">
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <label for="sku">SKU</label>
+                            <input type="number" id="sku" name="sku" value="{{ product[7] if product else '' }}">
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <label for="quantity">Stock quantity</label>
+                            <input type="number" id="quantity" name="quantity" placeholder="Type product quantity"
+                                value="{{ product[8] if product else '' }}">
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Category -->
+                <div class="col-md-6 col-lg-6 section" style="width: 565px !important;">
+                    <h3>Category</h3>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="product-tags">Product Gender</label>
+                            <div class="tags">
+                                <input type="radio" name="gender" id="tag1" value="Men" checked>
+                                <label for="Men">Men</label>
+                                <input type="radio" name="gender" id="tag2" value="Women">
+                                <label for="Women">Women</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6" id="div1">
+                            <label for="product-category-men">Product Category</label>
+                            <select id="product-category-men" name="product-category-men"
+                                value="{{ product[9] if product else '' }}">
+                                <option value="Shirt">Shirts</option>
+                                <option value="Tshirts">Tshirts</option>
+                                <option value="Trousers">Trousers</option>
+                                <option value="Shoes">Shoes</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-6" id="div2">
+                            <label for="product-category-women">Product Category</label>
+                            <select id="product-category-women" name="product-category-women"
+                                value="{{ product[9] if product else '' }}">
+                                <option value="WesternWear">Western Wear</option>
+                                <option value="EthnicWear">Ethnic Wear</option>
+                                <option value="Lingerie&Nightwear">Lingerie & Nightwear</option>
+                                <option value="Sportswear">Sportswear</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="imgupload mt-3">
-                            <input 
-               onchange="Filevalidation3()" id="input3" name="input3" type="file" class="file" data-browse-on-zone-click="true"
-                                data-preview="true" placeholder="Image 1">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="imgupload mt-3">
-                            <input 
-               onchange="Filevalidation4()" id="input4" name="input4" type="file" class="file" data-browse-on-zone-click="true"
-                                data-preview="true" placeholder="Image 1">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="imgupload mt-3">
-                            <input 
-               onchange="Filevalidation5()" id="input5" name="input5" type="file" class="file" data-browse-on-zone-click="true"
-                                data-preview="true" placeholder="Image 1">
-                        </div>
-                    </div>
-                    
-                    
-                </div>
-                </div>
-                </div>
-                
-            </div>
 
-            <!-- Pricing -->
-            <div class="col-md-6 col-lg-6 section">
-                <div class="row">
-                <h3>Pricing</h3>
-                <div class="col-lg-6 col-md-6">
-                  <label for="base-price">Base Price</label>
-                <input type="number" id="base-price" name="base-price" value="$118.89" >
-                </div>
-
-                <div class="col-lg-6 col-md-6">
-                  <label for="discountpercentage1">Discount Percentage 1(%)</label>
-                <input type="number" id="discountpercentage1" name="discountpercentage1" value="25%" >
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <label for="discountpercentage2">Discount Percentage 2(%)</label>
-                  <input type="number" id="discountpercentage2" name="discountpercentage2" value="25%" >
-                  </div>
-                  <div class="col-lg-6 col-md-6">
-                    <label for="discountpercentage3">Discount Percentage 3(%)</label>
-                  <input type="number" id="discountpercentage3" name="discountpercentage3" value="25%" >
-                  </div>
-
-                <div class="col-lg-6 col-md-6">
-                  <label for="sku">SKU</label>
-                <input type="number" id="sku" name="sku" value="113902" >
-                </div>
-
-                <div class="col-lg-6 col-md-6">
-                  <label for="quantity">Stock quantity</label>
-                <input type="number" id="quantity" name="quantity" placeholder="Type product quantity">
-                </div>
-                <button style="width: 50%; margin-top: 20px;" class="mx-auto" type="submit">Add Product</button>
-                </div>
-            </div>
-
-            <!-- Category -->
-            <div class="col-md-6 col-lg-6 section">
-                <h3>Category</h3>
-                <div class="row">
-                  <div class="col-lg-6">
-                    <label for="product-tags">Product Gender</label>
+                    <label for="product-tags" style="margin-top: 10px;">Product Size</label>
                     <div class="tags">
-                        <input type="radio" name="gender" id="tag1" value="Men" checked>
-                        <label for="Men">Men</label>
-                        <input type="radio" name="gender" id="tag2" value="Women">
-                        <label for="Women">Women</label>
+                        <input type="checkbox" name="size" value="XS" id="tag1" checked>
+                        <label for="XS">XS</label>
+                        <input type="checkbox" name="size" value="S" id="tag2">
+                        <label for="S">S</label>
+                        <input type="checkbox" name="size" value="M" id="tag3">
+                        <label for="M">M</label>
+                        <input type="checkbox" name="size" value="L" id="tag1" checked>
+                        <label for="L">L</label>
+                        <input type="checkbox" name="size" value="XL" id="tag2">
+                        <label for="XL">XL</label>
+                        <input type="checkbox" name="size" value="XXL" id="tag3">
+                        <label for="XXL">XXL</label>
                     </div>
-                  </div>
-                  <div class="col-lg-6" id="div1">
-                    <label for="product-category-men">Product Category</label>
-                <select id="product-category-men" name="product-category-men">
-                    <option value="Shirt">Shirts</option>
-                    <option value="Tshirts">Tshirts</option>
-                    <option value="Trousers">Trousers</option>
-                    <option value="Shoes">Shoes</option>
-                </select>
-                  </div>
-                  <div class="col-lg-6" id="div2">
-                    <label for="product-category-women">Product Category</label>
-                <select id="product-category-women" name="product-category-women">
-                    <option value="WesternWear">Western Wear</option>
-                    <option value="EthnicWear">Ethnic Wear</option>
-                    <option value="Lingerie&Nightwear">Lingerie & Nightwear</option>
-                    <option value="Sportswear">Sportswear</option>
-                </select>
-                  </div>
+                    <label for="product-tags" style="margin-top: 10px;">Available colors</label>
+                    <div class="tags">
+                        <input type="radio" name="color" value="Red" id="tag1" checked>
+                        <label for="tag1">Red</label>
+                        <input type="radio" name="color" value="Blue" id="tag2">
+                        <label for="tag2">Blue</label>
+                        <input type="radio" name="color" value="Black" id="tag3">
+                        <label for="tag3">Black</label>
+                        <input type="radio" name="color" value="Green" id="tag4">
+                        <label for="tag4">Green</label>
+                        <input type="radio" name="color" value="Yellow" id="tag5">
+                        <label for="tag5">Yellow</label>
+                        <input type="radio" name="color" value="White" id="tag6">
+                        <label for="tag6">White</label>
+                    </div>
+                    <label for="product-tags" style="margin-top: 10px;">Vendors</label>
+                    <div class="tags">
+                        <input type="radio" name="vendor" value="Nike" id="tag1" checked>
+                        <label for="tag1">Nike</label>
+                        <input type="radio" name="vendor" value="Puma" id="tag2">
+                        <label for="tag2">Puma</label>
+                        <input type="radio" name="vendor" value="Asics" id="tag3">
+                        <label for="tag3">Asics</label>
+                        <input type="radio" name="vendor" value="AllenSolly" id="tag4">
+                        <label for="tag4">Allen Solly</label>
+                        <input type="radio" name="vendor" value="H&M" id="tag5">
+                        <label for="tag5">H&M</label>
+                    </div>
+
+
                 </div>
 
-                <label for="product-tags" style="margin-top: 10px;">Product Size</label>
-                <div class="tags">
-                    <input type="checkbox" name="size" value="XS" id="tag1" checked>
-                    <label for="XS">XS</label>
-                    <input type="checkbox" name="size" value="S" id="tag2">
-                    <label for="S">S</label>
-                    <input type="checkbox" name="size" value="M" id="tag3">
-                    <label for="M">M</label>
-                    <input type="checkbox" name="size" value="L" id="tag1" checked>
-                    <label for="L">L</label>
-                    <input type="checkbox" name="size" value="XL" id="tag2">
-                    <label for="XL">XL</label>
-                    <input type="checkbox" name="size" value="XXL" id="tag3">
-                    <label for="XXL">XXL</label>
-                </div>
-                <label for="product-tags" style="margin-top: 10px;">Available colors</label>
-                <div class="tags">
-                    <input type="radio" name="color" value="Red" id="tag1" checked>
-                    <label for="tag1">Red</label>
-                    <input type="radio" name="color" value="Blue" id="tag2">
-                    <label for="tag2">Blue</label>
-                    <input type="radio" name="color" value="Black" id="tag3">
-                    <label for="tag3">Black</label>
-                    <input type="radio" name="color" value="Green" id="tag4">
-                    <label for="tag4">Green</label>
-                    <input type="radio" name="color" value="Yellow" id="tag5">
-                    <label for="tag5">Yellow</label>
-                    <input type="radio" name="color" value="White" id="tag6">
-                    <label for="tag6">White</label>
-                </div>
-                <label for="product-tags" style="margin-top: 10px;">Vendors</label>
-                <div class="tags">
-                    <input type="radio" name="vendor" value="Nike" id="tag1" checked>
-                    <label for="tag1">Nike</label>
-                    <input type="radio" name="vendor" value="Puma" id="tag2">
-                    <label for="tag2">Puma</label>
-                    <input type="radio" name="vendor" value="Asics" id="tag3">
-                    <label for="tag3">Asics</label>
-                    <input type="radio" name="vendor" value="AllenSolly" id="tag4">
-                    <label for="tag4">Allen Solly</label>
-                    <input type="radio" name="vendor" value="H&M" id="tag5">
-                    <label for="tag5">H&M</label>
-                </div>
-                
-                
-            </div>
+                <button style="width: 50%; margin-top: 20px;" class="mx-auto" type="submit">{{ 'Add Product' if not
+                    product else 'Update Product' }}</button>
 
-            <!-- Inventory -->
-        </form>
+                <!-- Inventory -->
+            </form>
         </div>
     </div>
 
@@ -318,16 +347,16 @@ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad fac
             // Check if any file is selected.
             if (fi.files.length > 0) {
                 for (const i = 0; i <= fi.files.length - 1; i++) {
-     
+
                     const fsize = fi.files.item(i).size;
                     const file = Math.round((fsize / 1024));
                     // The size of the file.
                     if (file >= 1024) {
                         alert(
-                          "File too Big, please select a file less than 1mb");
-                          $('#input1').val('');
+                            "File too Big, please select a file less than 1mb");
+                        $('#input1').val('');
                     }
-                     
+
                 }
             }
         }
@@ -336,16 +365,16 @@ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad fac
             // Check if any file is selected.
             if (fi.files.length > 0) {
                 for (const i = 0; i <= fi.files.length - 1; i++) {
-     
+
                     const fsize = fi.files.item(i).size;
                     const file = Math.round((fsize / 1024));
                     // The size of the file.
                     if (file >= 1024) {
                         alert(
-                          "File too Big, please select a file less than 1mb");
-                          $('#input2').val('');
+                            "File too Big, please select a file less than 1mb");
+                        $('#input2').val('');
                     }
-                     
+
                 }
             }
         }
@@ -354,16 +383,16 @@ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad fac
             // Check if any file is selected.
             if (fi.files.length > 0) {
                 for (const i = 0; i <= fi.files.length - 1; i++) {
-     
+
                     const fsize = fi.files.item(i).size;
                     const file = Math.round((fsize / 1024));
                     // The size of the file.
                     if (file >= 1024) {
                         alert(
-                          "File too Big, please select a file less than 1mb");
-                          $('#input3').val('');
+                            "File too Big, please select a file less than 1mb");
+                        $('#input3').val('');
                     }
-                     
+
                 }
             }
         }
@@ -372,16 +401,16 @@ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad fac
             // Check if any file is selected.
             if (fi.files.length > 0) {
                 for (const i = 0; i <= fi.files.length - 1; i++) {
-     
+
                     const fsize = fi.files.item(i).size;
                     const file = Math.round((fsize / 1024));
                     // The size of the file.
                     if (file >= 1024) {
                         alert(
-                          "File too Big, please select a file less than 1mb");
-                          $('#input4').val('');
+                            "File too Big, please select a file less than 1mb");
+                        $('#input4').val('');
                     }
-                     
+
                 }
             }
         }
@@ -390,16 +419,16 @@ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad fac
             // Check if any file is selected.
             if (fi.files.length > 0) {
                 for (const i = 0; i <= fi.files.length - 1; i++) {
-     
+
                     const fsize = fi.files.item(i).size;
                     const file = Math.round((fsize / 1024));
                     // The size of the file.
                     if (file >= 1024) {
                         alert(
-                          "File too Big, please select a file less than 1mb");
-                          $('#input5').val('');
+                            "File too Big, please select a file less than 1mb");
+                        $('#input5').val('');
                     }
-                     
+
                 }
             }
         }
@@ -414,7 +443,7 @@ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad fac
             if (selectedGender === "Women") {
                 div1.style.display = 'none';
                 div2.style.display = 'block';
-                categoryMen.disabled = true; 
+                categoryMen.disabled = true;
                 categoryWomen.disabled = false;
             } else {
                 div1.style.display = 'block';
@@ -435,9 +464,10 @@ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint dicta ad fac
 
 
         var alert_message = '{{ message }}'
-          if (alert_message != '') {
-              alert(alert_message);
-          } 
-      </script>
+        if (alert_message != '') {
+            alert(alert_message);
+        } 
+    </script>
 </body>
+
 </html>
