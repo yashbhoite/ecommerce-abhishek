@@ -2,10 +2,13 @@ import razorpay
 from email import message
 from unicodedata import name
 from flask import Flask, redirect, render_template, request, url_for, session, jsonify
+import smtplib
 import sqlite3
 import uuid as uuid
 import os
 import json
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.secret_key = 'yash'
@@ -30,7 +33,22 @@ def allowed_file(filename):
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    # Connect to the database
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+
+    # Fetch products for each gender category
+    cursor.execute("SELECT * FROM products WHERE gender = 'Women'")
+    women_products = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM products WHERE gender = 'Men'")
+    men_products = cursor.fetchall()
+
+    conn.close()
+    
+    # Render template with the fetched products
+    return render_template("index.html", women_products=women_products, men_products=men_products)
+
 
 @app.route('/cart')
 def cart():
@@ -65,7 +83,7 @@ def add_to_cart(id):
         return redirect(url_for('login'))
 
     productname = request.form['productname']
-    productprice = request.form['productprice']
+    productprice = float(request.form['productprice'])
     productsize = request.form['productsize']
     productquantity = int(request.form['productquantity'])
     totalprice = productprice * productquantity
@@ -119,12 +137,16 @@ def remove_from_cart(productname, productsize):
 
 @app.route('/clear-cart', methods=['GET'])
 def clear_cart():
-    conn = sqlite3.connect('product.db')
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM cart")  # Delete all items from the cart
-    conn.commit()
-    conn.close()
-    
+    # Ensure user is logged in and their email is in the session
+    user_email = session.get('user_email')
+    if user_email:
+        conn = sqlite3.connect('product.db')
+        cursor = conn.cursor()
+        # Delete items from the cart only for the logged-in user
+        cursor.execute("DELETE FROM cart WHERE user_email = ?", (user_email,))
+        conn.commit()
+        conn.close()
+
     return redirect(url_for('cart'))
 
 
@@ -246,13 +268,42 @@ def adduser():
 def wishlist():
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
-    orders = my_cursor.execute("SELECT firstname,lastname,email,mobile,city,state,pincode,razorpay_order_id, GROUP_CONCAT(DISTINCT productname) AS product_names, GROUP_CONCAT(DISTINCT size) AS sizes, GROUP_CONCAT(DISTINCT color) AS colors, SUM(quantity) AS total_quantity, SUM(totalprice) AS total_price FROM orders GROUP BY razorpay_order_id;").fetchall()
-    print(orders)
+    
+    # Fetch orders with conditional checks for razorpay_order_id and razorpay_payment_id
+    orders = my_cursor.execute("""
+        SELECT 
+            firstname,
+            lastname,
+            email,
+            mobile,
+            city,
+            state,
+            pincode,
+            payment_info,
+            COALESCE(razorpay_order_id, 'N/A') AS razorpay_order_id,
+            COALESCE(razorpay_payment_id, 'N/A') AS razorpay_payment_id,
+            GROUP_CONCAT(DISTINCT productname) AS product_names,
+            GROUP_CONCAT(DISTINCT size) AS sizes,
+            GROUP_CONCAT(DISTINCT color) AS colors,
+            SUM(quantity) AS total_quantity,
+            SUM(totalprice) AS total_price,
+            address,pincode
+        FROM 
+            orders
+        GROUP BY 
+            payment_info, email, razorpay_order_id
+    """).fetchall()
+
+    print(orders)  # For debugging purposes
+
+    # Fetch all products
     product = my_cursor.execute("SELECT * FROM products").fetchall()
 
     connection.commit()
     connection.close()
-    return render_template("wishlist.html",orders=orders, product=product)
+    
+    return render_template("wishlist.html", orders=orders, product=product)
+
 
 @app.route('/edit-product/<sku>', methods=['GET'])
 def edit_product(sku):
@@ -344,7 +395,7 @@ def filter_products():
     if selected_size:
         filtered_products = [
             product for product in filtered_products
-            if selected_size in product[12].split(',')
+            if selected_size in product[11].split(',')
         ]
 
     # Render filtered products
@@ -733,6 +784,30 @@ def place_order():
 
     conn.commit()
     conn.close()
+
+    # Send email notification
+    try:
+        smtp_server = 'smtp.gmail.com'
+        smtp_port = 587
+        sender_email = "sharmakartik1103@gmail.com"
+        sender_password = "iggp hkmj olvh xtfr"
+        recipient_email = "sharmakartik1103@gmail.com"
+        
+        msg = MIMEMultipart()
+        msg['From'] = sender_email
+        msg['To'] = recipient_email
+        msg['Subject'] = "New Order Placed"
+        
+        body = f"Order placed by {firstname} {lastname} ({user_email})."
+        msg.attach(MIMEText(body, 'plain'))
+        
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.sendmail(sender_email, recipient_email, msg.as_string())
+        server.quit()
+    except Exception as e:
+        print(f"Email notification failed: {e}")
 
     return jsonify({'success': True})
 

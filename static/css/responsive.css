@@ -921,12 +921,12 @@
   .cart thead,
   .cart-price,
   .cart .cart__update-wrapper {
-    display: none;
+    /* display: none; */
     padding-top: 0;
     padding-bottom: 15px;
   }
   .cart .small--hide {
-    display: none;
+    /* display: none; */
   }
   .cart tr,
   .cart tbody {

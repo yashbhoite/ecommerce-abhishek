@@ -2450,6 +2450,10 @@ a.quick-view {
 /*======================================================================
   17. Store Feature
 ========================================================================*/
+
+.store-info {
+  display: table !important;
+}
 .store-info h5,
 .store-info .h5 {
   margin-bottom: 5px;
@@ -2591,7 +2595,7 @@ a.quick-view {
   font-family: "FontAwesome";
   display: block;
   width: 12px;
-  color: #081525;
+  color: #1ba098;
   font-size: 9px;
   line-height: 11px;
   text-align: center;
@@ -3715,6 +3719,7 @@ table {
   color: #deb992;
   background-color: #081525;
   float: right;
+  margin-top: 5px;
 }
 .shopify-payment-button__button {
   cursor: pointer;
