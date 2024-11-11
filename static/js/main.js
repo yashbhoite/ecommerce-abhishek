@@ -1115,3 +1115,6 @@ prev.addEventListener('click',()=>{
 next.addEventListener('click',()=>{
   list.scrollLeft += itemWidth + padding
 })
+
+
+/*for chatbot */

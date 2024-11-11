@@ -7053,3 +7053,111 @@ border-radius:8px;
   transform: translate(-50%, -50%);
   font-size: 14px;
 } */
+
+
+/*-------------------for chatbot--------------------------*/
+
+
+.product {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+
+#bidButton {
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#chatbot {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  max-height: 400px; /* Limits chatbot height to avoid overlapping */
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
+  z-index: 1000; /* Ensures chatbot is always on top */
+  overflow: hidden;
+}
+
+.chat-header {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#closeChat {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  background: none;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.chat-content {
+  padding: 10px;
+  max-height: 250px; /* Increases max-height to allow more content */
+  overflow-y: auto;
+  border-bottom: 1px solid #ddd;
+}
+
+.chat-input {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+#bidInput {
+  flex: 1;
+  padding: 8px;
+  margin-right: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#submitBid {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.chat-options {
+  display: none;
+  justify-content: center;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.chat-options button {
+  padding: 8px 15px;
+  margin: 0 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@media (max-width: 321px) {
+  #chatbot{
+    width: 280px;
+  }
+}
