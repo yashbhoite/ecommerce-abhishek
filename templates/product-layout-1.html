@@ -804,6 +804,9 @@
                       <button id="accept">Yes</button>
                       <button id="decline">No</button>
                   </div>
+                  <input type="hidden" id="level2Price" value="discounted_price_for_level2">
+                  <input type="hidden" id="level3Price" value="discounted_price_for_level3">
+
               </div>
 
                 <p id="freeShipMsg" class="freeShipMsg" data-price="199" style="margin-top: 20px;">
@@ -2074,7 +2077,7 @@
     chatContent.scrollTop = chatContent.scrollHeight;
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     let currentLevel = 'level1'; // Track current discount level
     let path = window.location.pathname;
     const productId = path.match(/\/product\/(\d+)/)[1];
@@ -2093,31 +2096,37 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.getElementById('submitBid').addEventListener('click', () => {
         const bidAmount = document.getElementById('bidInput').value;
+        const selectedSize = document.querySelector('input[name="productsize"]:checked');
+
+        // Ensure size is selected before making an offer
+        if (!selectedSize) {
+            alert("Please select a size before making an offer.");
+            return;
+        }
+
         if (bidAmount) {
-            // Reset level to 'level1' if previous bid was declined at 'level3'
             if (currentLevel === 'level3') {
                 currentLevel = 'level1';
             }
-            sendBid(bidAmount, currentLevel, path, price);
+            sendBid(bidAmount, currentLevel, path, price, selectedSize.value);
         }
     });
 
     // Accept and Decline buttons
     document.getElementById('accept').addEventListener('click', () => {
         document.getElementById('chatContent').innerHTML += `<p>You accepted the offer!</p>`;
-        disableInput(); // Disable input on acceptance
-        document.getElementById('options').style.display = 'none'; // Hide options after accepting
+        disableInput();
+        document.getElementById('options').style.display = 'none';
 
-        // Show "Add to Cart" button after accepting the offer
         const addToCartButton = document.createElement('button');
         addToCartButton.textContent = 'Add to Cart';
         addToCartButton.id = 'addToCart';
         document.getElementById('chatContent').appendChild(addToCartButton);
 
-        // Handle add to cart click
         addToCartButton.addEventListener('click', () => {
-          const acceptedBidAmount = document.getElementById('bidInput').value;  // Use the last bid amount entered
-          addToCart(productId, acceptedBidAmount); // Send product ID and price to add to cart
+            const acceptedBidAmount = document.getElementById('bidInput').value;
+            const selectedSize = document.querySelector('input[name="productsize"]:checked').value;
+            addToCart(productId, acceptedBidAmount, selectedSize);
         });
     });
 
@@ -2127,89 +2136,101 @@ document.addEventListener("DOMContentLoaded", function() {
         } else if (currentLevel === 'level2') {
             currentLevel = 'level3';
         } else {
-            // After declining level 3, allow new bid at level 1
             document.getElementById('chatContent').innerHTML += `<p>No further discounts available. Feel free to submit a new bid.</p>`;
             scrollToBottom();
             enableInput();
-            currentLevel = 'level1'; // Reset to level 1 for next bid
-            document.getElementById('options').style.display = 'none'; // Hide options after final decline
+            currentLevel = 'level1';
+            document.getElementById('options').style.display = 'none';
             return;
         }
-        // Resubmit the bid with the updated level
+
         const bidAmount = document.getElementById('bidInput').value;
-        sendBid(bidAmount, currentLevel, path, price);
+        const selectedSize = document.querySelector('input[name="productsize"]:checked').value;
+        sendBid(bidAmount, currentLevel, path, price, selectedSize);
     });
 
-    // Function to handle bid submission
-    function sendBid(bidAmount, level, path, price) {
-        fetch('/bid', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ bidAmount: bidAmount, level: level, path: path, price: price })
-        })
-        .then(response => response.json())
-        .then(data => {
-            const chatContent = document.getElementById('chatContent');
-            const newMessage = document.createElement('p');
-            newMessage.textContent = data.message;
-            chatContent.appendChild(newMessage);
-            scrollToBottom();
+    function sendBid(bidAmount, level, path, price, size) {
+    fetch('/bid', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bidAmount, level, path, price, size })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const chatContent = document.getElementById('chatContent');
+        const newMessage = document.createElement('p');
+        newMessage.textContent = data.message;
+        chatContent.appendChild(newMessage);
+        scrollToBottom();
 
-            // Show "Yes" and "No" buttons on all levels until level 3 is declined
-            document.getElementById('options').style.display = 'block';
+        // Update prices dynamically
+        if (data.level2_price) {
+            document.getElementById('level2Price').value = data.level2_price;
+        }
+        if (data.level3_price) {
+            document.getElementById('level3Price').value = data.level3_price;
+        }
 
-            if (data.disable_bid) {
-                disableInput(); // Disable input if deal accepted
-            } else {
-                enableInput();
-            }
+        document.getElementById('options').style.display = 'block';
 
-            // Update level based on server response
-            currentLevel = data.status;
-        });
-    }
+        if (data.disable_bid) {
+            disableInput();
+        } else {
+            enableInput();
+        }
 
-    // Disable input for further bids
+        currentLevel = data.status;
+    });
+}
+
+
     function disableInput() {
         document.getElementById('bidInput').disabled = true;
         document.getElementById('submitBid').disabled = true;
     }
 
-    // Enable input to allow new bids
     function enableInput() {
         document.getElementById('bidInput').disabled = false;
         document.getElementById('submitBid').disabled = false;
     }
 
-    // Function to add product to cart
-    function addToCart(productId, price) {
-      console.log("Cartoferrrr")
-        fetch(`/add-to-cart-offer/${productId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                'productname': 'Product Name', // Replace with actual product name
-                'productprice': price,
-                'productsize': 'Size', // Replace with selected size
-                'productquantity': 1,
-                'productimage': 'Product Image URL', // Replace with actual image URL
-                'productcolor': 'Color', // Replace with selected color
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message); // Show success message
-            // Redirect or show cart summary
-            window.location.href = '/cart'; // You can redirect to cart page or update cart UI
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-});
+    function addToCart(productId, bidAmount, size) {
+    let finalPrice = bidAmount;
 
+    // Override price based on current level
+    if (currentLevel === 'level2') {
+        finalPrice = parseFloat(document.getElementById('level2Price').value) || bidAmount;
+        console.log('Level 2 Price:', finalPrice);
+    } else if (currentLevel === 'level3') {
+        finalPrice = parseFloat(document.getElementById('level3Price').value) || bidAmount;
+        console.log('Level 3 Price:', finalPrice);
+    }
+
+    fetch(`/add-to-cart-offer/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            productprice: finalPrice,
+            productsize: size,
+            productquantity: 1,
+            productimage: 'Product Image URL',
+            productcolor: 'Color',
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        window.location.href = '/cart';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+});
 
 
 

@@ -75,33 +75,36 @@ def bid():
     # Check bid against each level
     if level == 'level1' and bid_amount >= level1_price:
         return jsonify({
-            "message": f"Sure, we can have a deal! Get this for: {level1_price}. Do you want to proceed with the payment?",
-            "status": "level1",
-            "discount": discount,
-            "disable_bid": True  # Indicate to disable bid input
-        })
+        "message": f"Sure, we can have a deal! Get this for: {level1_price}. Do you want to proceed with the payment?",
+        "status": "level1",
+        "level2_price": level2_price,
+        "level3_price": level3_price,
+        "disable_bid": True
+    })
     elif level == 'level2' and bid_amount >= level2_price:
         return jsonify({
-            "message": f"Score a double deal! 🎉 Grab TWO stylish T-shirts for just ₹{level2_price} per piece. Don't miss out on leveling up your wardrobe with this perfect pair-up – trendy, comfy, and all yours at an unbeatable price! 👕✨. Do you accept it?",
-            "status": "level2",
-            "discount": discount,
-            "disable_bid": True  # Disable further bidding
-        })
+        "message": f"Score a double deal! 🎉 Grab TWO stylish T-shirts for just ₹{level2_price} per piece. Don't miss out on leveling up your wardrobe with this perfect pair-up – trendy, comfy, and all yours at an unbeatable price! 👕✨. Do you accept it?",
+        "status": "level2",
+        "level2_price": level2_price,
+        "level3_price": level3_price,
+        "disable_bid": True
+    })
     elif level == 'level3' and bid_amount >= level3_price:
         return jsonify({
-            "message": f"Final offer with Level 3: {level3_price}% discount on a single item! Accept?",
-            "status": "level3",
-            "discount": discount,
-            "disable_bid": False  # Allow bidding after level 3 decline
-        })
+        "message": f"Final offer with Level 3: {level3_price}% discount on a single item! Accept?",
+        "status": "level3",
+        "level2_price": level2_price,
+        "level3_price": level3_price,
+        "disable_bid": False
+    })
     else:
-        # Encourage the user to increase their bid
         return jsonify({
-            "message": "Thank you for your bid! It seems your current offer doesn’t quite meet the discount criteria. Please consider raising your bid a bit to get closer to a deal.",
-            "status": "level3",
-            "discount": discount,
-            "disable_bid": level != 'level3'  # Only allow bidding if level 3 has been declined
-        })
+        "message": "Thank you for your bid! It seems your current offer doesn’t quite meet the discount criteria. Please consider raising your bid a bit to get closer to a deal.",
+        "status": "level3",
+        "level2_price": level2_price,
+        "level3_price": level3_price,
+        "disable_bid": level != 'level3'
+    })
 
 
              
@@ -157,50 +160,36 @@ def cart():
 
 @app.route('/add-to-cart-offer/<string:product_id>', methods=['POST'])
 def add_to_cart_offer(product_id):
-    print("Add to cart offer route called")
-    
-    print(product_id)
-    # Check if user is logged in
     if 'user_email' not in session:
         return jsonify({"success": False, "message": "You need to log in first."})
-    
+
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
-    productdetails = cursor.execute("Select name,price,size,img1,color from products where sku=?",(product_id,)).fetchall()
-    # print(productdetails)
-    # print(productdetails[0][0])
+    productdetails = cursor.execute(
+        "SELECT name, price, size, img1, color FROM products WHERE sku=?", (product_id,)
+    ).fetchall()
 
-    
-
-
-    # Get data from the request
     productname = productdetails[0][0]
-    productprice = float(request.form.get('productprice'))
-    productsize = productdetails[0][2]
-    productquantity = int(request.form.get('productquantity', 1))  # Default to 1 if not provided
+    productprice = float(request.form.get('productprice'))  # Should be price sent from client
+    print(f"Received price: {productprice}")  # Debugging line
+    productsize = request.form.get('productsize')
+    productquantity = int(request.form.get('productquantity', 1))
     productimage = productdetails[0][3]
     productcolor = productdetails[0][4]
-    user_email = session['user_email']  # Get the logged-in user's email
+    user_email = session['user_email']
 
-    # Calculate total price
     totalprice = productprice * productquantity
 
-    # Connect to the database and insert the item into the cart
-    
     cursor.execute(
         '''INSERT INTO cart 
            (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor, user_email) 
            VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
-        (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor, user_email)  # Default to level 1 if not specified
+        (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor, user_email)
     )
     conn.commit()
     conn.close()
 
-    # Return success message
     return jsonify({"success": True, "message": "Item added to your cart successfully!"})
-
-
-
 
 @app.route('/add-to-cart/<string:id>', methods=['POST'])
 def add_to_cart(id):
