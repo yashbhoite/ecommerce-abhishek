@@ -36,12 +36,110 @@ discount_ranges = {
     'level2': (90, 110),
     'level3': (80, 100)
 }
-
+  
 def get_random_discount():
     return random.randint(5, 10)
 
+
+@app.route('/add-to-cart-combo/<string:product_id>', methods=['POST'])
+def add_to_cart_combo(product_id):
+    if 'user_email' not in session:
+        return jsonify({"success": False, "message": "You need to log in first."})
+
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+    
+    # Get details for the first product
+    productdetails = cursor.execute(
+        "SELECT name, price, size, img1, color FROM products WHERE sku=?", (product_id,)
+    ).fetchall()
+
+
+    productimage = f"../static/images/pics/{productdetails[0][3]}"
+    productname = productdetails[0][0]
+    productprice = float(request.form.get('productprice'))
+    productsize = request.form.get('productsize')
+    productcolor = productdetails[0][4]
+    user_email = session['user_email']
+    second_product_size = request.form.get('secondProductSize')
+    second_product_color = request.form.get('productcolor')
+    second_product_name = productname
+    second_product_price = float(request.form.get('productprice'))  
+    combined_product_name = f"{productname}, {second_product_name}"
+    combined_product_size = f"{productsize}, {second_product_size}"
+    combined_product_price = productprice + second_product_price
+    combined_product_color = f"{productcolor}, {second_product_color}"
+
+    cursor.execute(
+        '''INSERT INTO cart 
+           (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor, user_email) 
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
+        (productimage, combined_product_name, combined_product_size, productprice, 2, combined_product_price, combined_product_color, user_email)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({"success": True, "message": "Combo items added to your cart successfully!"})
+
+
+@app.route('/product-details/<product_id>', methods=['GET'])
+def get_product_details(product_id):
+    print("------------ Fetching Product Details -------------")
+    print(f"Product ID: {product_id}")
+    
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+    
+    # Fetch the product name using SKU
+    name = cursor.execute("SELECT name FROM products WHERE sku = ?", (product_id,)).fetchone()
+    
+    if not name:
+        conn.close()
+        return jsonify({"message": "Product not found"}), 404
+
+    # Fetch sizes, colors, and SKUs for products with the same name
+    products = cursor.execute(
+        "SELECT sku, size, color FROM products WHERE quantity != 0 AND name = ?", (name[0],)
+    ).fetchall()
+    conn.close()
+
+    if products:
+        # Map colors to their respective sizes
+        color_size_map = {}
+        sku_links = []
+        
+        for sku, size, color in products:
+            colors = color.split(',')
+            sizes = size.split(',')
+            for c in colors:
+                if c not in color_size_map:
+                    color_size_map[c] = set()
+                color_size_map[c].update(sizes)
+                
+            # Generate the SKU link
+            sku_links.append(f"http://127.0.0.1:5000/product/{sku}")
+
+        # Convert sets to lists for JSON serialization
+        color_size_map = {color: list(sizes) for color, sizes in color_size_map.items()}
+
+        # Include SKU links in the response
+        return jsonify({"color_size_map": color_size_map, "sku_links": sku_links})
+    else:
+        return jsonify({"message": "No products with available stock"}), 404
+
+
+
+
+
+
 @app.route('/bid', methods=['POST'])
 def bid():
+    if not session.get('logged_in'):
+        return jsonify({
+            "message": "You must log in to submit a bid.",
+            "redirect_url": "/login"  # Provide login URL
+        }), 401  # Unauthorized
     bid_amount = int(request.json['bidAmount'])
     level = request.json.get('level', 'level1')
     path = request.json.get('path')
@@ -52,10 +150,10 @@ def bid():
     if match:
         number = match.group(1)
 
-    # Retrieve discount levels from the database
+    # Retrieve discount levels and product details from the database
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
-    discount = cursor.execute("SELECT per1,per2,per3 FROM products WHERE sku = ?", (number,)).fetchall()
+    discount = cursor.execute("SELECT per1, per2, per3, size, color FROM products WHERE sku = ?", (number,)).fetchall()
     conn.close()
 
     level1low, level1high = map(int, discount[0][0].split('-'))
@@ -72,39 +170,44 @@ def bid():
     level2_price = int(price) - (int(price) * level2dis / 100)
     level3_price = int(price) - (int(price) * level3dis / 100)
 
-    # Check bid against each level
+    # Handle bid for each level
     if level == 'level1' and bid_amount >= level1_price:
         return jsonify({
-        "message": f"Sure, we can have a deal! Get this for: {level1_price}. Do you want to proceed with the payment?",
-        "status": "level1",
-        "level2_price": level2_price,
-        "level3_price": level3_price,
-        "disable_bid": True
-    })
+            "message": f"Sure, we can have a deal!. Do you want to proceed with the payment?",
+            "status": "level1",
+            "level2_price": level2_price,
+            "level3_price": level3_price,
+            "disable_bid": True
+        })
     elif level == 'level2' and bid_amount >= level2_price:
         return jsonify({
-        "message": f"Score a double deal! 🎉 Grab TWO stylish T-shirts for just ₹{level2_price} per piece. Don't miss out on leveling up your wardrobe with this perfect pair-up – trendy, comfy, and all yours at an unbeatable price! 👕✨. Do you accept it?",
-        "status": "level2",
-        "level2_price": level2_price,
-        "level3_price": level3_price,
-        "disable_bid": True
-    })
+            "message": f"Score a double deal! 🎉 Grab TWO stylish T-shirts for just ₹{level2_price} per piece. Don't miss out on leveling up your wardrobe with this perfect pair-up – trendy, comfy, and all yours at an unbeatable price! 👕✨. Do you accept it?",
+            "status": "level2",
+            "level2_price": level2_price,
+            "level3_price": level3_price,
+            "second_product_details": {
+                "sizes": discount[0][3].split(','),
+                "colors": discount[0][4].split(',')
+            },
+            "disable_bid": True
+        })
     elif level == 'level3' and bid_amount >= level3_price:
         return jsonify({
-        "message": f"Final offer with Level 3: {level3_price}% discount on a single item! Accept?",
-        "status": "level3",
-        "level2_price": level2_price,
-        "level3_price": level3_price,
-        "disable_bid": False
-    })
+            "message": f"Final offer with Level 3: {level3_price}% discount on a single item! Accept?",
+            "status": "level3",
+            "level2_price": level2_price,
+            "level3_price": level3_price,
+            "disable_bid": False
+        })
     else:
         return jsonify({
-        "message": "Thank you for your bid! It seems your current offer doesn’t quite meet the discount criteria. Please consider raising your bid a bit to get closer to a deal.",
-        "status": "level3",
-        "level2_price": level2_price,
-        "level3_price": level3_price,
-        "disable_bid": level != 'level3'
-    })
+            "message": "Thank you for your bid! It seems your current offer doesn’t quite meet the discount criteria. Please consider raising your bid a bit to get closer to a deal.",
+            "status": "level3",
+            "level2_price": level2_price,
+            "level3_price": level3_price,
+            "disable_bid": level != 'level3'
+        })
+
 
 
              
@@ -174,7 +277,7 @@ def add_to_cart_offer(product_id):
     print(f"Received price: {productprice}")  # Debugging line
     productsize = request.form.get('productsize')
     productquantity = int(request.form.get('productquantity', 1))
-    productimage = productdetails[0][3]
+    productimage = f"../static/images/pics/{productdetails[0][3]}"
     productcolor = productdetails[0][4]
     user_email = session['user_email']
 

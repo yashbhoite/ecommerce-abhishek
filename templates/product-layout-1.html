@@ -2113,22 +2113,138 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Accept and Decline buttons
-    document.getElementById('accept').addEventListener('click', () => {
-        document.getElementById('chatContent').innerHTML += `<p>You accepted the offer!</p>`;
-        disableInput();
-        document.getElementById('options').style.display = 'none';
+    document.getElementById('accept').addEventListener('click', async () => {
+    document.getElementById('chatContent').innerHTML += `<p>You accepted the offer!</p>`;
+    disableInput();
+    document.getElementById('options').style.display = 'none';
 
-        const addToCartButton = document.createElement('button');
-        addToCartButton.textContent = 'Add to Cart';
-        addToCartButton.id = 'addToCart';
-        document.getElementById('chatContent').appendChild(addToCartButton);
+    if (currentLevel === 'level1' || currentLevel === 'level3') {
+        document.getElementById('chatContent').innerHTML += `
+            <p>Great! You have accepted the offer.</p>
+            <button id="addToCartButton">Add to Cart</button>
+        `;
 
-        addToCartButton.addEventListener('click', () => {
-            const acceptedBidAmount = document.getElementById('bidInput').value;
+        document.getElementById('addToCartButton').addEventListener('click', () => {
+            const bidAmount = document.getElementById('bidInput').value;
             const selectedSize = document.querySelector('input[name="productsize"]:checked').value;
-            addToCart(productId, acceptedBidAmount, selectedSize);
+            addToCart(productId, bidAmount, selectedSize);
         });
+    } else if (currentLevel === 'level2') {
+    try {
+        // Fetch product details from the backend
+        const response = await fetch(`/product-details/${productId}`);
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to fetch product details');
+        }
+
+        // Dynamically generate options combining colors and sizes
+        const colorSizeOptions = Object.entries(data.color_size_map)
+            .flatMap(([color, sizes]) =>
+                sizes.map(size => `<option value="${color} (${size})">${color} (${size})</option>`)
+            )
+            .join('');
+
+        // Display the second product selection with combined options
+        document.getElementById('chatContent').innerHTML += `
+            <p>Great choice! Now, please select the second product for your combo offer:</p>
+            <div id="secondProductSelection">
+                <label for="secondProductColorSize">Select Color and Size:</label>
+                <select id="secondProductColorSize">${colorSizeOptions}</select>
+            </div>
+            <button id="addComboToCart">Add Combo to Cart</button>
+            <div id="skuLinks">
+                <p>Options to select from:-</p>
+                ${data.sku_links.map(link => `<a href="${link}" target="_blank">${link}</a>`).join('<br>')}
+            </div>
+        `;
+
+        // Add event listener for adding the combo to the cart
+        document.getElementById('addComboToCart').addEventListener('click', () => {
+            const selectedOption = document.getElementById('secondProductColorSize').value;
+            addComboToCart(productId, selectedOption);
+        });
+    } catch (error) {
+        document.getElementById('chatContent').innerHTML += `<p>Error fetching product details: ${error.message}</p>`;
+    }
+}
+
+scrollToBottom()
+
+});
+
+
+function displaySecondProductSelection() {
+    const secondProductDetails = data.second_product_details; // Received from backend
+    const sizeSelect = document.createElement('select');
+    const colorSelect = document.createElement('select');
+    
+    secondProductDetails.sizes.forEach(size => {
+        const option = document.createElement('option');
+        option.value = size;
+        option.textContent = size;
+        sizeSelect.appendChild(option);
     });
+
+    secondProductDetails.colors.forEach(color => {
+        const option = document.createElement('option');
+        option.value = color;
+        option.textContent = color;
+        colorSelect.appendChild(option);
+    });
+
+    document.getElementById('chatContent').appendChild(sizeSelect);
+    document.getElementById('chatContent').appendChild(colorSelect);
+
+    const confirmButton = document.createElement('button');
+    confirmButton.textContent = 'Confirm Combo';
+    document.getElementById('chatContent').appendChild(confirmButton);
+
+    confirmButton.addEventListener('click', () => {
+        const selectedSize = sizeSelect.value;
+        const selectedColor = colorSelect.value;
+        addToCartCombo(selectedSize, selectedColor);
+    });
+}
+
+function addComboToCart(productId, selectedOption) {
+    // Split the selected option into color and size
+    const [secondProductColor, secondProductSize] = selectedOption
+        .replace(')', '') // Remove the closing parenthesis
+        .split(' ('); // Split the string into color and size
+
+    const selectedSize = document.querySelector('input[name="productsize"]:checked')?.value; // Get selected size
+    const finalPrice = parseFloat(document.getElementById('level2Price').value); // Get level 2 price
+
+    if (!selectedSize || !secondProductSize || !secondProductColor) {
+        alert("Please ensure all selections are made.");
+        return;
+    }
+
+    fetch(`/add-to-cart-combo/${productId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+            productprice: finalPrice,
+            productsize: selectedSize, // Pass the first product size
+            secondProductSize: secondProductSize.trim(), // Pass the second product size
+            productcolor: secondProductColor.trim(), // Pass the second product color
+            productquantity: 1
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        window.location.href = '/cart'; // Redirect to cart page
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to add to cart. Please try again.');
+    });
+}
+
+
 
     document.getElementById('decline').addEventListener('click', () => {
         if (currentLevel === 'level1') {
@@ -2163,6 +2279,25 @@ document.addEventListener("DOMContentLoaded", function () {
         chatContent.appendChild(newMessage);
         scrollToBottom();
 
+        // Check if the message is the one that indicates a low bid
+        if (newMessage.textContent.includes("It seems your current offer doesn’t quite meet the discount criteria.")) {
+            // Disable bid submission buttons to avoid repeated submission
+            document.getElementById('accept').disabled = true;
+            document.getElementById('decline').disabled = true;
+
+            // Enable the user to resubmit their bid
+            document.getElementById('bidInput').disabled = false;
+            document.getElementById('submitBid').disabled = false;
+            document.getElementById('options').style.display = 'none'; // Hide the options
+
+            scrollToBottom(); // Scroll to the bottom after the message
+            return; // Stop execution and prevent the request
+        } else {
+            // Re-enable the "Yes" and "No" buttons if a valid bid message was shown
+            document.getElementById('accept').disabled = false;
+            document.getElementById('decline').disabled = false;
+        }
+
         // Update prices dynamically
         if (data.level2_price) {
             document.getElementById('level2Price').value = data.level2_price;
@@ -2184,6 +2319,8 @@ document.addEventListener("DOMContentLoaded", function () {
 }
 
 
+
+
     function disableInput() {
         document.getElementById('bidInput').disabled = true;
         document.getElementById('submitBid').disabled = true;
@@ -2200,10 +2337,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Override price based on current level
     if (currentLevel === 'level2') {
         finalPrice = parseFloat(document.getElementById('level2Price').value) || bidAmount;
-        console.log('Level 2 Price:', finalPrice);
     } else if (currentLevel === 'level3') {
         finalPrice = parseFloat(document.getElementById('level3Price').value) || bidAmount;
-        console.log('Level 3 Price:', finalPrice);
     }
 
     fetch(`/add-to-cart-offer/${productId}`, {
@@ -2215,19 +2350,20 @@ document.addEventListener("DOMContentLoaded", function () {
             productprice: finalPrice,
             productsize: size,
             productquantity: 1,
-            productimage: 'Product Image URL',
-            productcolor: 'Color',
+            productimage: 'Product Image URL', // You can replace this with the actual image URL
+            productcolor: 'Color', // Add the selected color if needed
         }),
     })
     .then(response => response.json())
     .then(data => {
-        alert(data.message);
-        window.location.href = '/cart';
+        alert(data.message); // Show success message
+        window.location.href = '/cart'; // Redirect to the cart page
     })
     .catch(error => {
         console.error('Error:', error);
     });
 }
+
 
 
 });
