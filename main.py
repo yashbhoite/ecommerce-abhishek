@@ -166,10 +166,12 @@ def bid():
     level3dis = random.randint(level3low, level3high)
 
     # Calculate the discount prices
-    level1_price = int(price) - (int(price) * level1dis / 100)
-    level2_price = int(price) - (int(price) * level2dis / 100)
-    level3_price = int(price) - (int(price) * level3dis / 100)
-
+    level1_price = int(price) - int(int(price) * level1dis / 100)
+    level2_price = int(price) - int(int(price) * level2dis / 100)
+    level3_price = int(price) - int(int(price) * level3dis / 100)
+    print(level1_price)
+    print(level2_price)
+    print(level3_price)
     # Handle bid for each level
     if level == 'level1' and bid_amount >= level1_price:
         return jsonify({
@@ -181,7 +183,7 @@ def bid():
         })
     elif level == 'level2' and bid_amount >= level2_price:
         return jsonify({
-            "message": f"Score a double deal! 🎉 Grab TWO stylish T-shirts for just ₹{level2_price} per piece. Don't miss out on leveling up your wardrobe with this perfect pair-up – trendy, comfy, and all yours at an unbeatable price! 👕✨. Do you accept it?",
+            "message": f"Score a double deal! 🎉 Grab TWO stylish T-shirts for just ₹ {level2_price} per piece. Don't miss out on leveling up your wardrobe with this perfect pair-up – trendy, comfy, and all yours at an unbeatable price! 👕✨. Do you accept it?",
             "status": "level2",
             "level2_price": level2_price,
             "level3_price": level3_price,
@@ -193,7 +195,7 @@ def bid():
         })
     elif level == 'level3' and bid_amount >= level3_price:
         return jsonify({
-            "message": f"Final offer with Level 3: {level3_price}% discount on a single item! Accept?",
+            "message": f"Final offer with Level 3: ₹ {level3_price} discount on a single item! Accept?",
             "status": "level3",
             "level2_price": level2_price,
             "level3_price": level3_price,
