@@ -7080,17 +7080,19 @@ border-radius:8px;
   right: 20px;
   width: 320px;
   max-height: 400px; /* Limits chatbot height to avoid overlapping */
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
+  /* border: 1px solid #ccc;
+  border-radius: 10px; */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   z-index: 1000; /* Ensures chatbot is always on top */
   overflow: hidden;
+  background-color: #081525;
+
 }
 
 .chat-header {
-  background-color: #333;
-  color: white;
+  background-color: #deb992;
+  color: black;
   padding: 10px;
   text-align: center;
   position: relative;
@@ -7103,23 +7105,29 @@ border-radius:8px;
   right: 10px;
   top: 5px;
   background: none;
-  color: white;
+  color: black;
   border: none;
   font-size: 16px;
   cursor: pointer;
+  
 }
 
 .chat-content {
   padding: 10px;
   max-height: 250px; /* Increases max-height to allow more content */
   overflow-y: auto;
-  border-bottom: 1px solid #ddd;
+  /* border-bottom: 1px solid #ddd; */
+  background-color: #081525;
+}
+.chat-content p{
+  color: #deb992 !important;
 }
 
 .chat-input {
   display: flex;
   padding: 10px;
-  border-top: 1px solid #ddd;
+  /* border-top: 1px solid #ddd; */
+  background-color: #081525;
 }
 
 #bidInput {
@@ -7132,8 +7140,8 @@ border-radius:8px;
 
 #submitBid {
   padding: 8px 12px;
-  background-color: #007bff;
-  color: white;
+  background-color: #deb992;
+  color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -7143,7 +7151,7 @@ border-radius:8px;
   display: none;
   justify-content: center;
   padding: 10px;
-  border-top: 1px solid #ddd;
+  /* border-top: 1px solid #ddd; */
 }
 
 .chat-options button {
