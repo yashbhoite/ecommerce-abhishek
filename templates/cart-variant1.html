@@ -585,32 +585,43 @@
                                     <td class="cart__update-wrapper cart-flex-item text-right">
                                         <div class="cart__qty text-center">
                                             <div class="qtyField">
-                                                <a class="qtyBtn minus" href="javascript:void(0);"><i class="icon icon-minus"></i></a>
-                                                <input class="cart__qty-input qty" type="text" name="updates[]" id="qty" value="{{ item[4] }}" pattern="[0-9]*">
-                                                <a class="qtyBtn plus" href="javascript:void(0);"><i class="icon icon-plus"></i></a>
+                                                <a 
+                                                    class="qtyBtn minus {% if item[7] %}disabled{% endif %}" 
+                                                    href="javascript:void(0);" 
+                                                    {% if item[7] %}onclick="return false;"{% endif %}
+                                                ><i class="icon icon-minus"></i></a>
+                                                <input 
+                                                    class="cart__qty-input qty {% if item[7] %}disabled{% endif %}" 
+                                                    type="text" 
+                                                    name="updates[]" 
+                                                    id="qty" 
+                                                    value="{{ item[4] }}" 
+                                                    {% if item[7] %}disabled{% endif %}
+                                                    pattern="[0-9]*">
+                                                <a 
+                                                    class="qtyBtn plus {% if item[7] %}disabled{% endif %}" 
+                                                    href="javascript:void(0);" 
+                                                    {% if item[7] %}onclick="return false;"{% endif %}
+                                                ><i class="icon icon-plus"></i></a>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="text-right small--hide cart-price">
                                         <div><span class="money">{{ item[5] }}</span></div>
                                     </td>
-                                    <td class="text-center small--hide"><a href="/remove-from-cart/{{ item[1] }}/{{ item[2] }}" class="btn btn--secondary cart__remove" title="Remove tem"><i class="icon icon anm anm-times-l"></i></a></td>
+                                    <td class="text-center small--hide">
+                                        <a href="/remove-from-cart/{{ item[1] }}/{{ item[2] }}" class="btn btn--secondary cart__remove" title="Remove item">
+                                            <i class="icon icon anm anm-times-l"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                                 {% else %}
                                 <tr>
                                     <td colspan="6" class="text-center" style="color: #869ba9;">Your cart is empty</td>
                                 </tr>
                                 {% endfor %}
-                                <tr>
-                                    <td colspan="3" class="text-left"><a href="/shopfullwidth" class="btn btn-secondary btn--small cart-continue">Continue shopping</a></td>
-                                    <td colspan="3" class="text-right">
-	                            
-                                        <a href="/clear-cart" class="btn btn-secondary btn--small cart-continue">Clear Cart</a></td>
-                                        
-                                    	<!-- <button type="submit" name="update" class="btn btn-secondary btn--small cart-continue ml-2">Update Cart</button> -->
-                                    </td>
-                                </tr>
                             </tbody>
+                            
                     	
                                 
                             
@@ -807,14 +818,18 @@
 
     // Handle plus/minus buttons click
     document.querySelectorAll('.qtyBtn').forEach(button => {
-        button.addEventListener('click', function() {
-            let productName = this.closest('tr').querySelector('.list-view-item__title a').innerText;
-            let productSize = this.closest('tr').querySelector('.cart__meta-text').innerText.split('Size: ')[1];
-            let pricePerItem = parseFloat(this.closest('tr').querySelector('.cart__price-wrapper .money').innerText);
-            
-            updateQuantity(this, productName, productSize, pricePerItem);
-        });
+    button.addEventListener('click', function() {
+        // Skip processing if button is disabled
+        if (this.classList.contains('disabled')) return;
+
+        let productName = this.closest('tr').querySelector('.list-view-item__title a').innerText;
+        let productSize = this.closest('tr').querySelector('.cart__meta-text').innerText.split('Size: ')[1];
+        let pricePerItem = parseFloat(this.closest('tr').querySelector('.cart__price-wrapper .money').innerText);
+        
+        updateQuantity(this, productName, productSize, pricePerItem);
     });
+});
+
 </script>
 </body>
 

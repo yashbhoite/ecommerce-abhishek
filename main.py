@@ -246,6 +246,12 @@ def cart():
     cursor.execute("SELECT productimage, productname, productsize, productprice, productquantity, totalprice, productcolor FROM cart WHERE user_email = ?", (user_email,))
     cart_items = cursor.fetchall()
 
+    # Add a flag to indicate if productname is comma-separated
+    cart_items = [
+        item + (',' in item[1],)  # Add True/False based on comma presence in productname
+        for item in cart_items
+    ]
+
     # Calculate subtotal (sum of totalprice)
     cursor.execute("SELECT SUM(totalprice) FROM cart WHERE user_email = ?", (user_email,))
     subtotal = cursor.fetchone()[0]
@@ -257,7 +263,7 @@ def cart():
     grand_total = subtotal + shipping_charges
 
     conn.close()
-    
+
     return render_template('cart-variant1.html', cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total)
 
 
@@ -791,7 +797,46 @@ def productinfo(id):
     sizes = my_cursor.execute(
         "Select size from products where sku=?", (id,)).fetchone()
     size_list = sizes[0].split(',') if sizes else []
-    return render_template("product-layout-1.html", name=name,size_list=size_list,id=id)
+
+    reviews = my_cursor.execute(
+        "SELECT name, rating, title, body FROM reviews WHERE sku=? ORDER BY rating DESC LIMIT 3", 
+        (id,)
+    ).fetchall()
+    # Calculate average rating and review count
+    my_cursor.execute(
+        "SELECT AVG(rating) as avg_rating, COUNT(*) as review_count FROM reviews WHERE sku=?", (id,))
+    review_data = my_cursor.fetchone()
+    avg_rating = round(review_data[0], 1) if review_data[0] else 0
+    review_count = review_data[1] if review_data[1] else 0
+    connection.close()
+    return render_template("product-layout-1.html", name=name,size_list=size_list,id=id,reviews=reviews,avg_rating=avg_rating,review_count=review_count)
+
+
+@app.route('/submit-review/<string:sku>', methods=['POST'])
+def submit_review(sku):
+    if 'user_email' not in session:
+        return redirect(url_for('login'))  # Redirect to login if user is not logged in
+
+    user_email = session['user_email']
+    name = request.form.get('review[author]')
+    rating = request.form.get('review[rating]', 0)  # Default rating to 0 if not provided
+    title = request.form.get('review[title]')
+    body = request.form.get('review[body]')
+
+    connection = sqlite3.connect('product.db')
+    my_cursor = connection.cursor()
+
+    # Insert review into the reviews table
+    my_cursor.execute("""
+        INSERT INTO reviews (user_email, name, rating, title, body, sku)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (user_email, name, rating, title, body, sku))
+
+    connection.commit()
+    connection.close()
+
+    # Redirect back to the product page
+    return redirect(url_for('productinfo', id=sku))
 
 
 @app.route('/addproduct')

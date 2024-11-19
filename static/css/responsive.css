@@ -142,7 +142,7 @@
     padding: 5px 12px;
     font-size: 10px;
     background-color: #deb992;
-	color: #081525;
+    color: #081525;
   }
 
   .saleTime.desktop {
@@ -432,7 +432,7 @@
   }
   #MobileNav li li a {
     padding-left: 20px;
-	color: #deb992;
+    color: #deb992;
   }
   #MobileNav li li li a {
     padding-left: 30px;
@@ -848,7 +848,7 @@
   .btn-filter {
     margin-bottom: 20px;
     width: 100%;
-	color: #deb992;
+    color: #deb992;
   }
   .filterbar .sidebar_widget:not(.filterBox),
   .filterbar .static-banner-block {
@@ -918,12 +918,18 @@
     margin-left: 0;
   }
 
-  .cart thead,
+  /* .cart thead, */
   .cart-price,
   .cart .cart__update-wrapper {
     /* display: none; */
     padding-top: 0;
     padding-bottom: 15px;
+  }
+  .cart__row {
+    padding: 10px 5px;
+  }
+  table {
+    min-width: 600px; /* Ensures columns remain readable */
   }
   .cart .small--hide {
     /* display: none; */

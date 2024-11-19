@@ -689,12 +689,20 @@
                       <span class="outstock hide">Unavailable</span>
                     </div>
                     <!-- <div class="product-sku">SKU: <span class="variant-sku">19115-rdxs</span></div> -->
-                    <div class="product-review">
-                      <a class="reviewLink" href="#tab2"><i class="font-13 fa fa-star"></i><i
-                          class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i
-                          class="font-13 fa fa-star-o"></i><i class="font-13 fa fa-star-o"></i><span
-                          class="spr-badge-caption">6 reviews</span></a>
-                    </div>
+                    <span class="product-review" id="review-summary" 
+                    data-avg-rating="{{ avg_rating }}" 
+                    data-review-count="{{ review_count }}">
+                <a class="reviewLink">
+                  <i class="font-13 fa fa-star"></i>
+                  <i class="font-13 fa fa-star"></i>
+                  <i class="font-13 fa fa-star"></i>
+                  <i class="font-13 fa fa-star-o"></i>
+                  <i class="font-13 fa fa-star-o"></i>
+                </a>
+                <span class="spr-summary-actions-togglereviews">
+                  Based on <span id="review-count">{{ review_count }}</span> reviews
+                </span>
+              </span>
                   </div>
                   <p class="product-single__price product-single__price-product-template">
                     <span
@@ -914,140 +922,78 @@
                   <div class="spr-container">
                     <div class="spr-header clearfix">
                       <div class="spr-summary">
-                        <span class="product-review"><a class="reviewLink"><i class="font-13 fa fa-star"></i><i
-                              class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i
-                              class="font-13 fa fa-star-o"></i><i class="font-13 fa fa-star-o"></i> </a><span
-                            class="spr-summary-actions-togglereviews">Based on 6 reviews</span></span>
-                        <span class="spr-summary-actions">
-                          <a href="#" class="spr-summary-actions-newreview btn">Write a review</a>
-                        </span>
+                        <span class="product-review" id="review-summary" 
+                    data-avg-rating="{{ avg_rating }}" 
+                    data-review-count="{{ review_count }}">
+                <a class="reviewLink">
+                  <i class="font-13 fa fa-star"></i>
+                  <i class="font-13 fa fa-star"></i>
+                  <i class="font-13 fa fa-star"></i>
+                  <i class="font-13 fa fa-star-o"></i>
+                  <i class="font-13 fa fa-star-o"></i>
+                </a>
+                <span class="spr-summary-actions-togglereviews">
+                  Based on <span id="review-count">{{ review_count }}</span> reviews
+                </span>
+              </span>
+                        
                       </div>
                     </div>
                     <div class="spr-content">
                       <div class="spr-form clearfix">
-                        <form method="post" action="#" id="new-review-form" class="new-review-form">
-                          <h3 class="spr-form-title">Write a review</h3>
-                          <fieldset class="spr-form-contact">
-                            <div class="spr-form-contact-name">
-                              <label class="spr-form-label" for="review_author_10508262282">Name</label>
-                              <input class="spr-form-input spr-form-input-text" id="review_author_10508262282"
-                                type="text" name="review[author]" value="" placeholder="Enter your name" />
-                            </div>
-                            <div class="spr-form-contact-email">
-                              <label class="spr-form-label" for="review_email_10508262282">Email</label>
-                              <input class="spr-form-input spr-form-input-email" id="review_email_10508262282"
-                                type="email" name="review[email]" value="" placeholder="kartik.sharma@example.com" />
-                            </div>
-                          </fieldset>
-                          <fieldset class="spr-form-review">
-                            <div class="spr-form-review-rating">
-                              <label class="spr-form-label">Rating</label>
-                              <div class="spr-form-input spr-starrating">
-                                <div class="product-review">
-                                  <a class="reviewLink" href="#"><i class="fa fa-star-o"></i><i
-                                      class="font-13 fa fa-star-o"></i><i class="font-13 fa fa-star-o"></i><i
-                                      class="font-13 fa fa-star-o"></i><i class="font-13 fa fa-star-o"></i></a>
+                        <form method="post" action="{{ url_for('submit_review', sku=id) }}" id="new-review-form" class="new-review-form">
+                            <h3 class="spr-form-title">Write a review</h3>
+                            <fieldset class="spr-form-contact">
+                                <div class="spr-form-contact-name">
+                                    <label class="spr-form-label" for="review_author">Name</label>
+                                    <input class="spr-form-input spr-form-input-text" id="review_author" type="text" name="review[author]" value="" placeholder="Enter your name" />
                                 </div>
-                              </div>
-                            </div>
-
-                            <div class="spr-form-review-title">
-                              <label class="spr-form-label" for="review_title_10508262282">Review Title</label>
-                              <input class="spr-form-input spr-form-input-text" id="review_title_10508262282"
-                                type="text" name="review[title]" value="" placeholder="Give your review a title" />
-                            </div>
-
-                            <div class="spr-form-review-body">
-                              <label class="spr-form-label" for="review_body_10508262282">Body of Review
-                                <span class="spr-form-review-body-charactersremaining">(1500)</span></label>
-                              <div class="spr-form-input">
-                                <textarea class="spr-form-input spr-form-input-textarea" id="review_body_10508262282"
-                                  data-product-id="10508262282" name="review[body]" rows="10"
-                                  placeholder="Write your comments here"></textarea>
-                              </div>
-                            </div>
-                          </fieldset>
-                          <fieldset class="spr-form-actions">
-                            <input type="submit"
-                              class="spr-button spr-button-primary button button-primary btn btn-primary"
-                              value="Submit Review" style="color: #deb992; font-weight: 700;" />
-                          </fieldset>
+                            </fieldset>
+                            <fieldset class="spr-form-review">
+                                <div class="spr-form-review-rating">
+                                    <label class="spr-form-label">Rating</label>
+                                    <input class="spr-form-input" type="number" name="review[rating]" min="1" max="5" placeholder="Enter rating (1-5)">
+                                </div>
+                                <div class="spr-form-review-title">
+                                    <label class="spr-form-label" for="review_title">Review Title</label>
+                                    <input class="spr-form-input spr-form-input-text" id="review_title" type="text" name="review[title]" value="" placeholder="Give your review a title" />
+                                </div>
+                                <div class="spr-form-review-body">
+                                    <label class="spr-form-label" for="review_body">Body of Review</label>
+                                    <textarea class="spr-form-input spr-form-input-textarea" id="review_body" name="review[body]" rows="10" placeholder="Write your comments here"></textarea>
+                                </div>
+                            </fieldset>
+                            <fieldset class="spr-form-actions">
+                                <input type="submit" class="spr-button spr-button-primary button button-primary btn btn-primary" value="Submit Review" />
+                            </fieldset>
                         </form>
-                      </div>
-                      <div class="spr-reviews">
-                        <div class="spr-review">
-                          <div class="spr-review-header">
-                            <span class="product-review spr-starratings spr-review-header-starratings"><span
-                                class="reviewLink"><i class="fa fa-star"></i><i class="font-13 fa fa-star"></i><i
-                                  class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i
-                                  class="font-13 fa fa-star"></i></span></span>
-                            <h3 class="spr-review-header-title">
-                              Lorem ipsum dolor sit amet
-                            </h3>
-                            <span class="spr-review-header-byline"><strong>Kartik</strong> on
-                              <strong>Sep 28, 2024</strong></span>
+                    </div>
+                    
+                    <div class="spr-reviews">
+                      {% for review in reviews %}
+                          <div class="spr-review">
+                              <div class="spr-review-header">
+                                  <span class="product-review spr-starratings spr-review-header-starratings">
+                                      <span class="reviewLink">
+                                          {% for star in range(review[1]) %}
+                                              <i class="fa fa-star"></i>
+                                          {% endfor %}
+                                          {% for star in range(5 - review[1]) %}
+                                              <i class="fa fa-star-o"></i>
+                                          {% endfor %}
+                                      </span>
+                                  </span>
+                                  <h3 class="spr-review-header-title">{{ review[2] }}</h3>
+                                  <span class="spr-review-header-byline"><strong>{{ review[0] }}</strong></span>
+                              </div>
+                              <div class="spr-review-content">
+                                  <p class="spr-review-content-body">{{ review[3] }}</p>
+                              </div>
                           </div>
-                          <div class="spr-review-content">
-                            <p class="spr-review-content-body" style="color: #081525;">
-                              Lorem ipsum dolor sit amet, consectetur
-                              adipiscing elit, sed do eiusmod tempor
-                              incididunt ut labore et dolore magna aliqua. Ut
-                              enim ad minim veniam, quis nostrud exercitation
-                              ullamco laboris nisi ut aliquip ex ea commodo
-                              consequat.
-                            </p>
-                          </div>
-                        </div>
-                        <div class="spr-review">
-                          <div class="spr-review-header">
-                            <span class="product-review spr-starratings spr-review-header-starratings"><span
-                                class="reviewLink"><i class="fa fa-star"></i><i class="font-13 fa fa-star"></i><i
-                                  class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i
-                                  class="font-13 fa fa-star"></i></span></span>
-                            <h3 class="spr-review-header-title">
-                              Lorem Ipsum is simply dummy text of the printing
-                            </h3>
-                            <span class="spr-review-header-byline"><strong>Yash Bhoite</strong> on
-                              <strong>Sep 30, 2024</strong></span>
-                          </div>
-
-                          <div class="spr-review-content">
-                            <p class="spr-review-content-body" style="color: #081525;">
-                              Sed ut perspiciatis unde omnis iste natus error
-                              sit voluptatem accusantium doloremque
-                              laudantium, totam rem aperiam, eaque ipsa quae
-                              ab illo inventore veritatis et quasi architecto
-                              beatae vitae dicta sunt explicabo.
-                            </p>
-                          </div>
-                        </div>
-                        <div class="spr-review">
-                          <div class="spr-review-header">
-                            <span class="product-review spr-starratings spr-review-header-starratings"><span
-                                class="reviewLink"><i class="fa fa-star"></i><i class="font-13 fa fa-star"></i><i
-                                  class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i
-                                  class="font-13 fa fa-star"></i></span></span>
-                            <h3 class="spr-review-header-title">
-                              Neque porro quisquam est qui dolorem ipsum quia
-                              dolor sit amet, consectetur, adipisci velit...
-                            </h3>
-                            <span class="spr-review-header-byline"><strong>Shubham</strong> on
-                              <strong>Sep 30, 2024</strong></span>
-                          </div>
-
-                          <div class="spr-review-content">
-                            <p class="spr-review-content-body" style="color: #081525;">
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting industry. Lorem Ipsum has been
-                              the industry's standard dummy text ever since
-                              the 1500s, when an unknown printer took a galley
-                              of type and scrambled.<br />
-                              <br />Lorem Ipsum is simply dummy text of the
-                              printing and typesetting industry.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                      {% endfor %}
+                  </div>
+                  
+                  
                     </div>
                   </div>
                 </div>
@@ -2430,6 +2376,53 @@ function addComboToCart(productId, selectedOption) {
     alert("{{ message }}");
   </script>
   {% endif %}
+
+
+  <script>
+    // JavaScript for dynamically rendering stars
+    function renderStars(averageRating) {
+      const starContainer = document.getElementById("dynamic-stars");
+      starContainer.innerHTML = ""; // Clear any previous stars
+  
+      for (let i = 1; i <= 5; i++) {
+        const starClass = i <= averageRating ? "fa fa-star" : "fa fa-star-o";
+        const star = document.createElement("i");
+        star.className = `font-13 ${starClass}`;
+        starContainer.appendChild(star);
+      }
+    }
+  </script>
+
+<script>
+  // Ensure DOM is loaded before running the script
+  document.addEventListener("DOMContentLoaded", function () {
+    const reviewSummary = document.getElementById("review-summary");
+    const avgRating = parseFloat(reviewSummary.dataset.avgRating);
+    const reviewCount = parseInt(reviewSummary.dataset.reviewCount, 10);
+
+    // Update stars dynamically based on the average rating
+    const starsContainer = reviewSummary.querySelector(".reviewLink");
+    starsContainer.innerHTML = generateStars(avgRating);
+
+    // Update review count
+    document.getElementById("review-count").textContent = reviewCount;
+  });
+
+  // Function to generate star icons based on rating
+  function generateStars(rating) {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+    const emptyStars = 5 - fullStars - halfStar;
+
+    return (
+      '<i class="font-13 fa fa-star"></i>'.repeat(fullStars) +
+      (halfStar ? '<i class="font-13 fa fa-star-half-o"></i>' : '') +
+      '<i class="font-13 fa fa-star-o"></i>'.repeat(emptyStars)
+    );
+  }
+</script>
+
+
 </body>
 
 </html>

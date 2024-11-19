@@ -4883,6 +4883,7 @@ table {
   padding-right: 15px;
   letter-spacing: 1px;
   color: #deb992;
+  white-space: nowrap; /* Prevent header wrapping */
 }
 .cart td {
   padding: 10px;
