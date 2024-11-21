@@ -6412,7 +6412,7 @@ body.home15-funiture-template {
   right: 0;
   top: 0;
   z-index: 10;
-  background-color: rgba(0, 0, 0, 0.7);
+  /* background-color: rgba(0, 0, 0, 0.7); */
   -ms-transition: all 0.45s cubic-bezier(0.29, 0.63, 0.44, 1);
   -webkit-transition: all 0.45s cubic-bezier(0.29, 0.63, 0.44, 1);
   transition: all 0.45s cubic-bezier(0.29, 0.63, 0.44, 1);
@@ -6873,12 +6873,12 @@ body.home15-funiture-template {
   background-color:  #339498;
 }
 
-.order-section, .address-section {
+.order-section, .address-section, .password-section {
   padding: 20px;
   flex: 1;
 }
 
-.order-section h2, .address-section h2 {
+.order-section h2, .address-section h2, .password-section h2 {
   margin-bottom: 20px;
 }
 

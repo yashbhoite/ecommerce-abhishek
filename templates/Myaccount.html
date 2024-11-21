@@ -614,6 +614,7 @@
                 <ul>
                     <li class="menu-active" id="orders-tab"><a href="#" onclick="showOrders()">Orders</a></li>
                     <li id="address-tab"><a href="#" onclick="showAddress()">Address</a></li>
+                    <li id="password-tab"><a href="#" onclick="showPassword()">Reset Password</a></li>
                 </ul>
             </aside>
             <section id="order-section" class="order-section">
@@ -717,6 +718,30 @@
     
 </section>
 
+<section id="password-section" class="password-section" style="display: none;">
+    <h2>Orders</h2>
+    <form method="post" action="/reset-password">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                    <label for="new_password" style="color: #deb992;">Enter new password:</label>
+                    <input type="password" name="new_password" id="new_password" required>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                    <input type="submit" class="btn mb-3" value="Reset Password">
+                </div>
+            </div>
+        </div>
+        
+        
+    </form>
+    
+    
+    
+</section>
+
 
 
         </div>
@@ -725,15 +750,27 @@
         function showOrders() {
             document.getElementById("order-section").style.display = "block";
             document.getElementById("address-section").style.display = "none";
+            document.getElementById("password-section").style.display = "none";
             document.getElementById("orders-tab").classList.add("menu-active");
             document.getElementById("address-tab").classList.remove("menu-active");
+            document.getElementById("password-tab").classList.remove("menu-active");
         }
 
         function showAddress() {
             document.getElementById("order-section").style.display = "none";
             document.getElementById("address-section").style.display = "block";
+            document.getElementById("password-section").style.display = "none";
             document.getElementById("orders-tab").classList.remove("menu-active");
             document.getElementById("address-tab").classList.add("menu-active");
+            document.getElementById("password-tab").classList.remove("menu-active");
+        }
+        function showPassword() {
+            document.getElementById("order-section").style.display = "none";
+            document.getElementById("address-section").style.display = "none";
+            document.getElementById("password-section").style.display = "block";
+            document.getElementById("orders-tab").classList.remove("menu-active");
+            document.getElementById("address-tab").classList.remove("menu-active");
+            document.getElementById("password-tab").classList.add("menu-active");
         }
     </script>
  <!--Footer-->

@@ -19,6 +19,26 @@ upload_folder = 'static/images/pics/'
 app.config['upload_folder'] = upload_folder
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
+def send_password_reset_email(email, temp_password):
+    sender_email = "sharmakartik1103@gmail.com"
+    sender_password = "iggp hkmj olvh xtfr"
+    subject = "Password Reset Request"
+    message = f"Your temporary password is: {temp_password}\nPlease login and reset your password."
+
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = email
+    msg['Subject'] = subject
+    msg.attach(MIMEText(message, 'plain'))
+
+    try:
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, email, msg.as_string())
+    except Exception as e:
+        print(f"Error sending email: {e}")
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -408,6 +428,63 @@ def login():
             return redirect(url_for('register', message="Account does not exist. Please create an account."))
 
     return render_template('login.html')
+
+@app.route('/forgot-password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        email = request.form['email']
+        
+        # Connect to the database
+        conn = sqlite3.connect('product.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users WHERE email = ?", [email])
+        user = cursor.fetchone()
+        conn.close()
+        
+        if user:
+            # Generate a temporary password or reset token
+            temp_password = "Temp1234"  # Replace this with a more secure random generator
+            # Update the database with the temporary password
+            conn = sqlite3.connect('product.db')
+            cursor = conn.cursor()
+            cursor.execute("UPDATE users SET password = ? WHERE email = ?", (temp_password, email))
+            conn.commit()
+            conn.close()
+            
+            # Notify the user
+            send_password_reset_email(email, temp_password)
+            return render_template('forgot_password.html', message="Temporary password sent to your email.")
+        else:
+            return render_template('forgot_password.html', message="Email not found.")
+    
+    return render_template('forgot_password.html')
+
+@app.route('/reset-password', methods=['GET', 'POST'])
+def reset_password():
+    if request.method == 'POST':
+        email = session.get('user_email')
+        new_password = request.form['new_password']
+        
+        if email:
+            # Update the database with the new password
+            conn = sqlite3.connect('product.db')
+            cursor = conn.cursor()
+            cursor.execute("UPDATE users SET password = ? WHERE email = ?", (new_password, email))
+            conn.commit()
+            conn.close()
+            
+            # Log the user out
+            session.clear()
+            
+            # Redirect to login page with a message
+            return redirect(url_for('login', message="Password reset successful. Please login with your new password."))
+        else:
+            return redirect(url_for('login', message="Session expired. Please log in again."))
+    
+    return render_template('Myaccount.html')
+
+
+
 
 
 @app.route('/logout')
