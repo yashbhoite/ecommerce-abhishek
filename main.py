@@ -248,10 +248,17 @@ def index():
     cursor.execute("SELECT * FROM products WHERE gender = 'Men'")
     men_products = cursor.fetchall()
 
+    sku = cursor.execute("SELECT sku FROM products ORDER BY RANDOM() LIMIT 5").fetchall()
+    sku_list = [item[0] for item in sku]
+    placeholders = ", ".join("?" for _ in sku_list)
+    query = f"SELECT * FROM products WHERE sku IN ({placeholders})"
+    relatedproducts = cursor.execute(query, sku_list).fetchall()
+
+
     conn.close()
     
     # Render template with the fetched products
-    return render_template("index.html", women_products=women_products, men_products=men_products)
+    return render_template("index.html", women_products=women_products, men_products=men_products,relatedproducts=relatedproducts)
 
 
 @app.route('/cart')
@@ -757,10 +764,13 @@ def productadddb():
     productcategory = product_category_men or product_category_women
     gender = request.form.get('gender')
     size = request.form.getlist('size')
+    print(size)
     color = request.form.getlist('color')
+    coloroption = request.form.getlist('coloroptions')
     vendor = request.form.get('vendor')
     sizes = ','.join(size)
     colors = ','.join(color)
+    coloroptions = ','.join(coloroption)
     input1 = request.files['input1']
     input2 = request.files['input2']
     input3 = request.files['input3']
@@ -799,7 +809,7 @@ def productadddb():
 
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
-    my_cursor.execute("INSERT INTO products VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (productname,description,colors,baseprice,discountpercentage1,discountpercentage2,discountpercentage3,sku,quantity,productcategory,gender,sizes,input1,input2,input3,input4,input5,vendor))
+    my_cursor.execute("INSERT INTO products VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (productname,description,colors,baseprice,discountpercentage1,discountpercentage2,discountpercentage3,sku,quantity,productcategory,gender,sizes,input1,input2,input3,input4,input5,vendor,coloroptions))
     connection.commit()
     connection.close()
     return redirect(url_for('shopfullwidth'))
@@ -869,8 +879,18 @@ def delete_product(sku):
 def productinfo(id):
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
+    productname = my_cursor.execute("Select name from products where sku=?", (id,)).fetchone()
+    gender = my_cursor.execute("Select gender from products where sku=?", (id,)).fetchone()
+    coloroptions_str = my_cursor.execute("Select coloroptions from products where name=?", (productname[0],)).fetchone()
+    sku = my_cursor.execute("SELECT sku FROM products WHERE gender=? ORDER BY RANDOM() LIMIT 5", (gender[0],)).fetchall()
+    sku_list = [item[0] for item in sku]
+    placeholders = ", ".join("?" for _ in sku_list)
+    query = f"SELECT * FROM products WHERE sku IN ({placeholders})"
+    relatedproducts = my_cursor.execute(query, sku_list).fetchall()
+    colors = coloroptions_str[0].split(",")
     name = my_cursor.execute(
         "Select * from products where sku=?", (id,)).fetchone()
+    print(name)
     sizes = my_cursor.execute(
         "Select size from products where sku=?", (id,)).fetchone()
     size_list = sizes[0].split(',') if sizes else []
@@ -886,7 +906,8 @@ def productinfo(id):
     avg_rating = round(review_data[0], 1) if review_data[0] else 0
     review_count = review_data[1] if review_data[1] else 0
     connection.close()
-    return render_template("product-layout-1.html", name=name,size_list=size_list,id=id,reviews=reviews,avg_rating=avg_rating,review_count=review_count)
+    return render_template("product-layout-1.html", name=name,size_list=size_list,id=id,reviews=reviews,avg_rating=avg_rating,review_count=review_count,colors=colors,relatedproducts=relatedproducts)
+
 
 
 @app.route('/submit-review/<string:sku>', methods=['POST'])
@@ -948,6 +969,45 @@ def checkout():
     conn.close()
     
     return render_template('checkout.html', cart_items=cart_items,userdetails=user, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total)
+
+@app.route('/select-color', methods=['POST'])
+def select_color():
+    try:
+        # Parse JSON data
+        data = request.get_json()
+        color = data.get('color')
+        sku = data.get('sku')
+
+        if not color or not sku:
+            return jsonify({"message": "Incomplete data received"}), 400
+
+        # Connect to the database
+        conn = sqlite3.connect('product.db')
+        cursor = conn.cursor()
+
+        # Get the product name for the given SKU
+        name_result = cursor.execute("SELECT name FROM products WHERE sku = ?", (sku,)).fetchone()
+        if not name_result:
+            return jsonify({"message": "Product not found for the given SKU"}), 404
+        name = name_result[0]
+
+        # Get the SKU for the selected color and product name
+        new_sku_result = cursor.execute("SELECT sku FROM products WHERE name = ? AND color = ?", (name, color)).fetchone()
+        if not new_sku_result:
+            return jsonify({"message": "No matching product found for the given color"}), 404
+        new_sku = new_sku_result[0]
+
+        conn.close()
+
+        # Redirect to the productinfo route with the new SKU
+        return redirect(url_for('productinfo', id=new_sku))
+
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+        return jsonify({"message": "A database error occurred", "error": str(e)}), 500
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"message": "An error occurred", "error": str(e)}), 500
 
 @app.route('/confirm-address', methods=['POST'])
 def confirm_address():
