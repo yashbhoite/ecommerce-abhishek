@@ -222,18 +222,21 @@
 
                         <div class="col-lg-6 col-md-6">
                             <label for="discountpercentage1">Discount Percentage 1(%)</label>
-                            <input type="number" id="discountpercentage1" name="discountpercentage1"
-                                value="{{ product[4] if product else '' }}">
+                            <input type="text" id="discountpercentage1" name="discountpercentage1"
+                                value="{{ product[4] if product else '' }}" 
+                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');">
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <label for="discountpercentage2">Discount Percentage 2(%)</label>
-                            <input type="number" id="discountpercentage2" name="discountpercentage2"
-                                value="{{ product[5] if product else '' }}">
+                            <input type="text" id="discountpercentage2" name="discountpercentage2"
+                                value="{{ product[5] if product else '' }}" 
+                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');">
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <label for="discountpercentage3">Discount Percentage 3(%)</label>
-                            <input type="number" id="discountpercentage3" name="discountpercentage3"
-                                value="{{ product[6] if product else '' }}">
+                            <input type="text" id="discountpercentage3" name="discountpercentage3"
+                                value="{{ product[6] if product else '' }}" 
+                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');">
                         </div>
 
                         <div class="col-lg-6 col-md-6">
@@ -243,8 +246,8 @@
 
                         <div class="col-lg-6 col-md-6">
                             <label for="quantity">Stock quantity</label>
-                            <input type="number" id="quantity" name="quantity" placeholder="Type product quantity"
-                                value="{{ product[8] if product else '' }}">
+                            <input type="text" id="quantity" name="quantity" placeholder="Type product quantity" pattern="[0-9,]*"
+                                value="{{ product[8] if product else '' }}"  oninput="this.value = this.value.replace(/[^0-9,]/g, '');">
                         </div>
 
                     </div>

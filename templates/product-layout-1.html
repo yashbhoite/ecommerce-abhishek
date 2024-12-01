@@ -17,6 +17,18 @@
   <!-- Main Style CSS -->
   <link rel="stylesheet" href="../static/css/style.css" />
   <link rel="stylesheet" href="../static/css/responsive.css" />
+  <style>
+    ul {
+        list-style-type: disc;
+        margin-left: 20px;
+        color: #555
+    }
+    ul ul {
+        list-style-type: circle;
+        margin-left: 40px;
+        color: #555
+    }
+</style>
 </head>
 
 <body class="template-product">
@@ -56,7 +68,7 @@
                   <!-- User is logged in -->
                   <li class="list-inline-item" style="display: none;"><a href="/wishlist" target="_blank"
                           style="color: #deb992; font-weight: 500;">Admin</a></li>
-                  <li class="list-inline-item" style="display: none;"><a href="/login"
+                  <li class="list-inline-item" style="display: none;"><a href="/login?next={{ request.path }}"
                           style="color: #deb992; font-weight: 500;">Login</a></li>
                   <li class="list-inline-item" style="display: none;"><a href="/register"
                           style="color: #deb992; font-weight: 500;">Create Account</a></li>
@@ -70,7 +82,7 @@
                   <!-- User is not logged in -->
                   <li class="list-inline-item"><a href="/wishlist" target="_blank"
                           style="color: #deb992; font-weight: 500;">Admin</a></li>
-                  <li class="list-inline-item"><a href="/login"
+                  <li class="list-inline-item"><a href="/login?next={{ request.path }}"
                           style="color: #deb992; font-weight: 500;">Login</a></li>
                   <li class="list-inline-item"><a href="/register"
                           style="color: #deb992; font-weight: 500;">Create Account</a></li>
@@ -685,8 +697,8 @@
                   </div>
                   <div class="prInfoRow">
                     <div class="product-stock">
-                      <span class="instock">In Stock</span>
-                      <span class="outstock hide">Unavailable</span>
+                      <span class="instock {% if stock== 0 %}hide{% endif %}">In Stock</span>
+                      <span class="outstock {% if stock > 0 %}hide{% endif %}">Unavailable</span>
                     </div>
                     <!-- <div class="product-sku">SKU: <span class="variant-sku">19115-rdxs</span></div> -->
                     <span class="product-review" id="review-summary" 
@@ -754,12 +766,17 @@
                   <input type="hidden" name="productimage" id="hiddenProductImage" value="">
                   <div class="swatch clearfix swatch-1 option2" data-option-index="1">
                     <div class="product-form__item">
+                      <br><label class="header" for="productsize">Current Size:</label>
                       <label class="header" for="productsize">Size:</label>
                       {% for size in size_list %}
                       <div data-value="{{ size }}" class="swatch-element {{ size.lower() }} available">
                         <input class="swatchInput" id="swatch-1-{{ size.lower() }}" type="radio" name="productsize" value="{{ size }}"
-                          required />
-                        <label class="swatchLbl medium rectangle" for="swatch-1-{{ size.lower() }}" title="{{ size }}">{{size}}</label>
+                          required {% if selected_size == size %}checked{% endif %}
+                          onclick="updateSelection('{{ id }}', '{{ size }}')" />
+                        <label style="background-color: #364658" 
+                               class="swatchLbl medium rectangle {% if selected_size == size %}selected{% endif %}" 
+                               for="swatch-1-{{ size.lower() }}" 
+                               title="{{ size }}">{{ size }}</label>
                       </div>
                       {% endfor %}
                       <!-- <div data-value="S" class="swatch-element s available">
@@ -801,24 +818,27 @@
                     </div>
 
 
-                    <button type="submit" name="add" class="btn product-form__cart-submit" style="width: 80%;padding: 12px;border-radius: 0.5rem;margin-top: -px;">
-                      Add to cart
-                    </button>
+                    <button type="submit" name="add" class="btn product-form__cart-submit productbtn" 
+                    style="width: 80%; padding: 12px; border-radius: 0.5rem; margin-top: -px;color: #deb992;"
+                    {% if stock == 0 %}disabled{% endif %}>
+                    Add to cart
+                  </button>
 
 
-                    <div class="shopify-payment-button" data-shopify="payment-button">
+                    <!-- <div class="shopify-payment-button" data-shopify="payment-button">
                       <button type="button"
                         class="shopify-payment-button__button shopify-payment-button__button--unbranded">
                         Buy it now
                       </button>
-                    </div>
+                    </div> -->
 
                   </div>
                   <!-- End Product Action -->
                 </form>
                 <div class="shopify-payment-button" data-shopify="payment-button">
-                  <button type="button"
-                  id="bidButton" class="shopify-payment-button__button shopify-payment-button__button--unbranded">
+                  <button type="button" id="bidButton" 
+                    class="shopify-payment-button__button shopify-payment-button__button--unbranded btn product-form__cart-submit productbtn"
+                    {% if stock == 0 %}disabled{% endif %}>
                     Bid for it
                   </button>
                 </div>
@@ -1116,30 +1136,48 @@
               </div>
 
               <div id="tab4" class="tab-content">
-                <h4>Returns Policy</h4>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Fusce eros justo, accumsan non dui sit amet. Phasellus
-                  semper volutpat mi sed imperdiet. Ut odio lectus, vulputate
-                  non ex non, mattis sollicitudin purus. Mauris consequat
-                  justo a enim interdum, in consequat dolor accumsan. Nulla
-                  iaculis diam purus, ut vehicula leo efficitur at.
-                </p>
-                <p>
-                  Interdum et malesuada fames ac ante ipsum primis in
-                  faucibus. In blandit nunc enim, sit amet pharetra erat
-                  aliquet ac.
-                </p>
-                <h4>Shipping</h4>
-                <p>
-                  Pellentesque ultrices ut sem sit amet lacinia. Sed nisi dui,
-                  ultrices ut turpis pulvinar. Sed fringilla ex eget lorem
-                  consectetur, consectetur blandit lacus varius. Duis vel
-                  scelerisque elit, et vestibulum metus. Integer sit amet
-                  tincidunt tortor. Ut lacinia ullamcorper massa, a fermentum
-                  arcu vehicula ut. Ut efficitur faucibus dui Nullam tristique
-                  dolor eget turpis consequat varius. Quisque a interdum
-                  augue. Nam ut nibh mauris.
+                <p>At <b>Fashion Holics</b>, we want you to be completely satisfied with your purchase. If for any reason you're not happy with your order, we offer a return policy under the following conditions:</p>
+                <h4>Eligibility for Return</h4>
+               
+                  <ul>
+                    <li>Returns will only be accepted if the buyer requests a return within <b>36</b> hours of receiving the product.</li>
+                    <li>Returns are only accepted for the following reasons:
+                      <ul>
+                        <li><b>Damaged or Defective Products</b>: If the item is damaged or defective upon arrival.</li>
+                        <li><b>Size Issues</b>: If the product size is incorrect (please ensure you check the size chart before ordering).</li>
+                      </ul>
+                    </li>
+                    
+                  </ul>
+               
+                <h4>Return Process</h4>
+              
+                  <ul>
+                    <li>To initiate a return, please contact our customer service team within 36 hours of receiving your order. You can reach us at Email fashionholics23@gmail.com , Phone or through our contact page.</li>
+                    <li>Provide your order number, a description of the issue, and photos (if applicable) of the product showing any damage or size discrepancy.</li>
+                  </ul>
+  
+                <h4>Conditions for Return</h4>
+                  <ul>
+                    <li>The product must be returned in its <b>original, unused condition</b> with all tags and packaging intact.</li>
+                    <li>For size issues, you may be offered a <b>size exchange</b> or a  <b>refund</b> depending on availability.</li>
+                    <li><b>Shipping fees</b> for returns are the responsibility of the buyer unless the product was damaged or defective upon arrival.</li>
+                  </ul>
+                  
+                <h4>Refunds</h4>
+                          <ul>
+                    <li>Once your return is processed and approved, a refund will be issued to the original payment method. Please allow 7-10 business days for the refund to appear in your account, depending on your payment provider.</li>
+                  </ul>
+                  
+                <h4>Non-Returnable Items</h4>
+                  <ul>
+                      <li>Items that have been worn or washed cannot be returned unless they meet the criteria for damaged or defective products.</li>
+                  </ul>
+                  
+
+
+            
+                <p>We strive to provide high-quality products and excellent customer service. If you have any questions or concerns about our return policy, feel free to contact us. Thank you for shopping at <b>Fashion Holics!</b>
                 </p>
               </div>
             </div>
@@ -1513,7 +1551,18 @@
     <script src="../static/js/vendor/photoswipe.min.js"></script>
     <script src="../static/js/vendor/photoswipe-ui-default.min.js"></script>
     <script>
+function updateSelection(productId, size) {
+    // Remove the "selected" class from all labels
+    const labels = document.querySelectorAll(".swatchLbl");
+    labels.forEach(label => label.classList.remove("selected"));
 
+    // Add the "selected" class to the clicked label
+    const selectedLabel = document.querySelector(`#swatch-1-${size.toLowerCase()}`).nextElementSibling;
+    selectedLabel.classList.add("selected");
+
+    // Redirect to the route with the selected size as a query parameter
+    window.location.href = `/product/${productId}?size=${encodeURIComponent(size)}`;
+}
 function sendColor(color) {
   // Extract the product ID from the URL
   let path = window.location.pathname;
@@ -1659,6 +1708,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Fetch product details from the backend
         const response = await fetch(`/product-details/${productId}`);
         const data = await response.json();
+        console.log(data)
 
         if (!response.ok) {
             throw new Error(data.message || 'Failed to fetch product details');
@@ -1808,6 +1858,18 @@ function addComboToCart(productId, selectedOption) {
         if (newMessage.textContent.includes("It seems your current offer doesn’t quite meet the discount criteria.")) {
             // Disable bid submission buttons to avoid repeated submission
             document.getElementById('accept').disabled = true;
+            document.getElementById('decline').disabled = true;
+
+            // Enable the user to resubmit their bid
+            document.getElementById('bidInput').disabled = false;
+            document.getElementById('submitBid').disabled = false;
+            document.getElementById('options').style.display = 'none'; // Hide the options
+
+            scrollToBottom(); // Scroll to the bottom after the message
+            return; // Stop execution and prevent the request
+        }
+        else if(newMessage.textContent.includes("You must log in to submit a bid.")) {
+          document.getElementById('accept').disabled = true;
             document.getElementById('decline').disabled = true;
 
             // Enable the user to resubmit their bid

@@ -7065,14 +7065,14 @@ border-radius:8px;
   border: 1px solid #ddd;
 }
 
-#bidButton {
+/* #bidButton {
   padding: 10px 20px;
   border: none;
   background-color: #007bff;
   color: white;
   border-radius: 5px;
   cursor: pointer;
-}
+} */
 
 #chatbot {
   display: none;
@@ -7174,4 +7174,14 @@ border-radius:8px;
 .coloroptions:hover { 
  cursor: pointer;
  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.productbtn:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important; 
+  background-color: #081525 !important;
+}
+
+
+.selected{
+  background-color: #007bff !important;
 }

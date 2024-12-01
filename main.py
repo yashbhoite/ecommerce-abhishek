@@ -120,23 +120,29 @@ def get_product_details(product_id):
 
     # Fetch sizes, colors, and SKUs for products with the same name
     products = cursor.execute(
-        "SELECT sku, size, color FROM products WHERE quantity != 0 AND name = ?", (name[0],)
+        "SELECT sku, size, color,quantity FROM products WHERE name = ?", (name[0],)
     ).fetchall()
     conn.close()
+
 
     if products:
         # Map colors to their respective sizes
         color_size_map = {}
         sku_links = []
         
-        for sku, size, color in products:
+        for sku, size, color, quantity in products:
             colors = color.split(',')
             sizes = size.split(',')
+            quantities = [int(q) for q in quantity.split(',')]  # Assuming quantities are stored as comma-separated values
+            
+            # Filter sizes with quantities greater than zero
+            valid_sizes = [sizes[i] for i in range(len(sizes)) if quantities[i] > 0]
+            
             for c in colors:
                 if c not in color_size_map:
                     color_size_map[c] = set()
-                color_size_map[c].update(sizes)
-                
+                color_size_map[c].update(valid_sizes)
+            
             # Generate the SKU link
             sku_links.append(f"http://127.0.0.1:5000/product/{sku}")
 
@@ -242,23 +248,26 @@ def index():
     cursor = conn.cursor()
 
     # Fetch products for each gender category
-    cursor.execute("SELECT * FROM products WHERE gender = 'Women'")
-    women_products = cursor.fetchall()
+    # cursor.execute("SELECT * FROM products WHERE gender = 'Women'")
+    # women_products = cursor.fetchall()
 
-    cursor.execute("SELECT * FROM products WHERE gender = 'Men'")
-    men_products = cursor.fetchall()
+    # cursor.execute("SELECT * FROM products WHERE gender = 'Men'")
+    # men_products = cursor.fetchall()
 
     sku = cursor.execute("SELECT sku FROM products ORDER BY RANDOM() LIMIT 5").fetchall()
     sku_list = [item[0] for item in sku]
     placeholders = ", ".join("?" for _ in sku_list)
     query = f"SELECT * FROM products WHERE sku IN ({placeholders})"
     relatedproducts = cursor.execute(query, sku_list).fetchall()
-
-
+    newarrivalsmen = cursor.execute("SELECT * FROM products WHERE gender = 'Men' ORDER BY created_at DESC LIMIT 4").fetchall()
+    newarrivalswomen = cursor.execute("SELECT * FROM products WHERE gender = 'Women' ORDER BY created_at DESC LIMIT 4").fetchall()
+    print("---------------new arrivals--------------------")
+    print(newarrivalsmen)
+    print(newarrivalswomen)
     conn.close()
     
     # Render template with the fetched products
-    return render_template("index.html", women_products=women_products, men_products=men_products,relatedproducts=relatedproducts)
+    return render_template("index.html",relatedproducts=relatedproducts,newarrivalsmen=newarrivalsmen,newarrivalswomen=newarrivalswomen)
 
 
 @app.route('/cart')
@@ -408,6 +417,14 @@ def contactus():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # Get the 'next' parameter from the query string
+    if request.method == 'POST':
+        next_page = request.form.get('next', url_for('index'))  # Default to index page if no 'next'
+    else:
+        next_page = request.args.get('next', url_for('index'))  # Default to index page if no 'next'
+
+    print("------------next page----------------------")
+    print(next_page)
     if request.method == 'POST':
         email = request.form['customer[email]']
         password = request.form['customer[password]']
@@ -422,19 +439,19 @@ def login():
         if user:
             # If the user exists, check the password
             if user[3] == password:
-                # If password matches, redirect to home with success alert
-                # After a successful login
+                # Successful login
                 session['logged_in'] = True
-                session['user_email'] = email  # You can store more user data if needed
-                return redirect(url_for('index', message="Login successful!"))
+                session['user_email'] = email
+                return redirect(next_page)  # Redirect to the original page
             else:
-                # If password is incorrect, stay on login page with email populated
+                # Incorrect password
                 return render_template('login.html', email=email, message="Password is incorrect.")
         else:
-            # If user does not exist, redirect to register page with alert
+            # User does not exist
             return redirect(url_for('register', message="Account does not exist. Please create an account."))
 
     return render_template('login.html')
+
 
 @app.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
@@ -809,7 +826,7 @@ def productadddb():
 
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
-    my_cursor.execute("INSERT INTO products VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (productname,description,colors,baseprice,discountpercentage1,discountpercentage2,discountpercentage3,sku,quantity,productcategory,gender,sizes,input1,input2,input3,input4,input5,vendor,coloroptions))
+    my_cursor.execute("INSERT INTO products (name, description, color, price, per1, per2, per3, sku, quantity, category, gender, size, img1, img2, img3, img4, img5, vendor, coloroptions, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)", (productname, description, colors, baseprice, discountpercentage1, discountpercentage2, discountpercentage3, sku, quantity, productcategory, gender, sizes, input1, input2, input3, input4, input5, vendor, coloroptions))
     connection.commit()
     connection.close()
     return redirect(url_for('shopfullwidth'))
@@ -877,11 +894,19 @@ def delete_product(sku):
 
 @app.route('/product/<string:id>')
 def productinfo(id):
+    selected_size = request.args.get('size')  # Capture the size from query params
+    print("------------captured size---------------------")
+    print(selected_size)
+
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
+
     productname = my_cursor.execute("Select name from products where sku=?", (id,)).fetchone()
     gender = my_cursor.execute("Select gender from products where sku=?", (id,)).fetchone()
     coloroptions_str = my_cursor.execute("Select coloroptions from products where name=?", (productname[0],)).fetchone()
+
+    
+
     sku = my_cursor.execute("SELECT sku FROM products WHERE gender=? ORDER BY RANDOM() LIMIT 5", (gender[0],)).fetchall()
     sku_list = [item[0] for item in sku]
     placeholders = ", ".join("?" for _ in sku_list)
@@ -891,24 +916,70 @@ def productinfo(id):
     name = my_cursor.execute(
         "Select * from products where sku=?", (id,)).fetchone()
     print(name)
+
     sizes = my_cursor.execute(
         "Select size from products where sku=?", (id,)).fetchone()
     size_list = sizes[0].split(',') if sizes else []
+
+    # Use the selected size if available, otherwise default to the first size
+    selected_size = selected_size or (size_list[0] if size_list else None)
+
+    data = my_cursor.execute("Select quantity from products where sku=?", (id,)).fetchone()
+    print("-----------------stock---------------------")
+    print(data)
+    if data and data[0]:  # Ensure it's not empty or None
+        if isinstance(data[0], int):  
+            stock = [data[0]]  # Single integer, wrap it in a list
+        elif isinstance(data[0], str) and ',' in data[0]:  
+            stock = [int(s) for s in data[0].split(',')]  # Comma-separated string, split and convert
+        else:
+            stock = []  # Handle any unexpected cases
+    else:
+        stock = []  # Default to an empty list if no data or invalid data
+
+    print("Stock:", stock)
+    if len(stock)>1:
+        if selected_size == 'XS':
+            stock = stock[0]
+        elif selected_size == 'S':
+            stock = stock[1]
+        elif selected_size == 'M':
+            stock = stock[2]
+        elif selected_size == 'L':
+            stock = stock[3]
+        elif selected_size == 'XL':
+            stock = stock[4]
+        else:
+            stock = stock[5]
+    else:
+        stock = data[0]
 
     reviews = my_cursor.execute(
         "SELECT name, rating, title, body FROM reviews WHERE sku=? ORDER BY rating DESC LIMIT 3", 
         (id,)
     ).fetchall()
+
     # Calculate average rating and review count
     my_cursor.execute(
         "SELECT AVG(rating) as avg_rating, COUNT(*) as review_count FROM reviews WHERE sku=?", (id,))
     review_data = my_cursor.fetchone()
     avg_rating = round(review_data[0], 1) if review_data[0] else 0
     review_count = review_data[1] if review_data[1] else 0
+
     connection.close()
-    return render_template("product-layout-1.html", name=name,size_list=size_list,id=id,reviews=reviews,avg_rating=avg_rating,review_count=review_count,colors=colors,relatedproducts=relatedproducts)
-
-
+    return render_template(
+        "product-layout-1.html",
+        name=name,
+        size_list=size_list,
+        id=id,
+        reviews=reviews,
+        avg_rating=avg_rating,
+        review_count=review_count,
+        colors=colors,
+        relatedproducts=relatedproducts,
+        stock=stock,
+        selected_size=selected_size
+    )
 
 @app.route('/submit-review/<string:sku>', methods=['POST'])
 def submit_review(sku):
@@ -955,6 +1026,7 @@ def checkout():
     # Fetch cart items specific to the logged-in user
     cursor.execute("SELECT productimage, productname, productsize, productprice, productquantity, totalprice, productcolor FROM cart WHERE user_email = ?", (user_email,))
     cart_items = cursor.fetchall()
+    
     
     # Calculate subtotal (sum of totalprice) for the logged-in user's cart items
     cursor.execute("SELECT SUM(totalprice) FROM cart WHERE user_email = ?", (user_email,))
@@ -1177,13 +1249,86 @@ def place_order():
     cursor.execute("SELECT productname, productsize, productcolor, productquantity, totalprice FROM cart WHERE user_email = ?", (user_email,))
     cart_items = cursor.fetchall()
 
+    
     # Insert order into orders table for each cart item
     for item in cart_items:
         cursor.execute('''INSERT INTO orders (firstname, lastname, email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice, razorpay_payment_id, razorpay_order_id, payment_info, status)
                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
                        (firstname, lastname, user_email, mobile, address, city, state, pincode, item[0], item[1], item[2], item[3], item[4], razorpay_payment_id, razorpay_order_id, payment_info, status))
+        conn.commit()
+    print("---------------------------------------decreasing quantity=----------------------------------")
+    for item in cart_items:
+        product_name = item[0]  # 'productname' from cart
+        sizes = item[1].split(',')  # 'productsize' from cart (comma-separated for combos)
+        colors = item[2].split(',')  # 'productcolor' from cart (comma-separated for combos)
+        quantity_to_decrease = item[3]  # 'productquantity' from cart
 
-    conn.commit()
+        # Check if the product_name indicates a combo (contains multiple names)
+        product_names = product_name.split(',')
+        if len(product_names) == len(sizes) == len(colors):  # Ensure sizes/colors match product names
+            for i, name in enumerate(product_names):
+                # Fetch the current quantity for each product, size, and color
+                selected_size = sizes[i].strip()
+                selected_color = colors[i].strip()
+                cursor.execute("""
+                    SELECT quantity FROM products
+                    WHERE name = ? AND color = ? AND size LIKE ?
+                """, (name.strip(), selected_color, f"%{selected_size}%"))
+                
+                current_qty = cursor.fetchone()
+                if current_qty:
+                    # Parse the current stock as a list
+                    qty_list = list(map(int, current_qty[0].split(',')))
+
+                    # Get the index for the current size
+                    size_index = {'XS': 0, 'S': 1, 'M': 2, 'L': 3, 'XL': 4, 'XXL': 5}.get(selected_size)
+                    print("-----------------------------------------size-index-----------------------------------------")
+                    print(size_index)
+                    if size_index is not None:
+                        # Decrease quantity by 1
+                        qty_list[size_index] -= 1
+
+                        # Update the `qty` in the database
+                        updated_qty = ','.join(map(str, qty_list))
+                        cursor.execute("""
+                            UPDATE products
+                            SET quantity = ?
+                            WHERE name = ? AND color = ?
+                        """, (updated_qty, name.strip(), selected_color))
+                        conn.commit()
+        else:
+            # Handle single-item purchase (as fallback logic)
+            selected_size = sizes[0].strip()  # Single size
+            selected_color = colors[0].strip()  # Single color
+            cursor.execute("""
+                SELECT quantity FROM products
+                WHERE name = ? AND color = ? AND size LIKE ?
+            """, (product_name.strip(), selected_color, f"%{selected_size}%"))
+
+            current_qty = cursor.fetchone()
+            if current_qty:
+                # Parse the current stock as a list
+                qty_list = list(map(int, current_qty[0].split(',')))
+
+                # Get the index for the current size
+                size_index = {'XS': 0, 'S': 1, 'M': 2, 'L': 3, 'XL': 4, 'XXL': 5}.get(selected_size)
+                if size_index is not None:
+                    # Decrease the quantity for the selected size
+                    qty_list[size_index] -= quantity_to_decrease
+
+                    # Update the `qty` in the database
+                    updated_qty = ','.join(map(str, qty_list))
+                    cursor.execute("""
+                        UPDATE products
+                        SET quantity = ?
+                        WHERE name = ? AND color = ?
+                    """, (updated_qty, product_name.strip(), selected_color))
+                    conn.commit()
+
+
+
+
+    
     conn.close()
 
     # Send email notification

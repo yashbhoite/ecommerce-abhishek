@@ -619,6 +619,7 @@
                         <div class="mb-4">
                             <form method="post" action="/login" id="CustomerLoginForm" accept-charset="UTF-8"
                                 class="contact-form">
+                                <input type="hidden" name="next" value="{{ request.args.get('next', '/') }}">
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="form-group">
