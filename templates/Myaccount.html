@@ -2,81 +2,85 @@
 <html class="no-js" lang="en">
 
 <!-- belle/shop-fullwidth.html   11 Nov 2019 12:39:03 GMT -->
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Women &ndash; Belle Multipurpose Bootstrap 4 Template</title>
-<meta name="description" content="description">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Favicon -->
-<link rel="shortcut icon" href="../static/images/favicon.png" />
-<!-- Plugins CSS -->
-<link rel="stylesheet" href="../static/css/plugins.css">
-<!-- Bootstap CSS -->
-<link rel="stylesheet" href="../static/css/bootstrap.min.css">
-<!-- Main Style CSS -->
-<link rel="stylesheet" href="../static/css/style.css">
-<link rel="stylesheet" href="../static/css/responsive.css">
-</head>
-<body class="template-collection belle">
-<div class="pageWrapper">
-	<!--Search Form Drawer-->
-	<div class="search">
-        <div class="search__form">
-            <form class="search-bar__form" action="#">
-                <button class="go-btn search__button" type="submit"><i class="icon anm anm-search-l"></i></button>
-                <input class="search__input" type="search" name="q" value="" placeholder="Search entire store..." aria-label="Search" autocomplete="off">
-            </form>
-            <button type="button" class="search-trigger close-btn"><i class="icon anm anm-times-l"></i></button>
-        </div>
-    </div>
-    <!--End Search Form Drawer-->
- <!--Top Header-->
- <div class="top-header" style="background-color: #081525;">
-    <div class="container-fluid">
-        <div class="row align-items-center">
-            <!-- Centered Tagline Section -->
-            <div class="col-sm-12 col-md-4 offset-md-4 text-center top-headerdiv">
-                <p class="top-header_middle-text" style="color: #deb992;">Effortless Style. Redefined for You.
-                </p>
-            </div>
-            <!-- Right Aligned Login and Create Account -->
-            <div class="col-sm-12 col-md-4 text-right accountlogo">
-                <span class="user-menu d-block d-lg-none">
-                    <i class="anm anm-user-al" aria-hidden="true" style="color: #deb992;"></i>
-                </span>
-                <ul class="customer-links list-inline mb-0">
-                    {% if session['logged_in'] %}
-                    <!-- User is logged in -->
-                    <li class="list-inline-item" style="display: none;"><a href="/wishlist" target="_blank"
-                            style="color: #deb992; font-weight: 500;">Admin</a></li>
-                    <li class="list-inline-item" style="display: none;"><a href="/login"
-                            style="color: #deb992; font-weight: 500;">Login</a></li>
-                    <li class="list-inline-item" style="display: none;"><a href="/register"
-                            style="color: #deb992; font-weight: 500;">Create Account</a></li>
 
-                    <!-- Show "My Account" and "Logout" when logged in -->
-                    <li class="list-inline-item"><a href="/myaccount" style="color: #deb992; font-weight: 500;">My
-                            Account</a></li>
-                    <li class="list-inline-item"><a href="/logout"
-                            style="color: #deb992; font-weight: 500;">Logout</a></li>
-                    {% else %}
-                    <!-- User is not logged in -->
-                    <li class="list-inline-item"><a href="/wishlist" target="_blank"
-                            style="color: #deb992; font-weight: 500;">Admin</a></li>
-                    <li class="list-inline-item"><a href="/login"
-                            style="color: #deb992; font-weight: 500;">Login</a></li>
-                    <li class="list-inline-item"><a href="/register"
-                            style="color: #deb992; font-weight: 500;">Create Account</a></li>
-                    <li class="list-inline-item" style="display: none;"><a href="/myaccount"
-                            style="color: #deb992; font-weight: 500; display: none;">My Account</a></li>
-                    {% endif %}
-                </ul>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Women &ndash; Belle Multipurpose Bootstrap 4 Template</title>
+    <meta name="description" content="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../static/images/favicon.png" />
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="../static/css/plugins.css">
+    <!-- Bootstap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/responsive.css">
+</head>
+
+<body class="template-collection belle">
+    <div class="pageWrapper">
+        <!--Search Form Drawer-->
+        <div class="search">
+            <div class="search__form">
+                <form class="search-bar__form" action="#">
+                    <button class="go-btn search__button" type="submit"><i class="icon anm anm-search-l"></i></button>
+                    <input class="search__input" type="search" name="q" value="" placeholder="Search entire store..."
+                        aria-label="Search" autocomplete="off">
+                </form>
+                <button type="button" class="search-trigger close-btn"><i class="icon anm anm-times-l"></i></button>
             </div>
         </div>
-    </div>
-</div>
-<!--End Top Header-->
+        <!--End Search Form Drawer-->
+        <!--Top Header-->
+        <div class="top-header" style="background-color: #081525;">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <!-- Centered Tagline Section -->
+                    <div class="col-sm-12 col-md-4 offset-md-4 text-center top-headerdiv">
+                        <p class="top-header_middle-text" style="color: #deb992;">Effortless Style. Redefined for You.
+                        </p>
+                    </div>
+                    <!-- Right Aligned Login and Create Account -->
+                    <div class="col-sm-12 col-md-4 text-right accountlogo">
+                        <span class="user-menu d-block d-lg-none">
+                            <i class="anm anm-user-al" aria-hidden="true" style="color: #deb992;"></i>
+                        </span>
+                        <ul class="customer-links list-inline mb-0">
+                            {% if session['logged_in'] %}
+                            <!-- User is logged in -->
+                            <li class="list-inline-item" style="display: none;"><a href="/wishlist" target="_blank"
+                                    style="color: #deb992; font-weight: 500;">Admin</a></li>
+                            <li class="list-inline-item" style="display: none;"><a href="/login"
+                                    style="color: #deb992; font-weight: 500;">Login</a></li>
+                            <li class="list-inline-item" style="display: none;"><a href="/register"
+                                    style="color: #deb992; font-weight: 500;">Create Account</a></li>
+
+                            <!-- Show "My Account" and "Logout" when logged in -->
+                            <li class="list-inline-item"><a href="/myaccount"
+                                    style="color: #deb992; font-weight: 500;">My
+                                    Account</a></li>
+                            <li class="list-inline-item"><a href="/logout"
+                                    style="color: #deb992; font-weight: 500;">Logout</a></li>
+                            {% else %}
+                            <!-- User is not logged in -->
+                            <li class="list-inline-item"><a href="/wishlist" target="_blank"
+                                    style="color: #deb992; font-weight: 500;">Admin</a></li>
+                            <li class="list-inline-item"><a href="/login"
+                                    style="color: #deb992; font-weight: 500;">Login</a></li>
+                            <li class="list-inline-item"><a href="/register"
+                                    style="color: #deb992; font-weight: 500;">Create Account</a></li>
+                            <li class="list-inline-item" style="display: none;"><a href="/myaccount"
+                                    style="color: #deb992; font-weight: 500; display: none;">My Account</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Top Header-->
         <!--Header-->
         <div class="header-wrap classicHeader animated d-flex">
             <div class="container-fluid">
@@ -245,174 +249,175 @@
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="lvl1 parent megamenu"><a href="/">Kids <span style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
-                                    class="anm anm-angle-down-l"></i></a>
-                           
-                        </li>
+                                <li class="lvl1 parent megamenu"><a href="/">Kids <span
+                                            style="background-color: red;border-radius: 5px; padding: 1px;">Coming
+                                            soon!</span><i class="anm anm-angle-down-l"></i></a>
+
+                                </li>
                                 <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i
                                             class="anm anm-angle-down-l"></i></a>
                                 </li>
-                               
+
                                 <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
                                             class="anm anm-angle-down-l"></i></a>
                                 </li>
                                 <li class="lvl1 parent dropdown"><a href="/myaccount">My Account <i
-                                    class="anm anm-angle-down-l"></i></a>
+                                            class="anm anm-angle-down-l"></i></a>
                                 </li>
                                 {% else %}
                                 <li class="lvl1 parent megamenu"><a href="/">Home <i
-                                    class="anm anm-angle-down-l"></i></a>
+                                            class="anm anm-angle-down-l"></i></a>
                                 </li>
                                 <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i
-                                    class="anm anm-angle-down-l"></i></a>
-                            <div class="megamenu style4">
-                                <ul class="grid grid--uniform mmWrapper">
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Shirts</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Dress Shirt</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Oxford Shirt</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Flannel Shirt</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Henley Shirt</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Chambray Shirt</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Tshirts</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Crew Neck T-shirt <span
-                                                        class="lbl nm_label3">Hot</span></a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">V-neck T-shirt</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Polo T-shirt</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Graphic T-shirt</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Long Sleeve T-shirt</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Trousers</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Chinos <span
-                                                        class="lbl nm_label3">Hot</span></a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Jeans</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Dress Pants</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Cargo Pants</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Joggers</a></li>
+                                            class="anm anm-angle-down-l"></i></a>
+                                    <div class="megamenu style4">
+                                        <ul class="grid grid--uniform mmWrapper">
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Shirts</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Dress Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Oxford Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Flannel Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Henley Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Chambray Shirt</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Tshirts</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Crew Neck T-shirt <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">V-neck T-shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Polo T-shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Graphic T-shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Long Sleeve T-shirt</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Trousers</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Chinos <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Jeans</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Dress Pants</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Cargo Pants</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Joggers</a></li>
 
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Shoes</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Sneakers <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Loafers</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Boots</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Derby Shoes</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Oxford Shoes</a></li>
+                                                </ul>
+                                            </li>
                                         </ul>
-                                    </li>
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Shoes</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Sneakers <span
-                                                        class="lbl nm_label3">Hot</span></a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Loafers</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Boots</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Derby Shoes</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Oxford Shoes</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
+                                    </div>
                                 </li>
                                 <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i
-                                    class="anm anm-angle-down-l"></i></a>
-                            <div class="megamenu style4">
-                                <ul class="grid grid--uniform mmWrapper">
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Western Wear</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Denim Jacket</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Skinny Jeans</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Bodycon Dress</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Blazer</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Jumpsuit</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Ethnic Wear</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Saree <span
-                                                        class="lbl nm_label3">Hot</span></a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Salwar Kameez</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Lehenga Choli</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Kurti</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Anarkali Suit</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Lingerie & Nightwear</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Underwire Bra <span
-                                                        class="lbl nm_label3">Hot</span></a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Boyshorts</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Lace Panties</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Nightgown</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Bodysuit</a></li>
+                                            class="anm anm-angle-down-l"></i></a>
+                                    <div class="megamenu style4">
+                                        <ul class="grid grid--uniform mmWrapper">
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Western Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Denim Jacket</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Skinny Jeans</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Bodycon Dress</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Blazer</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Jumpsuit</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Ethnic Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Saree <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Salwar Kameez</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Lehenga Choli</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Kurti</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Anarkali Suit</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Lingerie & Nightwear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Underwire Bra <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Boyshorts</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Lace Panties</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Nightgown</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Bodysuit</a></li>
 
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Sportswear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Sports Bra</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Leggings</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Tank Tops</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Running Shorts</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Track Jackets</a></li>
+                                                </ul>
+                                            </li>
                                         </ul>
-                                    </li>
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Sportswear</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Sports Bra</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Leggings</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Tank Tops</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Running Shorts</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Track Jackets</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
+                                    </div>
                                 </li>
                                 <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i
-                                    class="anm anm-angle-down-l"></i></a>
+                                            class="anm anm-angle-down-l"></i></a>
                                 </li>
-                       
+
                                 <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
-                                    class="anm anm-angle-down-l"></i></a>
+                                            class="anm anm-angle-down-l"></i></a>
                                 </li>
-                                <li class="lvl1 parent dropdown"><a href="/myaccount" style="display: none;">My Account <i
-                            class="anm anm-angle-down-l"></i></a>
+                                <li class="lvl1 parent dropdown"><a href="/myaccount" style="display: none;">My Account
+                                        <i class="anm anm-angle-down-l"></i></a>
                                 </li>
                                 {% endif %}
                             </ul>
@@ -527,7 +532,7 @@
                         <li><a href="/shopfullwidth" class="site-nav">Chambray Shirt</a></li>
                     </ul>
                 </li>
-           
+
 
 
 
@@ -539,10 +544,11 @@
                         <li><a href="/product" class="site-nav">Sportswear</a></li>
                     </ul>
                 </li>
-                <li class="lvl1 parent megamenu"><a href="/">Kids <span style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
-                    class="anm anm-angle-down-l"></i></a>
-           
-        </li>
+                <li class="lvl1 parent megamenu"><a href="/">Kids <span
+                            style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
+                            class="anm anm-angle-down-l"></i></a>
+
+                </li>
                 <li class="lvl1"><a href="#">New Arrivals</a>
                 </li>
 
@@ -569,7 +575,7 @@
                         <li><a href="/shopfullwidth" class="site-nav">Chambray Shirt</a></li>
                     </ul>
                 </li>
-        
+
 
 
 
@@ -587,452 +593,666 @@
                 <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
                 </li>
 
-                <li class="list-inline-item"><a href="/myaccount" style="color: #deb992; font-weight: 500; display: none;">My Account</a>
+                <li class="list-inline-item"><a href="/myaccount"
+                        style="color: #deb992; font-weight: 500; display: none;">My Account</a>
                 </li>
                 {% endif %}
 
             </ul>
-                <!-- <li class="lvl1 parent dropdown"><a href="Myaccount.html">My Account</a>
+            <!-- <li class="lvl1 parent dropdown"><a href="Myaccount.html">My Account</a>
                 </li> -->
 
         </div>
         <!--End Mobile Menu-->
-    
-    <!--Body Content-->
-    <div id="page-content">
-    	<!--Collection Banner-->
-    	<div class="collection-header">
-			<div class="collection-hero">
-        		<div class="collection-hero__image"><img class="blur-up lazyload" data-src="../static/images/cat-women2.jpg" src="../static/images/cat-women2.jpg" alt="Women" title="Women" /></div>
-        		<div class="collection-hero__title-wrapper"><h1 class="collection-hero__title page-width">Account Details</h1></div>
-      		</div>
-		</div>
-        <!--End Collection Banner-->
-        
-        <div class="dashboard-wrapper">
-            <aside class="menu-panel">
-                <ul>
-                    <li class="menu-active" id="orders-tab"><a href="#" onclick="showOrders()">Orders</a></li>
-                    <li id="address-tab"><a href="#" onclick="showAddress()">Address</a></li>
-                    <li id="password-tab"><a href="#" onclick="showPassword()">Reset Password</a></li>
-                </ul>
-            </aside>
-            <section id="order-section" class="order-section">
-                <h2>Orders</h2>
-                <table class="orders-grid">
-                    <thead>
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Size</th>
-                            <th>Color</th>
-                            <th>Quantity</th>
-                            <th>Total Price</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in order_items %}
-                        <tr>
-                            <td class="productname">{{ item[0] }}</td>
-                            <td class="size">{{ item[1] }}</td>
-                            <td class="color">{{ item[2] }}</td>
-                            <td class="quantity">{{ item[3] }}</td>
-                            <td class="totalprice">₹{{ item[4] }}</td>
-                            <td><button class="action-btn cancel-btn">Cancel</button></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                
-                
-                
-            </section>
-    
-           <section id="address-section" class="address-section" style="display:none;">
-    <h2>Billing Address</h2>
-    {% if address_data %}
-        <p><strong>{{ address_data[1] }} {{ address_data[2] }}</strong></p> <!-- Firstname Lastname -->
-        <p>{{ address_data[4] }}, {{ address_data[5] }}</p> <!-- Address, City -->
-        <p>{{ address_data[7] }} - {{ address_data[6] }}</p> <!-- State - Pincode -->
-        <p>Mobile: {{ address_data[3] }}</p> <!-- Mobile -->
-        <button class="action-btn" id="editAddressBtn">Edit Address</button>
-    {% else %}
-        <p>No address found.</p>
-    {% endif %}
 
-    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 sm-margin-30px-bottom" id="editAddressForm" style="display:none;">
-        <div class="create-ac-content bg-light-gray padding-20px-all">
-            <form method="POST" action="/update-address" id="addressForm">
-                <div class="row">
-                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                        <label for="email">Email address <span class="required-f">*</span></label>
-                        <input type="email" class="no-margin" name="email" id="email" value="{{ address_data[0] if address_data else '' }}" required>
-                    </div>
-                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                        <label for="firstname">First Name <span class="required-f">*</span></label>
-                        <input type="text" id="firstname" name="firstname" value="{{ address_data[1] if address_data else '' }}" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                        <label for="lastname">Last Name <span class="required-f">*</span></label>
-                        <input type="text" id="lastname" name="lastname" value="{{ address_data[2] if address_data else '' }}" required>
-                    </div>
-                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                        <label for="mobile">Mobile <span class="required-f">*</span></label>
-                        <input type="text" id="mobile" name="mobile" value="{{ address_data[3] if address_data else '' }}" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                        <label for="address">Address <span class="required-f">*</span></label>
-                        <input type="text" id="address" name="address" value="{{ address_data[4] if address_data else '' }}" required>
-                    </div>
-                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                        <label for="city">City <span class="required-f">*</span></label>
-                        <input type="text" id="city" name="city" value="{{ address_data[5] if address_data else '' }}" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                        <label for="pincode">Pincode <span class="required-f">*</span></label>
-                        <input type="text" id="pincode" name="pincode" value="{{ address_data[6] if address_data else '' }}" required>
-                    </div>
-                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                        <label for="state">State <span class="required-f">*</span></label>
-                        <input type="text" id="state" name="state" value="{{ address_data[7] if address_data else '' }}" required>
-                    </div>
-                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                        <label for="country">Country <span class="required-f">*</span></label>
-                        <input type="text" id="country" name="country" value="{{ address_data[8] if address_data else '' }}" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 order-button-payment" style="margin-top: 0px; text-align: center;">
-                        <button type="submit" class="btn btn-primary mt-3">Confirm Address</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    
-</section>
-
-<section id="password-section" class="password-section" style="display: none;">
-    <h2>Orders</h2>
-    <form method="post" action="/reset-password">
-        <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="form-group">
-                    <label for="new_password" style="color: #deb992;">Enter new password:</label>
-                    <input type="password" name="new_password" id="new_password" required>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="form-group">
-                    <input type="submit" class="btn mb-3" value="Reset Password">
-                </div>
-            </div>
-        </div>
-        
-        
-    </form>
-    
-    
-    
-</section>
-
-
-
-        </div>
-    <!--End Body Content-->
-    <script>
-        function showOrders() {
-            document.getElementById("order-section").style.display = "block";
-            document.getElementById("address-section").style.display = "none";
-            document.getElementById("password-section").style.display = "none";
-            document.getElementById("orders-tab").classList.add("menu-active");
-            document.getElementById("address-tab").classList.remove("menu-active");
-            document.getElementById("password-tab").classList.remove("menu-active");
-        }
-
-        function showAddress() {
-            document.getElementById("order-section").style.display = "none";
-            document.getElementById("address-section").style.display = "block";
-            document.getElementById("password-section").style.display = "none";
-            document.getElementById("orders-tab").classList.remove("menu-active");
-            document.getElementById("address-tab").classList.add("menu-active");
-            document.getElementById("password-tab").classList.remove("menu-active");
-        }
-        function showPassword() {
-            document.getElementById("order-section").style.display = "none";
-            document.getElementById("address-section").style.display = "none";
-            document.getElementById("password-section").style.display = "block";
-            document.getElementById("orders-tab").classList.remove("menu-active");
-            document.getElementById("address-tab").classList.remove("menu-active");
-            document.getElementById("password-tab").classList.add("menu-active");
-        }
-    </script>
- <!--Footer-->
- <footer id="footer">
-      
-    <div class="site-footer">
-        <div class="container">
-             <!--Footer Links-->
-            <div class="footer-top">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
-                        <h4 class="h4">Quick Shop</h4>
-                        <ul>
-                            <li><a href="#">Women</a></li>
-                            <li><a href="#">Men</a></li>
-                            <li><a href="#">Kids</a></li>
-                            <li><a href="#">Sportswear</a></li>
-                            <li><a href="#">Sale</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
-                        <h4 class="h4">Informations</h4>
-                        <ul>
-                            <li><a href="#">About us</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">Privacy policy</a></li>
-                            <li><a href="#">Terms &amp; condition</a></li>
-                            <li><a href="#">My Account</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
-                        <h4 class="h4">Customer Services</h4>
-                        <ul>
-                            <li><a href="#">Request Personal Data</a></li>
-                            <li><a href="#">FAQ's</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Orders and Returns</a></li>
-                            <li><a href="#">Support Center</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 contact-box">
-                        <h4 class="h4">Contact Us</h4>
-                        <ul class="addressFooter">
-                            <li><i class="icon anm anm-map-marker-al"></i><p>55 Gallaxy Enque,<br>2568 steet, 23568 NY</p></li>
-                            <li class="phone"><i class="icon anm anm-phone-s"></i><p>+91 123456789</p></li>
-                            <li class="email"><i class="icon anm anm-envelope-l"></i><p>sales@yousite.com</p></li>
-                        </ul>
+        <!--Body Content-->
+        <div id="page-content">
+            <!--Collection Banner-->
+            <div class="collection-header">
+                <div class="collection-hero">
+                    <div class="collection-hero__image"><img class="blur-up lazyload"
+                            data-src="../static/images/cat-women2.jpg" src="../static/images/cat-women2.jpg" alt="Women"
+                            title="Women" /></div>
+                    <div class="collection-hero__title-wrapper">
+                        <h1 class="collection-hero__title page-width">Account Details</h1>
                     </div>
                 </div>
             </div>
-            <!--End Footer Links-->
-            <hr>
-            <div class="footer-bottom">
-                
-                    <!--Footer Copyright-->
-                    <div class="row">
-                    <div class="text-lg-center"> <a href="templateshub.net">Designed by WebSharks</a></div>
-                    <!--End Footer Copyright-->
-                    <!--Footer Payment Icon-->
-                </div>
-                    <!--End Footer Payment Icon-->
-        
+            <!--End Collection Banner-->
+
+            <div class="dashboard-wrapper">
+                <aside class="menu-panel">
+                    <ul>
+                        <li class="menu-active" id="orders-tab"><a href="#" onclick="showOrders()">Orders</a></li>
+                        <li id="address-tab"><a href="#" onclick="showAddress()">Address</a></li>
+                        <li id="password-tab"><a href="#" onclick="showPassword()">Reset Password</a></li>
+                    </ul>
+                </aside>
+                <section id="order-section" class="order-section">
+                    <h2>Orders</h2>
+                    <table class="orders-grid">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Product Name</th>
+                                <th>Size</th>
+                                <th>Color</th>
+                                <th>Quantity</th>
+                                <th>Total Price</th>
+                                <th>Action</th>
+                                <th>Status</th>
+                                <th>Return Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order_items %}
+                            <tr>
+                                <td class="orderid">{{ item[6] }}</td>
+                                <td class="productname">{{ item[0] }}</td>
+                                <td class="size">{{ item[1] }}</td>
+                                <td class="color">{{ item[2] }}</td>
+                                <td class="quantity">{{ item[3] }}</td>
+                                <td class="totalprice">₹{{ item[4] }}</td>
+                                <td>
+
+                                    <button class="action-btn cancel-btn" data-order-id="{{ item[6] }}"
+                                        data-product-name="{{ item[0] }}" {% if item[7] !='Placed' %}disabled{% endif
+                                        %}>
+                                        Cancel
+                                    </button>
+                                    <button class="action-btn return-btn" data-timestamp="{{ item[5] }}">Return</button>
+                                    <div class="return-form hidden">
+                                        <select class="reason-dropdown">
+                                            <option value="">Select a reason</option>
+                                            <option value="Size issue">Size issue</option>
+                                            <option value="Damaged Product">Damaged Product</option>
+                                        </select>
+                                        <textarea class="return-details" placeholder="Describe the problem"></textarea>
+                                        <div class="image-upload hidden">
+                                            <label for="image1">Upload Image 1:</label>
+                                            <input type="file" id="input1" name="input1" accept=".jpg,.jpeg,.png">
+                                            <label for="image2">Upload Image 2:</label>
+                                            <input type="file" id="input2" name="input2" accept=".jpg,.jpeg,.png">
+                                        </div>
+                                        <button class="action-btn request-return-btn">Request Return</button>
+                                    </div>
+                                </td>
+                                <td class="status">{{ item[7] }}</td>
+                                <td class="status">{{ item[8] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+
+
+                </section>
+
+                <section id="address-section" class="address-section" style="display:none;">
+                    <h2>Billing Address</h2>
+                    {% if address_data %}
+                    <p><strong>{{ address_data[1] }} {{ address_data[2] }}</strong></p> <!-- Firstname Lastname -->
+                    <p>{{ address_data[4] }}, {{ address_data[5] }}</p> <!-- Address, City -->
+                    <p>{{ address_data[7] }} - {{ address_data[6] }}</p> <!-- State - Pincode -->
+                    <p>Mobile: {{ address_data[3] }}</p> <!-- Mobile -->
+                    <button class="action-btn" id="editAddressBtn">Edit Address</button>
+                    {% else %}
+                    <p>No address found.</p>
+                    {% endif %}
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 sm-margin-30px-bottom" id="editAddressForm"
+                        style="display:none;">
+                        <div class="create-ac-content bg-light-gray padding-20px-all">
+                            <form method="POST" action="/update-address" id="addressForm">
+                                <div class="row">
+                                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                        <label for="email">Email address <span class="required-f">*</span></label>
+                                        <input type="email" class="no-margin" name="email" id="email"
+                                            value="{{ address_data[0] if address_data else '' }}" required>
+                                    </div>
+                                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                        <label for="firstname">First Name <span class="required-f">*</span></label>
+                                        <input type="text" id="firstname" name="firstname"
+                                            value="{{ address_data[1] if address_data else '' }}" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                        <label for="lastname">Last Name <span class="required-f">*</span></label>
+                                        <input type="text" id="lastname" name="lastname"
+                                            value="{{ address_data[2] if address_data else '' }}" required>
+                                    </div>
+                                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                        <label for="mobile">Mobile <span class="required-f">*</span></label>
+                                        <input type="text" id="mobile" name="mobile"
+                                            value="{{ address_data[3] if address_data else '' }}" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                        <label for="address">Address <span class="required-f">*</span></label>
+                                        <input type="text" id="address" name="address"
+                                            value="{{ address_data[4] if address_data else '' }}" required>
+                                    </div>
+                                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                        <label for="city">City <span class="required-f">*</span></label>
+                                        <input type="text" id="city" name="city"
+                                            value="{{ address_data[5] if address_data else '' }}" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                        <label for="pincode">Pincode <span class="required-f">*</span></label>
+                                        <input type="text" id="pincode" name="pincode"
+                                            value="{{ address_data[6] if address_data else '' }}" required>
+                                    </div>
+                                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                        <label for="state">State <span class="required-f">*</span></label>
+                                        <input type="text" id="state" name="state"
+                                            value="{{ address_data[7] if address_data else '' }}" required>
+                                    </div>
+                                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                        <label for="country">Country <span class="required-f">*</span></label>
+                                        <input type="text" id="country" name="country"
+                                            value="{{ address_data[8] if address_data else '' }}" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 order-button-payment"
+                                        style="margin-top: 0px; text-align: center;">
+                                        <button type="submit" class="btn btn-primary mt-3">Confirm Address</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </section>
+
+                <section id="password-section" class="password-section" style="display: none;">
+                    <h2>Orders</h2>
+                    <form method="post" action="/reset-password">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label for="new_password" style="color: #deb992;">Enter new password:</label>
+                                    <input type="password" name="new_password" id="new_password" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <input type="submit" class="btn mb-3" value="Reset Password">
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+
+
+
+                </section>
+
+
+
             </div>
-        </div>
-    </div>
-</footer>
-<!--End Footer-->
-    
-    <!--Scoll Top-->
-    <span id="site-scroll"><i class="icon anm anm-angle-up-r"></i></span>
-    <!--End Scoll Top-->
-    
-    <!--Quick View popup-->
-    <div class="modal fade quick-view-popup" id="content_quickview">
-    	<div class="modal-dialog">
-        	<div class="modal-content">
-            	<div class="modal-body">
-                    <div id="ProductSection-product-template" class="product-template__container prstyle1">
-                <div class="product-single">
-                <!-- Start model close -->
-                <a href="javascript:void()" data-dismiss="modal" class="model-close-btn pull-right" title="close"><span class="icon icon anm anm-times-l"></span></a>
-                <!-- End model close -->
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-                        <div class="product-details-img">
-                            <div class="pl-20">
-                                <img src="../static/images/product-detail-page/camelia-reversible-big1.jpg" alt="" />
+            <!--End Body Content-->
+            <script>
+                function showOrders() {
+                    document.getElementById("order-section").style.display = "block";
+                    document.getElementById("address-section").style.display = "none";
+                    document.getElementById("password-section").style.display = "none";
+                    document.getElementById("orders-tab").classList.add("menu-active");
+                    document.getElementById("address-tab").classList.remove("menu-active");
+                    document.getElementById("password-tab").classList.remove("menu-active");
+                }
+
+                function showAddress() {
+                    document.getElementById("order-section").style.display = "none";
+                    document.getElementById("address-section").style.display = "block";
+                    document.getElementById("password-section").style.display = "none";
+                    document.getElementById("orders-tab").classList.remove("menu-active");
+                    document.getElementById("address-tab").classList.add("menu-active");
+                    document.getElementById("password-tab").classList.remove("menu-active");
+                }
+                function showPassword() {
+                    document.getElementById("order-section").style.display = "none";
+                    document.getElementById("address-section").style.display = "none";
+                    document.getElementById("password-section").style.display = "block";
+                    document.getElementById("orders-tab").classList.remove("menu-active");
+                    document.getElementById("address-tab").classList.remove("menu-active");
+                    document.getElementById("password-tab").classList.add("menu-active");
+                }
+            </script>
+            <!--Footer-->
+            <footer id="footer">
+
+                <div class="site-footer">
+                    <div class="container">
+                        <!--Footer Links-->
+                        <div class="footer-top">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                                    <h4 class="h4">Quick Shop</h4>
+                                    <ul>
+                                        <li><a href="#">Women</a></li>
+                                        <li><a href="#">Men</a></li>
+                                        <li><a href="#">Kids</a></li>
+                                        <li><a href="#">Sportswear</a></li>
+                                        <li><a href="#">Sale</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                                    <h4 class="h4">Informations</h4>
+                                    <ul>
+                                        <li><a href="#">About us</a></li>
+                                        <li><a href="#">Careers</a></li>
+                                        <li><a href="#">Privacy policy</a></li>
+                                        <li><a href="#">Terms &amp; condition</a></li>
+                                        <li><a href="#">My Account</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                                    <h4 class="h4">Customer Services</h4>
+                                    <ul>
+                                        <li><a href="#">Request Personal Data</a></li>
+                                        <li><a href="#">FAQ's</a></li>
+                                        <li><a href="#">Contact Us</a></li>
+                                        <li><a href="#">Orders and Returns</a></li>
+                                        <li><a href="#">Support Center</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-3 col-lg-3 contact-box">
+                                    <h4 class="h4">Contact Us</h4>
+                                    <ul class="addressFooter">
+                                        <li><i class="icon anm anm-map-marker-al"></i>
+                                            <p>55 Gallaxy Enque,<br>2568 steet, 23568 NY</p>
+                                        </li>
+                                        <li class="phone"><i class="icon anm anm-phone-s"></i>
+                                            <p>+91 123456789</p>
+                                        </li>
+                                        <li class="email"><i class="icon anm anm-envelope-l"></i>
+                                            <p>sales@yousite.com</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Footer Links-->
+                        <hr>
+                        <div class="footer-bottom">
+
+                            <!--Footer Copyright-->
+                            <div class="row">
+                                <div class="text-lg-center"> <a href="templateshub.net">Designed by WebSharks</a></div>
+                                <!--End Footer Copyright-->
+                                <!--Footer Payment Icon-->
+                            </div>
+                            <!--End Footer Payment Icon-->
+
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!--End Footer-->
+
+            <!--Scoll Top-->
+            <span id="site-scroll"><i class="icon anm anm-angle-up-r"></i></span>
+            <!--End Scoll Top-->
+
+            <!--Quick View popup-->
+            <div class="modal fade quick-view-popup" id="content_quickview">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div id="ProductSection-product-template" class="product-template__container prstyle1">
+                                <div class="product-single">
+                                    <!-- Start model close -->
+                                    <a href="javascript:void()" data-dismiss="modal" class="model-close-btn pull-right"
+                                        title="close"><span class="icon icon anm anm-times-l"></span></a>
+                                    <!-- End model close -->
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                            <div class="product-details-img">
+                                                <div class="pl-20">
+                                                    <img src="../static/images/product-detail-page/camelia-reversible-big1.jpg"
+                                                        alt="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                            <div class="product-single__meta">
+                                                <h2 class="product-single__title">Product Quick View Popup</h2>
+                                                <div class="prInfoRow">
+                                                    <div class="product-stock"> <span class="instock ">In Stock</span>
+                                                        <span class="outstock hide">Unavailable</span> </div>
+                                                    <div class="product-sku">SKU: <span
+                                                            class="variant-sku">19115-rdxs</span></div>
+                                                </div>
+                                                <p class="product-single__price product-single__price-product-template">
+                                                    <span class="visually-hidden">Regular price</span>
+                                                    <s id="ComparePrice-product-template"><span
+                                                            class="money">₹600.00</span></s>
+                                                    <span
+                                                        class="product-price__price product-price__price-product-template product-price__sale product-price__sale--single">
+                                                        <span id="ProductPrice-product-template"><span
+                                                                class="money">₹500.00</span></span>
+                                                    </span>
+                                                </p>
+                                                <div class="product-single__description rte">
+                                                    Belle Multipurpose Bootstrap 4 Html Template that will give you and
+                                                    your customers a smooth shopping experience which can be used for
+                                                    various kinds of stores such as fashion,...
+                                                </div>
+
+                                                <form method="post" action="http://annimexweb.com/cart/add"
+                                                    id="product_form_10508262282" accept-charset="UTF-8"
+                                                    class="product-form product-form-product-template hidedropdown"
+                                                    enctype="multipart/form-data">
+                                                    <div class="swatch clearfix swatch-0 option1" data-option-index="0">
+                                                        <div class="product-form__item">
+                                                            <label class="header">Color: <span
+                                                                    class="slVariant">Red</span></label>
+                                                            <div data-value="Red"
+                                                                class="swatch-element color red available">
+                                                                <input class="swatchInput" id="swatch-0-red"
+                                                                    type="radio" name="option-0" value="Red">
+                                                                <label class="swatchLbl color medium rectangle"
+                                                                    for="swatch-0-red"
+                                                                    style="background-image:url(../static/images/product-detail-page/variant1-1.jpg);"
+                                                                    title="Red"></label>
+                                                            </div>
+                                                            <div data-value="Blue"
+                                                                class="swatch-element color blue available">
+                                                                <input class="swatchInput" id="swatch-0-blue"
+                                                                    type="radio" name="option-0" value="Blue">
+                                                                <label class="swatchLbl color medium rectangle"
+                                                                    for="swatch-0-blue"
+                                                                    style="background-image:url(../static/images/product-detail-page/variant1-2.jpg);"
+                                                                    title="Blue"></label>
+                                                            </div>
+                                                            <div data-value="Green"
+                                                                class="swatch-element color green available">
+                                                                <input class="swatchInput" id="swatch-0-green"
+                                                                    type="radio" name="option-0" value="Green">
+                                                                <label class="swatchLbl color medium rectangle"
+                                                                    for="swatch-0-green"
+                                                                    style="background-image:url(../static/images/product-detail-page/variant1-3.jpg);"
+                                                                    title="Green"></label>
+                                                            </div>
+                                                            <div data-value="Gray"
+                                                                class="swatch-element color gray available">
+                                                                <input class="swatchInput" id="swatch-0-gray"
+                                                                    type="radio" name="option-0" value="Gray">
+                                                                <label class="swatchLbl color medium rectangle"
+                                                                    for="swatch-0-gray"
+                                                                    style="background-image:url(../static/images/product-detail-page/variant1-4.jpg);"
+                                                                    title="Gray"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="swatch clearfix swatch-1 option2" data-option-index="1">
+                                                        <div class="product-form__item">
+                                                            <label class="header">Size: <span
+                                                                    class="slVariant">XS</span></label>
+                                                            <div data-value="XS" class="swatch-element xs available">
+                                                                <input class="swatchInput" id="swatch-1-xs" type="radio"
+                                                                    name="option-1" value="XS">
+                                                                <label class="swatchLbl medium rectangle"
+                                                                    for="swatch-1-xs" title="XS">XS</label>
+                                                            </div>
+                                                            <div data-value="S" class="swatch-element s available">
+                                                                <input class="swatchInput" id="swatch-1-s" type="radio"
+                                                                    name="option-1" value="S">
+                                                                <label class="swatchLbl medium rectangle"
+                                                                    for="swatch-1-s" title="S">S</label>
+                                                            </div>
+                                                            <div data-value="M" class="swatch-element m available">
+                                                                <input class="swatchInput" id="swatch-1-m" type="radio"
+                                                                    name="option-1" value="M">
+                                                                <label class="swatchLbl medium rectangle"
+                                                                    for="swatch-1-m" title="M">M</label>
+                                                            </div>
+                                                            <div data-value="L" class="swatch-element l available">
+                                                                <input class="swatchInput" id="swatch-1-l" type="radio"
+                                                                    name="option-1" value="L">
+                                                                <label class="swatchLbl medium rectangle"
+                                                                    for="swatch-1-l" title="L">L</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Product Action -->
+                                                    <div class="product-action clearfix">
+                                                        <div class="product-form__item--quantity">
+                                                            <div class="wrapQtyBtn">
+                                                                <div class="qtyField">
+                                                                    <a class="qtyBtn minus"
+                                                                        href="javascript:void(0);"><i
+                                                                            class="fa anm anm-minus-r"
+                                                                            aria-hidden="true"></i></a>
+                                                                    <input type="text" id="Quantity" name="quantity"
+                                                                        value="1" class="product-form__input qty">
+                                                                    <a class="qtyBtn plus" href="javascript:void(0);"><i
+                                                                            class="fa anm anm-plus-r"
+                                                                            aria-hidden="true"></i></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-form__item--submit">
+                                                            <button type="button" name="add"
+                                                                class="btn product-form__cart-submit">
+                                                                <span>Add to cart</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- End Product Action -->
+                                                </form>
+                                                <div class="display-table shareRow">
+                                                    <div class="display-table-cell">
+                                                        <div class="wishlist-btn">
+                                                            <a class="wishlist add-to-wishlist" href="#"
+                                                                title="Add to Wishlist"><i class="icon anm anm-heart-l"
+                                                                    aria-hidden="true"></i> <span>Add to
+                                                                    Wishlist</span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End-product-single-->
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-                            <div class="product-single__meta">
-                                <h2 class="product-single__title">Product Quick View Popup</h2>
-                                <div class="prInfoRow">
-                                    <div class="product-stock"> <span class="instock ">In Stock</span> <span class="outstock hide">Unavailable</span> </div>
-                                    <div class="product-sku">SKU: <span class="variant-sku">19115-rdxs</span></div>
-                                </div>
-                                <p class="product-single__price product-single__price-product-template">
-                                    <span class="visually-hidden">Regular price</span>
-                                    <s id="ComparePrice-product-template"><span class="money">₹600.00</span></s>
-                                    <span class="product-price__price product-price__price-product-template product-price__sale product-price__sale--single">
-                                        <span id="ProductPrice-product-template"><span class="money">₹500.00</span></span>
-                                    </span>
-                                </p>
-                                <div class="product-single__description rte">
-                                    Belle Multipurpose Bootstrap 4 Html Template that will give you and your customers a smooth shopping experience which can be used for various kinds of stores such as fashion,...
-                                </div>
-                                
-                            <form method="post" action="http://annimexweb.com/cart/add" id="product_form_10508262282" accept-charset="UTF-8" class="product-form product-form-product-template hidedropdown" enctype="multipart/form-data">
-                                <div class="swatch clearfix swatch-0 option1" data-option-index="0">
-                                    <div class="product-form__item">
-                                      <label class="header">Color: <span class="slVariant">Red</span></label>
-                                      <div data-value="Red" class="swatch-element color red available">
-                                        <input class="swatchInput" id="swatch-0-red" type="radio" name="option-0" value="Red">
-                                        <label class="swatchLbl color medium rectangle" for="swatch-0-red" style="background-image:url(../static/images/product-detail-page/variant1-1.jpg);" title="Red"></label>
-                                      </div>
-                                      <div data-value="Blue" class="swatch-element color blue available">
-                                        <input class="swatchInput" id="swatch-0-blue" type="radio" name="option-0" value="Blue">
-                                        <label class="swatchLbl color medium rectangle" for="swatch-0-blue" style="background-image:url(../static/images/product-detail-page/variant1-2.jpg);" title="Blue"></label>
-                                      </div>
-                                      <div data-value="Green" class="swatch-element color green available">
-                                        <input class="swatchInput" id="swatch-0-green" type="radio" name="option-0" value="Green">
-                                        <label class="swatchLbl color medium rectangle" for="swatch-0-green" style="background-image:url(../static/images/product-detail-page/variant1-3.jpg);" title="Green"></label>
-                                      </div>
-                                      <div data-value="Gray" class="swatch-element color gray available">
-                                        <input class="swatchInput" id="swatch-0-gray" type="radio" name="option-0" value="Gray">
-                                        <label class="swatchLbl color medium rectangle" for="swatch-0-gray" style="background-image:url(../static/images/product-detail-page/variant1-4.jpg);" title="Gray"></label>
-                                      </div>
-                                    </div>
-                                </div>
-                                <div class="swatch clearfix swatch-1 option2" data-option-index="1">
-                                    <div class="product-form__item">
-                                      <label class="header">Size: <span class="slVariant">XS</span></label>
-                                      <div data-value="XS" class="swatch-element xs available">
-                                        <input class="swatchInput" id="swatch-1-xs" type="radio" name="option-1" value="XS">
-                                        <label class="swatchLbl medium rectangle" for="swatch-1-xs" title="XS">XS</label>
-                                      </div>
-                                      <div data-value="S" class="swatch-element s available">
-                                        <input class="swatchInput" id="swatch-1-s" type="radio" name="option-1" value="S">
-                                        <label class="swatchLbl medium rectangle" for="swatch-1-s" title="S">S</label>
-                                      </div>
-                                      <div data-value="M" class="swatch-element m available">
-                                        <input class="swatchInput" id="swatch-1-m" type="radio" name="option-1" value="M">
-                                        <label class="swatchLbl medium rectangle" for="swatch-1-m" title="M">M</label>
-                                      </div>
-                                      <div data-value="L" class="swatch-element l available">
-                                        <input class="swatchInput" id="swatch-1-l" type="radio" name="option-1" value="L">
-                                        <label class="swatchLbl medium rectangle" for="swatch-1-l" title="L">L</label>
-                                      </div>
-                                    </div>
-                                </div>
-                                <!-- Product Action -->
-                                <div class="product-action clearfix">
-                                    <div class="product-form__item--quantity">
-                                        <div class="wrapQtyBtn">
-                                            <div class="qtyField">
-                                                <a class="qtyBtn minus" href="javascript:void(0);"><i class="fa anm anm-minus-r" aria-hidden="true"></i></a>
-                                                <input type="text" id="Quantity" name="quantity" value="1" class="product-form__input qty">
-                                                <a class="qtyBtn plus" href="javascript:void(0);"><i class="fa anm anm-plus-r" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>                                
-                                    <div class="product-form__item--submit">
-                                        <button type="button" name="add" class="btn product-form__cart-submit">
-                                            <span>Add to cart</span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- End Product Action -->
-                            </form>
-                            <div class="display-table shareRow">
-                                    <div class="display-table-cell">
-                                        <div class="wishlist-btn">
-                                            <a class="wishlist add-to-wishlist" href="#" title="Add to Wishlist"><i class="icon anm anm-heart-l" aria-hidden="true"></i> <span>Add to Wishlist</span></a>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
                 </div>
             </div>
-                <!--End-product-single-->
-                </div>
-            </div>
-        		</div>
-        	</div>
+            <!--End Quick View popup-->
+
+            <!-- Including Jquery -->
+            <script src="../static/js/vendor/jquery-3.3.1.min.js"></script>
+            <script src="../static/js/vendor/jquery.cookie.js"></script>
+            <script src="../static/js/vendor/modernizr-3.6.0.min.js"></script>
+            <script src="../static/js/vendor/wow.min.js"></script>
+            <!-- Including Javascript -->
+            <script src="../static/js/bootstrap.min.js"></script>
+            <script src="../static/js/plugins.js"></script>
+            <script src="../static/js/popper.min.js"></script>
+            <script src="../static/js/lazysizes.js"></script>
+            <script src="../static/js/main.js"></script>
         </div>
     </div>
-    <!--End Quick View popup-->
-    
-     <!-- Including Jquery -->
-     <script src="../static/js/vendor/jquery-3.3.1.min.js"></script>
-     <script src="../static/js/vendor/jquery.cookie.js"></script>
-     <script src="../static/js/vendor/modernizr-3.6.0.min.js"></script>
-     <script src="../static/js/vendor/wow.min.js"></script>
-     <!-- Including Javascript -->
-     <script src="../static/js/bootstrap.min.js"></script>
-     <script src="../static/js/plugins.js"></script>
-     <script src="../static/js/popper.min.js"></script>
-     <script src="../static/js/lazysizes.js"></script>
-     <script src="../static/js/main.js"></script>
-</div>
-</div>
 
-<script>
-    document.querySelectorAll('.cancel-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const row = this.closest('tr');
-            const data = {
-                productname: row.querySelector('.productname').textContent.trim(),
-                size: row.querySelector('.size').textContent.trim(),
-                color: row.querySelector('.color').textContent.trim(),
-                quantity: row.querySelector('.quantity').textContent.trim(),
-                totalprice: row.querySelector('.totalprice').textContent.replace('₹', '').trim()
-            };
+    <script>
+        document.querySelectorAll('.reason-dropdown').forEach(dropdown => {
+            dropdown.addEventListener('change', function () {
+                const returnForm = this.closest('.return-form');
+                const imageUploadDiv = returnForm.querySelector('.image-upload');
 
-            fetch('/cancel-order', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    alert(result.message);
-                    location.reload();
+                if (this.value === "Damaged Product") {
+                    imageUploadDiv.classList.remove('hidden'); // Show image upload fields
                 } else {
-                    alert('Error cancelling order');
+                    imageUploadDiv.classList.add('hidden'); // Hide image upload fields
                 }
             });
         });
-    });
-</script>
+    </script>
+
+    <script>
+        document.querySelectorAll('.return-btn').forEach(button => {
+            const orderTime = new Date(button.getAttribute('data-timestamp')); // Parse timestamp correctly
+            const currentTime = new Date();
+
+            // Calculate time difference in minutes
+            const timeDiff = (currentTime - orderTime) / (1000 * 60); // Convert ms to minutes
+
+            // Disable the button if time exceeds 2 minutes
+            if (timeDiff > 50) {
+                button.disabled = true;
+            }
+
+            button.addEventListener('click', function () {
+                if (button.disabled) {
+                    alert("Your time limit has been exceeded");
+                    return;
+                }
+
+                // Show return form on click
+                const returnForm = this.closest('td').querySelector('.return-form');
+                returnForm.classList.toggle('hidden');
+
+                // const row = this.closest('tr');
+                // const data = {
+                //     productname: row.querySelector('.productname').textContent.trim(),
+                //     size: row.querySelector('.size').textContent.trim(),
+                //     color: row.querySelector('.color').textContent.trim(),
+                //     quantity: row.querySelector('.quantity').textContent.trim(),
+                //     totalprice: row.querySelector('.totalprice').textContent.replace('₹', '').trim()
+                // };
+
+                // fetch('/cancel-order', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(data)
+                // })
+                // .then(response => response.json())
+                // .then(result => {
+                //     if (result.success) {
+                //         alert(result.message);
+                //         location.reload();
+                //     } else {
+                //         alert(result.message);
+                //     }
+                // });
+            });
+        });
+
+
+        document.querySelectorAll('.request-return-btn').forEach(button => {
+            button.addEventListener('click', async function () {
+                const row = this.closest('tr');
+                const returnForm = this.closest('.return-form');
+
+                const productData = new FormData();
+                productData.append('orderid', row.querySelector('.orderid').textContent.trim());
+                productData.append('productname', row.querySelector('.productname').textContent.trim());
+                productData.append('size', row.querySelector('.size').textContent.trim());
+                productData.append('color', row.querySelector('.color').textContent.trim());
+                productData.append('quantity', row.querySelector('.quantity').textContent.trim());
+                productData.append('totalprice', row.querySelector('.totalprice').textContent.replace('₹', '').trim());
+                productData.append('reason', returnForm.querySelector('.reason-dropdown').value);
+                productData.append('details', returnForm.querySelector('.return-details').value);
+
+                const input1 = returnForm.querySelector('#input1').files[0];
+                const input2 = returnForm.querySelector('#input2').files[0];
+
+                if (input1) productData.append('input1', input1);
+                if (input2) productData.append('input2', input2);
+
+                try {
+                    const response = await fetch('/request-return', {
+                        method: 'POST',
+                        body: productData,
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        alert(result.message);
+                        location.reload();
+                    } else {
+                        alert(result.message);
+                    }
+                } catch (error) {
+                    alert('An error occurred while submitting the return request.');
+                    console.error(error);
+                }
+            });
+        });
+
+
+
+    </script>
 
 <script>
-    document.getElementById('editAddressBtn').addEventListener('click', function() {
-        document.getElementById('editAddressForm').style.display = 'block';
-        document.getElementById('address-section').style.display = 'block';
-    });
-
-    document.getElementById('addressForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-        const formData = new FormData(this);
-
-        fetch('/update-address', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(result => {
-            if (result.success) {
-                alert(result.message);
-                location.reload(); // Reload the page to reflect changes
-            } else {
-                alert('Error updating address');
+    function cancelOrder(orderId, productName) {
+        $.ajax({
+            url: '/cancel-order',
+            type: 'POST',
+            data: {
+                razorpay_order_id: orderId,
+                product_name: productName
+            },
+            success: function(response) {
+                alert(response.message); // Show a success message
+                location.reload(); // Optionally reload the page
+            },
+            error: function(xhr, status, error) {
+                console.error('Error cancelling order:', error);
             }
         });
+    }
+    
+    // Attach click handler to Cancel buttons
+    $(document).on('click', '.cancel-btn', function() {
+        const orderId = $(this).data('order-id');
+        const productName = $(this).data('product-name');
+        if (confirm('Are you sure you want to cancel this order?')) {
+            cancelOrder(orderId, productName);
+        }
     });
-</script>
+    </script>
+    
+
+    <script>
+        document.getElementById('editAddressBtn').addEventListener('click', function () {
+            document.getElementById('editAddressForm').style.display = 'block';
+            document.getElementById('address-section').style.display = 'block';
+        });
+
+        document.getElementById('addressForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+            const formData = new FormData(this);
+
+            fetch('/update-address', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        alert(result.message);
+                        location.reload(); // Reload the page to reflect changes
+                    } else {
+                        alert('Error updating address');
+                    }
+                });
+        });
+    </script>
 
 
 
 </body>
 
 <!-- belle/shop-fullwidth.html   11 Nov 2019 12:39:06 GMT -->
+
 </html>

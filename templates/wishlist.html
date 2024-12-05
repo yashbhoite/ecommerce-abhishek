@@ -68,7 +68,8 @@
                             <div class="col-12 col-sm-12 col-md-12 col-lg-7 w-100 d-flex justify-content-start align-items-center"
                                 style="margin-top: 1%;">
                                 <div class="display-table">
-                                    <div class="display-table-cell footer-newsletter">
+                                   <div class="row">
+                                    <div class="col-lg-3 col-sm-6 col-md-3  display-table-cell footer-newsletter">
 
 
                                         <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
@@ -79,7 +80,7 @@
                                                         Product</span></button></a>
                                         </span>
                                     </div>
-                                    <div class="display-table-cell footer-newsletter">
+                                    <div class="col-lg-3 col-sm-6 col-md-3 display-table-cell footer-newsletter">
 
 
                                         <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
@@ -91,17 +92,41 @@
                                         </span>
                                     </div>
 
-                                    <div class="display-table-cell footer-newsletter">
+                                    <div class="col-lg-3 col-sm-6 col-md-3 display-table-cell footer-newsletter">
 
 
                                         <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
                                         <span class="input-group__btn">
                                             <button type="submit"
                                                     class="btn newsletter__submit" name="commit" onclick="showOrderHistory()" id="ordersBtn"><span
-                                                        class="newsletter__submit-text--large">Orders
+                                                        class="newsletter__submit-text--large">Order History
                                                     </span></button>
                                         </span>
                                     </div>
+
+                                    <div class="col-lg-3 col-sm-6 col-md-3 display-table-cell footer-newsletter">
+
+
+                                        <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
+                                        <span class="input-group__btn">
+                                            <button type="submit"
+                                                    class="btn newsletter__submit" name="commit" onclick="showReturnHistory()" id="returnBtn"><span
+                                                        class="newsletter__submit-text--large">Return 
+                                                    </span></button>
+                                        </span>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6 col-md-3 display-table-cell footer-newsletter">
+
+
+                                        <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
+                                        <span class="input-group__btn">
+                                            <button type="submit"
+                                                    class="btn newsletter__submit" name="commit" onclick="showCancelled()" id="returnBtn"><span
+                                                        class="newsletter__submit-text--large">Cancelled Orders 
+                                                    </span></button>
+                                        </span>
+                                    </div>
+                                   </div>
 
                                 </div>
 
@@ -127,10 +152,12 @@
                                             <th class="product-name text-center alt-font">Customer name</th>
                                             <th class="product-price text-center alt-font">Phone No.</th>
                                             <th class="product-subtotal text-center alt-font">Email</th>
-                                            <th class="product-name alt-font text-center">Product</th>
+                                            <th class="product-name alt-font text-center">Product Details</th>
                                             <th class="product-name alt-font text-center">Billing Address</th>
                                             <th class="product-price text-center alt-font">Order Value</th>
+                                            <th class="product-price text-center alt-font">Order ID</th>
                                             <th class="stock-status text-center alt-font">Payment Method</th>
+                                            <th class="status text-center alt-font">Status</th>
 
                                         </tr>
                                     </thead>
@@ -144,12 +171,23 @@
                                             </td>
                                             <td class="product-name text-center">{{order[2]}}</td>
                                             <td class="product-price text-center"><span
-                                                    class="amount">{{order[10]}}</span></td>
+                                                    class="amount">{{ order[10] }} (Size: {{ order[11] }}, Color: {{ order[12] }}, Qty: {{ order[13] }})</span></td>
                                             <td class="stock text-center">
                                                 <span class="in-stock">{{order[15]}}, {{order[16]}}, {{order[4]}}, {{order[5]}}, {{order[6]}}</span>
                                             </td>
                                             <td class="product-subtotal text-center"> ₹ {{order[14]}}</td>
+                                            <td class="product-subtotal text-center">{{order[8]}}</td>
                                             <td class="product-subtotal text-center">{{order[7]}}</td>
+                                            <td class="product-status text-center">
+                                                <input type="hidden" name="razorpay_order_id" value="{{ order[8] }}">
+                                                <select name="status" id="status_{{ order[8] }}">
+                                                    <option value="Placed" {% if order[17] == 'Placed' %}selected{% endif %}>Placed</option>
+                                                    <option value="Shipped" {% if order[17] == 'Shipped' %}selected{% endif %}>Shipped</option>
+                                                    <option value="Delivered" {% if order[17] == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                                </select>
+                                                <button type="button" onclick="updateOrderStatus('{{ order[8] }}')">Update</button>
+                                            </td>
+                                            
                                         </tr>
                                         {% endfor %}
 
@@ -205,6 +243,134 @@
                                             <td class="product-subtotal text-center">{{pro[17]}}</td>
                                             <td><a href="{{ url_for('edit_product', sku=pro[7]) }}" class="action-btn cancel-btn">Edit</a></td>
                                             <td><button class="action-btn cancel-btn" onclick="deleteProduct('{{ pro[7] }}')">DELETE</button></td>
+                                        </tr>
+                                        {% endfor %}
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container" id="returnTable" style="display: none;">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
+                        <h2 style="color: #deb992;">Return Requests</h2>
+
+                        <form action="#">
+                            <div class="wishlist-table table-content table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="product-name text-center alt-font">Customer name</th>
+                                            <th class="product-price text-center alt-font">Phone No.</th>
+                                            <th class="product-subtotal text-center alt-font">Email</th>
+                                            <th class="product-name alt-font text-center">Product details</th>
+                                            <th class="product-name alt-font text-center">Billing Address</th>
+                                            <th class="product-price text-center alt-font">Order Value</th>
+                                            <th class="product-price text-center alt-font">Order ID</th>
+                                            <th class="stock-status text-center alt-font">Payment Method</th>
+                                            <th class="product-name alt-font text-center">Reason</th>
+                                            <th class="product-name alt-font text-center">Images</th>
+                                            <th class="product-name alt-font text-center">Details</th>
+                                            <th class="product-name alt-font text-center">Status</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for request in return_requests %}
+                                        <tr>
+                                            <td class="product-remove text-center" valign="middle">{{request[0]}}
+                                                {{request[1]}}</td>
+                                            <td class="product-thumbnail text-center">
+                                                {{request[2]}}
+                                            </td>
+                                            <td class="product-name text-center">{{request[9]}}</td>
+                                            <td class="text-center">
+                                                {{ request[10] }} (Size: {{ request[11] }}, Color: {{ request[12] }}, Qty: {{ request[13] }})
+                                            </td>
+                                            <td class="stock text-center">
+                                                <span class="in-stock">{{request[3]}}, {{request[4]}}, {{request[5]}}, {{request[6]}}</span>
+                                            </td>
+                                            <td class="product-subtotal text-center"> ₹ {{request[14]}}</td>
+                                            <td class="product-subtotal text-center">{{request[7]}}</td>
+                                            <td class="product-subtotal text-center">{{request[8]}}</td>
+                                            <td class="product-subtotal text-center">{{request[15]}}</td>
+                                            <td class="product-subtotal text-center">
+                                                {% if request[17] and request[18] %}
+                                                    <a href="{{ request[17] }}" target="_blank">Image1</a>, 
+                                                    <a href="{{ request[18] }}" target="_blank">Image2</a>
+                                                {% else %}
+                                                    No images
+                                                {% endif %}
+                                            </td>
+                                            <td class="product-subtotal text-center">{{request[16]}}</td>
+                                            <td class="product-status text-center">
+                                                <input type="hidden" name="razorpay_order_id" value="{{ request[7] }}">
+                                                <input type="hidden" name="productname" value="{{ request[10] }}">
+                                                <select name="returnstatus" id="returnstatus_{{ request[7] }}_{{ request[10] }}">
+                                                    <option value="Placed" {% if request[19] == 'Placed' %}selected{% endif %}>Placed</option>
+                                                    <option value="Shipped" {% if request[19] == 'Shipped' %}selected{% endif %}>Shipped</option>
+                                                    <option value="Delivered" {% if request[19] == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                                </select>
+                                                <button type="button" onclick="updateReturnStatus('{{ request[7] }}','{{ request[10] }}')">Update</button>
+                                            </td>
+                                            
+                                        </tr>
+                                        {% endfor %}
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container" id="CancelTable" style="display: none;">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
+                        <h2 style="color: #deb992;">Cancelled Orders</h2>
+
+                        <form action="#">
+                            <div class="wishlist-table table-content table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="product-name text-center alt-font">Customer name</th>
+                                            <th class="product-price text-center alt-font">Phone No.</th>
+                                            <th class="product-subtotal text-center alt-font">Email</th>
+                                            <th class="product-name alt-font text-center">Product Details</th>
+                                            <th class="product-name alt-font text-center">Billing Address</th>
+                                            <th class="product-price text-center alt-font">Order Value</th>
+                                            <th class="product-price text-center alt-font">Order ID</th>
+                                            <th class="stock-status text-center alt-font">Payment Method</th>
+                                           
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in cancel %}
+                                        <tr>
+                                            <td class="product-remove text-center" valign="middle">{{order[0]}}
+                                                {{order[1]}}</td>
+                                            <td class="product-thumbnail text-center">
+                                                {{order[3]}}
+                                            </td>
+                                            <td class="product-name text-center">{{order[2]}}</td>
+                                            <td class="product-price text-center"><span
+                                                    class="amount">{{ order[10] }} (Size: {{ order[11] }}, Color: {{ order[12] }}, Qty: {{ order[13] }})</span></td>
+                                            <td class="stock text-center">
+                                                <span class="in-stock">{{order[15]}}, {{order[16]}}, {{order[4]}}, {{order[5]}}, {{order[6]}}</span>
+                                            </td>
+                                            <td class="product-subtotal text-center"> ₹ {{order[14]}}</td>
+                                            <td class="product-subtotal text-center">{{order[8]}}</td>
+                                            <td class="product-subtotal text-center">{{order[7]}}</td>
+                                            
                                         </tr>
                                         {% endfor %}
 
@@ -312,11 +478,28 @@
         function showEditProduct() {
             document.getElementById("editProductTable").style.display = "block";
             document.getElementById("orderHistoryTable").style.display = "none";
+            document.getElementById("returnTable").style.display = "none";
+            document.getElementById("CancelTable").style.display = "none";
         }
     
         function showOrderHistory() {
             document.getElementById("editProductTable").style.display = "none";
             document.getElementById("orderHistoryTable").style.display = "block";
+            document.getElementById("returnTable").style.display = "none";
+            document.getElementById("CancelTable").style.display = "none";
+        }
+
+        function showReturnHistory(){
+            document.getElementById("editProductTable").style.display = "none";
+            document.getElementById("orderHistoryTable").style.display = "none";
+            document.getElementById("returnTable").style.display = "block";
+            document.getElementById("CancelTable").style.display = "none";
+        }
+        function showCancelled() {
+            document.getElementById("editProductTable").style.display = "none";
+            document.getElementById("orderHistoryTable").style.display = "none";
+            document.getElementById("returnTable").style.display = "none";
+            document.getElementById("CancelTable").style.display = "block";
         }
     </script>
 
@@ -340,6 +523,56 @@
         }
     }
     </script>
+
+<script>
+function updateOrderStatus(orderId) {
+    var status = document.getElementById('status_' + orderId).value;
+
+    $.ajax({
+        url: '/update-order-status',
+        type: 'POST',
+        data: {
+            razorpay_order_id: orderId,
+            status: status
+        },
+        success: function(response) {
+            console.log('Order updated successfully!');
+            location.reload(); // Optionally reload the page to show updated status
+        },
+        error: function(xhr, status, error) {
+            if (xhr.status === 403) {
+                alert("Cannot update status for a cancelled order.");
+            } else {
+                alert("Error updating order status: " + error);
+            }
+        }
+    });
+}
+</script>
+
+<script>
+    function updateReturnStatus(orderId, productName) {
+        const status = document.getElementById('returnstatus_' + orderId + '_' + productName).value;
+    
+        $.ajax({
+            url: '/update-return-status',
+            type: 'POST',
+            data: {
+                razorpay_order_id: orderId,
+                productname: productName,
+                returnstatus: status
+            },
+            success: function(response) {
+                console.log('Return updated successfully!');
+                location.reload(); // Optionally reload the page to show updated status
+            },
+            error: function(xhr, status, error) {
+                console.log('Error updating return status:', error);
+            }
+        });
+    }
+    </script>
+    
     
 
 </body>

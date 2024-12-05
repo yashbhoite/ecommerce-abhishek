@@ -12,6 +12,8 @@ from email.mime.text import MIMEText
 from werkzeug.utils import secure_filename
 import random
 import re
+from datetime import datetime, timedelta
+from uuid import uuid4
 
 app = Flask(__name__)
 app.secret_key = 'yash'
@@ -532,9 +534,20 @@ def myaccount():
 
     # Query to get only "Placed" order details from the orders table for the logged-in user
     cursor.execute("""
-        SELECT productname, size, color, quantity, totalprice 
-        FROM orders 
-        WHERE email = ? AND status = 'Placed'
+        SELECT 
+            o.productname, 
+            o.size, 
+            o.color, 
+            o.quantity, 
+            o.totalprice, 
+            o.timestamp, 
+            o.razorpay_order_id,
+            o.status,
+            COALESCE(r.status, 'No Return') AS status
+        FROM orders o
+        LEFT JOIN return r 
+        ON o.razorpay_order_id = r.orderid AND o.productname = r.productname
+        WHERE o.email = ?
     """, (email,))
     order_items = cursor.fetchall()
 
@@ -597,27 +610,53 @@ def wishlist():
     
     # Fetch orders with conditional checks for razorpay_order_id and razorpay_payment_id
     orders = my_cursor.execute("""
-        SELECT 
-            firstname,
-            lastname,
-            email,
-            mobile,
-            city,
-            state,
-            pincode,
-            payment_info,
-            COALESCE(razorpay_order_id, 'N/A') AS razorpay_order_id,
-            COALESCE(razorpay_payment_id, 'N/A') AS razorpay_payment_id,
-            GROUP_CONCAT(DISTINCT productname) AS product_names,
-            GROUP_CONCAT(DISTINCT size) AS sizes,
-            GROUP_CONCAT(DISTINCT color) AS colors,
-            SUM(quantity) AS total_quantity,
-            SUM(totalprice) AS total_price,
-            address,pincode
-        FROM 
-            orders
-        GROUP BY 
-            payment_info, email, razorpay_order_id
+    SELECT 
+    firstname,
+    lastname,
+    email,
+    mobile,
+    city,
+    state,
+    pincode,
+    payment_info,
+    razorpay_order_id,
+    razorpay_payment_id,
+    GROUP_CONCAT(DISTINCT productname) AS product_names,
+    GROUP_CONCAT(DISTINCT size) AS sizes,
+    GROUP_CONCAT(DISTINCT color) AS colors,
+    GROUP_CONCAT(DISTINCT quantity) AS quantity,
+    SUM(totalprice) AS total_price,
+    address, pincode, status
+FROM 
+    orders
+GROUP BY 
+    razorpay_order_id
+    """).fetchall()
+
+    cancel = my_cursor.execute("""
+    SELECT 
+    firstname,
+    lastname,
+    email,
+    mobile,
+    city,
+    state,
+    pincode,
+    payment_info,
+    razorpay_order_id,
+    razorpay_payment_id,
+    GROUP_CONCAT(DISTINCT productname) AS product_names,
+    GROUP_CONCAT(DISTINCT size) AS sizes,
+    GROUP_CONCAT(DISTINCT color) AS colors,
+    GROUP_CONCAT(DISTINCT quantity) AS quantity,
+    SUM(totalprice) AS total_price,
+    address, pincode, status
+FROM 
+    orders
+WHERE 
+    status = 'Cancelled'
+GROUP BY 
+    razorpay_order_id
     """).fetchall()
 
     print(orders)  # For debugging purposes
@@ -625,10 +664,111 @@ def wishlist():
     # Fetch all products
     product = my_cursor.execute("SELECT * FROM products").fetchall()
 
+    return_requests = my_cursor.execute("""
+        SELECT 
+            o.firstname,
+            o.lastname,
+            o.mobile,
+            o.address,
+            o.city,
+            o.state,
+            o.pincode,
+            o.razorpay_order_id,
+            o.payment_info,
+            o.email,                           
+            r.productname,
+            r.size,
+            r.color,
+            r.quantity,
+            r.totalprice,
+            r.reason,
+            r.details,
+            r.image1,
+            r.image2,
+            r.status
+        FROM 
+            orders o
+        INNER JOIN 
+            return r
+        ON 
+            o.email = r.user_email
+            AND o.productname = r.productname
+            AND o.razorpay_order_id = r.orderid
+    """).fetchall()
+
     connection.commit()
     connection.close()
     
-    return render_template("wishlist.html", orders=orders, product=product)
+    return render_template("wishlist.html", orders=orders, product=product, return_requests=return_requests, cancel=cancel)
+
+
+@app.route('/update-order-status', methods=['POST'])
+def update_order_status():
+    razorpay_order_id = request.form.get('razorpay_order_id')
+    new_status = request.form.get('status')
+
+    if not razorpay_order_id or not new_status:
+        print("Missing order ID or status")
+        
+
+    # Update the database
+    connection = sqlite3.connect('product.db')
+    my_cursor = connection.cursor()
+
+    my_cursor.execute("""
+        SELECT status FROM orders WHERE razorpay_order_id = ?
+    """, (razorpay_order_id,))
+    current_status = my_cursor.fetchone()
+
+    if not current_status:
+        connection.close()
+        return "Order not found", 404
+
+    if current_status[0] == "Cancelled":
+        connection.close()
+        return "Cannot update status for a cancelled order", 403
+
+    my_cursor.execute("""
+        UPDATE orders 
+        SET status = ? 
+        WHERE razorpay_order_id = ?
+    """, (new_status, razorpay_order_id))
+
+    connection.commit()
+    connection.close()
+
+    print(f"Order ID: {razorpay_order_id} updated to status: {new_status}")
+    return 'Success', 200  # Respond with success so AJAX can handle it
+
+
+@app.route('/update-return-status', methods=['POST'])
+def update_return_status():
+    razorpay_order_id = request.form.get('razorpay_order_id')
+    productname = request.form.get('productname')
+    new_status = request.form.get('returnstatus')
+
+    if not razorpay_order_id or not productname or not new_status:
+        print(f"Missing data: order ID ({razorpay_order_id}), product name ({productname}), status ({new_status})")
+        return jsonify({'success': False, 'message': 'Missing required fields'})
+
+    # Update the return status in the database
+    connection = sqlite3.connect('product.db')
+    my_cursor = connection.cursor()
+
+    my_cursor.execute("""
+        UPDATE return
+        SET status = ?
+        WHERE orderid = ? AND productname = ?
+    """, (new_status, razorpay_order_id, productname))
+
+    connection.commit()
+    connection.close()
+
+    print(f"Return status updated: {razorpay_order_id}, {productname} to {new_status}")
+    return jsonify({'success': True, 'message': 'Return status updated successfully.'})
+
+
+
 
 
 @app.route('/edit-product/<sku>', methods=['GET'])
@@ -1238,9 +1378,15 @@ def place_order():
     payment_method = request.form.get('payment_method')  # COD or Online
 
     # Get optional Razorpay IDs
-    razorpay_payment_id = request.form.get('razorpay_payment_id') if payment_method == 'Online' else None
-    razorpay_order_id = request.form.get('razorpay_order_id') if payment_method == 'Online' else None
-    payment_info = "COD" if payment_method == 'COD' else "Online"
+    if payment_method == 'Online':
+        razorpay_payment_id = request.form.get('razorpay_payment_id')
+        razorpay_order_id = request.form.get('razorpay_order_id')
+        payment_info = "Online"
+    else:
+        razorpay_payment_id = None
+        razorpay_order_id = f"COD-{uuid4()}"  # Generate a unique ID for COD
+        payment_info = "COD"
+
     status = "Placed"  # Static status for successful orders
 
     # Fetch cart items for the logged-in user
@@ -1249,12 +1395,13 @@ def place_order():
     cursor.execute("SELECT productname, productsize, productcolor, productquantity, totalprice FROM cart WHERE user_email = ?", (user_email,))
     cart_items = cursor.fetchall()
 
-    
+    current_timestamp = datetime.now()
+
     # Insert order into orders table for each cart item
     for item in cart_items:
-        cursor.execute('''INSERT INTO orders (firstname, lastname, email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice, razorpay_payment_id, razorpay_order_id, payment_info, status)
-                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                       (firstname, lastname, user_email, mobile, address, city, state, pincode, item[0], item[1], item[2], item[3], item[4], razorpay_payment_id, razorpay_order_id, payment_info, status))
+        cursor.execute('''INSERT INTO orders (firstname, lastname, email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice, razorpay_payment_id, razorpay_order_id, payment_info, status, timestamp)
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                       (firstname, lastname, user_email, mobile, address, city, state, pincode, item[0], item[1], item[2], item[3], item[4], razorpay_payment_id, razorpay_order_id, payment_info, status, current_timestamp))
         conn.commit()
     print("---------------------------------------decreasing quantity=----------------------------------")
     for item in cart_items:
@@ -1359,35 +1506,135 @@ def place_order():
 
 
 
-@app.route('/cancel-order', methods=['POST'])
-def cancel_order():
-    # Retrieve the logged-in user's email
-    email = session.get('user_email')
-    if not email:
+@app.route('/request-return', methods=['POST'])
+def request_return():
+    if 'user_email' not in session:
         return jsonify({'success': False, 'message': 'User not logged in'})
 
-    # Retrieve the unique identifiers for the order to be cancelled from the request
-    productname = request.json.get('productname')
-    size = request.json.get('size')
-    color = request.json.get('color')
-    quantity = request.json.get('quantity')
-    totalprice = request.json.get('totalprice')
+    user_email = session['user_email']
+    orderid = request.form.get('orderid')
+    productname = request.form.get('productname')
+    size = request.form.get('size')
+    color = request.form.get('color')
+    quantity = request.form.get('quantity')
+    totalprice = request.form.get('totalprice')
+    reason = request.form.get('reason')
+    details = request.form.get('details')
 
-    # Connect to the database and update the status to 'Cancelled' for the specific order
+    input1 = None
+    input2 = None
+
+    # Save images if provided
+    if reason == "Damaged Product":
+        input1_file = request.files.get('input1')
+        input2_file = request.files.get('input2')
+
+        if input1_file and allowed_file(input1_file.filename):
+            input1_filename = secure_filename(input1_file.filename)
+            input1_path = os.path.join(app.config['upload_folder'], str(uuid.uuid4()) + "_" + input1_filename)
+            input1_file.save(input1_path)
+            input1 = input1_path
+
+        if input2_file and allowed_file(input2_file.filename):
+            input2_filename = secure_filename(input2_file.filename)
+            input2_path = os.path.join(app.config['upload_folder'], str(uuid.uuid4()) + "_" + input2_filename)
+            input2_file.save(input2_path)
+            input2 = input2_path
+
+    status = "Placed"
+    # Insert the return request into the return table
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
 
-    cursor.execute("""
-        UPDATE orders 
-        SET status = 'Cancelled' 
-        WHERE email = ? AND productname = ? AND size = ? 
-              AND color = ? AND quantity = ? AND totalprice = ?
-    """, (email, productname, size, color, quantity, totalprice))
+    cursor.execute('''
+        INSERT INTO return (user_email, productname, size, color, quantity, totalprice, reason, details, orderid, image1, image2, status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (user_email, productname, size, color, quantity, totalprice, reason, details, orderid, input1, input2, status))
 
     conn.commit()
     conn.close()
 
-    return jsonify({'success': True, 'message': 'Order cancelled successfully'})
+    # Send email notification
+    try:
+        smtp_server = 'smtp.gmail.com'
+        smtp_port = 587
+        sender_email = "sharmakartik1103@gmail.com"
+        sender_password = "iggp hkmj olvh xtfr"
+        recipient_email = "sharmakartik1103@gmail.com"
+
+        msg = MIMEMultipart()
+        msg['From'] = sender_email
+        msg['To'] = recipient_email
+        msg['Subject'] = "Return Request Initiated"
+
+        body = f"A return request has been placed by {user_email} for the product {productname} (Order ID: {orderid}). Reason: {reason}. Details: {details}."
+        msg.attach(MIMEText(body, 'plain'))
+
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.sendmail(sender_email, recipient_email, msg.as_string())
+        server.quit()
+    except Exception as e:
+        print(f"Email notification failed: {e}")
+
+    return jsonify({'success': True, 'message': 'Return request has been initialized.'})
+
+
+@app.route('/cancel-order', methods=['POST'])
+def cancel_order():
+    razorpay_order_id = request.form.get('razorpay_order_id')
+    product_name = request.form.get('product_name')
+
+    if not razorpay_order_id or not product_name:
+        return jsonify({"message": "Invalid request parameters."}), 400
+
+    connection = sqlite3.connect('product.db')
+    my_cursor = connection.cursor()
+
+    # Check the current status
+    my_cursor.execute("""
+        SELECT status FROM orders 
+        WHERE razorpay_order_id = ? AND productname = ?
+    """, (razorpay_order_id, product_name))
+    result = my_cursor.fetchone()
+
+    if result and result[0] == 'Placed':
+        # Update status to 'Cancelled'
+        my_cursor.execute("""
+            UPDATE orders 
+            SET status = 'Cancelled' 
+            WHERE razorpay_order_id = ? AND productname = ?
+        """, (razorpay_order_id, product_name))
+        connection.commit()
+        # Send email notification
+        try:
+            smtp_server = 'smtp.gmail.com'
+            smtp_port = 587
+            sender_email = "sharmakartik1103@gmail.com"
+            sender_password = "iggp hkmj olvh xtfr"
+            recipient_email = "sharmakartik1103@gmail.com"
+
+            msg = MIMEMultipart()
+            msg['From'] = sender_email
+            msg['To'] = recipient_email
+            msg['Subject'] = "Order Cancelled"
+
+            body = f"Order with ID {razorpay_order_id} and product {product_name} has been cancelled by the user."
+            msg.attach(MIMEText(body, 'plain'))
+
+            server = smtplib.SMTP(smtp_server, smtp_port)
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, recipient_email, msg.as_string())
+            server.quit()
+        except Exception as e:
+            print(f"Email notification failed: {e}")
+        connection.close()
+        return jsonify({"message": "Order cancelled successfully."}), 200
+    else:
+        connection.close()
+        return jsonify({"message": "Order cannot be cancelled. Invalid status."}), 400
 
 
 
