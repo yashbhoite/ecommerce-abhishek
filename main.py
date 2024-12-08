@@ -611,53 +611,71 @@ def wishlist():
     # Fetch orders with conditional checks for razorpay_order_id and razorpay_payment_id
     orders = my_cursor.execute("""
     SELECT 
-    firstname,
-    lastname,
-    email,
-    mobile,
-    city,
-    state,
-    pincode,
-    payment_info,
-    razorpay_order_id,
-    razorpay_payment_id,
-    GROUP_CONCAT(DISTINCT productname) AS product_names,
-    GROUP_CONCAT(DISTINCT size) AS sizes,
-    GROUP_CONCAT(DISTINCT color) AS colors,
-    GROUP_CONCAT(DISTINCT quantity) AS quantity,
-    SUM(totalprice) AS total_price,
-    address, pincode, status
-FROM 
-    orders
-GROUP BY 
-    razorpay_order_id
+        firstname,
+        lastname,
+        email,
+        mobile,
+        city,
+        state,
+        pincode,
+        payment_info,
+        razorpay_order_id,
+        razorpay_payment_id,
+        productname,
+        size,
+        color,
+        quantity,
+        totalprice,
+        address,
+        status
+    FROM 
+        orders
+    ORDER BY 
+        razorpay_order_id
     """).fetchall()
+
+    processed_orders = []
+    previous_order_id = None
+    for order in orders:
+        razorpay_order_id = order[8]
+        show_rowspan = razorpay_order_id != previous_order_id
+        processed_orders.append((show_rowspan,) + order)
+        previous_order_id = razorpay_order_id
 
     cancel = my_cursor.execute("""
     SELECT 
-    firstname,
-    lastname,
-    email,
-    mobile,
-    city,
-    state,
-    pincode,
-    payment_info,
-    razorpay_order_id,
-    razorpay_payment_id,
-    GROUP_CONCAT(DISTINCT productname) AS product_names,
-    GROUP_CONCAT(DISTINCT size) AS sizes,
-    GROUP_CONCAT(DISTINCT color) AS colors,
-    GROUP_CONCAT(DISTINCT quantity) AS quantity,
-    SUM(totalprice) AS total_price,
-    address, pincode, status
-FROM 
-    orders
-WHERE 
-    status = 'Cancelled'
-GROUP BY 
-    razorpay_order_id
+        firstname,
+        lastname,
+        email,
+        mobile,
+        city,
+        state,
+        pincode,
+        payment_info,
+        razorpay_order_id,
+        razorpay_payment_id,
+        productname,
+        size,
+        color,
+        quantity,
+        totalprice,
+        address,
+        status
+    FROM 
+        orders
+    WHERE 
+        status = 'Cancelled'
+    ORDER BY 
+        razorpay_order_id
     """).fetchall()
+
+    cancelled_orders = []
+    previous_order_id = None
+    for order in cancel:
+        razorpay_order_id = order[8]
+        show_rowspan = razorpay_order_id != previous_order_id
+        cancelled_orders.append((show_rowspan,) + order)
+        previous_order_id = razorpay_order_id
 
     print(orders)  # For debugging purposes
 
@@ -699,25 +717,28 @@ GROUP BY
     connection.commit()
     connection.close()
     
-    return render_template("wishlist.html", orders=orders, product=product, return_requests=return_requests, cancel=cancel)
+    return render_template("wishlist.html", orders=processed_orders, product=product, return_requests=return_requests, cancel=cancelled_orders)
 
 
 @app.route('/update-order-status', methods=['POST'])
 def update_order_status():
     razorpay_order_id = request.form.get('razorpay_order_id')
+    productname = request.form.get('productname')
     new_status = request.form.get('status')
 
-    if not razorpay_order_id or not new_status:
-        print("Missing order ID or status")
-        
+    if not razorpay_order_id or not productname or not new_status:
+        print("Missing order ID, product name, or status")
+        return "Missing required parameters", 400
 
     # Update the database
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
 
+    # Check current status
     my_cursor.execute("""
-        SELECT status FROM orders WHERE razorpay_order_id = ?
-    """, (razorpay_order_id,))
+        SELECT status FROM orders 
+        WHERE razorpay_order_id = ? AND productname = ?
+    """, (razorpay_order_id, productname))
     current_status = my_cursor.fetchone()
 
     if not current_status:
@@ -728,17 +749,19 @@ def update_order_status():
         connection.close()
         return "Cannot update status for a cancelled order", 403
 
+    # Update the status
     my_cursor.execute("""
         UPDATE orders 
         SET status = ? 
-        WHERE razorpay_order_id = ?
-    """, (new_status, razorpay_order_id))
+        WHERE razorpay_order_id = ? AND productname = ?
+    """, (new_status, razorpay_order_id, productname))
 
     connection.commit()
     connection.close()
 
-    print(f"Order ID: {razorpay_order_id} updated to status: {new_status}")
+    print(f"Order ID: {razorpay_order_id}, Product: {productname} updated to status: {new_status}")
     return 'Success', 200  # Respond with success so AJAX can handle it
+
 
 
 @app.route('/update-return-status', methods=['POST'])

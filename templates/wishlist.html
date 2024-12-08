@@ -143,13 +143,13 @@
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
                         <h2 style="color: #deb992;">Orders History</h2>
-
+            
                         <form action="#">
                             <div class="wishlist-table table-content table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="product-name text-center alt-font">Customer name</th>
+                                            <th class="product-name text-center alt-font">Customer Name</th>
                                             <th class="product-price text-center alt-font">Phone No.</th>
                                             <th class="product-subtotal text-center alt-font">Email</th>
                                             <th class="product-name alt-font text-center">Product Details</th>
@@ -158,40 +158,80 @@
                                             <th class="product-price text-center alt-font">Order ID</th>
                                             <th class="stock-status text-center alt-font">Payment Method</th>
                                             <th class="status text-center alt-font">Status</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% set previous_order_id = None %}
                                         {% for order in orders %}
-                                        <tr>
-                                            <td class="product-remove text-center" valign="middle">{{order[0]}}
-                                                {{order[1]}}</td>
-                                            <td class="product-thumbnail text-center">
-                                                {{order[3]}}
-                                            </td>
-                                            <td class="product-name text-center">{{order[2]}}</td>
-                                            <td class="product-price text-center"><span
-                                                    class="amount">{{ order[10] }} (Size: {{ order[11] }}, Color: {{ order[12] }}, Qty: {{ order[13] }})</span></td>
-                                            <td class="stock text-center">
-                                                <span class="in-stock">{{order[15]}}, {{order[16]}}, {{order[4]}}, {{order[5]}}, {{order[6]}}</span>
-                                            </td>
-                                            <td class="product-subtotal text-center"> ₹ {{order[14]}}</td>
-                                            <td class="product-subtotal text-center">{{order[8]}}</td>
-                                            <td class="product-subtotal text-center">{{order[7]}}</td>
-                                            <td class="product-status text-center">
-                                                <input type="hidden" name="razorpay_order_id" value="{{ order[8] }}">
-                                                <select name="status" id="status_{{ order[8] }}">
-                                                    <option value="Placed" {% if order[17] == 'Placed' %}selected{% endif %}>Placed</option>
-                                                    <option value="Shipped" {% if order[17] == 'Shipped' %}selected{% endif %}>Shipped</option>
-                                                    <option value="Delivered" {% if order[17] == 'Delivered' %}selected{% endif %}>Delivered</option>
-                                                </select>
-                                                <button type="button" onclick="updateOrderStatus('{{ order[8] }}')">Update</button>
-                                            </td>
-                                            
-                                        </tr>
+                                            <tr>
+                                                <!-- Customer Name with Rowspan -->
+                                                {% if order[0] %}
+                                                    <td class="product-remove text-center" rowspan="{{
+                                                        orders | selectattr('8', 'equalto', order[8]) | list | length
+                                                    }}">{{ order[1] }} {{ order[2] }}</td>
+                                                {% endif %}
+            
+                                                <!-- Phone No. with Rowspan -->
+                                                {% if order[0] %}
+                                                    <td class="product-thumbnail text-center" rowspan="{{
+                                                        orders | selectattr('8', 'equalto', order[8]) | list | length
+                                                    }}">{{ order[4] }}</td>
+                                                {% endif %}
+            
+                                                <!-- Email with Rowspan -->
+                                                {% if order[0] %}
+                                                    <td class="product-name text-center" rowspan="{{
+                                                        orders | selectattr('8', 'equalto', order[8]) | list | length
+                                                    }}">{{ order[3] }}</td>
+                                                {% endif %}
+            
+                                                <!-- Product Details -->
+                                                <td class="product-price text-center">
+                                                    <span 
+                                                    class="amount {% if order[17] == 'Cancelled' %} text-danger {% endif %}">
+                                                    {{ order[11] }} (Size: {{ order[12] }}, Color: {{ order[13] }}, Qty: {{ order[14] }})
+                                                </span>
+                                                </td>
+            
+                                                <!-- Billing Address with Rowspan -->
+                                                {% if order[0] %}
+                                                    <td class="stock text-center" rowspan="{{
+                                                        orders | selectattr('8', 'equalto', order[8]) | list | length
+                                                    }}">
+                                                        <span class="in-stock">{{ order[16] }}, {{ order[6] }}, {{ order[5] }}, {{ order[7] }}</span>
+                                                    </td>
+                                                {% endif %}
+            
+                                                <!-- Order Value -->
+                                                <td class="product-subtotal text-center">₹ {{ order[15] }}</td>
+            
+                                                <!-- Order ID with Rowspan -->
+                                                {% if order[0] %}
+                                                    <td class="product-subtotal text-center" rowspan="{{
+                                                        orders | selectattr('8', 'equalto', order[8]) | list | length
+                                                    }}">{{ order[9] }}</td>
+                                                {% endif %}
+            
+                                                <!-- Payment Method with Rowspan -->
+                                                {% if order[0] %}
+                                                    <td class="product-subtotal text-center" rowspan="{{
+                                                        orders | selectattr('8', 'equalto', order[8]) | list | length
+                                                    }}">{{ order[8] }}</td>
+                                                {% endif %}
+            
+                                                <!-- Status -->
+                                                <td class="product-status text-center">
+                                                    <input type="hidden" name="razorpay_order_id" value="{{ order[9] }}">
+                                                    <input type="hidden" name="productname" value="{{ order[11] }}">
+                                                    <select name="status" id="status_{{ order[9] }}_{{ order[11] }}">
+                                                        <option value="Placed" {% if order[17] == 'Placed' %}selected{% endif %}>Placed</option>
+                                                        <option value="Shipped" {% if order[17] == 'Shipped' %}selected{% endif %}>Shipped</option>
+                                                        <option value="Delivered" {% if order[17] == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                                    </select>
+                                                    <button type="button" onclick="updateOrderStatus('{{ order[9] }}', '{{ order[11] }}')">Update</button>
+                                                </td>
+                                            </tr>
                                         {% endfor %}
-
-
                                     </tbody>
                                 </table>
                             </div>
@@ -199,6 +239,9 @@
                     </div>
                 </div>
             </div>
+            
+            
+            
 
             <div class="container" id="editProductTable" style="display: none;">
                 <div class="row">
@@ -354,27 +397,64 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% set previous_order_id = None %}
                                         {% for order in cancel %}
-                                        <tr>
-                                            <td class="product-remove text-center" valign="middle">{{order[0]}}
-                                                {{order[1]}}</td>
-                                            <td class="product-thumbnail text-center">
-                                                {{order[3]}}
-                                            </td>
-                                            <td class="product-name text-center">{{order[2]}}</td>
-                                            <td class="product-price text-center"><span
-                                                    class="amount">{{ order[10] }} (Size: {{ order[11] }}, Color: {{ order[12] }}, Qty: {{ order[13] }})</span></td>
-                                            <td class="stock text-center">
-                                                <span class="in-stock">{{order[15]}}, {{order[16]}}, {{order[4]}}, {{order[5]}}, {{order[6]}}</span>
-                                            </td>
-                                            <td class="product-subtotal text-center"> ₹ {{order[14]}}</td>
-                                            <td class="product-subtotal text-center">{{order[8]}}</td>
-                                            <td class="product-subtotal text-center">{{order[7]}}</td>
-                                            
-                                        </tr>
+                                            <tr>
+                                                <!-- Customer Name with Rowspan -->
+                                                {% if order[0] %}
+                                                    <td class="product-remove text-center" rowspan="{{
+                                                        orders | selectattr('8', 'equalto', order[8]) | list | length
+                                                    }}">{{ order[1] }} {{ order[2] }}</td>
+                                                {% endif %}
+            
+                                                <!-- Phone No. with Rowspan -->
+                                                {% if order[0] %}
+                                                    <td class="product-thumbnail text-center" rowspan="{{
+                                                        orders | selectattr('8', 'equalto', order[8]) | list | length
+                                                    }}">{{ order[4] }}</td>
+                                                {% endif %}
+            
+                                                <!-- Email with Rowspan -->
+                                                {% if order[0] %}
+                                                    <td class="product-name text-center" rowspan="{{
+                                                        orders | selectattr('8', 'equalto', order[8]) | list | length
+                                                    }}">{{ order[3] }}</td>
+                                                {% endif %}
+            
+                                                <input type="hidden" name="productname" value="{{ request[10] }}">
+                                                <!-- Product Details -->
+                                                <td class="product-price text-center">
+                                                    <span class="amount">{{ order[11] }} (Size: {{ order[12] }}, Color: {{ order[13] }}, Qty: {{ order[14] }})</span>
+                                                </td>
+            
+                                                <!-- Billing Address with Rowspan -->
+                                                {% if order[0] %}
+                                                    <td class="stock text-center" rowspan="{{
+                                                        orders | selectattr('8', 'equalto', order[8]) | list | length
+                                                    }}">
+                                                        <span class="in-stock">{{ order[16] }}, {{ order[6] }}, {{ order[5] }}, {{ order[7] }}</span>
+                                                    </td>
+                                                {% endif %}
+            
+                                                <!-- Order Value -->
+                                                <td class="product-subtotal text-center">₹ {{ order[15] }}</td>
+            
+                                                <!-- Order ID with Rowspan -->
+                                                {% if order[0] %}
+                                                    <td class="product-subtotal text-center" rowspan="{{
+                                                        orders | selectattr('8', 'equalto', order[8]) | list | length
+                                                    }}">{{ order[9] }}</td>
+                                                {% endif %}
+            
+                                                <!-- Payment Method with Rowspan -->
+                                                {% if order[0] %}
+                                                    <td class="product-subtotal text-center" rowspan="{{
+                                                        orders | selectattr('8', 'equalto', order[8]) | list | length
+                                                    }}">{{ order[8] }}</td>
+                                                {% endif %}
+            
+                                            </tr>
                                         {% endfor %}
-
-
                                     </tbody>
                                 </table>
                             </div>
@@ -525,30 +605,31 @@
     </script>
 
 <script>
-function updateOrderStatus(orderId) {
-    var status = document.getElementById('status_' + orderId).value;
-
-    $.ajax({
-        url: '/update-order-status',
-        type: 'POST',
-        data: {
-            razorpay_order_id: orderId,
-            status: status
-        },
-        success: function(response) {
-            console.log('Order updated successfully!');
-            location.reload(); // Optionally reload the page to show updated status
-        },
-        error: function(xhr, status, error) {
-            if (xhr.status === 403) {
-                alert("Cannot update status for a cancelled order.");
-            } else {
-                alert("Error updating order status: " + error);
+    function updateOrderStatus(orderId, productName) {
+        var status = document.getElementById('status_' + orderId + '_' + productName).value;
+    
+        $.ajax({
+            url: '/update-order-status',
+            type: 'POST',
+            data: {
+                razorpay_order_id: orderId,
+                productname: productName,
+                status: status
+            },
+            success: function(response) {
+                console.log('Order updated successfully!');
+                location.reload(); // Optionally reload the page to show updated status
+            },
+            error: function(xhr, status, error) {
+                if (xhr.status === 403) {
+                    alert("Cannot update status for a cancelled order.");
+                } else {
+                    alert("Error updating order status: " + error);
+                }
             }
-        }
-    });
-}
-</script>
+        });
+    }
+    </script>
 
 <script>
     function updateReturnStatus(orderId, productName) {

@@ -2100,6 +2100,11 @@ a.quick-view {
 .grid-products .item .product-name a:hover {
   opacity: 0.8;
 }
+
+.text-danger {
+  color: red;
+}
+
 .grid-products .item .product-price {
   margin: 5px 0;
   color: #081525;
