@@ -1,7 +1,7 @@
 import razorpay
 from email import message
 from unicodedata import name
-from flask import Flask, redirect, render_template, request, url_for, session, jsonify
+from flask import flash,Flask, redirect, render_template, request, url_for, session, jsonify
 import smtplib
 import sqlite3
 import uuid as uuid
@@ -125,33 +125,51 @@ def get_product_details(product_id):
         "SELECT sku, size, color,quantity FROM products WHERE name = ?", (name[0],)
     ).fetchall()
     conn.close()
-
+    print("-----------------------------pros---------------------------------------")
+    print(products)
 
     if products:
         # Map colors to their respective sizes
+        size_index_map = {
+            'XS': 1,
+            'S': 2,
+            'M': 3,
+            'L': 4,
+            'XL': 5,
+            'XXL': 6
+        }
+
+        # Initialize response components
         color_size_map = {}
         sku_links = []
-        
+
+        # Iterate over each product
         for sku, size, color, quantity in products:
-            colors = color.split(',')
-            sizes = size.split(',')
-            quantities = [int(q) for q in quantity.split(',')]  # Assuming quantities are stored as comma-separated values
+            sizes = size.split(',')  # Split sizes into a list
+            colors = color.split(',')  # Split colors into a list
+            quantities = [int(q) for q in quantity.split(',')]  # Convert quantity string to integers
             
-            # Filter sizes with quantities greater than zero
-            valid_sizes = [sizes[i] for i in range(len(sizes)) if quantities[i] > 0]
+            valid_sizes = []  # List to store sizes with available quantity
             
+            # Check each size based on the quantity mapping
+            for size in sizes:
+                index = size_index_map[size] - 1  # Get the index for the size (subtract 1 because it's 0-based)
+                if quantities[index] > 0:  # Check if the quantity is greater than 0
+                    valid_sizes.append(size)
+            
+            # Update the color_size_map with valid sizes for each color
             for c in colors:
                 if c not in color_size_map:
-                    color_size_map[c] = set()
-                color_size_map[c].update(valid_sizes)
+                    color_size_map[c] = []
+                color_size_map[c].extend(valid_sizes)
             
             # Generate the SKU link
             sku_links.append(f"http://127.0.0.1:5000/product/{sku}")
 
-        # Convert sets to lists for JSON serialization
-        color_size_map = {color: list(sizes) for color, sizes in color_size_map.items()}
+        # Convert lists to remove duplicates and ensure unique sizes per color
+        color_size_map = {color: list(set(sizes)) for color, sizes in color_size_map.items()}
 
-        # Include SKU links in the response
+            # Include SKU links in the response
         return jsonify({"color_size_map": color_size_map, "sku_links": sku_links})
     else:
         return jsonify({"message": "No products with available stock"}), 404
@@ -342,29 +360,57 @@ def add_to_cart_offer(product_id):
 
 @app.route('/add-to-cart/<string:id>', methods=['POST'])
 def add_to_cart(id):
+    print(id)
     if 'user_email' not in session:
         return redirect(url_for('login'))
-
-    productname = request.form['productname']
-    productprice = float(request.form['productprice'])
-    productsize = request.form['productsize']
-    productquantity = int(request.form['productquantity'])
-    totalprice = productprice * productquantity
-    productimage = request.form['productimage']
-    productcolor = request.form['productcolor']
-    user_email = session['user_email']  # Get logged-in user's email
-
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
-    cursor.execute(
-        'INSERT INTO cart (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor, user_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-        (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor, user_email)
-    )
-    conn.commit()
-    conn.close()
+    productquantity = int(request.form['productquantity'])
+    productsize = request.form['productsize']
+    if productsize=='XS':
+        qty=0
+    elif productsize=='S':
+        qty=1
+    elif productsize=='M':
+        qty=2
+    elif productsize=='L':
+        qty=3
+    elif productsize=='XL':
+        qty=4
+    elif productsize=='XXL':
+        qty=5
+    else:
+        qty=-1
+        
+    curqty = cursor.execute("Select quantity from products where sku=?", (id,)).fetchone()
+    print("---------------------currentqty-------------------------------")
+    curqty = curqty[0].split(',')
+    print(qty)
+    print(curqty[qty])
 
-    session['message'] = "Cart items updated!"
-    return redirect(url_for('productinfo', id=id))
+    if(int(curqty[qty])<productquantity):
+        flash("We currently do not have the quantity you requested in stock; please select a lower quantity.")
+        return redirect(url_for('productinfo', id=id))
+    else:
+
+        productname = request.form['productname']
+        productprice = float(request.form['productprice'])
+        
+        totalprice = productprice * productquantity
+        productimage = request.form['productimage']
+        productcolor = request.form['productcolor']
+        user_email = session['user_email']  # Get logged-in user's email
+
+        
+        cursor.execute(
+            'INSERT INTO cart (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor, user_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor, user_email)
+        )
+        conn.commit()
+        conn.close()
+
+        session['message'] = "Cart items updated!"
+        return redirect(url_for('productinfo', id=id))
 
 
 @app.route('/update-cart-item', methods=['POST'])
@@ -1038,7 +1084,7 @@ def productupdatedb(sku):
     connection.commit()
     connection.close()
     
-    return redirect(url_for('shopfullwidth'))
+    return redirect(url_for('wishlist'))
 
 @app.route('/delete-product/<sku>', methods=['DELETE'])
 def delete_product(sku):
@@ -1063,7 +1109,6 @@ def productinfo(id):
 
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
-
     productname = my_cursor.execute("Select name from products where sku=?", (id,)).fetchone()
     gender = my_cursor.execute("Select gender from products where sku=?", (id,)).fetchone()
     coloroptions_str = my_cursor.execute("Select coloroptions from products where name=?", (productname[0],)).fetchone()

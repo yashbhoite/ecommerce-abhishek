@@ -786,6 +786,16 @@
 </div>
 
 <script>
+
+document.getElementById('cartCheckout').addEventListener('click', function(event) {
+        // Check if the checkbox is checked
+        var checkbox = document.querySelector('input[name="tearm"]');
+        if (!checkbox.checked) {
+            // Prevent the redirect if checkbox is not checked
+            event.preventDefault();
+            alert("You must agree with the terms and conditions to proceed.");
+        }
+    });
     // Function to handle quantity change
     function updateQuantity(element, productName, productSize, pricePerItem) {
         let quantityInput = element.parentNode.querySelector('.cart__qty-input');

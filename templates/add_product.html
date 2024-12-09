@@ -224,19 +224,19 @@
                             <label for="discountpercentage1">Discount Percentage 1(%)</label>
                             <input type="text" id="discountpercentage1" name="discountpercentage1"
                                 value="{{ product[4] if product else '' }}" 
-                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');">
+                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');" placeholder="5-10">
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <label for="discountpercentage2">Discount Percentage 2(%)</label>
                             <input type="text" id="discountpercentage2" name="discountpercentage2"
                                 value="{{ product[5] if product else '' }}" 
-                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');">
+                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');" placeholder="10-15">
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <label for="discountpercentage3">Discount Percentage 3(%)</label>
                             <input type="text" id="discountpercentage3" name="discountpercentage3"
                                 value="{{ product[6] if product else '' }}" 
-                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');">
+                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');" placeholder="15-20">
                         </div>
 
                         <div class="col-lg-6 col-md-6">
@@ -246,7 +246,7 @@
 
                         <div class="col-lg-6 col-md-6">
                             <label for="quantity">Stock quantity</label>
-                            <input type="text" id="quantity" name="quantity" placeholder="Type product quantity" pattern="[0-9,]*"
+                            <input type="text" id="quantity" name="quantity" placeholder="0,0,0,0,0,0" pattern="[0-9,]*"
                                 value="{{ product[8] if product else '' }}"  oninput="this.value = this.value.replace(/[^0-9,]/g, '');">
                         </div>
 
@@ -260,20 +260,21 @@
                         <div class="col-lg-6">
                             <label for="product-tags">Product Gender</label>
                             <div class="tags">
-                                <input type="radio" name="gender" id="tag1" value="Men" checked>
+                                <input type="radio" name="gender" id="tag1" value="Men" {{ 'checked' if product and product[10] == 'Men' else '' }}>
                                 <label for="Men">Men</label>
-                                <input type="radio" name="gender" id="tag2" value="Women">
+                                <input type="radio" name="gender" id="tag2" value="Women" {{ 'checked' if product and product[10] == 'Women' else '' }}>
                                 <label for="Women">Women</label>
                             </div>
                         </div>
+
                         <div class="col-lg-6" id="div1">
                             <label for="product-category-men">Product Category</label>
                             <select id="product-category-men" name="product-category-men"
                                 value="{{ product[9] if product else '' }}">
-                                <option value="Shirt">Shirts</option>
-                                <option value="Tshirts">Tshirts</option>
-                                <option value="Trousers">Trousers</option>
-                                <option value="Shoes">Shoes</option>
+                                <option value="Shirt" {{ 'selected' if product and product[9] == 'Shirt' else '' }}>Shirts</option>
+                                <option value="Tshirts" {{ 'selected' if product and product[9] == 'Tshirts' else '' }}>Tshirts</option>
+                                <option value="Trousers" {{ 'selected' if product and product[9] == 'Trousers' else '' }}>Trousers</option>
+                                <option value="Shoes" {{ 'selected' if product and product[9] == 'Shoes' else '' }}>Shoes</option>
                             </select>
                         </div>
                         <div class="col-lg-6" id="div2">
@@ -290,60 +291,60 @@
 
                     <label for="product-tags" style="margin-top: 10px;">Product Size</label>
                     <div class="tags">
-                        <input type="checkbox" name="size" value="XS" id="tag1" checked>
+                        <input type="checkbox" name="size" value="XS" id="tag1" {{ 'checked' if 'XS' in product[11] else '' }}>
                         <label for="XS">XS</label>
-                        <input type="checkbox" name="size" value="S" id="tag2">
+                        <input type="checkbox" name="size" value="S" id="tag2" {{ 'checked' if 'S' in product[11] else '' }}>
                         <label for="S">S</label>
-                        <input type="checkbox" name="size" value="M" id="tag3">
+                        <input type="checkbox" name="size" value="M" id="tag3" {{ 'checked' if 'M' in product[11] else '' }}>
                         <label for="M">M</label>
-                        <input type="checkbox" name="size" value="L" id="tag1" checked>
+                        <input type="checkbox" name="size" value="L" id="tag1" {{ 'checked' if 'L' in product[11] else '' }}>
                         <label for="L">L</label>
-                        <input type="checkbox" name="size" value="XL" id="tag2">
+                        <input type="checkbox" name="size" value="XL" id="tag2" {{ 'checked' if 'XL' in product[11] else '' }}>
                         <label for="XL">XL</label>
-                        <input type="checkbox" name="size" value="XXL" id="tag3">
+                        <input type="checkbox" name="size" value="XXL" id="tag3" {{ 'checked' if 'XXL' in product[11] else '' }}>
                         <label for="XXL">XXL</label>
                     </div>
                     <label for="product-tags" style="margin-top: 10px;">Color</label>
                     <div class="tags">
-                        <input type="radio" name="color" value="Red" id="tag1" checked>
+                        <input type="radio" name="color" value="Red" id="tag1" {{ 'checked' if 'Red' in product[2] else '' }}>
                         <label for="tag1">Red</label>
-                        <input type="radio" name="color" value="Blue" id="tag2">
+                        <input type="radio" name="color" value="Blue" id="tag2" {{ 'checked' if 'Blue' in product[2] else '' }}>
                         <label for="tag2">Blue</label>
-                        <input type="radio" name="color" value="Black" id="tag3">
+                        <input type="radio" name="color" value="Black" id="tag3" {{ 'checked' if 'Black' in product[2] else '' }}>
                         <label for="tag3">Black</label>
-                        <input type="radio" name="color" value="Green" id="tag4">
+                        <input type="radio" name="color" value="Green" id="tag4" {{ 'checked' if 'Green' in product[2] else '' }}>
                         <label for="tag4">Green</label>
-                        <input type="radio" name="color" value="Yellow" id="tag5">
+                        <input type="radio" name="color" value="Yellow" id="tag5" {{ 'checked' if 'Yellow' in product[2] else '' }}>
                         <label for="tag5">Yellow</label>
-                        <input type="radio" name="color" value="White" id="tag6">
+                        <input type="radio" name="color" value="White" id="tag6" {{ 'checked' if 'White' in product[2] else '' }}>
                         <label for="tag6">White</label>
                     </div>
                     <label for="product-tags" style="margin-top: 10px;">Color Options:-</label>
                     <div class="tags">
-                        <input type="checkbox" name="coloroptions" value="Red" id="tag1">
+                        <input type="checkbox" name="coloroptions" value="Red" id="tag1" {{ 'checked' if 'Red' in product[18] else '' }}>
                         <label for="Red">Red</label>
-                        <input type="checkbox" name="coloroptions" value="White" id="tag2">
+                        <input type="checkbox" name="coloroptions" value="White" id="tag2" {{ 'checked' if 'White' in product[18] else '' }}>
                         <label for="White">White</label>
-                        <input type="checkbox" name="coloroptions" value="Blue" id="tag3">
+                        <input type="checkbox" name="coloroptions" value="Blue" id="tag3" {{ 'checked' if 'Blue' in product[18] else '' }}>
                         <label for="Blue">Blue</label>
-                        <input type="checkbox" name="coloroptions" value="Green" id="tag1">
+                        <input type="checkbox" name="coloroptions" value="Green" id="tag1" {{ 'checked' if 'Green' in product[18] else '' }}>
                         <label for="Green">Green</label>
-                        <input type="checkbox" name="coloroptions" value="Yellow" id="tag2">
+                        <input type="checkbox" name="coloroptions" value="Yellow" id="tag2" {{ 'checked' if 'Yellow' in product[18] else '' }}>
                         <label for="Yellow">Yellow</label>
-                        <input type="checkbox" name="coloroptions" value="Orange" id="tag3">
+                        <input type="checkbox" name="coloroptions" value="Orange" id="tag3" {{ 'checked' if 'Orange' in product[18] else '' }}>
                         <label for="Orange">Orange</label>
                     </div>
                     <label for="product-tags" style="margin-top: 10px;">Vendors</label>
                     <div class="tags">
-                        <input type="radio" name="vendor" value="Nike" id="tag1" checked>
+                        <input type="radio" name="vendor" value="Nike" id="tag1" {{ 'checked' if 'Nike' in product[17] else '' }}>
                         <label for="tag1">Nike</label>
-                        <input type="radio" name="vendor" value="Puma" id="tag2">
+                        <input type="radio" name="vendor" value="Puma" id="tag2" {{ 'checked' if 'Puma' in product[17] else '' }}>
                         <label for="tag2">Puma</label>
-                        <input type="radio" name="vendor" value="Asics" id="tag3">
+                        <input type="radio" name="vendor" value="Asics" id="tag3" {{ 'checked' if 'Asics' in product[17] else '' }}>
                         <label for="tag3">Asics</label>
-                        <input type="radio" name="vendor" value="AllenSolly" id="tag4">
+                        <input type="radio" name="vendor" value="AllenSolly" id="tag4" {{ 'checked' if 'AllenSolly' in product[17] else '' }}>
                         <label for="tag4">Allen Solly</label>
-                        <input type="radio" name="vendor" value="H&M" id="tag5">
+                        <input type="radio" name="vendor" value="H&M" id="tag5" {{ 'checked' if 'H&M' in product[17] else '' }}>
                         <label for="tag5">H&M</label>
                     </div>
 

@@ -32,6 +32,13 @@
 </head>
 
 <body class="template-product">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script type="text/javascript">
+            alert("{{ messages[0] }}");
+        </script>
+    {% endif %}
+{% endwith %}
   <div class="pageWrapper">
     <!--Search Form Drawer-->
     <div class="search">
@@ -1551,6 +1558,7 @@
     <script src="../static/js/vendor/photoswipe.min.js"></script>
     <script src="../static/js/vendor/photoswipe-ui-default.min.js"></script>
     <script>
+
 function updateSelection(productId, size) {
     // Remove the "selected" class from all labels
     const labels = document.querySelectorAll(".swatchLbl");
