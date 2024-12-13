@@ -52,21 +52,24 @@
                         <ul class="customer-links list-inline mb-0">
                             {% if session['logged_in'] %}
                             <!-- User is logged in -->
-                            <li class="list-inline-item" style="display: none;"><a href="/wishlist" target="_blank"
+                            {% if session['is_admin'] %}
+                            <li class="list-inline-item"><a href="/wishlist" target="_blank"
                                     style="color: #deb992; font-weight: 500;">Admin</a></li>
+                            {% endif %}
                             <li class="list-inline-item" style="display: none;"><a href="/login"
                                     style="color: #deb992; font-weight: 500;">Login</a></li>
                             <li class="list-inline-item" style="display: none;"><a href="/register"
                                     style="color: #deb992; font-weight: 500;">Create Account</a></li>
 
                             <!-- Show "My Account" and "Logout" when logged in -->
-                            <li class="list-inline-item"><a href="/myaccount" style="color: #deb992; font-weight: 500;">My
+                            <li class="list-inline-item"><a href="/myaccount"
+                                    style="color: #deb992; font-weight: 500;">My
                                     Account</a></li>
                             <li class="list-inline-item"><a href="/logout"
                                     style="color: #deb992; font-weight: 500;">Logout</a></li>
                             {% else %}
                             <!-- User is not logged in -->
-                            <li class="list-inline-item"><a href="/wishlist" target="_blank"
+                            <li class="list-inline-item" style="display: none;"><a href="/wishlist" target="_blank"
                                     style="color: #deb992; font-weight: 500;">Admin</a></li>
                             <li class="list-inline-item"><a href="/login"
                                     style="color: #deb992; font-weight: 500;">Login</a></li>
@@ -88,8 +91,9 @@
                     <!--Desktop Logo-->
                     <div class="logo col-md-2 col-lg-2 d-none d-lg-block">
                         <a href="/">
-                            <h3 style="color: #deb992;"><img src="../static/images/logo/logo.png" height="40px" width="50px" alt="Belle Multipurpose Html Template" title="Belle Multipurpose Html Template" />
-                                LOGO</h3>
+                            <img src="../static/images/collection/WhatsApp Image 2024-12-08 at 14.18.26.jpeg" width="80px" alt="FashionHolics" 
+                                    title="FashionHolics" />
+                                
                         </a>
                     </div>
                     <!--End Desktop Logo-->
@@ -186,10 +190,10 @@
                                             <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
                                                     class="site-nav lvl-1">Western Wear</a>
                                                 <ul class="subLinks">
-                                                    <li class="lvl-2"><a href="/shopwomen"
-                                                            class="site-nav lvl-2">Denim Jacket</a></li>
-                                                    <li class="lvl-2"><a href="/shopwomen"
-                                                            class="site-nav lvl-2">Skinny Jeans</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Denim
+                                                            Jacket</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Skinny
+                                                            Jeans</a></li>
                                                     <li class="lvl-2"><a href="/shopwomen"
                                                             class="site-nav lvl-2">Bodycon Dress</a></li>
                                                     <li class="lvl-2"><a href="/shopwomen"
@@ -201,11 +205,10 @@
                                             <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
                                                     class="site-nav lvl-1">Ethnic Wear</a>
                                                 <ul class="subLinks">
-                                                    <li class="lvl-2"><a href="/shopwomen"
-                                                            class="site-nav lvl-2">Saree <span
-                                                                class="lbl nm_label3">Hot</span></a></li>
-                                                    <li class="lvl-2"><a href="/shopwomen"
-                                                            class="site-nav lvl-2">Salwar Kameez</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Saree
+                                                            <span class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Salwar
+                                                            Kameez</a></li>
                                                     <li class="lvl-2"><a href="/shopwomen"
                                                             class="site-nav lvl-2">Lehenga Choli</a></li>
                                                     <li class="lvl-2"><a href="/shopwomen"
@@ -222,8 +225,8 @@
                                                                 class="lbl nm_label3">Hot</span></a></li>
                                                     <li class="lvl-2"><a href="/shopwomen"
                                                             class="site-nav lvl-2">Boyshorts</a></li>
-                                                    <li class="lvl-2"><a href="/shopwomen"
-                                                            class="site-nav lvl-2">Lace Panties</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Lace
+                                                            Panties</a></li>
                                                     <li class="lvl-2"><a href="/shopwomen"
                                                             class="site-nav lvl-2">Nightgown</a></li>
                                                     <li class="lvl-2"><a href="/shopwomen"
@@ -234,189 +237,195 @@
                                             <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
                                                     class="site-nav lvl-1">Sportswear</a>
                                                 <ul class="subLinks">
-                                                    <li class="lvl-2"><a href="/shopwomen"
-                                                            class="site-nav lvl-2">Sports Bra</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Sports
+                                                            Bra</a></li>
                                                     <li class="lvl-2"><a href="/shopwomen"
                                                             class="site-nav lvl-2">Leggings</a></li>
-                                                    <li class="lvl-2"><a href="/shopwomen"
-                                                            class="site-nav lvl-2">Tank Tops</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Tank
+                                                            Tops</a></li>
                                                     <li class="lvl-2"><a href="/shopwomen"
                                                             class="site-nav lvl-2">Running Shorts</a></li>
-                                                    <li class="lvl-2"><a href="/shopwomen"
-                                                            class="site-nav lvl-2">Track Jackets</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Track
+                                                            Jackets</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="lvl1 parent megamenu"><a href="/">Kids <span style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
-                                    class="anm anm-angle-down-l"></i></a>
-                           
-                        </li>
+                                <li class="lvl1 parent megamenu"><a href="/">Kids <span
+                                            style="background-color: red;border-radius: 5px; padding: 1px;">Coming
+                                            soon!</span><i class="anm anm-angle-down-l"></i></a>
+
+                                </li>
                                 <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i
                                             class="anm anm-angle-down-l"></i></a>
                                 </li>
-                               
+
                                 <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
                                             class="anm anm-angle-down-l"></i></a>
                                 </li>
-                                <li class="lvl1 parent dropdown"><a href="/myaccount">My Account <i
+                                <li class="lvl1 parent dropdown"><a href="/aboutus">About Us <i
                                     class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                <li class="lvl1 parent dropdown"><a href="/myaccount">My Account <i
+                                            class="anm anm-angle-down-l"></i></a>
                                 </li>
                                 {% else %}
                                 <li class="lvl1 parent megamenu"><a href="/">Home <i
-                                    class="anm anm-angle-down-l"></i></a>
+                                            class="anm anm-angle-down-l"></i></a>
                                 </li>
                                 <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i
-                                    class="anm anm-angle-down-l"></i></a>
-                            <div class="megamenu style4">
-                                <ul class="grid grid--uniform mmWrapper">
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Shirts</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Dress Shirt</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Oxford Shirt</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Flannel Shirt</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Henley Shirt</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Chambray Shirt</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Tshirts</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Crew Neck T-shirt <span
-                                                        class="lbl nm_label3">Hot</span></a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">V-neck T-shirt</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Polo T-shirt</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Graphic T-shirt</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Long Sleeve T-shirt</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Trousers</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Chinos <span
-                                                        class="lbl nm_label3">Hot</span></a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Jeans</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Dress Pants</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Cargo Pants</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Joggers</a></li>
+                                            class="anm anm-angle-down-l"></i></a>
+                                    <div class="megamenu style4">
+                                        <ul class="grid grid--uniform mmWrapper">
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Shirts</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Dress Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Oxford Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Flannel Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Henley Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Chambray Shirt</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Tshirts</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Crew Neck T-shirt <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">V-neck T-shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Polo T-shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Graphic T-shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Long Sleeve T-shirt</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Trousers</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Chinos <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Jeans</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Dress Pants</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Cargo Pants</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Joggers</a></li>
 
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Shoes</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Sneakers <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Loafers</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Boots</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Derby Shoes</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Oxford Shoes</a></li>
+                                                </ul>
+                                            </li>
                                         </ul>
-                                    </li>
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Shoes</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Sneakers <span
-                                                        class="lbl nm_label3">Hot</span></a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Loafers</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Boots</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Derby Shoes</a></li>
-                                            <li class="lvl-2"><a href="/shopfullwidth"
-                                                    class="site-nav lvl-2">Oxford Shoes</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
+                                    </div>
                                 </li>
                                 <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i
-                                    class="anm anm-angle-down-l"></i></a>
-                            <div class="megamenu style4">
-                                <ul class="grid grid--uniform mmWrapper">
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Western Wear</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Denim Jacket</a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Skinny Jeans</a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Bodycon Dress</a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Blazer</a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Jumpsuit</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Ethnic Wear</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Saree <span
-                                                        class="lbl nm_label3">Hot</span></a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Salwar Kameez</a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Lehenga Choli</a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Kurti</a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Anarkali Suit</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Lingerie & Nightwear</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Underwire Bra <span
-                                                        class="lbl nm_label3">Hot</span></a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Boyshorts</a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Lace Panties</a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Nightgown</a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Bodysuit</a></li>
+                                            class="anm anm-angle-down-l"></i></a>
+                                    <div class="megamenu style4">
+                                        <ul class="grid grid--uniform mmWrapper">
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Western Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Denim
+                                                            Jacket</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Skinny
+                                                            Jeans</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen"
+                                                            class="site-nav lvl-2">Bodycon Dress</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen"
+                                                            class="site-nav lvl-2">Blazer</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen"
+                                                            class="site-nav lvl-2">Jumpsuit</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Ethnic Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Saree
+                                                            <span class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Salwar
+                                                            Kameez</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen"
+                                                            class="site-nav lvl-2">Lehenga Choli</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen"
+                                                            class="site-nav lvl-2">Kurti</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen"
+                                                            class="site-nav lvl-2">Anarkali Suit</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Lingerie & Nightwear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopwomen"
+                                                            class="site-nav lvl-2">Underwire Bra <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen"
+                                                            class="site-nav lvl-2">Boyshorts</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Lace
+                                                            Panties</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen"
+                                                            class="site-nav lvl-2">Nightgown</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen"
+                                                            class="site-nav lvl-2">Bodysuit</a></li>
 
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Sportswear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Sports
+                                                            Bra</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen"
+                                                            class="site-nav lvl-2">Leggings</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Tank
+                                                            Tops</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen"
+                                                            class="site-nav lvl-2">Running Shorts</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Track
+                                                            Jackets</a></li>
+                                                </ul>
+                                            </li>
                                         </ul>
-                                    </li>
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                            class="site-nav lvl-1">Sportswear</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Sports Bra</a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Leggings</a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Tank Tops</a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Running Shorts</a></li>
-                                            <li class="lvl-2"><a href="/shopwomen"
-                                                    class="site-nav lvl-2">Track Jackets</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
+                                    </div>
                                 </li>
                                 <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i
-                                    class="anm anm-angle-down-l"></i></a>
+                                            class="anm anm-angle-down-l"></i></a>
                                 </li>
-                       
+
                                 <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                <li class="lvl1 parent dropdown"><a href="/aboutus">About Us <i
                                     class="anm anm-angle-down-l"></i></a>
                                 </li>
-                                <li class="lvl1 parent dropdown"><a href="/myaccount" style="display: none;">My Account <i
-                            class="anm anm-angle-down-l"></i></a>
+                                <li class="lvl1 parent dropdown"><a href="/myaccount" style="display: none;">My Account
+                                        <i class="anm anm-angle-down-l"></i></a>
                                 </li>
                                 {% endif %}
                             </ul>
@@ -425,10 +434,11 @@
                     </div>
                     <!--Mobile Logo-->
                     <div class="col-6 col-sm-6 col-md-6 col-lg-2 d-block d-lg-none mobile-logo">
-                        <div class="logo">
+                        <div class="logo" style="margin-left: 55px;">
                             <a href="/">
-                                <!-- <img src="../static/images/logo.svg" alt="" /> -->
-                                <h3 style="color: #deb992;">LOGO</h3>
+                                <img src="../static/images/collection/WhatsApp Image 2024-12-08 at 14.18.26.jpeg" width="80px" alt="FashionHolics" 
+                                        title="FashionHolics" />
+                                    
                             </a>
                         </div>
                     </div>
@@ -439,7 +449,7 @@
                                 <i class="anm anm-bag-l" style="color: #deb992; font-size: 22px !important;"></i>
                                 <!-- <span id="CartCount" class="site-header__cart-count" data-cart-render="item_count">2</span> -->
                             </a>
-                           
+
                         </div>
                         <div class="site-header__search">
                             <button type="button" class="search-trigger"><i class="icon anm anm-search-l"></i></button>
@@ -469,7 +479,7 @@
                         <li><a href="/shopwomen" class="site-nav">Chambray Shirt</a></li>
                     </ul>
                 </li>
-           
+
 
 
 
@@ -481,14 +491,18 @@
                         <li><a href="/product" class="site-nav">Sportswear</a></li>
                     </ul>
                 </li>
-                <li class="lvl1 parent megamenu"><a href="/">Kids <span style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
-                    class="anm anm-angle-down-l"></i></a>
-           
-        </li>
+                <li class="lvl1 parent megamenu"><a href="/">Kids <span
+                            style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
+                            class="anm anm-angle-down-l"></i></a>
+
+                </li>
                 <li class="lvl1"><a href="#">New Arrivals</a>
                 </li>
 
                 <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
+                </li>
+                <li class="lvl1 parent dropdown"><a href="/aboutus">About Us <i
+                    class="anm anm-angle-down-l"></i></a>
                 </li>
 
                 <li class="lvl1 parent dropdown"><a href="/myaccount">My Account</a>
@@ -511,7 +525,7 @@
                         <li><a href="/shopwomen" class="site-nav">Chambray Shirt</a></li>
                     </ul>
                 </li>
-        
+
 
 
 
@@ -528,13 +542,17 @@
 
                 <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
                 </li>
+                <li class="lvl1 parent dropdown"><a href="/aboutus">About Us <i
+                    class="anm anm-angle-down-l"></i></a>
+                </li>
 
-                <li class="list-inline-item"><a href="/myaccount" style="color: #deb992; font-weight: 500; display: none;">My Account</a>
+                <li class="list-inline-item"><a href="/myaccount"
+                        style="color: #deb992; font-weight: 500; display: none;">My Account</a>
                 </li>
                 {% endif %}
 
             </ul>
-                
+
 
         </div>
         <!--End Mobile Menu-->
@@ -626,14 +644,25 @@
                                             <div class="col-12 item">
                                                 <div class="product-image">
                                                     <a href="/product/{{product[7]}}">
-                                                        <img class="primary blur-up lazyload" data-src="../static/images/pics/{{product[12]}}" src="../static/images/pics/{{product[12]}}" alt="image" title="product">
-                                                        <img class="hover blur-up lazyload" data-src="../static/images/pics/{{product[13]}}" src="../static/images/pics/{{product[13]}}" alt="image" title="product">
+                                                        <img class="primary blur-up lazyload"
+                                                            data-src="../static/images/pics/{{product[12]}}"
+                                                            src="../static/images/pics/{{product[12]}}" alt="image"
+                                                            title="product">
+                                                        <img class="hover blur-up lazyload"
+                                                            data-src="../static/images/pics/{{product[13]}}"
+                                                            src="../static/images/pics/{{product[13]}}" alt="image"
+                                                            title="product">
                                                     </a>
-                                                    <form class="variants add" action="#" onclick="window.location.href='/product/{{product[7]}}'" method="post">
-                                                        <button class="btn btn-addto-cart" type="button" tabindex="0">View More</button>
+                                                    <form class="variants add" action="#"
+                                                        onclick="window.location.href='/product/{{product[7]}}'"
+                                                        method="post">
+                                                        <button class="btn btn-addto-cart" type="button"
+                                                            tabindex="0">View More</button>
                                                     </form>
                                                     <div class="button-set">
-                                                        <a href="javascript:void(0)" title="Quick View" class="quick-view-popup quick-view" data-toggle="modal" data-target="#content_quickview">
+                                                        <a href="javascript:void(0)" title="Quick View"
+                                                            class="quick-view-popup quick-view" data-toggle="modal"
+                                                            data-target="#content_quickview">
                                                             <i class="icon anm anm-search-plus-r"></i>
                                                         </a>
                                                     </div>
@@ -649,9 +678,9 @@
                                             </div>
                                             {% endfor %}
                                         </div>
-                                       
+
                                     </div>
-                                    
+
                                     <!-- Men Products Section -->
                                     <div id="tab2" class="tab_content grid-products">
                                         <div class="productSlider">
@@ -659,14 +688,25 @@
                                             <div class="col-12 item">
                                                 <div class="product-image">
                                                     <a href="/product/{{product[7]}}">
-                                                        <img class="primary blur-up lazyload" data-src="../static/images/pics/{{product[12]}}" src="../static/images/pics/{{product[12]}}" alt="image" title="product">
-                                                        <img class="hover blur-up lazyload" data-src="../static/images/pics/{{product[13]}}" src="../static/images/pics/{{product[13]}}" alt="image" title="product">
+                                                        <img class="primary blur-up lazyload"
+                                                            data-src="../static/images/pics/{{product[12]}}"
+                                                            src="../static/images/pics/{{product[12]}}" alt="image"
+                                                            title="product">
+                                                        <img class="hover blur-up lazyload"
+                                                            data-src="../static/images/pics/{{product[13]}}"
+                                                            src="../static/images/pics/{{product[13]}}" alt="image"
+                                                            title="product">
                                                     </a>
-                                                    <form class="variants add" action="#" onclick="window.location.href='/product/{{product[7]}}'" method="post">
-                                                        <button class="btn btn-addto-cart" type="button" tabindex="0">View More</button>
+                                                    <form class="variants add" action="#"
+                                                        onclick="window.location.href='/product/{{product[7]}}'"
+                                                        method="post">
+                                                        <button class="btn btn-addto-cart" type="button"
+                                                            tabindex="0">View More</button>
                                                     </form>
                                                     <div class="button-set">
-                                                        <a href="javascript:void(0)" title="Quick View" class="quick-view-popup quick-view" data-toggle="modal" data-target="#content_quickview">
+                                                        <a href="javascript:void(0)" title="Quick View"
+                                                            class="quick-view-popup quick-view" data-toggle="modal"
+                                                            data-target="#content_quickview">
                                                             <i class="icon anm anm-search-plus-r"></i>
                                                         </a>
                                                     </div>
@@ -685,7 +725,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -825,14 +865,12 @@
                                         <!-- image -->
                                         <img class="grid-view-item__image primary blur-up lazyload"
                                             data-src="../static/images/pics/{{product[12]}}"
-                                            src="../static/images/pics/{{product[12]}}" alt="image"
-                                            title="product">
+                                            src="../static/images/pics/{{product[12]}}" alt="image" title="product">
                                         <!-- End image -->
                                         <!-- Hover image -->
                                         <img class="grid-view-item__image hover blur-up lazyload"
                                             data-src="../static/images/pics/{{product[12]}}"
-                                            src="../static/images/pics/{{product[12]}}" alt="image"
-                                            title="product">
+                                            src="../static/images/pics/{{product[12]}}" alt="image" title="product">
                                         <!-- End hover image -->
                                         <!-- product label -->
                                         <!-- <div class="product-labels rectangular"><span class="lbl on-sale">-16%</span> <span class="lbl pr-label1">new</span></div> -->
@@ -849,12 +887,13 @@
                                         <!-- product price -->
                                         <div class="product-price">
                                             <!-- <span class="old-price" style="color: #deb992;">₹500.00</span> -->
-                                            <span class="price" style="color: #081525 !important;">₹ {{product[3]}}</span>
+                                            <span class="price" style="color: #081525 !important;">₹
+                                                {{product[3]}}</span>
                                         </div>
                                         <!-- End product price -->
 
                                         <!-- product button -->
-                                        
+
                                         <!-- end product button -->
                                     </div>
                                     <!-- Variant -->
@@ -998,7 +1037,7 @@
                             <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
                                 <h4 class="h4">Informations</h4>
                                 <ul>
-                                    <li><a href="#">About us</a></li>
+                                    <li><a href="/aboutus">About us</a></li>
                                     <li><a href="#">Careers</a></li>
                                     <li><a href="#">Privacy policy</a></li>
                                     <li><a href="#">Terms &amp; condition</a></li>

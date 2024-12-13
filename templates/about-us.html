@@ -2,797 +2,783 @@
 <html class="no-js" lang="en">
 
 <!-- belle/about-us.html   11 Nov 2019 12:44:33 GMT -->
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>About Us &ndash; Belle Multipurpose Bootstrap 4 Template</title>
-<meta name="description" content="description">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Favicon -->
-<link rel="shortcut icon" href="assets/images/favicon.png" />
-<!-- Plugins CSS -->
-<link rel="stylesheet" href="assets/css/plugins.css">
-<!-- Bootstap CSS -->
-<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-<!-- Main Style CSS -->
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/responsive.css">
-</head>
-<body class="page-template belle">
-<div class="pageWrapper">
-	<!--Search Form Drawer-->
-	<div class="search">
-        <div class="search__form">
-            <form class="search-bar__form" action="#">
-                <button class="go-btn search__button" type="submit"><i class="icon anm anm-search-l"></i></button>
-                <input class="search__input" type="search" name="q" value="" placeholder="Search entire store..." aria-label="Search" autocomplete="off">
-            </form>
-            <button type="button" class="search-trigger close-btn"><i class="icon anm anm-times-l"></i></button>
-        </div>
-    </div>
-    <!--End Search Form Drawer-->
-  <!--Top Header-->
-  <div class="top-header" style="background-color: #081525;">
-    <div class="container-fluid">
-        <div class="row align-items-center">
-            <!-- Centered Tagline Section -->
-            <div class="col-sm-12 col-md-4 offset-md-4 text-center top-headerdiv">
-                <p class="top-header_middle-text" style="color: #deb992;">Effortless Style. Redefined for You.
-                </p>
-            </div>
-            <!-- Right Aligned Login and Create Account -->
-            <div class="col-sm-12 col-md-4 text-right accountlogo">
-                <span class="user-menu d-block d-lg-none">
-                    <i class="anm anm-user-al" aria-hidden="true" style="color: #deb992;"></i>
-                </span>
-                <ul class="customer-links list-inline mb-0">
-                    {% if session['logged_in'] %}
-                    <!-- User is logged in -->
-                    <li class="list-inline-item" style="display: none;"><a href="/wishlist" target="_blank"
-                            style="color: #deb992; font-weight: 500;">Admin</a></li>
-                    <li class="list-inline-item" style="display: none;"><a href="/login"
-                            style="color: #deb992; font-weight: 500;">Login</a></li>
-                    <li class="list-inline-item" style="display: none;"><a href="register.html"
-                            style="color: #deb992; font-weight: 500;">Create Account</a></li>
 
-                    <!-- Show "My Account" and "Logout" when logged in -->
-                    <li class="list-inline-item"><a href="/myaccount" style="color: #deb992; font-weight: 500;">My
-                            Account</a></li>
-                    <li class="list-inline-item"><a href="/logout"
-                            style="color: #deb992; font-weight: 500;">Logout</a></li>
-                    {% else %}
-                    <!-- User is not logged in -->
-                    <li class="list-inline-item"><a href="/wishlist" target="_blank"
-                            style="color: #deb992; font-weight: 500;">Admin</a></li>
-                    <li class="list-inline-item"><a href="/login"
-                            style="color: #deb992; font-weight: 500;">Login</a></li>
-                    <li class="list-inline-item"><a href="register.html"
-                            style="color: #deb992; font-weight: 500;">Create Account</a></li>
-                    <li class="list-inline-item" style="display: none;"><a href="/myaccount"
-                            style="color: #deb992; font-weight: 500; display: none;">My Account</a></li>
-                    {% endif %}
-                </ul>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>About Us &ndash; Belle Multipurpose Bootstrap 4 Template</title>
+    <meta name="description" content="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../static/images/favicon.png" />
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="../static/css/plugins.css">
+    <!-- Bootstap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/responsive.css">
+</head>
+
+<body class="page-template belle">
+    <div class="pageWrapper">
+        <!--Search Form Drawer-->
+        <div class="search">
+            <div class="search__form">
+                <form class="search-bar__form" action="#">
+                    <button class="go-btn search__button" type="submit"><i class="icon anm anm-search-l"></i></button>
+                    <input class="search__input" type="search" name="q" value="" placeholder="Search entire store..."
+                        aria-label="Search" autocomplete="off">
+                </form>
+                <button type="button" class="search-trigger close-btn"><i class="icon anm anm-times-l"></i></button>
             </div>
         </div>
-    </div>
-</div>
-<!--End Top Header-->
+        <!--End Search Form Drawer-->
+        <!--Top Header-->
+        <div class="top-header" style="background-color: #081525;">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <!-- Centered Tagline Section -->
+                    <div class="col-sm-12 col-md-4 offset-md-4 text-center top-headerdiv">
+                        <p class="top-header_middle-text" style="color: #deb992;">Effortless Style. Redefined for You.
+                        </p>
+                    </div>
+                    <!-- Right Aligned Login and Create Account -->
+                    <div class="col-sm-12 col-md-4 text-right accountlogo">
+                        <span class="user-menu d-block d-lg-none">
+                            <i class="anm anm-user-al" aria-hidden="true" style="color: #deb992;"></i>
+                        </span>
+                        <ul class="customer-links list-inline mb-0">
+                            {% if session['logged_in'] %}
+                            <!-- User is logged in -->
+                            {% if session['is_admin'] %}
+                            <li class="list-inline-item"><a href="/wishlist" target="_blank"
+                                    style="color: #deb992; font-weight: 500;">Admin</a></li>
+                            {% endif %}
+                            <li class="list-inline-item" style="display: none;"><a href="/login"
+                                    style="color: #deb992; font-weight: 500;">Login</a></li>
+                            <li class="list-inline-item" style="display: none;"><a href="/register"
+                                    style="color: #deb992; font-weight: 500;">Create Account</a></li>
+
+                            <!-- Show "My Account" and "Logout" when logged in -->
+                            <li class="list-inline-item"><a href="/myaccount"
+                                    style="color: #deb992; font-weight: 500;">My
+                                    Account</a></li>
+                            <li class="list-inline-item"><a href="/logout"
+                                    style="color: #deb992; font-weight: 500;">Logout</a></li>
+                            {% else %}
+                            <!-- User is not logged in -->
+                            <li class="list-inline-item" style="display: none;"><a href="/wishlist" target="_blank"
+                                    style="color: #deb992; font-weight: 500;">Admin</a></li>
+                            <li class="list-inline-item"><a href="/login"
+                                    style="color: #deb992; font-weight: 500;">Login</a></li>
+                            <li class="list-inline-item"><a href="/register"
+                                    style="color: #deb992; font-weight: 500;">Create Account</a></li>
+                            <li class="list-inline-item" style="display: none;"><a href="/myaccount"
+                                    style="color: #deb992; font-weight: 500; display: none;">My Account</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Top Header-->
         <!--Header-->
         <div class="header-wrap classicHeader animated d-flex">
-          <div class="container-fluid">
-              <div class="row align-items-center">
-                  <!--Desktop Logo-->
-                  <div class="logo col-md-2 col-lg-2 d-none d-lg-block">
-                      <a href="index.html">
-                          <h3 style="color: #deb992;">LOGO</h3>
-                          <!-- <img src="../static/images/logo.svg" alt="Belle Multipurpose Html Template" title="Belle Multipurpose Html Template" /> -->
-                      </a>
-                  </div>
-                  <!--End Desktop Logo-->
-                  <div class="col-2 col-sm-3 col-md-3 col-lg-8">
-                      <div class="d-block d-lg-none">
-                          <button type="button"
-                              class="btn--link site-header__menu js-mobile-nav-toggle mobile-nav--open">
-                              <i class="icon anm anm-times-l"></i>
-                              <i class="anm anm-bars-r" style="color: #deb992;"></i>
-                          </button>
-                      </div>
-                      <!--Desktop Menu-->
-                      <nav class="grid__item" id="AccessibleNav"><!-- for mobile -->
-                          <ul id="siteNav" class="site-nav medium center hidearrow">
-                              {% if session['logged_in'] %}
-                              <li class="lvl1 parent megamenu"><a href="index.html">Home <i
-                                          class="anm anm-angle-down-l"></i></a>
-                              </li>
-                              <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i
-                                          class="anm anm-angle-down-l"></i></a>
-                                  <div class="megamenu style4">
-                                      <ul class="grid grid--uniform mmWrapper">
-                                          <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                                  class="site-nav lvl-1">Shirts</a>
-                                              <ul class="subLinks">
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Dress Shirt</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Oxford Shirt</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Flannel Shirt</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Henley Shirt</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Chambray Shirt</a></li>
-                                              </ul>
-                                          </li>
-                                          <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                                  class="site-nav lvl-1">Tshirts</a>
-                                              <ul class="subLinks">
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Crew Neck T-shirt <span
-                                                              class="lbl nm_label3">Hot</span></a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">V-neck T-shirt</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Polo T-shirt</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Graphic T-shirt</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Long Sleeve T-shirt</a></li>
-                                              </ul>
-                                          </li>
-                                          <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                                  class="site-nav lvl-1">Trousers</a>
-                                              <ul class="subLinks">
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Chinos <span
-                                                              class="lbl nm_label3">Hot</span></a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Jeans</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Dress Pants</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Cargo Pants</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Joggers</a></li>
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <!--Desktop Logo-->
+                    <div class="logo col-md-2 col-lg-2 d-none d-lg-block">
+                        <a href="/">
+                            <h3 style="color: #deb992;">LOGO</h3>
+                            <!-- <img src="../static/images/logo.svg" alt="Belle Multipurpose Html Template" title="Belle Multipurpose Html Template" /> -->
+                        </a>
+                    </div>
+                    <!--End Desktop Logo-->
+                    <div class="col-2 col-sm-3 col-md-3 col-lg-8">
+                        <div class="d-block d-lg-none">
+                            <button type="button"
+                                class="btn--link site-header__menu js-mobile-nav-toggle mobile-nav--open">
+                                <i class="icon anm anm-times-l"></i>
+                                <i class="anm anm-bars-r" style="color: #deb992;"></i>
+                            </button>
+                        </div>
+                        <!--Desktop Menu-->
+                        <nav class="grid__item" id="AccessibleNav"><!-- for mobile -->
+                            <ul id="siteNav" class="site-nav medium center hidearrow">
+                                {% if session['logged_in'] %}
+                                <li class="lvl1 parent megamenu"><a href="/">Home <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i
+                                            class="anm anm-angle-down-l"></i></a>
+                                    <div class="megamenu style4">
+                                        <ul class="grid grid--uniform mmWrapper">
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Shirts</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Dress Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Oxford Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Flannel Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Henley Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Chambray Shirt</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Tshirts</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Crew Neck T-shirt <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">V-neck T-shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Polo T-shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Graphic T-shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Long Sleeve T-shirt</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Trousers</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Chinos <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Jeans</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Dress Pants</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Cargo Pants</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Joggers</a></li>
 
-                                              </ul>
-                                          </li>
-                                          <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                                  class="site-nav lvl-1">Shoes</a>
-                                              <ul class="subLinks">
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Sneakers <span
-                                                              class="lbl nm_label3">Hot</span></a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Loafers</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Boots</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Derby Shoes</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Oxford Shoes</a></li>
-                                              </ul>
-                                          </li>
-                                      </ul>
-                                  </div>
-                              </li>
-                              <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i
-                                          class="anm anm-angle-down-l"></i></a>
-                                  <div class="megamenu style4">
-                                      <ul class="grid grid--uniform mmWrapper">
-                                          <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                                  class="site-nav lvl-1">Western Wear</a>
-                                              <ul class="subLinks">
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Denim Jacket</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Skinny Jeans</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Bodycon Dress</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Blazer</a></li>
-                                                  <li class="lvl-2"><a href="shop-grid-5.html"
-                                                          class="site-nav lvl-2">Jumpsuit</a></li>
-                                              </ul>
-                                          </li>
-                                          <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                                  class="site-nav lvl-1">Ethnic Wear</a>
-                                              <ul class="subLinks">
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Saree <span
-                                                              class="lbl nm_label3">Hot</span></a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Salwar Kameez</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Lehenga Choli</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Kurti</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Anarkali Suit</a></li>
-                                              </ul>
-                                          </li>
-                                          <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                                  class="site-nav lvl-1">Lingerie & Nightwear</a>
-                                              <ul class="subLinks">
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Underwire Bra <span
-                                                              class="lbl nm_label3">Hot</span></a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Boyshorts</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Lace Panties</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Nightgown</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Bodysuit</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Shoes</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Sneakers <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Loafers</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Boots</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Derby Shoes</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Oxford Shoes</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i
+                                            class="anm anm-angle-down-l"></i></a>
+                                    <div class="megamenu style4">
+                                        <ul class="grid grid--uniform mmWrapper">
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Western Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Denim Jacket</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Skinny Jeans</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Bodycon Dress</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Blazer</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Jumpsuit</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Ethnic Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Saree <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Salwar Kameez</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Lehenga Choli</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Kurti</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Anarkali Suit</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Lingerie & Nightwear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Underwire Bra <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Boyshorts</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Lace Panties</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Nightgown</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Bodysuit</a></li>
 
-                                              </ul>
-                                          </li>
-                                          <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                                  class="site-nav lvl-1">Sportswear</a>
-                                              <ul class="subLinks">
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Sports Bra</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Leggings</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Tank Tops</a></li>
-                                                  <li class="lvl-2"><a href="/shopfullwidth"
-                                                          class="site-nav lvl-2">Running Shorts</a></li>
-                                                  <li class="lvl-2"><a href="shop-grid-5.html"
-                                                          class="site-nav lvl-2">Track Jackets</a></li>
-                                              </ul>
-                                          </li>
-                                      </ul>
-                                  </div>
-                              </li>
-                              <li class="lvl1 parent megamenu"><a href="/">Kids <span style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
-                                class="anm anm-angle-down-l"></i></a>
-                       
-                    </li>
-                              <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i
-                                          class="anm anm-angle-down-l"></i></a>
-                              </li>
-                             
-                              <li class="lvl1 parent dropdown"><a href="contact-us.html">Contact Us <i
-                                          class="anm anm-angle-down-l"></i></a>
-                              </li>
-                              <li class="lvl1 parent dropdown"><a href="/myaccount">My Account <i
-                                  class="anm anm-angle-down-l"></i></a>
-                              </li>
-                              {% else %}
-                              <li class="lvl1 parent megamenu"><a href="index.html">Home <i
-                                  class="anm anm-angle-down-l"></i></a>
-                              </li>
-                              <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i
-                                  class="anm anm-angle-down-l"></i></a>
-                          <div class="megamenu style4">
-                              <ul class="grid grid--uniform mmWrapper">
-                                  <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                          class="site-nav lvl-1">Shirts</a>
-                                      <ul class="subLinks">
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Dress Shirt</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Oxford Shirt</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Flannel Shirt</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Henley Shirt</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Chambray Shirt</a></li>
-                                      </ul>
-                                  </li>
-                                  <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                          class="site-nav lvl-1">Tshirts</a>
-                                      <ul class="subLinks">
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Crew Neck T-shirt <span
-                                                      class="lbl nm_label3">Hot</span></a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">V-neck T-shirt</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Polo T-shirt</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Graphic T-shirt</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Long Sleeve T-shirt</a></li>
-                                      </ul>
-                                  </li>
-                                  <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                          class="site-nav lvl-1">Trousers</a>
-                                      <ul class="subLinks">
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Chinos <span
-                                                      class="lbl nm_label3">Hot</span></a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Jeans</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Dress Pants</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Cargo Pants</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Joggers</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Sportswear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Sports Bra</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Leggings</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Tank Tops</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Running Shorts</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Track Jackets</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="lvl1 parent megamenu"><a href="/">Kids <span
+                                            style="background-color: red;border-radius: 5px; padding: 1px;">Coming
+                                            soon!</span><i class="anm anm-angle-down-l"></i></a>
 
-                                      </ul>
-                                  </li>
-                                  <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                          class="site-nav lvl-1">Shoes</a>
-                                      <ul class="subLinks">
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Sneakers <span
-                                                      class="lbl nm_label3">Hot</span></a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Loafers</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Boots</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Derby Shoes</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Oxford Shoes</a></li>
-                                      </ul>
-                                  </li>
-                              </ul>
-                          </div>
-                              </li>
-                              <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i
-                                  class="anm anm-angle-down-l"></i></a>
-                          <div class="megamenu style4">
-                              <ul class="grid grid--uniform mmWrapper">
-                                  <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                          class="site-nav lvl-1">Western Wear</a>
-                                      <ul class="subLinks">
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Denim Jacket</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Skinny Jeans</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Bodycon Dress</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Blazer</a></li>
-                                          <li class="lvl-2"><a href="shop-grid-5.html"
-                                                  class="site-nav lvl-2">Jumpsuit</a></li>
-                                      </ul>
-                                  </li>
-                                  <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                          class="site-nav lvl-1">Ethnic Wear</a>
-                                      <ul class="subLinks">
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Saree <span
-                                                      class="lbl nm_label3">Hot</span></a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Salwar Kameez</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Lehenga Choli</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Kurti</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Anarkali Suit</a></li>
-                                      </ul>
-                                  </li>
-                                  <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                          class="site-nav lvl-1">Lingerie & Nightwear</a>
-                                      <ul class="subLinks">
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Underwire Bra <span
-                                                      class="lbl nm_label3">Hot</span></a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Boyshorts</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Lace Panties</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Nightgown</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Bodysuit</a></li>
+                                </li>
+                                <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
 
-                                      </ul>
-                                  </li>
-                                  <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                          class="site-nav lvl-1">Sportswear</a>
-                                      <ul class="subLinks">
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Sports Bra</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Leggings</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Tank Tops</a></li>
-                                          <li class="lvl-2"><a href="/shopfullwidth"
-                                                  class="site-nav lvl-2">Running Shorts</a></li>
-                                          <li class="lvl-2"><a href="shop-grid-5.html"
-                                                  class="site-nav lvl-2">Track Jackets</a></li>
-                                      </ul>
-                                  </li>
-                              </ul>
-                          </div>
-                              </li>
-                              <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i
-                                  class="anm anm-angle-down-l"></i></a>
-                              </li>
-                     
-                              <li class="lvl1 parent dropdown"><a href="contact-us.html">Contact Us <i
-                                  class="anm anm-angle-down-l"></i></a>
-                              </li>
-                              <li class="lvl1 parent dropdown"><a href="/myaccount" style="display: none;">My Account <i
-                          class="anm anm-angle-down-l"></i></a>
-                              </li>
-                              {% endif %}
-                          </ul>
-                      </nav>
-                      <!--End Desktop Menu-->
-                  </div>
-                  <!--Mobile Logo-->
-                  <div class="col-6 col-sm-6 col-md-6 col-lg-2 d-block d-lg-none mobile-logo">
-                      <div class="logo">
-                          <a href="index.html">
-                              <!-- <img src="../static/images/logo.svg" alt="" /> -->
-                              <h3 style="color: #deb992;">LOGO</h3>
-                          </a>
-                      </div>
-                  </div>
-                  <!--Mobile Logo-->
-                  <div class="col-4 col-sm-3 col-md-3 col-lg-2">
-                      <div class="site-cart">
-                          <a href="/cart" title="Cart">
-                              <i class="anm anm-bag-l" style="color: #deb992; font-size: 22px !important;"></i>
-                              <!-- <span id="CartCount" class="site-header__cart-count" data-cart-render="item_count">2</span> -->
-                          </a>
-                          <!--Minicart Popup-->
-                          <!-- <div id="header-cart" class="block block-cart">
-                        <ul class="mini-products-list">
-                              <li class="item">
-                                <a class="product-image" href="#">
-                                    <img src="../static/images/product-images/cape-dress-1.jpg" alt="3/4 Sleeve Kimono Dress" title="" />
-                                  </a>
-                                  <div class="product-details">
-                                    <a href="#" class="remove"><i class="anm anm-times-l" aria-hidden="true"></i></a>
-                                      <a href="#" class="edit-i remove"><i class="anm anm-edit" aria-hidden="true"></i></a>
-                                      <a class="pName" href="cart-variant1.html">Sleeve Kimono Dress</a>
-                                      <div class="variant-cart">Black / XL</div>
-                                      <div class="wrapQtyBtn">
-                                          <div class="qtyField">
-                                            <span class="label">Qty:</span>
-                                              <a class="qtyBtn minus" href="javascript:void(0);"><i class="fa anm anm-minus-r" aria-hidden="true"></i></a>
-                                              <input type="text" id="Quantity" name="quantity" value="1" class="product-form__input qty">
-                                              <a class="qtyBtn plus" href="javascript:void(0);"><i class="fa anm anm-plus-r" aria-hidden="true"></i></a>
-                                          </div>
-                                      </div>
-                                      <div class="priceRow">
-                                        <div class="product-price">
-                                            <span class="money">₹59.00</span>
-                                          </div>
-                                       </div>
-                </div>
-                              </li>
-                              <li class="item">
-                                <a class="product-image" href="#">
-                                    <img src="../static/images/product-images/cape-dress-2.jpg" alt="Elastic Waist Dress - Black / Small" title="" />
-                                  </a>
-                                  <div class="product-details">
-                                    <a href="#" class="remove"><i class="anm anm-times-l" aria-hidden="true"></i></a>
-                                      <a href="#" class="edit-i remove"><i class="anm anm-edit" aria-hidden="true"></i></a>
-                                      <a class="pName" href="cart-variant1.html">Elastic Waist Dress</a>
-                                      <div class="variant-cart">Gray / XXL</div>
-                                      <div class="wrapQtyBtn">
-                                          <div class="qtyField">
-                                            <span class="label">Qty:</span>
-                                              <a class="qtyBtn minus" href="javascript:void(0);"><i class="fa anm anm-minus-r" aria-hidden="true"></i></a>
-                                              <input type="text" id="Quantity" name="quantity" value="1" class="product-form__input qty">
-                                              <a class="qtyBtn plus" href="javascript:void(0);"><i class="fa anm anm-plus-r" aria-hidden="true"></i></a>
-                                          </div>
-                                      </div>
-                                       <div class="priceRow">
-                                          <div class="product-price">
-                                              <span class="money">₹99.00</span>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </li>
-                          </ul>
-                          <div class="total">
-                            <div class="total-in">
-                                <span class="label">Cart Subtotal:</span><span class="product-price"><span class="money">₹748.00</span></span>
-                              </div>
-                               <div class="buttonSet text-center">
-                                  <a href="cart-variant1.html" class="btn btn-secondary btn--small">View Cart</a>
-                                  <a href="checkout.html" class="btn btn-secondary btn--small">Checkout</a>
-                              </div>
-                          </div>
-                      </div> -->
-                          <!--EndMinicart Popup-->
-                      </div>
-                      <div class="site-header__search">
-                          <button type="button" class="search-trigger"><i class="icon anm anm-search-l"></i></button>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <!--End Header-->
-      <!--Mobile Menu-->
-      <div class="mobile-nav-wrapper" role="navigation">
-          <div class="closemobileMenu"><i class="icon anm anm-times-l pull-right"></i> Close Menu</div>
-          <ul id="MobileNav" class="mobile-nav">
-              {% if session['logged_in'] %}
-              <li class="lvl1 parent megamenu"><a href="index.html">Home</a>
+                                <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                <li class="lvl1 parent dropdown"><a href="/aboutus">About Us <i
+                                    class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                <li class="lvl1 parent dropdown"><a href="/myaccount">My Account <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                {% else %}
+                                <li class="lvl1 parent megamenu"><a href="/">Home <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i
+                                            class="anm anm-angle-down-l"></i></a>
+                                    <div class="megamenu style4">
+                                        <ul class="grid grid--uniform mmWrapper">
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Shirts</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Dress Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Oxford Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Flannel Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Henley Shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Chambray Shirt</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Tshirts</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Crew Neck T-shirt <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">V-neck T-shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Polo T-shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Graphic T-shirt</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Long Sleeve T-shirt</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Trousers</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Chinos <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Jeans</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Dress Pants</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Cargo Pants</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Joggers</a></li>
 
-              </li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Shoes</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Sneakers <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Loafers</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Boots</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Derby Shoes</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Oxford Shoes</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i
+                                            class="anm anm-angle-down-l"></i></a>
+                                    <div class="megamenu style4">
+                                        <ul class="grid grid--uniform mmWrapper">
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Western Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Denim Jacket</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Skinny Jeans</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Bodycon Dress</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Blazer</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Jumpsuit</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Ethnic Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Saree <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Salwar Kameez</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Lehenga Choli</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Kurti</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Anarkali Suit</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Lingerie & Nightwear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Underwire Bra <span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Boyshorts</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Lace Panties</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Nightgown</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Bodysuit</a></li>
 
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Sportswear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Sports Bra</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Leggings</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Tank Tops</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Running Shorts</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth"
+                                                            class="site-nav lvl-2">Track Jackets</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
 
-              <li><a href="#" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
-                  <ul>
-                      <li><a href="/shopfullwidth" class="site-nav">Shirts</a></li>
-                      <li><a href="/shopfullwidth" class="site-nav">Tshirts</a></li>
-                      <li><a href="/shopfullwidth" class="site-nav">Trousers</a></li>
-                      <li><a href="/shopfullwidth" class="site-nav">Shoes</a></li>
-                      <li><a href="/shopfullwidth" class="site-nav">Henley Shirt</a></li>
-                      <li><a href="/shopfullwidth" class="site-nav">Chambray Shirt</a></li>
-                  </ul>
-              </li>
-         
-
-
-
-              <li><a href="/product" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
-                  <ul>
-                      <li><a href="/product" class="site-nav">Western Wear</a></li>
-                      <li><a href="/product" class="site-nav">Ethnic Wear</a></li>
-                      <li><a href="/product" class="site-nav">Lingerie & Nightwear</a></li>
-                      <li><a href="/product" class="site-nav">Sportswear</a></li>
-                  </ul>
-              </li>
-              <li class="lvl1 parent megamenu"><a href="/">Kids <span style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
-                class="anm anm-angle-down-l"></i></a>
-       
-    </li>
-              <li class="lvl1"><a href="#">New Arrivals</a>
-              </li>
-
-              <li class="lvl1 parent dropdown"><a href="contact-us.html">Contact Us</a>
-              </li>
-
-              <li class="lvl1 parent dropdown"><a href="/myaccount">My Account</a>
-              </li>
-
-              {% else %}
-
-              <li class="lvl1 parent megamenu"><a href="index.html">Home</a>
-
-              </li>
-
-
-              <li><a href="#" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
-                  <ul>
-                      <li><a href="/shopfullwidth" class="site-nav">Shirts</a></li>
-                      <li><a href="/shopfullwidth" class="site-nav">Tshirts</a></li>
-                      <li><a href="/shopfullwidth" class="site-nav">Trousers</a></li>
-                      <li><a href="/shopfullwidth" class="site-nav">Shoes</a></li>
-                      <li><a href="/shopfullwidth" class="site-nav">Henley Shirt</a></li>
-                      <li><a href="/shopfullwidth" class="site-nav">Chambray Shirt</a></li>
-                  </ul>
-              </li>
-      
-
-
-
-              <li><a href="/product" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
-                  <ul>
-                      <li><a href="/product" class="site-nav">Western Wear</a></li>
-                      <li><a href="/product" class="site-nav">Ethnic Wear</a></li>
-                      <li><a href="/product" class="site-nav">Lingerie & Nightwear</a></li>
-                      <li><a href="/product" class="site-nav">Sportswear</a></li>
-                  </ul>
-              </li>
-              <li class="lvl1"><a href="#">New Arrivals</a>
-              </li>
-
-              <li class="lvl1 parent dropdown"><a href="contact-us.html">Contact Us</a>
-              </li>
-
-              <li class="list-inline-item"><a href="/myaccount" style="color: #deb992; font-weight: 500; display: none;">My Account</a>
-              </li>
-              {% endif %}
-
-          </ul>
-              <!-- <li class="lvl1 parent dropdown"><a href="Myaccount.html">My Account</a>
-              </li> -->
-
-      </div>
-      <!--End Mobile Menu-->
-    
-    <!--Body Content-->
-    <div id="page-content">
-    	<!--Page Title-->
-    	<div class="page section-header text-center">
-			<div class="page-title">
-        		<div class="wrapper"><h1 class="page-width">About Us</h1></div>
-      		</div>
-		</div>
-        <!--End Page Title-->
-        
-        <div class="container">
-        	<div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
-                	<div class="text-center mb-4">
-                        <h2 class="h2">Belle Multipurpose Bootstrap 4 Html Template</h2>
-                        <div class="rte-setting">
-                            <p><strong>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</strong></p>
-                            <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+                                <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                <li class="lvl1 parent dropdown"><a href="/myaccount" style="display: none;">My Account
+                                        <i class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                        <!--End Desktop Menu-->
+                    </div>
+                    <!--Mobile Logo-->
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 d-block d-lg-none mobile-logo">
+                        <div class="logo">
+                            <a href="/">
+                                <!-- <img src="../static/images/logo.svg" alt="" /> -->
+                                <h3 style="color: #deb992;">LOGO</h3>
+                            </a>
                         </div>
                     </div>
-               	</div>
-            </div>
-            <div class="row">
-            	<div class="col-12 col-sm-4 col-md-4 col-lg-4 mb-4"><img class="blur-up lazyload" data-src="assets/images/about1.jpg" src="assets/images/about1.jpg" alt="About Us" /></div>
-                <div class="col-12 col-sm-4 col-md-4 col-lg-4 mb-4"><img class="blur-up lazyload" data-src="assets/images/about2.jpg" src="assets/images/about2.jpg" alt="About Us" /></div>
-                <div class="col-12 col-sm-4 col-md-4 col-lg-4 mb-4"><img class="blur-up lazyload" data-src="assets/images/about3.jpg" src="assets/images/about3.jpg" alt="About Us" /></div>
-            </div>
-            <div class="row">
-            	<div class="col-12">
-                    <h2>Sed ut perspiciatis unde omnis iste natus error</h2>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain.</p>
-                    <p>simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted.</p>
-                    <p></p>
+                    <!--Mobile Logo-->
+                    <div class="col-4 col-sm-3 col-md-3 col-lg-2">
+                        <div class="site-cart">
+                            <a href="/cart" title="Cart">
+                                <i class="anm anm-bag-l" style="color: #deb992; font-size: 22px !important;"></i>
+                                <!-- <span id="CartCount" class="site-header__cart-count" data-cart-render="item_count">2</span> -->
+                            </a>
+
+                        </div>
+                        <div class="site-header__search">
+                            <button type="button" class="search-trigger"><i class="icon anm anm-search-l"></i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="row">
-            	<div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-4">
-                	<h2 class="h2">About Annimex Web</h2>
-                    <div class="rte-setting"><p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</strong></p>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                    <p></p>
-                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p></div>
-                </div>
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                	<h2 class="h2">Contact Us</h2>
-                    <ul class="addressFooter">
-                        <li><i class="icon anm anm-map-marker-al"></i><p>55 Gallaxy Enque, 2568 steet, 23568 NY</p></li>
-                        <li class="phone"><i class="icon anm anm-phone-s"></i><p>(440) 000 000 0000</p></li>
-                        <li class="email"><i class="icon anm anm-envelope-l"></i><p>sales@yousite.com</p></li>
-                    </ul>
-                    <hr />
-                    <ul class="list--inline site-footer__social-icons social-icons">
-                        <li><a class="social-icons__link" href="#" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Facebook"><i class="icon icon-facebook"></i></a></li>
-                        <li><a class="social-icons__link" href="#" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Twitter"><i class="icon icon-twitter"></i> <span class="icon__fallback-text">Twitter</span></a></li>
-                        <li><a class="social-icons__link" href="#" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Pinterest"><i class="icon icon-pinterest"></i> <span class="icon__fallback-text">Pinterest</span></a></li>
-                        <li><a class="social-icons__link" href="#" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Instagram"><i class="icon icon-instagram"></i> <span class="icon__fallback-text">Instagram</span></a></li>
-                        <li><a class="social-icons__link" href="#" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Tumblr"><i class="icon icon-tumblr-alt"></i> <span class="icon__fallback-text">Tumblr</span></a></li>
-                        <li><a class="social-icons__link" href="#" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on YouTube"><i class="icon icon-youtube"></i> <span class="icon__fallback-text">YouTube</span></a></li>
-                        <li><a class="social-icons__link" href="#" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Vimeo"><i class="icon icon-vimeo-alt"></i> <span class="icon__fallback-text">Vimeo</span></a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            
         </div>
-        
-    </div>
-    <!--End Body Content-->
-    
-    <!--Footer-->
-    <footer id="footer">
-        <div class="newsletter-section">
+        <!--End Header-->
+        <!--Mobile Menu-->
+        <div class="mobile-nav-wrapper" role="navigation">
+            <div class="closemobileMenu"><i class="icon anm anm-times-l pull-right"></i> Close Menu</div>
+            <ul id="MobileNav" class="mobile-nav">
+                {% if session['logged_in'] %}
+                <li class="lvl1 parent megamenu"><a href="/">Home</a>
+
+                </li>
+
+
+                <li><a href="#" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
+                    <ul>
+                        <li><a href="/shopfullwidth" class="site-nav">Shirts</a></li>
+                        <li><a href="/shopfullwidth" class="site-nav">Tshirts</a></li>
+                        <li><a href="/shopfullwidth" class="site-nav">Trousers</a></li>
+                        <li><a href="/shopfullwidth" class="site-nav">Shoes</a></li>
+                        <li><a href="/shopfullwidth" class="site-nav">Henley Shirt</a></li>
+                        <li><a href="/shopfullwidth" class="site-nav">Chambray Shirt</a></li>
+                    </ul>
+                </li>
+
+
+
+
+                <li><a href="/product" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
+                    <ul>
+                        <li><a href="/product" class="site-nav">Western Wear</a></li>
+                        <li><a href="/product" class="site-nav">Ethnic Wear</a></li>
+                        <li><a href="/product" class="site-nav">Lingerie & Nightwear</a></li>
+                        <li><a href="/product" class="site-nav">Sportswear</a></li>
+                    </ul>
+                </li>
+                <li class="lvl1 parent megamenu"><a href="/">Kids <span
+                            style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
+                            class="anm anm-angle-down-l"></i></a>
+
+                </li>
+                <li class="lvl1"><a href="#">New Arrivals</a>
+                </li>
+
+                <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
+                </li>
+
+                <li class="lvl1 parent dropdown"><a href="/myaccount">My Account</a>
+                </li>
+
+                {% else %}
+
+                <li class="lvl1 parent megamenu"><a href="/">Home</a>
+
+                </li>
+
+
+                <li><a href="#" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
+                    <ul>
+                        <li><a href="/shopfullwidth" class="site-nav">Shirts</a></li>
+                        <li><a href="/shopfullwidth" class="site-nav">Tshirts</a></li>
+                        <li><a href="/shopfullwidth" class="site-nav">Trousers</a></li>
+                        <li><a href="/shopfullwidth" class="site-nav">Shoes</a></li>
+                        <li><a href="/shopfullwidth" class="site-nav">Henley Shirt</a></li>
+                        <li><a href="/shopfullwidth" class="site-nav">Chambray Shirt</a></li>
+                    </ul>
+                </li>
+
+
+
+
+                <li><a href="/product" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
+                    <ul>
+                        <li><a href="/product" class="site-nav">Western Wear</a></li>
+                        <li><a href="/product" class="site-nav">Ethnic Wear</a></li>
+                        <li><a href="/product" class="site-nav">Lingerie & Nightwear</a></li>
+                        <li><a href="/product" class="site-nav">Sportswear</a></li>
+                    </ul>
+                </li>
+                <li class="lvl1"><a href="#">New Arrivals</a>
+                </li>
+
+                <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
+                </li>
+
+                <li class="list-inline-item"><a href="/myaccount"
+                        style="color: #deb992; font-weight: 500; display: none;">My Account</a>
+                </li>
+                {% endif %}
+
+            </ul>
+
+
+        </div>
+        <!--End Mobile Menu-->
+
+        <!--Body Content-->
+        <div id="page-content">
+            <!--Page Title-->
+            <div class="page section-header text-center">
+                <div class="page-title" style="margin-top: 5%;">
+                    <div class="wrapper" style="margin-top: 80px;">
+                        <h1 class="page-width"
+                            style="background-color: #deb992; color: #081525; font-weight: 500; font-size: x-large;">
+                            About Us</h1>
+                    </div>
+                </div>
+            </div>
+            <!--End Page Title-->
+
             <div class="container">
-                <div class="row">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-7 w-100 d-flex justify-content-start align-items-center">
-                            <div class="display-table">
-                                <div class="display-table-cell footer-newsletter">
-                                    <div class="section-header text-center">
-                                        <label class="h2"><span>sign up for </span>newsletter</label>
-                                    </div>
-                                    <form action="#" method="post">
-                                        <div class="input-group">
-                                            <input type="email" class="input-group__field newsletter__input" name="EMAIL" value="" placeholder="Email address" required="">
-                                            <span class="input-group__btn">
-                                                <button type="submit" class="btn newsletter__submit" name="commit" id="Subscribe"><span class="newsletter__submit-text--large">Subscribe</span></button>
-                                            </span>
-                                        </div>
-                                    </form>
-                                </div>
+                <!-- <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
+                        <div class="text-center mb-4">
+                            <h2 class="h2" style="color: #deb992;">Belle Multipurpose Bootstrap 4 Html Template</h2>
+                            <div class="rte-setting">
+                                <p><strong>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                        industry.</strong></p>
+                                <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those
+                                    interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by
+                                    Cicero are also reproduced in their exact original form, accompanied by English
+                                    versions from the 1914 translation by H. Rackham.</p>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-5 d-flex justify-content-end align-items-center">
-                            <div class="footer-social">
-                                <ul class="list--inline site-footer__social-icons social-icons">
-                                    <li><a class="social-icons__link" href="#" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Facebook"><i class="icon icon-facebook"></i></a></li>
-                                    <li><a class="social-icons__link" href="#" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Twitter"><i class="icon icon-twitter"></i> <span class="icon__fallback-text">Twitter</span></a></li>
-                                    <li><a class="social-icons__link" href="#" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Pinterest"><i class="icon icon-pinterest"></i> <span class="icon__fallback-text">Pinterest</span></a></li>
-                                    <li><a class="social-icons__link" href="#" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Instagram"><i class="icon icon-instagram"></i> <span class="icon__fallback-text">Instagram</span></a></li>
-                                    <li><a class="social-icons__link" href="#" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Tumblr"><i class="icon icon-tumblr-alt"></i> <span class="icon__fallback-text">Tumblr</span></a></li>
-                                    <li><a class="social-icons__link" href="#" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on YouTube"><i class="icon icon-youtube"></i> <span class="icon__fallback-text">YouTube</span></a></li>
-                                    <li><a class="social-icons__link" href="#" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Vimeo"><i class="icon icon-vimeo-alt"></i> <span class="icon__fallback-text">Vimeo</span></a></li>
+                    </div>
+                </div> -->
+                <div class="row mb-4">
+                    <div class="col-12 col-sm-4 col-md-12 col-lg-6 mb-4"
+                        style="border: 1px solid #1ba098; padding:25px;">
+                        <h2 style="color: #deb992; font-size: 25px;">Know about our story</h2>
+                        <p style="color: #869ba9; font-size: medium; line-height: 30px; text-align: justify;">My name is
+                            <span style="color: #deb992;">Abhishek Pandey</span>, and I'm a full-time practicing trader
+                            in
+                            the financial market with over two years of experience. While my professional journey in
+                            trading has been rewarding, my passion for fashion has always been a part of me. I've known
+                            <span style="color: #deb992;">Shubham Phaphale</span> since 2019, when we both started our
+                            first jobs. Shubham, who hails from a
+                            small village and completed his ITI course as a machinist, was a new face in the company. We
+                            quickly became friends through a mutual connection, and over time, our bond has grown
+                            stronger. Shubham's dedication and hardworking nature have inspired me in many ways, and
+                            together, we decided to bring my long-time vision of a <span
+                                style="color: #deb992;">clothing brand</span> to life.
+                        </p>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-12 col-lg-6 mb-4"
+                        style="display: flex; justify-content: center;">
+                        <img class="blur-up lazyload"
+                            data-src="../static/images/collection/launching-a-business-with-friends-1200.jpg"
+                            src="../static/images/collection/launching-a-business-with-friends-1200.jpg"
+                            alt="About Us" />
+                    </div>
+                    <!-- <div class="col-12 col-sm-4 col-md-4 col-lg-4 mb-4"><img class="blur-up lazyload"
+                            data-src="../static/images/about2.jpg" src="../static/images/about2.jpg" alt="About Us" />
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 mb-4"><img class="blur-up lazyload"
+                            data-src="../static/images/about3.jpg" src="../static/images/about3.jpg" alt="About Us" />
+                    </div> -->
+                </div>
+
+                <div class="row mb-4">
+
+                    <div class="col-12 col-sm-4 col-md-12 col-lg-6 mb-4"
+                        style="display: flex; justify-content: center;">
+                        <img class="blur-up lazyload"
+                            data-src="../static/images/collection/WhatsApp Image 2024-12-08 at 14.18.26.jpeg"
+                            src="../static/images/collection/WhatsApp Image 2024-12-08 at 14.18.26.jpeg"
+                            alt="About Us" />
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-12 col-lg-6 mb-4"
+                        style="border: 1px solid #1ba098; padding:25px;">
+                        <h2 style="color: #deb992; font-size: 25px;">Our Vision</h2>
+                        <p style="color: #869ba9; font-size: medium; line-height: 30px; text-align: justify;">The vision
+                            behind our clothing brand is simple: <span style="color: #deb992;">"To create a name that represents high-quality clothing
+                                at affordable prices, with fresh, trendy, and fashionable designs that stay ahead of the
+                                curve"</span>. This idea has been brewing in my mind since my college days, but it’s only now that I
+                            have the courage and the drive to turn it into reality. Through our brand, we want to offer
+                            clothing that not only looks good but also feels good, combining style with comfort. With
+                            Shubham’s support and our shared determination, we are committed to building a brand that
+                            stands for quality, affordability, and continuous innovation in fashion.</p>
+                    </div>
+                </div>
+              
+
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
+                        <h2 class="h2 mb-4" style="color: #deb992; font-size: 25px;">Contact Us</h2>
+                        <ul class="addressFooter">
+                            <li>
+                                <div class="demo mb-2" style="display: flex; justify-content: center;">
+                                    <i class="icon anm anm-map-marker-al"></i>
+                                <p style="color: #869ba9;">55 Gallaxy Enque, 2568 steet, 23568 NY</p>
+                                </div>
+                            </li>
+                            <li class="phone"><div class="demo mb-2" style="display: flex; justify-content: center;">
+                                <i class="icon anm anm-phone-s"></i>
+                                <p style="color: #869ba9;">(440) 000 000 0000</p>
+                            </div>
+                            </li>
+                            <li class="email"><div class="demo" style="display: flex; justify-content: center;">
+                                <i class="icon anm anm-envelope-l"></i>
+                                <p style="color: #869ba9;">sales@yousite.com</p>
+                            </div>
+                            </li>
+                        </ul>
+                        <hr />
+                        <ul class="list--inline site-footer__social-icons social-icons">
+                            <li><a class="social-icons__link" href="#" target="_blank"
+                                    title="Belle Multipurpose Bootstrap 4 Template on Facebook"><i
+                                        class="icon icon-facebook"></i></a></li>
+                            <li><a class="social-icons__link" href="#" target="_blank"
+                                    title="Belle Multipurpose Bootstrap 4 Template on Twitter"><i
+                                        class="icon icon-twitter"></i> <span
+                                        class="icon__fallback-text">Twitter</span></a></li>
+                            <li><a class="social-icons__link" href="#" target="_blank"
+                                    title="Belle Multipurpose Bootstrap 4 Template on Pinterest"><i
+                                        class="icon icon-pinterest"></i> <span
+                                        class="icon__fallback-text">Pinterest</span></a></li>
+                            <li><a class="social-icons__link" href="#" target="_blank"
+                                    title="Belle Multipurpose Bootstrap 4 Template on Instagram"><i
+                                        class="icon icon-instagram"></i> <span
+                                        class="icon__fallback-text">Instagram</span></a></li>
+                            <li><a class="social-icons__link" href="#" target="_blank"
+                                    title="Belle Multipurpose Bootstrap 4 Template on Tumblr"><i
+                                        class="icon icon-tumblr-alt"></i> <span
+                                        class="icon__fallback-text">Tumblr</span></a></li>
+                            <li><a class="social-icons__link" href="#" target="_blank"
+                                    title="Belle Multipurpose Bootstrap 4 Template on YouTube"><i
+                                        class="icon icon-youtube"></i> <span
+                                        class="icon__fallback-text">YouTube</span></a></li>
+                            <li><a class="social-icons__link" href="#" target="_blank"
+                                    title="Belle Multipurpose Bootstrap 4 Template on Vimeo"><i
+                                        class="icon icon-vimeo-alt"></i> <span
+                                        class="icon__fallback-text">Vimeo</span></a></li>
+                        </ul>
+                        <hr />
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <!--End Body Content-->
+
+        <!--Footer-->
+        <footer id="footer">
+          
+            <div class="site-footer">
+                <div class="container">
+                    <!--Footer Links-->
+                    <div class="footer-top">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                                <h4 class="h4">Quick Shop</h4>
+                                <ul>
+                                    <li><a href="#">Women</a></li>
+                                    <li><a href="#">Men</a></li>
+                                    <li><a href="#">Kids</a></li>
+                                    <li><a href="#">Sportswear</a></li>
+                                    <li><a href="#">Sale</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                                <h4 class="h4">Informations</h4>
+                                <ul>
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="#">Careers</a></li>
+                                    <li><a href="#">Privacy policy</a></li>
+                                    <li><a href="#">Terms &amp; condition</a></li>
+                                    <li><a href="#">My Account</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                                <h4 class="h4">Customer Services</h4>
+                                <ul>
+                                    <li><a href="#">Request Personal Data</a></li>
+                                    <li><a href="#">FAQ's</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="#">Orders and Returns</a></li>
+                                    <li><a href="#">Support Center</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 contact-box">
+                                <h4 class="h4">Contact Us</h4>
+                                <ul class="addressFooter">
+                                    <li><i class="icon anm anm-map-marker-al"></i>
+                                        <p>55 Gallaxy Enque,<br>2568 steet, 23568 NY</p>
+                                    </li>
+                                    <li class="phone"><i class="icon anm anm-phone-s"></i>
+                                        <p>(440) 000 000 0000</p>
+                                    </li>
+                                    <li class="email"><i class="icon anm anm-envelope-l"></i>
+                                        <p>sales@yousite.com</p>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-            </div>    
-        </div>
-        <div class="site-footer">
-        	<div class="container">
-     			<!--Footer Links-->
-            	<div class="footer-top">
-                	<div class="row">
-                    	<div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
-                        	<h4 class="h4">Quick Shop</h4>
-                            <ul>
-                            	<li><a href="#">Women</a></li>
-                                <li><a href="#">Men</a></li>
-                                <li><a href="#">Kids</a></li>
-                                <li><a href="#">Sportswear</a></li>
-                                <li><a href="#">Sale</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
-                        	<h4 class="h4">Informations</h4>
-                            <ul>
-                            	<li><a href="#">About us</a></li>
-                                <li><a href="#">Careers</a></li>
-                                <li><a href="#">Privacy policy</a></li>
-                                <li><a href="#">Terms &amp; condition</a></li>
-                                <li><a href="#">My Account</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
-                        	<h4 class="h4">Customer Services</h4>
-                            <ul>
-                            	<li><a href="#">Request Personal Data</a></li>
-                                <li><a href="#">FAQ's</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Orders and Returns</a></li>
-                                <li><a href="#">Support Center</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 contact-box">
-                        	<h4 class="h4">Contact Us</h4>
-                            <ul class="addressFooter">
-                            	<li><i class="icon anm anm-map-marker-al"></i><p>55 Gallaxy Enque,<br>2568 steet, 23568 NY</p></li>
-                                <li class="phone"><i class="icon anm anm-phone-s"></i><p>(440) 000 000 0000</p></li>
-                                <li class="email"><i class="icon anm anm-envelope-l"></i><p>sales@yousite.com</p></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!--End Footer Links-->
-                <hr>
-                <div class="footer-bottom">
-                	<div class="row">
-                    	<!--Footer Copyright-->
-	                	<div class="col-12 col-sm-12 col-md-6 col-lg-6 order-1 order-md-0 order-lg-0 order-sm-1 copyright text-sm-center text-md-left text-lg-left"><span></span> <a href="templateshub.net">Templates Hub</a></div>
-                        <!--End Footer Copyright-->
-                        <!--Footer Payment Icon-->
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 order-0 order-md-1 order-lg-1 order-sm-0 payment-icons text-right text-md-center">
-                        	<ul class="payment-icons list--inline">
-                        		<li><i class="icon fa fa-cc-visa" aria-hidden="true"></i></li>
-                                <li><i class="icon fa fa-cc-mastercard" aria-hidden="true"></i></li>
-                                <li><i class="icon fa fa-cc-discover" aria-hidden="true"></i></li>
-                                <li><i class="icon fa fa-cc-paypal" aria-hidden="true"></i></li>
-                                <li><i class="icon fa fa-cc-amex" aria-hidden="true"></i></li>
-                                <li><i class="icon fa fa-credit-card" aria-hidden="true"></i></li>
-                            </ul>
-                        </div>
-                        <!--End Footer Payment Icon-->
+                    <!--End Footer Links-->
+                    <hr>
+                    <div class="footer-bottom">
+
+                        <p class="text-center" style="font-size: medium; font-weight: 500; color: #1ba098;">Designed By
+                            Websharks</p>
+
                     </div>
                 </div>
             </div>
-        </div>
-    </footer>
-    <!--End Footer-->
-    <!--Scoll Top-->
-    <span id="site-scroll"><i class="icon anm anm-angle-up-r"></i></span>
-    <!--End Scoll Top-->
-    
-     <!-- Including Jquery -->
-     <script src="assets/js/vendor/jquery-3.3.1.min.js"></script>
-     <script src="assets/js/vendor/jquery.cookie.js"></script>
-     <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
-     <script src="assets/js/vendor/wow.min.js"></script>
-     <!-- Including Javascript -->
-     <script src="assets/js/bootstrap.min.js"></script>
-     <script src="assets/js/plugins.js"></script>
-     <script src="assets/js/popper.min.js"></script>
-     <script src="assets/js/lazysizes.js"></script>
-     <script src="assets/js/main.js"></script>
-</div>
+        </footer>
+        <!--End Footer-->
+        <!--Scoll Top-->
+        <span id="site-scroll"><i class="icon anm anm-angle-up-r"></i></span>
+        <!--End Scoll Top-->
+
+        <!-- Including Jquery -->
+        <script src="../static/js/vendor/jquery-3.3.1.min.js"></script>
+        <script src="../static/js/vendor/jquery.cookie.js"></script>
+        <script src="../static/js/vendor/modernizr-3.6.0.min.js"></script>
+        <script src="../static/js/vendor/wow.min.js"></script>
+        <!-- Including Javascript -->
+        <script src="../static/js/bootstrap.min.js"></script>
+        <script src="../static/js/plugins.js"></script>
+        <script src="../static/js/popper.min.js"></script>
+        <script src="../static/js/lazysizes.js"></script>
+        <script src="../static/js/main.js"></script>
+    </div>
 </body>
 
 <!-- belle/about-us.html   11 Nov 2019 12:44:39 GMT -->
+
 </html>

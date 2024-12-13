@@ -4264,7 +4264,7 @@ table {
   list-style: none;
 }
 .page-template #page-content .addressFooter .icon {
-  color: #081525 !important;
+  color: #deb992 !important;
   font-size: 18px;
 }
 .page-template .addressFooter li p {
@@ -4275,7 +4275,8 @@ table {
   margin-bottom: 0;
 }
 .contact-template .map-section {
-  margin-bottom: 0;
+  margin-bottom: 30px;
+  margin-top: 10px;
   overflow: hidden;
   height: 350px;
 }
@@ -6732,7 +6733,7 @@ body.home15-funiture-template {
   padding: 0 10px;
 }
 .social-icons .icon {
-  color: #111111;
+  color: #deb992;
   font-size: 16px;
 }
 .site-footer__social-icons .icon {
@@ -7191,3 +7192,4 @@ border-radius:8px;
 .selected{
   background-color: #007bff !important;
 }
+

@@ -15,6 +15,7 @@ import re
 from datetime import datetime, timedelta
 from uuid import uuid4
 
+
 app = Flask(__name__)
 app.secret_key = 'yash'
 upload_folder = 'static/images/pics/'
@@ -315,12 +316,40 @@ def cart():
         subtotal = 0
 
     # Set shipping charges and calculate grand total
-    shipping_charges = 100  # Fixed shipping charge
+    cursor.execute("SELECT SUM(productquantity) FROM cart WHERE user_email = ?", (user_email,))
+    total_quantity = cursor.fetchone()[0] or 0
+    shipping_charges = 40 if total_quantity <= 3 else 70
     grand_total = subtotal + shipping_charges
 
     conn.close()
 
     return render_template('cart-variant1.html', cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total)
+
+
+@app.route('/get-product-price', methods=['POST'])
+def get_product_price():
+    data = request.json
+    name = data.get('productName')
+    color = data.get('color')
+
+    print(f"Received name: {name}, color: {color}")  # Debug log
+
+    # Fetch totalprice from the products table
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT price FROM products
+        WHERE name = ? AND color = ?
+    """, (name, color))
+    result = cursor.fetchone()
+    conn.close()
+
+    print(f"Query result: {result}")  # Debug log
+
+    if result:
+        return jsonify({'totalprice': result[0]})
+    else:
+        return jsonify({'error': 'Product not found'}), 404
 
 
 #addtocartfromchatbotwithoffer
@@ -458,10 +487,55 @@ def clear_cart():
 
     return redirect(url_for('cart'))
 
-
 @app.route('/contactus')
 def contactus():
-    return render_template("contact-us.html")
+    return render_template('contact-us.html')
+
+
+@app.route('/aboutus')
+def aboutus():
+    return render_template('about-us.html')
+
+@app.route('/send-message', methods=['POST'])
+def send_message():
+
+    SMTP_SERVER = "smtp.gmail.com"
+    SMTP_PORT = 587
+    GMAIL_USER = "sharmakartik1103@gmail.com"
+    GMAIL_PASSWORD = "iggp hkmj olvh xtfr"
+    # Get form data
+    name = request.form['name']
+    email = request.form['email']
+    phone = request.form['phone']
+    subject = request.form['subject']
+    message = request.form['message']
+
+    # Compose email content
+    email_subject = f"New Contact Us Message: {subject}"
+    email_body = f"""
+    Name: {name}
+    Email: {email}
+    Phone: {phone}
+    Subject: {subject}
+    Message: {message}
+    """
+
+    # Send email
+    try:
+        msg = MIMEMultipart()
+        msg['From'] = GMAIL_USER
+        msg['To'] = GMAIL_USER
+        msg['Subject'] = email_subject
+        msg.attach(MIMEText(email_body, 'plain'))
+
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(GMAIL_USER, GMAIL_PASSWORD)
+            server.send_message(msg)
+    except Exception as e:
+        return f"Failed to send email: {e}"
+    
+    return render_template('contact-us.html', message="Your message has been sent!.")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -490,6 +564,8 @@ def login():
                 # Successful login
                 session['logged_in'] = True
                 session['user_email'] = email
+                session['is_admin'] = email == 'admin@a.com' and password == 'admin'  # Set admin flag
+
                 return redirect(next_page)  # Redirect to the original page
             else:
                 # Incorrect password
@@ -592,7 +668,7 @@ def myaccount():
             COALESCE(r.status, 'No Return') AS status
         FROM orders o
         LEFT JOIN return r 
-        ON o.razorpay_order_id = r.orderid AND o.productname = r.productname
+        ON o.razorpay_order_id = r.orderid AND o.productname = r.productname AND o.color = r.color
         WHERE o.email = ?
     """, (email,))
     order_items = cursor.fetchall()
@@ -673,20 +749,29 @@ def wishlist():
         quantity,
         totalprice,
         address,
-        status
+        status,
+        (SELECT SUM(totalprice) FROM orders WHERE razorpay_order_id = o.razorpay_order_id) AS total_value
     FROM 
-        orders
+        orders o
     ORDER BY 
-        razorpay_order_id
+        razorpay_order_id, productname
     """).fetchall()
 
-    processed_orders = []
-    previous_order_id = None
+    # Group orders by razorpay_order_id
+    grouped_orders = {}
     for order in orders:
-        razorpay_order_id = order[8]
-        show_rowspan = razorpay_order_id != previous_order_id
-        processed_orders.append((show_rowspan,) + order)
-        previous_order_id = razorpay_order_id
+        order_id = order[8]
+        if order_id not in grouped_orders:
+            grouped_orders[order_id] = {
+                "orders": [],
+                "total_value": order[17],
+                "rowspan": 0
+            }
+        grouped_orders[order_id]["orders"].append(order)
+        grouped_orders[order_id]["rowspan"] += 1
+
+    # Transform grouped orders into a list for template rendering
+    grouped_orders_list = [{"orders": data["orders"], "total_value": data["total_value"], "rowspan": data["rowspan"]} for data in grouped_orders.values()]
 
     cancel = my_cursor.execute("""
     SELECT 
@@ -711,17 +796,7 @@ def wishlist():
         orders
     WHERE 
         status = 'Cancelled'
-    ORDER BY 
-        razorpay_order_id
     """).fetchall()
-
-    cancelled_orders = []
-    previous_order_id = None
-    for order in cancel:
-        razorpay_order_id = order[8]
-        show_rowspan = razorpay_order_id != previous_order_id
-        cancelled_orders.append((show_rowspan,) + order)
-        previous_order_id = razorpay_order_id
 
     print(orders)  # For debugging purposes
 
@@ -758,21 +833,23 @@ def wishlist():
             o.email = r.user_email
             AND o.productname = r.productname
             AND o.razorpay_order_id = r.orderid
+            AND o.color = r.color
     """).fetchall()
 
     connection.commit()
     connection.close()
     
-    return render_template("wishlist.html", orders=processed_orders, product=product, return_requests=return_requests, cancel=cancelled_orders)
+    return render_template("wishlist.html", grouped_orders=grouped_orders_list, product=product, return_requests=return_requests, cancel=cancel)
 
 
 @app.route('/update-order-status', methods=['POST'])
 def update_order_status():
     razorpay_order_id = request.form.get('razorpay_order_id')
     productname = request.form.get('productname')
+    color = request.form.get('color')
     new_status = request.form.get('status')
 
-    if not razorpay_order_id or not productname or not new_status:
+    if not razorpay_order_id or not productname or not color or not new_status:
         print("Missing order ID, product name, or status")
         return "Missing required parameters", 400
 
@@ -783,8 +860,8 @@ def update_order_status():
     # Check current status
     my_cursor.execute("""
         SELECT status FROM orders 
-        WHERE razorpay_order_id = ? AND productname = ?
-    """, (razorpay_order_id, productname))
+        WHERE razorpay_order_id = ? AND productname = ? AND color = ?
+    """, (razorpay_order_id, productname, color))
     current_status = my_cursor.fetchone()
 
     if not current_status:
@@ -799,13 +876,13 @@ def update_order_status():
     my_cursor.execute("""
         UPDATE orders 
         SET status = ? 
-        WHERE razorpay_order_id = ? AND productname = ?
-    """, (new_status, razorpay_order_id, productname))
+        WHERE razorpay_order_id = ? AND productname = ? AND color = ?
+    """, (new_status, razorpay_order_id, productname, color))
 
     connection.commit()
     connection.close()
 
-    print(f"Order ID: {razorpay_order_id}, Product: {productname} updated to status: {new_status}")
+    print(f"Order ID: {razorpay_order_id}, Product: {productname}, Color: {color} updated to status: {new_status}")
     return 'Success', 200  # Respond with success so AJAX can handle it
 
 
@@ -814,10 +891,11 @@ def update_order_status():
 def update_return_status():
     razorpay_order_id = request.form.get('razorpay_order_id')
     productname = request.form.get('productname')
+    color = request.form.get('color')
     new_status = request.form.get('returnstatus')
 
-    if not razorpay_order_id or not productname or not new_status:
-        print(f"Missing data: order ID ({razorpay_order_id}), product name ({productname}), status ({new_status})")
+    if not razorpay_order_id or not productname or not color or not new_status:
+        print(f"Missing data: order ID ({razorpay_order_id}), product name ({productname}), color ({color}), status ({new_status})")
         return jsonify({'success': False, 'message': 'Missing required fields'})
 
     # Update the return status in the database
@@ -827,13 +905,13 @@ def update_return_status():
     my_cursor.execute("""
         UPDATE return
         SET status = ?
-        WHERE orderid = ? AND productname = ?
-    """, (new_status, razorpay_order_id, productname))
+        WHERE orderid = ? AND productname = ? AND color = ?
+    """, (new_status, razorpay_order_id, productname, color))
 
     connection.commit()
     connection.close()
 
-    print(f"Return status updated: {razorpay_order_id}, {productname} to {new_status}")
+    print(f"Return status updated: {razorpay_order_id}, {productname}, {color} to {new_status}")
     return jsonify({'success': True, 'message': 'Return status updated successfully.'})
 
 
@@ -1042,6 +1120,7 @@ def productadddb():
 
 @app.route('/productupdatedb/<sku>', methods=['POST'])
 def productupdatedb(sku):
+    updated_sku = request.form.get('sku')  # The updated SKU from the form
     productname = request.form['productname']
     description = request.form['description']
     baseprice = request.form['base-price']
@@ -1077,9 +1156,9 @@ def productupdatedb(sku):
     my_cursor = connection.cursor()
     my_cursor.execute("""
         UPDATE products SET name=?, description=?, color=?, price=?, per1=?, 
-        per2=?, per3=?, quantity=?, category=?, gender=?, size=?, 
+        per2=?, per3=?, sku=?, quantity=?, category=?, gender=?, size=?, 
         img1=?, img2=?, img3=?, img4=?, img5=?, vendor=? WHERE sku=?
-    """, (productname, description, colors, baseprice, discountpercentage1, discountpercentage2, discountpercentage3,
+    """, (productname, description, colors, baseprice, discountpercentage1, discountpercentage2, discountpercentage3,updated_sku,
           quantity, productcategory, gender, sizes, *input_files, vendor, sku))
     connection.commit()
     connection.close()
@@ -1243,7 +1322,9 @@ def checkout():
         subtotal = 0
 
     # Set shipping charges and calculate grand total
-    shipping_charges = 100  # Fixed shipping charge
+    cursor.execute("SELECT SUM(productquantity) FROM cart WHERE user_email = ?", (user_email,))
+    total_quantity = cursor.fetchone()[0] or 0
+    shipping_charges = 40 if total_quantity <= 3 else 70
     grand_total = subtotal + shipping_charges
 
     conn.close()
@@ -1322,6 +1403,11 @@ def confirm_address():
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (email, firstname, lastname, mobile, address, city, pincode, state, country))
 
+    # Re-fetch updated user details to populate the form
+    cursor.execute("SELECT * FROM useradr WHERE email = ?", (email,))
+    userdetails = cursor.fetchone()
+
+
     # Fetch only the cart items associated with the logged-in user (session email)
     cursor.execute("SELECT productimage, productname, productsize, productprice, productquantity, totalprice, productcolor FROM cart WHERE user_email = ?", (email,))
     cart_items = cursor.fetchall()
@@ -1333,7 +1419,9 @@ def confirm_address():
         subtotal = 0
 
     # Set shipping charges and calculate grand total
-    shipping_charges = 100  # Fixed shipping charge
+    cursor.execute("SELECT SUM(productquantity) FROM cart WHERE user_email = ?", (email,))
+    total_quantity = cursor.fetchone()[0] or 0
+    shipping_charges = 40 if total_quantity <= 3 else 70
     grand_total = subtotal + shipping_charges
 
     conn.commit()
@@ -1343,7 +1431,7 @@ def confirm_address():
     message = "Address has been confirmed!"
     return render_template(
         'checkout.html', 
-        message=message, userdetails=user,
+        message=message, userdetails=userdetails,
         email=email, firstname=firstname, lastname=lastname, mobile=mobile, 
         address=address, city=city, pincode=pincode, state=state, country=country, 
         cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total
@@ -1392,7 +1480,9 @@ def userdetails():
     user = None
     cart_items = []
     subtotal = 0
-    shipping_charges = 100  # Fixed shipping charge
+    cursor.execute("SELECT SUM(productquantity) FROM cart WHERE user_email = ?", (email,))
+    total_quantity = cursor.fetchone()[0] or 0
+    shipping_charges = 40 if total_quantity <= 3 else 70
 
     # Check if the user with the provided email and password exists in users table
     truepass = cursor.execute("SELECT password FROM users WHERE email = ?", (email,)).fetchone()
@@ -1471,6 +1561,9 @@ def place_order():
                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
                        (firstname, lastname, user_email, mobile, address, city, state, pincode, item[0], item[1], item[2], item[3], item[4], razorpay_payment_id, razorpay_order_id, payment_info, status, current_timestamp))
         conn.commit()
+
+    cursor.execute("DELETE FROM cart WHERE user_email = ?", (user_email,))
+    
     print("---------------------------------------decreasing quantity=----------------------------------")
     for item in cart_items:
         product_name = item[0]  # 'productname' from cart
@@ -1559,7 +1652,7 @@ def place_order():
         msg['To'] = recipient_email
         msg['Subject'] = "New Order Placed"
         
-        body = f"Order placed by {firstname} {lastname} ({user_email})."
+        body = f"Order placed by Name: {firstname} {lastname} , Email: ({user_email}), Contact: ({mobile}), OrderID: ({razorpay_order_id})."
         msg.attach(MIMEText(body, 'plain'))
         
         server = smtplib.SMTP(smtp_server, smtp_port)
@@ -1635,7 +1728,7 @@ def request_return():
         msg['To'] = recipient_email
         msg['Subject'] = "Return Request Initiated"
 
-        body = f"A return request has been placed by {user_email} for the product {productname} (Order ID: {orderid}). Reason: {reason}. Details: {details}."
+        body = f"A Return request has been placed by Email: {user_email} for the Product: {productname} (Order ID: {orderid}). Reason: {reason}. Details: {details}."
         msg.attach(MIMEText(body, 'plain'))
 
         server = smtplib.SMTP(smtp_server, smtp_port)
@@ -1688,7 +1781,7 @@ def cancel_order():
             msg['To'] = recipient_email
             msg['Subject'] = "Order Cancelled"
 
-            body = f"Order with ID {razorpay_order_id} and product {product_name} has been cancelled by the user."
+            body = f"Order with ID: '{razorpay_order_id}' and Product: '{product_name}' has been cancelled by the user."
             msg.attach(MIMEText(body, 'plain'))
 
             server = smtplib.SMTP(smtp_server, smtp_port)

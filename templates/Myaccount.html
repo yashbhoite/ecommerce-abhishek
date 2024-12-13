@@ -51,8 +51,10 @@
                         <ul class="customer-links list-inline mb-0">
                             {% if session['logged_in'] %}
                             <!-- User is logged in -->
-                            <li class="list-inline-item" style="display: none;"><a href="/wishlist" target="_blank"
+                            {% if session['is_admin'] %}
+                            <li class="list-inline-item"><a href="/wishlist" target="_blank"
                                     style="color: #deb992; font-weight: 500;">Admin</a></li>
+                            {% endif %}
                             <li class="list-inline-item" style="display: none;"><a href="/login"
                                     style="color: #deb992; font-weight: 500;">Login</a></li>
                             <li class="list-inline-item" style="display: none;"><a href="/register"
@@ -66,7 +68,7 @@
                                     style="color: #deb992; font-weight: 500;">Logout</a></li>
                             {% else %}
                             <!-- User is not logged in -->
-                            <li class="list-inline-item"><a href="/wishlist" target="_blank"
+                            <li class="list-inline-item" style="display: none;"><a href="/wishlist" target="_blank"
                                     style="color: #deb992; font-weight: 500;">Admin</a></li>
                             <li class="list-inline-item"><a href="/login"
                                     style="color: #deb992; font-weight: 500;">Login</a></li>
@@ -260,6 +262,9 @@
 
                                 <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
                                             class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                <li class="lvl1 parent dropdown"><a href="/aboutus">About Us <i
+                                    class="anm anm-angle-down-l"></i></a>
                                 </li>
                                 <li class="lvl1 parent dropdown"><a href="/myaccount">My Account <i
                                             class="anm anm-angle-down-l"></i></a>
@@ -655,12 +660,15 @@
                                 <td class="totalprice">₹{{ item[4] }}</td>
                                 <td>
 
+                                    {% if item[7] == 'Placed' %}
                                     <button class="action-btn cancel-btn" data-order-id="{{ item[6] }}"
-                                        data-product-name="{{ item[0] }}" {% if item[7] !='Placed' %}disabled{% endif
-                                        %}>
+                                        data-product-name="{{ item[0] }}">
                                         Cancel
                                     </button>
+                                    {% endif %}
+                                    {% if item[7] == 'Delivered' %}
                                     <button class="action-btn return-btn" data-timestamp="{{ item[5] }}">Return</button>
+                                    {% endif %}
                                     <div class="return-form hidden">
                                         <select class="reason-dropdown">
                                             <option value="">Select a reason</option>
@@ -925,7 +933,8 @@
                                                 <h2 class="product-single__title">Product Quick View Popup</h2>
                                                 <div class="prInfoRow">
                                                     <div class="product-stock"> <span class="instock ">In Stock</span>
-                                                        <span class="outstock hide">Unavailable</span> </div>
+                                                        <span class="outstock hide">Unavailable</span>
+                                                    </div>
                                                     <div class="product-sku">SKU: <span
                                                             class="variant-sku">19115-rdxs</span></div>
                                                 </div>
@@ -1193,35 +1202,35 @@
 
     </script>
 
-<script>
-    function cancelOrder(orderId, productName) {
-        $.ajax({
-            url: '/cancel-order',
-            type: 'POST',
-            data: {
-                razorpay_order_id: orderId,
-                product_name: productName
-            },
-            success: function(response) {
-                alert(response.message); // Show a success message
-                location.reload(); // Optionally reload the page
-            },
-            error: function(xhr, status, error) {
-                console.error('Error cancelling order:', error);
+    <script>
+        function cancelOrder(orderId, productName) {
+            $.ajax({
+                url: '/cancel-order',
+                type: 'POST',
+                data: {
+                    razorpay_order_id: orderId,
+                    product_name: productName
+                },
+                success: function (response) {
+                    alert(response.message); // Show a success message
+                    location.reload(); // Optionally reload the page
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error cancelling order:', error);
+                }
+            });
+        }
+
+        // Attach click handler to Cancel buttons
+        $(document).on('click', '.cancel-btn', function () {
+            const orderId = $(this).data('order-id');
+            const productName = $(this).data('product-name');
+            if (confirm('Are you sure you want to cancel this order?')) {
+                cancelOrder(orderId, productName);
             }
         });
-    }
-    
-    // Attach click handler to Cancel buttons
-    $(document).on('click', '.cancel-btn', function() {
-        const orderId = $(this).data('order-id');
-        const productName = $(this).data('product-name');
-        if (confirm('Are you sure you want to cancel this order?')) {
-            cancelOrder(orderId, productName);
-        }
-    });
     </script>
-    
+
 
     <script>
         document.getElementById('editAddressBtn').addEventListener('click', function () {

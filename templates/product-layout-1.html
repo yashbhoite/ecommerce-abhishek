@@ -19,26 +19,27 @@
   <link rel="stylesheet" href="../static/css/responsive.css" />
   <style>
     ul {
-        list-style-type: disc;
-        margin-left: 20px;
-        color: #555
+      list-style-type: disc;
+      margin-left: 20px;
+      color: #555
     }
+
     ul ul {
-        list-style-type: circle;
-        margin-left: 40px;
-        color: #555
+      list-style-type: circle;
+      margin-left: 40px;
+      color: #555
     }
-</style>
+  </style>
 </head>
 
 <body class="template-product">
   {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <script type="text/javascript">
-            alert("{{ messages[0] }}");
-        </script>
-    {% endif %}
-{% endwith %}
+  {% if messages %}
+  <script type="text/javascript">
+    alert("{{ messages[0] }}");
+  </script>
+  {% endif %}
+  {% endwith %}
   <div class="pageWrapper">
     <!--Search Form Drawer-->
     <div class="search">
@@ -56,52 +57,55 @@
       </div>
     </div>
     <!--End Search Form Drawer-->
- <!--Top Header-->
- <div class="top-header" style="background-color: #081525;">
-  <div class="container-fluid">
-      <div class="row align-items-center">
+    <!--Top Header-->
+    <div class="top-header" style="background-color: #081525;">
+      <div class="container-fluid">
+        <div class="row align-items-center">
           <!-- Centered Tagline Section -->
           <div class="col-sm-12 col-md-4 offset-md-4 text-center top-headerdiv">
-              <p class="top-header_middle-text" style="color: #deb992;">Effortless Style. Redefined for You.
-              </p>
+            <p class="top-header_middle-text" style="color: #deb992;">Effortless Style. Redefined for You.
+            </p>
           </div>
           <!-- Right Aligned Login and Create Account -->
           <div class="col-sm-12 col-md-4 text-right accountlogo">
-              <span class="user-menu d-block d-lg-none">
-                  <i class="anm anm-user-al" aria-hidden="true" style="color: #deb992;"></i>
-              </span>
-              <ul class="customer-links list-inline mb-0">
-                  {% if session['logged_in'] %}
-                  <!-- User is logged in -->
-                  <li class="list-inline-item" style="display: none;"><a href="/wishlist" target="_blank"
-                          style="color: #deb992; font-weight: 500;">Admin</a></li>
-                  <li class="list-inline-item" style="display: none;"><a href="/login?next={{ request.path }}"
-                          style="color: #deb992; font-weight: 500;">Login</a></li>
-                  <li class="list-inline-item" style="display: none;"><a href="/register"
-                          style="color: #deb992; font-weight: 500;">Create Account</a></li>
+            <span class="user-menu d-block d-lg-none">
+              <i class="anm anm-user-al" aria-hidden="true" style="color: #deb992;"></i>
+            </span>
+            <ul class="customer-links list-inline mb-0">
+              {% if session['logged_in'] %}
+              <!-- User is logged in -->
+              {% if session['is_admin'] %}
+              <li class="list-inline-item"><a href="/wishlist" target="_blank"
+                      style="color: #deb992; font-weight: 500;">Admin</a></li>
+              {% endif %}
+              <li class="list-inline-item" style="display: none;"><a href="/login"
+                      style="color: #deb992; font-weight: 500;">Login</a></li>
+              <li class="list-inline-item" style="display: none;"><a href="/register"
+                      style="color: #deb992; font-weight: 500;">Create Account</a></li>
 
-                  <!-- Show "My Account" and "Logout" when logged in -->
-                  <li class="list-inline-item"><a href="/myaccount" style="color: #deb992; font-weight: 500;">My
-                          Account</a></li>
-                  <li class="list-inline-item"><a href="/logout"
-                          style="color: #deb992; font-weight: 500;">Logout</a></li>
-                  {% else %}
-                  <!-- User is not logged in -->
-                  <li class="list-inline-item"><a href="/wishlist" target="_blank"
-                          style="color: #deb992; font-weight: 500;">Admin</a></li>
-                  <li class="list-inline-item"><a href="/login?next={{ request.path }}"
-                          style="color: #deb992; font-weight: 500;">Login</a></li>
-                  <li class="list-inline-item"><a href="/register"
-                          style="color: #deb992; font-weight: 500;">Create Account</a></li>
-                  <li class="list-inline-item" style="display: none;"><a href="/myaccount"
-                          style="color: #deb992; font-weight: 500; display: none;">My Account</a></li>
-                  {% endif %}
-              </ul>
+              <!-- Show "My Account" and "Logout" when logged in -->
+              <li class="list-inline-item"><a href="/myaccount"
+                      style="color: #deb992; font-weight: 500;">My
+                      Account</a></li>
+              <li class="list-inline-item"><a href="/logout"
+                      style="color: #deb992; font-weight: 500;">Logout</a></li>
+              {% else %}
+              <!-- User is not logged in -->
+              <li class="list-inline-item" style="display: none;"><a href="/wishlist" target="_blank"
+                      style="color: #deb992; font-weight: 500;">Admin</a></li>
+              <li class="list-inline-item"><a href="/login"
+                      style="color: #deb992; font-weight: 500;">Login</a></li>
+              <li class="list-inline-item"><a href="/register"
+                      style="color: #deb992; font-weight: 500;">Create Account</a></li>
+              <li class="list-inline-item" style="display: none;"><a href="/myaccount"
+                      style="color: #deb992; font-weight: 500; display: none;">My Account</a></li>
+              {% endif %}
+          </ul>
           </div>
+        </div>
       </div>
-  </div>
-</div>
-<!--End Top Header-->
+    </div>
+    <!--End Top Header-->
     <!--Header-->
     <div class="header-wrap animated d-flex" style="background-color: #081525;">
       <div class="container-fluid">
@@ -117,337 +121,239 @@
           <div class="col-2 col-sm-3 col-md-3 col-lg-8">
             <div class="d-block d-lg-none">
               <button type="button" class="btn--link site-header__menu js-mobile-nav-toggle mobile-nav--open">
-                <i class="icon anm anm-times-l"></i>
-                <i class="anm anm-bars-r"></i>
+                <i class="icon anm anm-times-l" style="color: #deb992;"></i>
+                <i class="anm anm-bars-r" style="color: #deb992;"></i>
               </button>
             </div>
             <!--Desktop Menu-->
             <nav class="grid__item" id="AccessibleNav"><!-- for mobile -->
               <ul id="siteNav" class="site-nav medium center hidearrow">
-                  {% if session['logged_in'] %}
-                  <li class="lvl1 parent megamenu"><a href="/">Home <i
-                              class="anm anm-angle-down-l"></i></a>
-                  </li>
-                  <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i
-                              class="anm anm-angle-down-l"></i></a>
-                      <div class="megamenu style4">
-                          <ul class="grid grid--uniform mmWrapper">
-                              <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                      class="site-nav lvl-1">Shirts</a>
-                                  <ul class="subLinks">
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Dress Shirt</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Oxford Shirt</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Flannel Shirt</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Henley Shirt</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Chambray Shirt</a></li>
-                                  </ul>
-                              </li>
-                              <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                      class="site-nav lvl-1">Tshirts</a>
-                                  <ul class="subLinks">
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Crew Neck T-shirt <span
-                                                  class="lbl nm_label3">Hot</span></a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">V-neck T-shirt</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Polo T-shirt</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Graphic T-shirt</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Long Sleeve T-shirt</a></li>
-                                  </ul>
-                              </li>
-                              <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                      class="site-nav lvl-1">Trousers</a>
-                                  <ul class="subLinks">
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Chinos <span
-                                                  class="lbl nm_label3">Hot</span></a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Jeans</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Dress Pants</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Cargo Pants</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Joggers</a></li>
+                {% if session['logged_in'] %}
+                <li class="lvl1 parent megamenu"><a href="/">Home <i class="anm anm-angle-down-l"></i></a>
+                </li>
+                <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i class="anm anm-angle-down-l"></i></a>
+                  <div class="megamenu style4">
+                    <ul class="grid grid--uniform mmWrapper">
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Shirts</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Dress Shirt</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Oxford Shirt</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Flannel Shirt</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Henley Shirt</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Chambray Shirt</a></li>
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Tshirts</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Crew Neck T-shirt <span
+                                class="lbl nm_label3">Hot</span></a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">V-neck T-shirt</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Polo T-shirt</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Graphic T-shirt</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Long Sleeve T-shirt</a></li>
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Trousers</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Chinos <span
+                                class="lbl nm_label3">Hot</span></a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Jeans</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Dress Pants</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Cargo Pants</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Joggers</a></li>
 
-                                  </ul>
-                              </li>
-                              <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                      class="site-nav lvl-1">Shoes</a>
-                                  <ul class="subLinks">
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Sneakers <span
-                                                  class="lbl nm_label3">Hot</span></a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Loafers</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Boots</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Derby Shoes</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Oxford Shoes</a></li>
-                                  </ul>
-                              </li>
-                          </ul>
-                      </div>
-                  </li>
-                  <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i
-                              class="anm anm-angle-down-l"></i></a>
-                      <div class="megamenu style4">
-                          <ul class="grid grid--uniform mmWrapper">
-                              <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                      class="site-nav lvl-1">Western Wear</a>
-                                  <ul class="subLinks">
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Denim Jacket</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Skinny Jeans</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Bodycon Dress</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Blazer</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Jumpsuit</a></li>
-                                  </ul>
-                              </li>
-                              <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                      class="site-nav lvl-1">Ethnic Wear</a>
-                                  <ul class="subLinks">
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Saree <span
-                                                  class="lbl nm_label3">Hot</span></a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Salwar Kameez</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Lehenga Choli</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Kurti</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Anarkali Suit</a></li>
-                                  </ul>
-                              </li>
-                              <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                      class="site-nav lvl-1">Lingerie & Nightwear</a>
-                                  <ul class="subLinks">
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Underwire Bra <span
-                                                  class="lbl nm_label3">Hot</span></a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Boyshorts</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Lace Panties</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Nightgown</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Bodysuit</a></li>
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Shoes</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Sneakers <span
+                                class="lbl nm_label3">Hot</span></a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Loafers</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Boots</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Derby Shoes</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Oxford Shoes</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i class="anm anm-angle-down-l"></i></a>
+                  <div class="megamenu style4">
+                    <ul class="grid grid--uniform mmWrapper">
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Western Wear</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Denim Jacket</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Skinny Jeans</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Bodycon Dress</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Blazer</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Jumpsuit</a></li>
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Ethnic Wear</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Saree <span
+                                class="lbl nm_label3">Hot</span></a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Salwar Kameez</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Lehenga Choli</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Kurti</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Anarkali Suit</a></li>
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Lingerie &
+                          Nightwear</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Underwire Bra <span
+                                class="lbl nm_label3">Hot</span></a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Boyshorts</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Lace Panties</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Nightgown</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Bodysuit</a></li>
 
-                                  </ul>
-                              </li>
-                              <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                                      class="site-nav lvl-1">Sportswear</a>
-                                  <ul class="subLinks">
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Sports Bra</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Leggings</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Tank Tops</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Running Shorts</a></li>
-                                      <li class="lvl-2"><a href="/shopfullwidth"
-                                              class="site-nav lvl-2">Track Jackets</a></li>
-                                  </ul>
-                              </li>
-                          </ul>
-                      </div>
-                  </li>
-                  <li class="lvl1 parent megamenu"><a href="/">Kids <span style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
-                    class="anm anm-angle-down-l"></i></a>
-           
-        </li>
-                  <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i
-                              class="anm anm-angle-down-l"></i></a>
-                  </li>
-                 
-                  <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
-                              class="anm anm-angle-down-l"></i></a>
-                  </li>
-                  <li class="lvl1 parent dropdown"><a href="/myaccount">My Account <i
-                      class="anm anm-angle-down-l"></i></a>
-                  </li>
-                  {% else %}
-                  <li class="lvl1 parent megamenu"><a href="/">Home <i
-                      class="anm anm-angle-down-l"></i></a>
-                  </li>
-                  <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i
-                      class="anm anm-angle-down-l"></i></a>
-              <div class="megamenu style4">
-                  <ul class="grid grid--uniform mmWrapper">
-                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                              class="site-nav lvl-1">Shirts</a>
-                          <ul class="subLinks">
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Dress Shirt</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Oxford Shirt</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Flannel Shirt</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Henley Shirt</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Chambray Shirt</a></li>
-                          </ul>
+                        </ul>
                       </li>
-                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                              class="site-nav lvl-1">Tshirts</a>
-                          <ul class="subLinks">
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Crew Neck T-shirt <span
-                                          class="lbl nm_label3">Hot</span></a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">V-neck T-shirt</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Polo T-shirt</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Graphic T-shirt</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Long Sleeve T-shirt</a></li>
-                          </ul>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Sportswear</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Sports Bra</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Leggings</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Tank Tops</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Running Shorts</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Track Jackets</a></li>
+                        </ul>
                       </li>
-                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                              class="site-nav lvl-1">Trousers</a>
-                          <ul class="subLinks">
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Chinos <span
-                                          class="lbl nm_label3">Hot</span></a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Jeans</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Dress Pants</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Cargo Pants</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Joggers</a></li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="lvl1 parent megamenu"><a href="/">Kids <span
+                      style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
+                      class="anm anm-angle-down-l"></i></a>
 
-                          </ul>
-                      </li>
-                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                              class="site-nav lvl-1">Shoes</a>
-                          <ul class="subLinks">
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Sneakers <span
-                                          class="lbl nm_label3">Hot</span></a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Loafers</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Boots</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Derby Shoes</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Oxford Shoes</a></li>
-                          </ul>
-                      </li>
-                  </ul>
-              </div>
-                  </li>
-                  <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i
-                      class="anm anm-angle-down-l"></i></a>
-              <div class="megamenu style4">
-                  <ul class="grid grid--uniform mmWrapper">
-                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                              class="site-nav lvl-1">Western Wear</a>
-                          <ul class="subLinks">
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Denim Jacket</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Skinny Jeans</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Bodycon Dress</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Blazer</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Jumpsuit</a></li>
-                          </ul>
-                      </li>
-                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                              class="site-nav lvl-1">Ethnic Wear</a>
-                          <ul class="subLinks">
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Saree <span
-                                          class="lbl nm_label3">Hot</span></a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Salwar Kameez</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Lehenga Choli</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Kurti</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Anarkali Suit</a></li>
-                          </ul>
-                      </li>
-                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                              class="site-nav lvl-1">Lingerie & Nightwear</a>
-                          <ul class="subLinks">
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Underwire Bra <span
-                                          class="lbl nm_label3">Hot</span></a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Boyshorts</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Lace Panties</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Nightgown</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Bodysuit</a></li>
+                </li>
+                <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i class="anm anm-angle-down-l"></i></a>
+                </li>
 
-                          </ul>
-                      </li>
-                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                              class="site-nav lvl-1">Sportswear</a>
-                          <ul class="subLinks">
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Sports Bra</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Leggings</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Tank Tops</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Running Shorts</a></li>
-                              <li class="lvl-2"><a href="/shopfullwidth"
-                                      class="site-nav lvl-2">Track Jackets</a></li>
-                          </ul>
-                      </li>
-                  </ul>
-              </div>
-                  </li>
-                  <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i
+                <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
                       class="anm anm-angle-down-l"></i></a>
-                  </li>
-         
-                  <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
+                </li>
+                <li class="lvl1 parent dropdown"><a href="/aboutus">About Us <i
+                  class="anm anm-angle-down-l"></i></a>
+              </li>
+                <li class="lvl1 parent dropdown"><a href="/myaccount">My Account <i
                       class="anm anm-angle-down-l"></i></a>
-                  </li>
-                  <li class="lvl1 parent dropdown"><a href="/myaccount" style="display: none;">My Account <i
-              class="anm anm-angle-down-l"></i></a>
-                  </li>
-                  {% endif %}
+                </li>
+                {% else %}
+                <li class="lvl1 parent megamenu"><a href="/">Home <i class="anm anm-angle-down-l"></i></a>
+                </li>
+                <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i class="anm anm-angle-down-l"></i></a>
+                  <div class="megamenu style4">
+                    <ul class="grid grid--uniform mmWrapper">
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Shirts</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Dress Shirt</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Oxford Shirt</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Flannel Shirt</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Henley Shirt</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Chambray Shirt</a></li>
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Tshirts</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Crew Neck T-shirt <span
+                                class="lbl nm_label3">Hot</span></a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">V-neck T-shirt</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Polo T-shirt</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Graphic T-shirt</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Long Sleeve T-shirt</a></li>
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Trousers</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Chinos <span
+                                class="lbl nm_label3">Hot</span></a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Jeans</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Dress Pants</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Cargo Pants</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Joggers</a></li>
+
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Shoes</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Sneakers <span
+                                class="lbl nm_label3">Hot</span></a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Loafers</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Boots</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Derby Shoes</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Oxford Shoes</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i class="anm anm-angle-down-l"></i></a>
+                  <div class="megamenu style4">
+                    <ul class="grid grid--uniform mmWrapper">
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Western Wear</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Denim Jacket</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Skinny Jeans</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Bodycon Dress</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Blazer</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Jumpsuit</a></li>
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Ethnic Wear</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Saree <span
+                                class="lbl nm_label3">Hot</span></a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Salwar Kameez</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Lehenga Choli</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Kurti</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Anarkali Suit</a></li>
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Lingerie &
+                          Nightwear</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Underwire Bra <span
+                                class="lbl nm_label3">Hot</span></a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Boyshorts</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Lace Panties</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Nightgown</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Bodysuit</a></li>
+
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Sportswear</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Sports Bra</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Leggings</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Tank Tops</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Running Shorts</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth" class="site-nav lvl-2">Track Jackets</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i class="anm anm-angle-down-l"></i></a>
+                </li>
+
+                <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
+                      class="anm anm-angle-down-l"></i></a>
+                </li>
+                <li class="lvl1 parent dropdown"><a href="/myaccount" style="display: none;">My Account <i
+                      class="anm anm-angle-down-l"></i></a>
+                </li>
+                {% endif %}
               </ul>
-          </nav>
+            </nav>
             <!--End Desktop Menu-->
           </div>
           <div class="col-6 col-sm-6 col-md-6 col-lg-2 d-block d-lg-none mobile-logo">
             <div class="logo">
               <a href="/">
                 <!-- <img src="../static/images/logo.svg" alt="" /> -->
-                <h3>LOGO</h3>
+                <h3 style="color: #deb992;">LOGO</h3>
               </a>
             </div>
           </div>
@@ -456,77 +362,70 @@
               <a href="/cart" title="Cart">
                 <i class="anm anm-bag-l" style="color: #deb992; font-size: 22px !important;"></i>
                 <!-- <span id="CartCount" class="site-header__cart-count" data-cart-render="item_count">2</span> -->
-            </a>
+              </a>
               <!--Minicart Popup-->
               <!-- <div id="header-cart" class="block block-cart">
-                <ul class="mini-products-list">
-                  <li class="item">
-                    <a class="product-image" href="#">
-                      <img src="../static/images/product-images/cape-dress-1.jpg" alt="3/4 Sleeve Kimono Dress"
-                        title="" />
-                    </a>
-                    <div class="product-details">
-                      <a href="#" class="remove"><i class="anm anm-times-l" aria-hidden="true"></i></a>
-                      <a href="#" class="edit-i remove"><i class="anm anm-edit" aria-hidden="true"></i></a>
-                      <a class="pName" href="/cart">Sleeve Kimono Dress</a>
-                      <div class="variant-cart">Black / XL</div>
-                      <div class="wrapQtyBtn">
-                        <div class="qtyField">
-                          <span class="label">Qty:</span>
-                          <a class="qtyBtn minus" href="javascript:void(0);"><i class="fa anm anm-minus-r"
-                              aria-hidden="true"></i></a>
-                          <input type="text" id="Quantity" name="quantity" value="1" class="product-form__input qty">
-                          <a class="qtyBtn plus" href="javascript:void(0);"><i class="fa anm anm-plus-r"
-                              aria-hidden="true"></i></a>
+              <ul class="mini-products-list">
+                    <li class="item">
+                      <a class="product-image" href="#">
+                          <img src="../static/images/product-images/cape-dress-1.jpg" alt="3/4 Sleeve Kimono Dress" title="" />
+                        </a>
+                        <div class="product-details">
+                          <a href="#" class="remove"><i class="anm anm-times-l" aria-hidden="true"></i></a>
+                            <a href="#" class="edit-i remove"><i class="anm anm-edit" aria-hidden="true"></i></a>
+                            <a class="pName" href="cart-variant1.html">Sleeve Kimono Dress</a>
+                            <div class="variant-cart">Black / XL</div>
+                            <div class="wrapQtyBtn">
+                                <div class="qtyField">
+                                  <span class="label">Qty:</span>
+                                    <a class="qtyBtn minus" href="javascript:void(0);"><i class="fa anm anm-minus-r" aria-hidden="true"></i></a>
+                                    <input type="text" id="Quantity" name="quantity" value="1" class="product-form__input qty">
+                                    <a class="qtyBtn plus" href="javascript:void(0);"><i class="fa anm anm-plus-r" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                            <div class="priceRow">
+                              <div class="product-price">
+                                  <span class="money">₹59.00</span>
+                                </div>
+                             </div>
+      </div>
+                    </li>
+                    <li class="item">
+                      <a class="product-image" href="#">
+                          <img src="../static/images/product-images/cape-dress-2.jpg" alt="Elastic Waist Dress - Black / Small" title="" />
+                        </a>
+                        <div class="product-details">
+                          <a href="#" class="remove"><i class="anm anm-times-l" aria-hidden="true"></i></a>
+                            <a href="#" class="edit-i remove"><i class="anm anm-edit" aria-hidden="true"></i></a>
+                            <a class="pName" href="cart-variant1.html">Elastic Waist Dress</a>
+                            <div class="variant-cart">Gray / XXL</div>
+                            <div class="wrapQtyBtn">
+                                <div class="qtyField">
+                                  <span class="label">Qty:</span>
+                                    <a class="qtyBtn minus" href="javascript:void(0);"><i class="fa anm anm-minus-r" aria-hidden="true"></i></a>
+                                    <input type="text" id="Quantity" name="quantity" value="1" class="product-form__input qty">
+                                    <a class="qtyBtn plus" href="javascript:void(0);"><i class="fa anm anm-plus-r" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                             <div class="priceRow">
+                                <div class="product-price">
+                                    <span class="money">₹99.00</span>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <div class="priceRow">
-                        <div class="product-price">
-                          <span class="money">₹59.00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="item">
-                    <a class="product-image" href="#">
-                      <img src="../static/images/product-images/cape-dress-2.jpg"
-                        alt="Elastic Waist Dress - Black / Small" title="" />
-                    </a>
-                    <div class="product-details">
-                      <a href="#" class="remove"><i class="anm anm-times-l" aria-hidden="true"></i></a>
-                      <a href="#" class="edit-i remove"><i class="anm anm-edit" aria-hidden="true"></i></a>
-                      <a class="pName" href="/cart">Elastic Waist Dress</a>
-                      <div class="variant-cart">Gray / XXL</div>
-                      <div class="wrapQtyBtn">
-                        <div class="qtyField">
-                          <span class="label">Qty:</span>
-                          <a class="qtyBtn minus" href="javascript:void(0);"><i class="fa anm anm-minus-r"
-                              aria-hidden="true"></i></a>
-                          <input type="text" id="Quantity" name="quantity" value="1" class="product-form__input qty">
-                          <a class="qtyBtn plus" href="javascript:void(0);"><i class="fa anm anm-plus-r"
-                              aria-hidden="true"></i></a>
-                        </div>
-                      </div>
-                      <div class="priceRow">
-                        <div class="product-price">
-                          <span class="money">₹99.00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
+                    </li>
                 </ul>
                 <div class="total">
                   <div class="total-in">
-                    <span class="label">Cart Subtotal:</span><span class="product-price"><span
-                        class="money">₹748.00</span></span>
-                  </div>
-                  <div class="buttonSet text-center">
-                    <a href="/cart" class="btn btn-secondary btn--small">View Cart</a>
-                    <a href="checkout.html" class="btn btn-secondary btn--small">Checkout</a>
-                  </div>
+                      <span class="label">Cart Subtotal:</span><span class="product-price"><span class="money">₹748.00</span></span>
+                    </div>
+                     <div class="buttonSet text-center">
+                        <a href="cart-variant1.html" class="btn btn-secondary btn--small">View Cart</a>
+                        <a href="checkout.html" class="btn btn-secondary btn--small">Checkout</a>
+                    </div>
                 </div>
-              </div> -->
-              <!--End Minicart Popup-->
+            </div> -->
+              <!--EndMinicart Popup-->
             </div>
             <div class="site-header__search">
               <button type="button" class="search-trigger"><i class="icon anm anm-search-l"></i></button>
@@ -540,6 +439,7 @@
     <div class="mobile-nav-wrapper" role="navigation">
       <div class="closemobileMenu"><i class="icon anm anm-times-l pull-right"></i> Close Menu</div>
       <ul id="MobileNav" class="mobile-nav">
+        {% if session['logged_in'] %}
         <li class="lvl1 parent megamenu"><a href="/">Home</a>
 
         </li>
@@ -551,39 +451,80 @@
             <li><a href="/shopfullwidth" class="site-nav">Tshirts</a></li>
             <li><a href="/shopfullwidth" class="site-nav">Trousers</a></li>
             <li><a href="/shopfullwidth" class="site-nav">Shoes</a></li>
+            <li><a href="/shopfullwidth" class="site-nav">Henley Shirt</a></li>
+            <li><a href="/shopfullwidth" class="site-nav">Chambray Shirt</a></li>
           </ul>
         </li>
-        <!-- <li><a href="#" class="site-nav">Shop Features<i class="anm anm-plus-l"></i></a>
+
+
+
+
+        <li><a href="/product" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
           <ul>
-            <li><a href="/shopfullwidth" class="site-nav">Product Countdown </a></li>
-            <li><a href="/shopfullwidth" class="site-nav">Infinite Scrolling</a></li>
-            <li><a href="/shopfullwidth" class="site-nav">Pagination - Classic</a></li>
-            <li><a href="/shopfullwidth" class="site-nav">Pagination - Load More</a></li>
-            <li><a href="/shopfullwidth" class="site-nav">Dynamic Product Labels</a></li>
-            <li><a href="product-swatches-style.html" class="site-nav">Product Swatches </a></li>
-            <li><a href="product-hover-info.html" class="site-nav">Product Hover Info</a></li>
-            <li><a href="/shopfullwidth" class="site-nav">Product Reviews</a></li>
-            <li><a href="/shopfullwidth" class="site-nav last">Discount Label </a></li>
+            <li><a href="/product" class="site-nav">Western Wear</a></li>
+            <li><a href="/product" class="site-nav">Ethnic Wear</a></li>
+            <li><a href="/product" class="site-nav">Lingerie & Nightwear</a></li>
+            <li><a href="/product" class="site-nav">Sportswear</a></li>
           </ul>
+        </li>
+        <li class="lvl1"><a href="#">New Arrivals</a>
+        </li>
+
+        <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
+        </li>
+
+        <li class="lvl1 parent dropdown"><a href="/myaccount">My Account</a>
+        </li>
+
+        {% else %}
+
+        <li class="lvl1 parent megamenu"><a href="/">Home</a>
+
+        </li>
+
+
+        <li><a href="#" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
+          <ul>
+            <li><a href="/shopfullwidth" class="site-nav">Shirts</a></li>
+            <li><a href="/shopfullwidth" class="site-nav">Tshirts</a></li>
+            <li><a href="/shopfullwidth" class="site-nav">Trousers</a></li>
+            <li><a href="/shopfullwidth" class="site-nav">Shoes</a></li>
+            <li><a href="/shopfullwidth" class="site-nav">Henley Shirt</a></li>
+            <li><a href="/shopfullwidth" class="site-nav">Chambray Shirt</a></li>
+          </ul>
+        </li>
+
+
+
+
+        <li><a href="/product" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
+          <ul>
+            <li><a href="/product" class="site-nav">Western Wear</a></li>
+            <li><a href="/product" class="site-nav">Ethnic Wear</a></li>
+            <li><a href="/product" class="site-nav">Lingerie & Nightwear</a></li>
+            <li><a href="/product" class="site-nav">Sportswear</a></li>
+          </ul>
+        </li>
+        <li class="lvl1 parent megamenu"><a href="/">Kids <span
+              style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
+              class="anm anm-angle-down-l"></i></a>
+
+        </li>
+        <li class="lvl1"><a href="#">New Arrivals</a>
+        </li>
+
+        <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
+        </li>
+
+        <li class="list-inline-item"><a href="/myaccount" style="color: #deb992; font-weight: 500; display: none;">My
+            Account</a>
+        </li>
+        {% endif %}
+
+      </ul>
+      <!-- <li class="lvl1 parent dropdown"><a href="Myaccount.html">My Account</a>
         </li> -->
 
-
-        <ul>
-          <li><a href="/product" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
-            <ul>
-              <li><a href="/product" class="site-nav">Western Wear</a></li>
-              <li><a href="/product" class="site-nav">Ethnic Wear</a></li>
-              <li><a href="/product" class="site-nav">Lingerie & Nightwear</a></li>
-              <li><a href="/product" class="site-nav">Sportswear</a></li>
-            </ul>
-          </li>
-          <li class="lvl1 parent megamenu"><a href="/">Kids <span style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
-            class="anm anm-angle-down-l"></i></a>
-   
-</li>
-          <li class="lvl1"><a href="#">New Arrivals</a>
-          </li>
-        </ul>
     </div>
     <!--End Mobile Menu-->
 
@@ -610,52 +551,40 @@
                   <div class="product-thumb">
                     <div id="gallery" class="product-dec-slider-2 product-tab-left">
                       <a data-image="../static/images/pics/{{name[12]}}"
-                        data-zoom-image="../static/images/pics/{{name[12]}}"
-                        class="slick-slide slick-cloned" data-slick-index="-4" aria-hidden="true" tabindex="-1">
-                        <img class="blur-up lazyload"
-                          data-src="../static/images/pics/{{name[12]}}"
-                          src="../static/images/pics/{{name[12]}}"
-                          alt="" />
+                        data-zoom-image="../static/images/pics/{{name[12]}}" class="slick-slide slick-cloned"
+                        data-slick-index="-4" aria-hidden="true" tabindex="-1">
+                        <img class="blur-up lazyload" data-src="../static/images/pics/{{name[12]}}"
+                          src="../static/images/pics/{{name[12]}}" alt="" />
                       </a>
                       <a data-image="../static/images/pics/{{name[13]}}"
-                        data-zoom-image="../static/images/pics/{{name[13]}}"
-                        class="slick-slide slick-cloned" data-slick-index="-3" aria-hidden="true" tabindex="-1">
-                        <img class="blur-up lazyload"
-                          data-src="../static/images/pics/{{name[13]}}"
-                          src="../static/images/pics/{{name[13]}}"
-                          alt="" />
+                        data-zoom-image="../static/images/pics/{{name[13]}}" class="slick-slide slick-cloned"
+                        data-slick-index="-3" aria-hidden="true" tabindex="-1">
+                        <img class="blur-up lazyload" data-src="../static/images/pics/{{name[13]}}"
+                          src="../static/images/pics/{{name[13]}}" alt="" />
                       </a>
                       <a data-image="../static/images/pics/{{name[14]}}"
-                        data-zoom-image="../static/images/pics/{{name[14]}}"
-                        class="slick-slide slick-cloned" data-slick-index="-2" aria-hidden="true" tabindex="-1">
-                        <img class="blur-up lazyload"
-                          data-src="../static/images/pics/{{name[14]}}"
-                          src="../static/images/pics/{{name[14]}}"
-                          alt="" />
+                        data-zoom-image="../static/images/pics/{{name[14]}}" class="slick-slide slick-cloned"
+                        data-slick-index="-2" aria-hidden="true" tabindex="-1">
+                        <img class="blur-up lazyload" data-src="../static/images/pics/{{name[14]}}"
+                          src="../static/images/pics/{{name[14]}}" alt="" />
                       </a>
                       <a data-image="../static/images/pics/{{name[15]}}"
-                        data-zoom-image="../static/images/pics/{{name[15]}}"
-                        class="slick-slide slick-cloned" data-slick-index="-1" aria-hidden="true" tabindex="-1">
-                        <img class="blur-up lazyload"
-                          data-src="../static/images/pics/{{name[15]}}"
-                          src="../static/images/pics/{{name[15]}}"
-                          alt="" />
+                        data-zoom-image="../static/images/pics/{{name[15]}}" class="slick-slide slick-cloned"
+                        data-slick-index="-1" aria-hidden="true" tabindex="-1">
+                        <img class="blur-up lazyload" data-src="../static/images/pics/{{name[15]}}"
+                          src="../static/images/pics/{{name[15]}}" alt="" />
                       </a>
                       <a data-image="../static/images/pics/{{name[16]}}"
-                        data-zoom-image="../static/images/pics/{{name[16]}}"
-                        class="slick-slide slick-cloned" data-slick-index="0" aria-hidden="true" tabindex="-1">
-                        <img class="blur-up lazyload"
-                          data-src="../static/images/pics/{{name[16]}}"
-                          src="../static/images/pics/{{name[16]}}"
-                          alt="" />
+                        data-zoom-image="../static/images/pics/{{name[16]}}" class="slick-slide slick-cloned"
+                        data-slick-index="0" aria-hidden="true" tabindex="-1">
+                        <img class="blur-up lazyload" data-src="../static/images/pics/{{name[16]}}"
+                          src="../static/images/pics/{{name[16]}}" alt="" />
                       </a>
                       <a data-image="../static/images/pics/{{name[12]}}"
-                        data-zoom-image="../static/images/pics/{{name[12]}}"
-                        class="slick-slide slick-cloned" data-slick-index="1" aria-hidden="true" tabindex="-1">
-                        <img class="blur-up lazyload"
-                          data-src="../static/images/pics/{{name[12]}}"
-                          src="../static/images/pics/{{name[12]}}"
-                          alt="" />
+                        data-zoom-image="../static/images/pics/{{name[12]}}" class="slick-slide slick-cloned"
+                        data-slick-index="1" aria-hidden="true" tabindex="-1">
+                        <img class="blur-up lazyload" data-src="../static/images/pics/{{name[12]}}"
+                          src="../static/images/pics/{{name[12]}}" alt="" />
                       </a>
 
                     </div>
@@ -663,8 +592,7 @@
                   <div class="zoompro-wrap product-zoom-right pl-20">
                     <div class="zoompro-span">
                       <img class="blur-up lazyload zoompro" id="productimage"
-                        data-zoom-image="../static/images/pics/{{name[12]}}"
-                        alt=""
+                        data-zoom-image="../static/images/pics/{{name[12]}}" alt=""
                         src="../static/images/pics/{{name[12]}}" />
                     </div>
 
@@ -675,24 +603,17 @@
                     </div>
                   </div>
                   <div class="lightboximages">
-                    <a href="../static/images/pics/{{name[12]}}"
-                      data-size="1462x2048"></a>
-                    <a href="../static/images/pics/{{name[13]}}"
-                      data-size="1462x2048"></a>
-                    <a href="../static/images/pics/{{name[14]}}"
-                      data-size="1462x2048"></a>
-                    <a href="../static/images/pics/{{name[15]}}"
-                      data-size="1462x2048"></a>
-                    <a href="../static/images/pics/{{name[16]}}"
-                      data-size="1462x2048"></a>
-                    <a href="../static/images/pics/{{name[12]}}"
-                      data-size="1462x2048"></a>
+                    <a href="../static/images/pics/{{name[12]}}" data-size="1462x2048"></a>
+                    <a href="../static/images/pics/{{name[13]}}" data-size="1462x2048"></a>
+                    <a href="../static/images/pics/{{name[14]}}" data-size="1462x2048"></a>
+                    <a href="../static/images/pics/{{name[15]}}" data-size="1462x2048"></a>
+                    <a href="../static/images/pics/{{name[16]}}" data-size="1462x2048"></a>
+                    <a href="../static/images/pics/{{name[12]}}" data-size="1462x2048"></a>
                     <a href="../static/images/pics/{{name[12]}}" data-size="731x1024"></a>
                     <a href="../static/images/pics/{{name[12]}}" data-size="731x1024"></a>
                     <a href="../static/images/pics/{{name[14]}}" data-size="731x1024"></a>
                     <a href="../static/images/pics/{{name[15]}}" data-size="731x1024"></a>
-                    <a href="../static/images/pics/{{name[16]}}"
-                      data-size="731x1024"></a>
+                    <a href="../static/images/pics/{{name[16]}}" data-size="731x1024"></a>
                   </div>
                 </div>
               </div>
@@ -708,20 +629,19 @@
                       <span class="outstock {% if stock > 0 %}hide{% endif %}">Unavailable</span>
                     </div>
                     <!-- <div class="product-sku">SKU: <span class="variant-sku">19115-rdxs</span></div> -->
-                    <span class="product-review" id="review-summary" 
-                    data-avg-rating="{{ avg_rating }}" 
-                    data-review-count="{{ review_count }}">
-                <a class="reviewLink">
-                  <i class="font-13 fa fa-star"></i>
-                  <i class="font-13 fa fa-star"></i>
-                  <i class="font-13 fa fa-star"></i>
-                  <i class="font-13 fa fa-star-o"></i>
-                  <i class="font-13 fa fa-star-o"></i>
-                </a>
-                <span class="spr-summary-actions-togglereviews">
-                  Based on <span id="review-count">{{ review_count }}</span> reviews
-                </span>
-              </span>
+                    <span class="product-review" id="review-summary" data-avg-rating="{{ avg_rating }}"
+                      data-review-count="{{ review_count }}">
+                      <a class="reviewLink">
+                        <i class="font-13 fa fa-star"></i>
+                        <i class="font-13 fa fa-star"></i>
+                        <i class="font-13 fa fa-star"></i>
+                        <i class="font-13 fa fa-star-o"></i>
+                        <i class="font-13 fa fa-star-o"></i>
+                      </a>
+                      <span class="spr-summary-actions-togglereviews">
+                        Based on <span id="review-count">{{ review_count }}</span> reviews
+                      </span>
+                    </span>
                   </div>
                   <p class="product-single__price product-single__price-product-template">
                     <span
@@ -747,26 +667,29 @@
                   class="product-form product-form-product-template hidedropdown" enctype="multipart/form-data">
                   <h3>Color:-</h3>
                   <div class="d-flex" style="justify-content: center; align-items: center; gap: 5px;">
-                  <div class="swatch clearfix swatch-0 option1" data-option-index="0" style="margin-bottom: 0px;">
-                    <div class="product-form__item">
-                      
-                     <button style="background-color: #081525;padding: 5px 10px;border-radius: 0.5rem;">{{name[2]}}</button>
+                    <div class="swatch clearfix swatch-0 option1" data-option-index="0" style="margin-bottom: 0px;">
+                      <div class="product-form__item">
 
+                        <button type="button"
+                          style="background-color: #081525;padding: 5px 10px;border-radius: 0.5rem;">{{name[2]}}</button>
+
+                      </div>
                     </div>
-                  </div>
                   </div>
                   <h3>Color Options:-</h3>
                   <div class="d-flex" style="justify-content: center; align-items: center; gap: 5px;">
-                  {% for color in colors %}
-                  <div class="swatch clearfix swatch-0 option1 " data-option-index="0" style="margin-bottom: 0px;">
-                    <div class="product-form__item">
-                      
-                     <button class="coloroptions" style="background-color: #081525;padding: 5px 10px;border-radius: 0.5rem;" onclick="sendColor('{{ color }}')">{{color}}</button>
+                    {% for color in colors %}
+                    <div class="swatch clearfix swatch-0 option1 " data-option-index="0" style="margin-bottom: 0px;">
+                      <div class="product-form__item">
 
+                        <button type="button" class="coloroptions"
+                          style="background-color: #081525;padding: 5px 10px;border-radius: 0.5rem;"
+                          onclick="sendColor('{{ color }}')">{{color}}</button>
+
+                      </div>
                     </div>
+                    {% endfor %}
                   </div>
-                  {% endfor %}
-                </div>
                   <input type="hidden" name="productname" value="{{ name[0] }}">
                   <input type="hidden" name="productprice" value="{{ name[3] }}">
                   <input type="hidden" name="productcolor" id="productcolor" value="{{ name[2] }}">
@@ -777,13 +700,12 @@
                       <label class="header" for="productsize">Size:</label>
                       {% for size in size_list %}
                       <div data-value="{{ size }}" class="swatch-element {{ size.lower() }} available">
-                        <input class="swatchInput" id="swatch-1-{{ size.lower() }}" type="radio" name="productsize" value="{{ size }}"
-                          required {% if selected_size == size %}checked{% endif %}
+                        <input class="swatchInput" id="swatch-1-{{ size.lower() }}" type="radio" name="productsize"
+                          value="{{ size }}" required {% if selected_size==size %}checked{% endif %}
                           onclick="updateSelection('{{ id }}', '{{ size }}')" />
-                        <label style="background-color: #364658" 
-                               class="swatchLbl medium rectangle {% if selected_size == size %}selected{% endif %}" 
-                               for="swatch-1-{{ size.lower() }}" 
-                               title="{{ size }}">{{ size }}</label>
+                        <label style="background-color: #364658"
+                          class="swatchLbl medium rectangle {% if selected_size == size %}selected{% endif %}"
+                          for="swatch-1-{{ size.lower() }}" title="{{ size }}">{{ size }}</label>
                       </div>
                       {% endfor %}
                       <!-- <div data-value="S" class="swatch-element s available">
@@ -825,11 +747,11 @@
                     </div>
 
 
-                    <button type="submit" name="add" class="btn product-form__cart-submit productbtn" 
-                    style="width: 80%; padding: 12px; border-radius: 0.5rem; margin-top: -px;color: #deb992;"
-                    {% if stock == 0 %}disabled{% endif %}>
-                    Add to cart
-                  </button>
+                    <button type="submit" name="add" class="btn product-form__cart-submit productbtn"
+                      style="width: 80%; padding: 12px; border-radius: 0.5rem; margin-top: -px;color: #deb992;" {% if
+                      stock==0 %}disabled{% endif %}>
+                      Add to cart
+                    </button>
 
 
                     <!-- <div class="shopify-payment-button" data-shopify="payment-button">
@@ -843,30 +765,30 @@
                   <!-- End Product Action -->
                 </form>
                 <div class="shopify-payment-button" data-shopify="payment-button">
-                  <button type="button" id="bidButton" 
+                  <button type="button" id="bidButton"
                     class="shopify-payment-button__button shopify-payment-button__button--unbranded btn product-form__cart-submit productbtn"
-                    {% if stock == 0 %}disabled{% endif %}>
+                    {% if stock==0 %}disabled{% endif %}>
                     Bid for it
                   </button>
                 </div>
                 <div id="chatbot" class="chatbot">
                   <div class="chat-header">
-                      <h3>Chatbot</h3>
-                      <button id="closeChat">X</button>
+                    <h3>Chatbot</h3>
+                    <button id="closeChat">X</button>
                   </div>
                   <div class="chat-content" id="chatContent"></div>
                   <div class="chat-input">
-                      <input type="number" id="bidInput" placeholder="Enter your bid amount">
-                      <button id="submitBid">Submit</button>
+                    <input type="number" id="bidInput" placeholder="Enter your bid amount">
+                    <button id="submitBid">Submit</button>
                   </div>
                   <div id="options" class="chat-options">
-                      <button id="accept">Yes</button>
-                      <button id="decline">No</button>
+                    <button id="accept">Yes</button>
+                    <button id="decline">No</button>
                   </div>
                   <input type="hidden" id="level2Price" value="discounted_price_for_level2">
                   <input type="hidden" id="level3Price" value="discounted_price_for_level3">
 
-              </div>
+                </div>
 
                 <p id="freeShipMsg" class="freeShipMsg" data-price="199" style="margin-top: 20px;">
                   <i class="fa fa-truck" aria-hidden="true" style="color: #081525;"></i> GETTING
@@ -935,108 +857,89 @@
               <div id="tab1" class="tab-content">
                 <div class="product-description rte">
                   <p style="color: #081525;">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book. It has survived not only five
-                    centuries, but also the leap into electronic typesetting,
-                    remaining essentially unchanged.
+                    {{ name[1] }}
                   </p>
-                  <ul>
-                    <li>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    </li>
-                    <li>
-                      Sed ut perspiciatis unde omnis iste natus error sit
-                    </li>
-                    <li>
-                      Neque porro quisquam est qui dolorem ipsum quia dolor
-                    </li>
-                    <li>Lorem Ipsum is not simply random text.</li>
-                    <li>Free theme updates</li>
-                  </ul>
-
                 </div>
               </div>
 
               <div id="tab2" class="tab-content">
                 <div id="shopify-product-reviews">
                   <div class="spr-container">
-                    <div class="spr-header clearfix">
-                      <div class="spr-summary">
-                        <span class="product-review" id="review-summary" 
-                    data-avg-rating="{{ avg_rating }}" 
-                    data-review-count="{{ review_count }}">
-                <a class="reviewLink">
-                  <i class="font-13 fa fa-star"></i>
-                  <i class="font-13 fa fa-star"></i>
-                  <i class="font-13 fa fa-star"></i>
-                  <i class="font-13 fa fa-star-o"></i>
-                  <i class="font-13 fa fa-star-o"></i>
-                </a>
-                <span class="spr-summary-actions-togglereviews">
-                  Based on <span id="review-count">{{ review_count }}</span> reviews
-                </span>
-              </span>
-                        
-                      </div>
-                    </div>
+                    <span class="product-review" id="review-summaries" data-avg-rating="{{ avg_rating }}"
+                        data-review-count="{{ review_count }}">
+                        <a class="reviewLink">
+                          <i class="font-13 fa fa-star"></i>
+                          <i class="font-13 fa fa-star"></i>
+                          <i class="font-13 fa fa-star"></i>
+                          <i class="font-13 fa fa-star-o"></i>
+                          <i class="font-13 fa fa-star-o"></i>
+                        </a>
+                        <span class="spr-summary-actions-togglereviews">
+                          Based on <span id="review-count">{{ review_count }}</span> reviews
+                        </span>
+                      </span>
                     <div class="spr-content">
                       <div class="spr-form clearfix">
-                        <form method="post" action="{{ url_for('submit_review', sku=id) }}" id="new-review-form" class="new-review-form">
-                            <h3 class="spr-form-title">Write a review</h3>
-                            <fieldset class="spr-form-contact">
-                                <div class="spr-form-contact-name">
-                                    <label class="spr-form-label" for="review_author">Name</label>
-                                    <input class="spr-form-input spr-form-input-text" id="review_author" type="text" name="review[author]" value="" placeholder="Enter your name" />
-                                </div>
-                            </fieldset>
-                            <fieldset class="spr-form-review">
-                                <div class="spr-form-review-rating">
-                                    <label class="spr-form-label">Rating</label>
-                                    <input class="spr-form-input" type="number" name="review[rating]" min="1" max="5" placeholder="Enter rating (1-5)">
-                                </div>
-                                <div class="spr-form-review-title">
-                                    <label class="spr-form-label" for="review_title">Review Title</label>
-                                    <input class="spr-form-input spr-form-input-text" id="review_title" type="text" name="review[title]" value="" placeholder="Give your review a title" />
-                                </div>
-                                <div class="spr-form-review-body">
-                                    <label class="spr-form-label" for="review_body">Body of Review</label>
-                                    <textarea class="spr-form-input spr-form-input-textarea" id="review_body" name="review[body]" rows="10" placeholder="Write your comments here"></textarea>
-                                </div>
-                            </fieldset>
-                            <fieldset class="spr-form-actions">
-                                <input type="submit" class="spr-button spr-button-primary button button-primary btn btn-primary" value="Submit Review" />
-                            </fieldset>
+                        <form method="post" action="{{ url_for('submit_review', sku=id) }}" id="new-review-form"
+                          class="new-review-form">
+                          <h3 class="spr-form-title">Write a review</h3>
+                          <fieldset class="spr-form-contact">
+                            <div class="spr-form-contact-name">
+                              <label class="spr-form-label" for="review_author">Name</label>
+                              <input class="spr-form-input spr-form-input-text" id="review_author" type="text"
+                                name="review[author]" value="" placeholder="Enter your name" />
+                            </div>
+                          </fieldset>
+                          <fieldset class="spr-form-review">
+                            <div class="spr-form-review-rating">
+                              <label class="spr-form-label">Rating</label>
+                              <input class="spr-form-input" type="number" name="review[rating]" min="1" max="5"
+                                placeholder="Enter rating (1-5)">
+                            </div>
+                            <div class="spr-form-review-title">
+                              <label class="spr-form-label" for="review_title">Review Title</label>
+                              <input class="spr-form-input spr-form-input-text" id="review_title" type="text"
+                                name="review[title]" value="" placeholder="Give your review a title" />
+                            </div>
+                            <div class="spr-form-review-body">
+                              <label class="spr-form-label" for="review_body">Body of Review</label>
+                              <textarea class="spr-form-input spr-form-input-textarea" id="review_body"
+                                name="review[body]" rows="10" placeholder="Write your comments here"></textarea>
+                            </div>
+                          </fieldset>
+                          <fieldset class="spr-form-actions">
+                            <input type="submit"
+                              class="spr-button spr-button-primary button button-primary btn btn-primary"
+                              value="Submit Review" />
+                          </fieldset>
                         </form>
-                    </div>
-                    
-                    <div class="spr-reviews">
-                      {% for review in reviews %}
-                          <div class="spr-review">
-                              <div class="spr-review-header">
-                                  <span class="product-review spr-starratings spr-review-header-starratings">
-                                      <span class="reviewLink">
-                                          {% for star in range(review[1]) %}
-                                              <i class="fa fa-star"></i>
-                                          {% endfor %}
-                                          {% for star in range(5 - review[1]) %}
-                                              <i class="fa fa-star-o"></i>
-                                          {% endfor %}
-                                      </span>
-                                  </span>
-                                  <h3 class="spr-review-header-title">{{ review[2] }}</h3>
-                                  <span class="spr-review-header-byline"><strong>{{ review[0] }}</strong></span>
-                              </div>
-                              <div class="spr-review-content">
-                                  <p class="spr-review-content-body">{{ review[3] }}</p>
-                              </div>
+                      </div>
+
+                      <div class="spr-reviews">
+                        {% for review in reviews %}
+                        <div class="spr-review">
+                          <div class="spr-review-header">
+                            <span class="product-review spr-starratings spr-review-header-starratings">
+                              <span class="reviewLink">
+                                {% for star in range(review[1]) %}
+                                <i class="fa fa-star"></i>
+                                {% endfor %}
+                                {% for star in range(5 - review[1]) %}
+                                <i class="fa fa-star-o"></i>
+                                {% endfor %}
+                              </span>
+                            </span>
+                            <h3 class="spr-review-header-title">{{ review[2] }}</h3>
+                            <span class="spr-review-header-byline"><strong>{{ review[0] }}</strong></span>
                           </div>
-                      {% endfor %}
-                  </div>
-                  
-                  
+                          <div class="spr-review-content">
+                            <p class="spr-review-content-body">{{ review[3] }}</p>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+
+
                     </div>
                   </div>
                 </div>
@@ -1143,48 +1046,61 @@
               </div>
 
               <div id="tab4" class="tab-content">
-                <p>At <b>Fashion Holics</b>, we want you to be completely satisfied with your purchase. If for any reason you're not happy with your order, we offer a return policy under the following conditions:</p>
+                <p>At <b>Fashion Holics</b>, we want you to be completely satisfied with your purchase. If for any
+                  reason you're not happy with your order, we offer a return policy under the following conditions:</p>
                 <h4>Eligibility for Return</h4>
-               
-                  <ul>
-                    <li>Returns will only be accepted if the buyer requests a return within <b>36</b> hours of receiving the product.</li>
-                    <li>Returns are only accepted for the following reasons:
-                      <ul>
-                        <li><b>Damaged or Defective Products</b>: If the item is damaged or defective upon arrival.</li>
-                        <li><b>Size Issues</b>: If the product size is incorrect (please ensure you check the size chart before ordering).</li>
-                      </ul>
-                    </li>
-                    
-                  </ul>
-               
+
+                <ul>
+                  <li>Returns will only be accepted if the buyer requests a return within <b>36</b> hours of receiving
+                    the product.</li>
+                  <li>Returns are only accepted for the following reasons:
+                    <ul>
+                      <li><b>Damaged or Defective Products</b>: If the item is damaged or defective upon arrival.</li>
+                      <li><b>Size Issues</b>: If the product size is incorrect (please ensure you check the size chart
+                        before ordering).</li>
+                    </ul>
+                  </li>
+
+                </ul>
+
                 <h4>Return Process</h4>
-              
-                  <ul>
-                    <li>To initiate a return, please contact our customer service team within 36 hours of receiving your order. You can reach us at Email fashionholics23@gmail.com , Phone or through our contact page.</li>
-                    <li>Provide your order number, a description of the issue, and photos (if applicable) of the product showing any damage or size discrepancy.</li>
-                  </ul>
-  
+
+                <ul>
+                  <li>To initiate a return, please contact our customer service team within 36 hours of receiving your
+                    order. You can reach us at Email fashionholics23@gmail.com , Phone or through our contact page.</li>
+                  <li>Provide your order number, a description of the issue, and photos (if applicable) of the product
+                    showing any damage or size discrepancy.</li>
+                </ul>
+
                 <h4>Conditions for Return</h4>
-                  <ul>
-                    <li>The product must be returned in its <b>original, unused condition</b> with all tags and packaging intact.</li>
-                    <li>For size issues, you may be offered a <b>size exchange</b> or a  <b>refund</b> depending on availability.</li>
-                    <li><b>Shipping fees</b> for returns are the responsibility of the buyer unless the product was damaged or defective upon arrival.</li>
-                  </ul>
-                  
+                <ul>
+                  <li>The product must be returned in its <b>original, unused condition</b> with all tags and packaging
+                    intact.</li>
+                  <li>For size issues, you may be offered a <b>size exchange</b> or a <b>refund</b> depending on
+                    availability.</li>
+                  <li><b>Shipping fees</b> for returns are the responsibility of the buyer unless the product was
+                    damaged or defective upon arrival.</li>
+                </ul>
+
                 <h4>Refunds</h4>
-                          <ul>
-                    <li>Once your return is processed and approved, a refund will be issued to the original payment method. Please allow 7-10 business days for the refund to appear in your account, depending on your payment provider.</li>
-                  </ul>
-                  
+                <ul>
+                  <li>Once your return is processed and approved, a refund will be issued to the original payment
+                    method. Please allow 7-10 business days for the refund to appear in your account, depending on your
+                    payment provider.</li>
+                </ul>
+
                 <h4>Non-Returnable Items</h4>
-                  <ul>
-                      <li>Items that have been worn or washed cannot be returned unless they meet the criteria for damaged or defective products.</li>
-                  </ul>
-                  
+                <ul>
+                  <li>Items that have been worn or washed cannot be returned unless they meet the criteria for damaged
+                    or defective products.</li>
+                </ul>
 
 
-            
-                <p>We strive to provide high-quality products and excellent customer service. If you have any questions or concerns about our return policy, feel free to contact us. Thank you for shopping at <b>Fashion Holics!</b>
+
+
+                <p>We strive to provide high-quality products and excellent customer service. If you have any questions
+                  or concerns about our return policy, feel free to contact us. Thank you for shopping at <b>Fashion
+                    Holics!</b>
                 </p>
               </div>
             </div>
@@ -1310,7 +1226,7 @@
                 <!-- End product details -->
               </div>
               {% endfor %}
-              
+
             </div>
           </div>
           <!--End Related Product Slider-->
@@ -1553,62 +1469,62 @@
     <script src="../static/js/popper.min.js"></script>
     <script src="../static/js/lazysizes.js"></script>
     <script src="../static/js/main.js"></script>
- 
+
     <!-- Photoswipe Gallery -->
     <script src="../static/js/vendor/photoswipe.min.js"></script>
     <script src="../static/js/vendor/photoswipe-ui-default.min.js"></script>
     <script>
 
-function updateSelection(productId, size) {
-    // Remove the "selected" class from all labels
-    const labels = document.querySelectorAll(".swatchLbl");
-    labels.forEach(label => label.classList.remove("selected"));
+      function updateSelection(productId, size) {
+        // Remove the "selected" class from all labels
+        const labels = document.querySelectorAll(".swatchLbl");
+        labels.forEach(label => label.classList.remove("selected"));
 
-    // Add the "selected" class to the clicked label
-    const selectedLabel = document.querySelector(`#swatch-1-${size.toLowerCase()}`).nextElementSibling;
-    selectedLabel.classList.add("selected");
+        // Add the "selected" class to the clicked label
+        const selectedLabel = document.querySelector(`#swatch-1-${size.toLowerCase()}`).nextElementSibling;
+        selectedLabel.classList.add("selected");
 
-    // Redirect to the route with the selected size as a query parameter
-    window.location.href = `/product/${productId}?size=${encodeURIComponent(size)}`;
-}
-function sendColor(color) {
-  // Extract the product ID from the URL
-  let path = window.location.pathname;
-  const match = path.match(/\/product\/(\w+)/); // Adjust regex for non-numeric IDs if necessary
-  const productId = match ? match[1] : null;
-
-  if (!productId) {
-    console.error("Product ID not found in URL.");
-    return;
-  }
-
-  // Send POST request
-  fetch('/select-color', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ color: color, sku: productId }), // Send both color and productId
-  })
-    .then(response => {
-      if (response.redirected) {
-        // Automatically follow the redirection
-        window.location.href = response.url;
-      } else {
-        return response.json();
+        // Redirect to the route with the selected size as a query parameter
+        window.location.href = `/product/${productId}?size=${encodeURIComponent(size)}`;
       }
-    })
-    .then(data => {
-      if (data && data.message) {
-        console.log(data.message);
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-}
+      function sendColor(color) {
+        // Extract the product ID from the URL
+        let path = window.location.pathname;
+        const match = path.match(/\/product\/(\w+)/); // Adjust regex for non-numeric IDs if necessary
+        const productId = match ? match[1] : null;
 
-      
+        if (!productId) {
+          console.error("Product ID not found in URL.");
+          return;
+        }
+
+        // Send POST request
+        fetch('/select-color', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ color: color, sku: productId }), // Send both color and productId
+        })
+          .then(response => {
+            if (response.redirected) {
+              // Automatically follow the redirection
+              window.location.href = response.url;
+            } else {
+              return response.json();
+            }
+          })
+          .then(data => {
+            if (data && data.message) {
+              console.log(data.message);
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      }
+
+
       $(function () {
         var $pswp = $(".pswp")[0],
           image = [],
@@ -1655,82 +1571,82 @@ function sendColor(color) {
       });
 
       function scrollToBottom() {
-    const chatContent = document.getElementById('chatContent');
-    chatContent.scrollTop = chatContent.scrollHeight;
-}
+        const chatContent = document.getElementById('chatContent');
+        chatContent.scrollTop = chatContent.scrollHeight;
+      }
 
-document.addEventListener("DOMContentLoaded", function () {
-    let currentLevel = 'level1'; // Track current discount level
-    let path = window.location.pathname;
-    const productId = path.match(/\/product\/(\d+)/)[1];
-    const price = "{{name[3]}}"; // Pass product ID to the JS
+      document.addEventListener("DOMContentLoaded", function () {
+        let currentLevel = 'level1'; // Track current discount level
+        let path = window.location.pathname;
+        const productId = path.match(/\/product\/(\d+)/)[1];
+        const price = "{{name[3]}}"; // Pass product ID to the JS
 
-    document.getElementById('bidButton').addEventListener('click', () => {
-        currentLevel = 'level1'; // Reset to level 1 when chatbot opens
-        document.getElementById('chatbot').style.display = 'block';
-        document.getElementById('chatContent').innerHTML = ''; // Clear previous messages
-        enableInput();
-    });
+        document.getElementById('bidButton').addEventListener('click', () => {
+          currentLevel = 'level1'; // Reset to level 1 when chatbot opens
+          document.getElementById('chatbot').style.display = 'block';
+          document.getElementById('chatContent').innerHTML = ''; // Clear previous messages
+          enableInput();
+        });
 
-    document.getElementById('closeChat').addEventListener('click', () => {
-        document.getElementById('chatbot').style.display = 'none';
-    });
+        document.getElementById('closeChat').addEventListener('click', () => {
+          document.getElementById('chatbot').style.display = 'none';
+        });
 
-    document.getElementById('submitBid').addEventListener('click', () => {
-        const bidAmount = document.getElementById('bidInput').value;
-        const selectedSize = document.querySelector('input[name="productsize"]:checked');
+        document.getElementById('submitBid').addEventListener('click', () => {
+          const bidAmount = document.getElementById('bidInput').value;
+          const selectedSize = document.querySelector('input[name="productsize"]:checked');
 
-        // Ensure size is selected before making an offer
-        if (!selectedSize) {
+          // Ensure size is selected before making an offer
+          if (!selectedSize) {
             alert("Please select a size before making an offer.");
             return;
-        }
+          }
 
-        if (bidAmount) {
+          if (bidAmount) {
             if (currentLevel === 'level3') {
-                currentLevel = 'level1';
+              currentLevel = 'level1';
             }
             sendBid(bidAmount, currentLevel, path, price, selectedSize.value);
-        }
-    });
+          }
+        });
 
-    // Accept and Decline buttons
-    document.getElementById('accept').addEventListener('click', async () => {
-    document.getElementById('chatContent').innerHTML += `<p>You accepted the offer!</p>`;
-    disableInput();
-    document.getElementById('options').style.display = 'none';
+        // Accept and Decline buttons
+        document.getElementById('accept').addEventListener('click', async () => {
+          document.getElementById('chatContent').innerHTML += `<p>You accepted the offer!</p>`;
+          disableInput();
+          document.getElementById('options').style.display = 'none';
 
-    if (currentLevel === 'level1' || currentLevel === 'level3') {
-        document.getElementById('chatContent').innerHTML += `
+          if (currentLevel === 'level1' || currentLevel === 'level3') {
+            document.getElementById('chatContent').innerHTML += `
             <p>Great! You have accepted the offer.</p>
             <button id="addToCartButton">Add to Cart</button>
         `;
 
-        document.getElementById('addToCartButton').addEventListener('click', () => {
-            const bidAmount = document.getElementById('bidInput').value;
-            const selectedSize = document.querySelector('input[name="productsize"]:checked').value;
-            addToCart(productId, bidAmount, selectedSize);
-        });
-    } else if (currentLevel === 'level2') {
-    try {
-        // Fetch product details from the backend
-        const response = await fetch(`/product-details/${productId}`);
-        const data = await response.json();
-        console.log(data)
+            document.getElementById('addToCartButton').addEventListener('click', () => {
+              const bidAmount = document.getElementById('bidInput').value;
+              const selectedSize = document.querySelector('input[name="productsize"]:checked').value;
+              addToCart(productId, bidAmount, selectedSize);
+            });
+          } else if (currentLevel === 'level2') {
+            try {
+              // Fetch product details from the backend
+              const response = await fetch(`/product-details/${productId}`);
+              const data = await response.json();
+              console.log(data)
 
-        if (!response.ok) {
-            throw new Error(data.message || 'Failed to fetch product details');
-        }
+              if (!response.ok) {
+                throw new Error(data.message || 'Failed to fetch product details');
+              }
 
-        // Dynamically generate options combining colors and sizes
-        const colorSizeOptions = Object.entries(data.color_size_map)
-            .flatMap(([color, sizes]) =>
-                sizes.map(size => `<option value="${color} (${size})">${color} (${size})</option>`)
-            )
-            .join('');
+              // Dynamically generate options combining colors and sizes
+              const colorSizeOptions = Object.entries(data.color_size_map)
+                .flatMap(([color, sizes]) =>
+                  sizes.map(size => `<option value="${color} (${size})">${color} (${size})</option>`)
+                )
+                .join('');
 
-        // Display the second product selection with combined options
-        document.getElementById('chatContent').innerHTML += `
+              // Display the second product selection with combined options
+              document.getElementById('chatContent').innerHTML += `
             <p>Great choice! Now, please select the second product for your combo offer:</p>
             <div id="secondProductSelection">
                 <label for="secondProductColorSize">Select Color and Size:</label>
@@ -1743,225 +1659,225 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         `;
 
-        // Add event listener for adding the combo to the cart
-        document.getElementById('addComboToCart').addEventListener('click', () => {
-            const selectedOption = document.getElementById('secondProductColorSize').value;
-            addComboToCart(productId, selectedOption);
+              // Add event listener for adding the combo to the cart
+              document.getElementById('addComboToCart').addEventListener('click', () => {
+                const selectedOption = document.getElementById('secondProductColorSize').value;
+                addComboToCart(productId, selectedOption);
+              });
+            } catch (error) {
+              document.getElementById('chatContent').innerHTML += `<p>Error fetching product details: ${error.message}</p>`;
+            }
+          }
+
+          scrollToBottom()
+
         });
-    } catch (error) {
-        document.getElementById('chatContent').innerHTML += `<p>Error fetching product details: ${error.message}</p>`;
-    }
-}
-
-scrollToBottom()
-
-});
 
 
-function displaySecondProductSelection() {
-    const secondProductDetails = data.second_product_details; // Received from backend
-    const sizeSelect = document.createElement('select');
-    const colorSelect = document.createElement('select');
-    
-    secondProductDetails.sizes.forEach(size => {
-        const option = document.createElement('option');
-        option.value = size;
-        option.textContent = size;
-        sizeSelect.appendChild(option);
-    });
+        function displaySecondProductSelection() {
+          const secondProductDetails = data.second_product_details; // Received from backend
+          const sizeSelect = document.createElement('select');
+          const colorSelect = document.createElement('select');
 
-    secondProductDetails.colors.forEach(color => {
-        const option = document.createElement('option');
-        option.value = color;
-        option.textContent = color;
-        colorSelect.appendChild(option);
-    });
+          secondProductDetails.sizes.forEach(size => {
+            const option = document.createElement('option');
+            option.value = size;
+            option.textContent = size;
+            sizeSelect.appendChild(option);
+          });
 
-    document.getElementById('chatContent').appendChild(sizeSelect);
-    document.getElementById('chatContent').appendChild(colorSelect);
+          secondProductDetails.colors.forEach(color => {
+            const option = document.createElement('option');
+            option.value = color;
+            option.textContent = color;
+            colorSelect.appendChild(option);
+          });
 
-    const confirmButton = document.createElement('button');
-    confirmButton.textContent = 'Confirm Combo';
-    document.getElementById('chatContent').appendChild(confirmButton);
+          document.getElementById('chatContent').appendChild(sizeSelect);
+          document.getElementById('chatContent').appendChild(colorSelect);
 
-    confirmButton.addEventListener('click', () => {
-        const selectedSize = sizeSelect.value;
-        const selectedColor = colorSelect.value;
-        addToCartCombo(selectedSize, selectedColor);
-    });
-}
+          const confirmButton = document.createElement('button');
+          confirmButton.textContent = 'Confirm Combo';
+          document.getElementById('chatContent').appendChild(confirmButton);
 
-function addComboToCart(productId, selectedOption) {
-    // Split the selected option into color and size
-    const [secondProductColor, secondProductSize] = selectedOption
-        .replace(')', '') // Remove the closing parenthesis
-        .split(' ('); // Split the string into color and size
+          confirmButton.addEventListener('click', () => {
+            const selectedSize = sizeSelect.value;
+            const selectedColor = colorSelect.value;
+            addToCartCombo(selectedSize, selectedColor);
+          });
+        }
 
-    const selectedSize = document.querySelector('input[name="productsize"]:checked')?.value; // Get selected size
-    const finalPrice = parseFloat(document.getElementById('level2Price').value); // Get level 2 price
+        function addComboToCart(productId, selectedOption) {
+          // Split the selected option into color and size
+          const [secondProductColor, secondProductSize] = selectedOption
+            .replace(')', '') // Remove the closing parenthesis
+            .split(' ('); // Split the string into color and size
 
-    if (!selectedSize || !secondProductSize || !secondProductColor) {
-        alert("Please ensure all selections are made.");
-        return;
-    }
+          const selectedSize = document.querySelector('input[name="productsize"]:checked')?.value; // Get selected size
+          const finalPrice = parseFloat(document.getElementById('level2Price').value); // Get level 2 price
 
-    fetch(`/add-to-cart-combo/${productId}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-            productprice: finalPrice,
-            productsize: selectedSize, // Pass the first product size
-            secondProductSize: secondProductSize.trim(), // Pass the second product size
-            productcolor: secondProductColor.trim(), // Pass the second product color
-            productquantity: 1
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.message);
-        window.location.href = '/cart'; // Redirect to cart page
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to add to cart. Please try again.');
-    });
-}
+          if (!selectedSize || !secondProductSize || !secondProductColor) {
+            alert("Please ensure all selections are made.");
+            return;
+          }
+
+          fetch(`/add-to-cart-combo/${productId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+              productprice: finalPrice,
+              productsize: selectedSize, // Pass the first product size
+              secondProductSize: secondProductSize.trim(), // Pass the second product size
+              productcolor: secondProductColor.trim(), // Pass the second product color
+              productquantity: 1
+            })
+          })
+            .then(response => response.json())
+            .then(data => {
+              alert(data.message);
+              window.location.href = '/cart'; // Redirect to cart page
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('Failed to add to cart. Please try again.');
+            });
+        }
 
 
 
-    document.getElementById('decline').addEventListener('click', () => {
-        if (currentLevel === 'level1') {
+        document.getElementById('decline').addEventListener('click', () => {
+          if (currentLevel === 'level1') {
             currentLevel = 'level2';
-        } else if (currentLevel === 'level2') {
+          } else if (currentLevel === 'level2') {
             currentLevel = 'level3';
-        } else {
+          } else {
             document.getElementById('chatContent').innerHTML += `<p>No further discounts available. Feel free to submit a new bid.</p>`;
             scrollToBottom();
             enableInput();
             currentLevel = 'level1';
             document.getElementById('options').style.display = 'none';
             return;
+          }
+
+          const bidAmount = document.getElementById('bidInput').value;
+          const selectedSize = document.querySelector('input[name="productsize"]:checked').value;
+          sendBid(bidAmount, currentLevel, path, price, selectedSize);
+        });
+
+        function sendBid(bidAmount, level, path, price, size) {
+          fetch('/bid', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ bidAmount, level, path, price, size })
+          })
+            .then(response => response.json())
+            .then(data => {
+              const chatContent = document.getElementById('chatContent');
+              const newMessage = document.createElement('p');
+              newMessage.textContent = data.message;
+              chatContent.appendChild(newMessage);
+              scrollToBottom();
+
+              // Check if the message is the one that indicates a low bid
+              if (newMessage.textContent.includes("It seems your current offer doesn’t quite meet the discount criteria.")) {
+                // Disable bid submission buttons to avoid repeated submission
+                document.getElementById('accept').disabled = true;
+                document.getElementById('decline').disabled = true;
+
+                // Enable the user to resubmit their bid
+                document.getElementById('bidInput').disabled = false;
+                document.getElementById('submitBid').disabled = false;
+                document.getElementById('options').style.display = 'none'; // Hide the options
+
+                scrollToBottom(); // Scroll to the bottom after the message
+                return; // Stop execution and prevent the request
+              }
+              else if (newMessage.textContent.includes("You must log in to submit a bid.")) {
+                document.getElementById('accept').disabled = true;
+                document.getElementById('decline').disabled = true;
+
+                // Enable the user to resubmit their bid
+                document.getElementById('bidInput').disabled = false;
+                document.getElementById('submitBid').disabled = false;
+                document.getElementById('options').style.display = 'none'; // Hide the options
+
+                scrollToBottom(); // Scroll to the bottom after the message
+                return; // Stop execution and prevent the request
+              } else {
+                // Re-enable the "Yes" and "No" buttons if a valid bid message was shown
+                document.getElementById('accept').disabled = false;
+                document.getElementById('decline').disabled = false;
+              }
+
+              // Update prices dynamically
+              if (data.level2_price) {
+                document.getElementById('level2Price').value = data.level2_price;
+              }
+              if (data.level3_price) {
+                document.getElementById('level3Price').value = data.level3_price;
+              }
+
+              document.getElementById('options').style.display = 'block';
+
+              if (data.disable_bid) {
+                disableInput();
+              } else {
+                enableInput();
+              }
+
+              currentLevel = data.status;
+            });
         }
 
-        const bidAmount = document.getElementById('bidInput').value;
-        const selectedSize = document.querySelector('input[name="productsize"]:checked').value;
-        sendBid(bidAmount, currentLevel, path, price, selectedSize);
-    });
 
-    function sendBid(bidAmount, level, path, price, size) {
-    fetch('/bid', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bidAmount, level, path, price, size })
-    })
-    .then(response => response.json())
-    .then(data => {
-        const chatContent = document.getElementById('chatContent');
-        const newMessage = document.createElement('p');
-        newMessage.textContent = data.message;
-        chatContent.appendChild(newMessage);
-        scrollToBottom();
 
-        // Check if the message is the one that indicates a low bid
-        if (newMessage.textContent.includes("It seems your current offer doesn’t quite meet the discount criteria.")) {
-            // Disable bid submission buttons to avoid repeated submission
-            document.getElementById('accept').disabled = true;
-            document.getElementById('decline').disabled = true;
 
-            // Enable the user to resubmit their bid
-            document.getElementById('bidInput').disabled = false;
-            document.getElementById('submitBid').disabled = false;
-            document.getElementById('options').style.display = 'none'; // Hide the options
-
-            scrollToBottom(); // Scroll to the bottom after the message
-            return; // Stop execution and prevent the request
-        }
-        else if(newMessage.textContent.includes("You must log in to submit a bid.")) {
-          document.getElementById('accept').disabled = true;
-            document.getElementById('decline').disabled = true;
-
-            // Enable the user to resubmit their bid
-            document.getElementById('bidInput').disabled = false;
-            document.getElementById('submitBid').disabled = false;
-            document.getElementById('options').style.display = 'none'; // Hide the options
-
-            scrollToBottom(); // Scroll to the bottom after the message
-            return; // Stop execution and prevent the request
-        } else {
-            // Re-enable the "Yes" and "No" buttons if a valid bid message was shown
-            document.getElementById('accept').disabled = false;
-            document.getElementById('decline').disabled = false;
+        function disableInput() {
+          document.getElementById('bidInput').disabled = true;
+          document.getElementById('submitBid').disabled = true;
         }
 
-        // Update prices dynamically
-        if (data.level2_price) {
-            document.getElementById('level2Price').value = data.level2_price;
-        }
-        if (data.level3_price) {
-            document.getElementById('level3Price').value = data.level3_price;
+        function enableInput() {
+          document.getElementById('bidInput').disabled = false;
+          document.getElementById('submitBid').disabled = false;
         }
 
-        document.getElementById('options').style.display = 'block';
+        function addToCart(productId, bidAmount, size) {
+          let finalPrice = bidAmount;
 
-        if (data.disable_bid) {
-            disableInput();
-        } else {
-            enableInput();
+          // Override price based on current level
+          if (currentLevel === 'level2') {
+            finalPrice = parseFloat(document.getElementById('level2Price').value) || bidAmount;
+          } else if (currentLevel === 'level3') {
+            finalPrice = parseFloat(document.getElementById('level3Price').value) || bidAmount;
+          }
+
+          fetch(`/add-to-cart-offer/${productId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+              productprice: finalPrice,
+              productsize: size,
+              productquantity: 1,
+              productimage: 'Product Image URL', // You can replace this with the actual image URL
+              productcolor: 'Color', // Add the selected color if needed
+            }),
+          })
+            .then(response => response.json())
+            .then(data => {
+              alert(data.message); // Show success message
+              window.location.href = '/cart'; // Redirect to the cart page
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
         }
 
-        currentLevel = data.status;
-    });
-}
 
 
-
-
-    function disableInput() {
-        document.getElementById('bidInput').disabled = true;
-        document.getElementById('submitBid').disabled = true;
-    }
-
-    function enableInput() {
-        document.getElementById('bidInput').disabled = false;
-        document.getElementById('submitBid').disabled = false;
-    }
-
-    function addToCart(productId, bidAmount, size) {
-    let finalPrice = bidAmount;
-
-    // Override price based on current level
-    if (currentLevel === 'level2') {
-        finalPrice = parseFloat(document.getElementById('level2Price').value) || bidAmount;
-    } else if (currentLevel === 'level3') {
-        finalPrice = parseFloat(document.getElementById('level3Price').value) || bidAmount;
-    }
-
-    fetch(`/add-to-cart-offer/${productId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-            productprice: finalPrice,
-            productsize: size,
-            productquantity: 1,
-            productimage: 'Product Image URL', // You can replace this with the actual image URL
-            productcolor: 'Color', // Add the selected color if needed
-        }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.message); // Show success message
-        window.location.href = '/cart'; // Redirect to the cart page
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-
-
-
-});
+      });
 
 
 
@@ -2024,7 +1940,7 @@ function addComboToCart(productId, selectedOption) {
     function renderStars(averageRating) {
       const starContainer = document.getElementById("dynamic-stars");
       starContainer.innerHTML = ""; // Clear any previous stars
-  
+
       for (let i = 1; i <= 5; i++) {
         const starClass = i <= averageRating ? "fa fa-star" : "fa fa-star-o";
         const star = document.createElement("i");
@@ -2034,10 +1950,39 @@ function addComboToCart(productId, selectedOption) {
     }
   </script>
 
+  <script>
+    // Ensure DOM is loaded before running the script
+    document.addEventListener("DOMContentLoaded", function () {
+      const reviewSummary = document.getElementById("review-summary");
+      const avgRating = parseFloat(reviewSummary.dataset.avgRating);
+      const reviewCount = parseInt(reviewSummary.dataset.reviewCount, 10);
+
+      // Update stars dynamically based on the average rating
+      const starsContainer = reviewSummary.querySelector(".reviewLink");
+      starsContainer.innerHTML = generateStars(avgRating);
+
+      // Update review count
+      document.getElementById("review-count").textContent = reviewCount;
+    });
+
+    // Function to generate star icons based on rating
+    function generateStars(rating) {
+      const fullStars = Math.floor(rating);
+      const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+      const emptyStars = 5 - fullStars - halfStar;
+
+      return (
+        '<i class="font-13 fa fa-star"></i>'.repeat(fullStars) +
+        (halfStar ? '<i class="font-13 fa fa-star-half-o"></i>' : '') +
+        '<i class="font-13 fa fa-star-o"></i>'.repeat(emptyStars)
+      );
+    }
+  </script>
+
 <script>
   // Ensure DOM is loaded before running the script
   document.addEventListener("DOMContentLoaded", function () {
-    const reviewSummary = document.getElementById("review-summary");
+    const reviewSummary = document.getElementById("review-summaries");
     const avgRating = parseFloat(reviewSummary.dataset.avgRating);
     const reviewCount = parseInt(reviewSummary.dataset.reviewCount, 10);
 
