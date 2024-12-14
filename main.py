@@ -123,14 +123,14 @@ def get_product_details(product_id):
 
     # Fetch sizes, colors, and SKUs for products with the same name
     products = cursor.execute(
-        "SELECT sku, size, color,quantity FROM products WHERE name = ?", (name[0],)
+        "SELECT sku, size, color, quantity FROM products WHERE name = ?", (name[0],)
     ).fetchall()
     conn.close()
     print("-----------------------------pros---------------------------------------")
     print(products)
 
     if products:
-        # Map colors to their respective sizes
+        # Map sizes and colors
         size_index_map = {
             'XS': 1,
             'S': 2,
@@ -140,11 +140,11 @@ def get_product_details(product_id):
             'XXL': 6
         }
 
-        # Initialize response components
         color_size_map = {}
         sku_links = []
+        color_options_map = {}
 
-        # Iterate over each product
+        # Process each product entry
         for sku, size, color, quantity in products:
             sizes = size.split(',')  # Split sizes into a list
             colors = color.split(',')  # Split colors into a list
@@ -152,28 +152,36 @@ def get_product_details(product_id):
             
             valid_sizes = []  # List to store sizes with available quantity
             
-            # Check each size based on the quantity mapping
+            # Determine valid sizes
             for size in sizes:
                 index = size_index_map[size] - 1  # Get the index for the size (subtract 1 because it's 0-based)
                 if quantities[index] > 0:  # Check if the quantity is greater than 0
                     valid_sizes.append(size)
             
-            # Update the color_size_map with valid sizes for each color
+            # Ensure correct mapping of color and size
             for c in colors:
                 if c not in color_size_map:
                     color_size_map[c] = []
                 color_size_map[c].extend(valid_sizes)
+                color_size_map[c] = list(set(color_size_map[c]))  # Ensure uniqueness
             
-            # Generate the SKU link
+            # Maintain reverse mapping for color options
+            primary_color = colors[0]
+            if primary_color not in color_options_map:
+                color_options_map[primary_color] = colors[1:]
+            
+            # Generate SKU link
             sku_links.append(f"http://127.0.0.1:5000/product/{sku}")
 
-        # Convert lists to remove duplicates and ensure unique sizes per color
-        color_size_map = {color: list(set(sizes)) for color, sizes in color_size_map.items()}
-
-            # Include SKU links in the response
-        return jsonify({"color_size_map": color_size_map, "sku_links": sku_links})
+        # Include SKU links and the reverse color mapping
+        return jsonify({
+            "color_size_map": color_size_map,
+            "color_options_map": color_options_map,
+            "sku_links": sku_links
+        })
     else:
         return jsonify({"message": "No products with available stock"}), 404
+
 
 
 
