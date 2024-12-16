@@ -928,9 +928,9 @@
   .cart__row {
     padding: 10px 5px;
   }
-  table {
-    min-width: 600px; /* Ensures columns remain readable */
-  }
+  /* table {
+    min-width: 600px;
+  } */
   .cart .small--hide {
     /* display: none; */
   }

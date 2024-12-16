@@ -1,4 +1,4 @@
-/*********************************************************************************
+footer-links/*********************************************************************************
 	Template Name: Belle Multipurpose eCommerce Bootstrap4 Template
 	Description: A perfect template to build beautiful and unique Fashion websites. It comes with nice and clean design.
 	Version: 1.0
@@ -3842,7 +3842,7 @@ table {
 
 .template-product .tabs-listing .product-tabs {
   border-bottom: 1px solid #081525;
-  width: 100%;
+  /* width: 100%; */
   margin-bottom: 0;
 }
 .template-product .tabs-listing .product-tabs li {
@@ -6760,6 +6760,9 @@ body.home15-funiture-template {
 .footer-links .h4 {
   position: relative;
 }
+.footer-links .h4:hover {
+  cursor: pointer;
+}
 .footer-links ul,
 .contact-box ul {
   margin-bottom: 20px;
@@ -6842,9 +6845,9 @@ body.home15-funiture-template {
   -webkit-transition: filter 400ms, -webkit-filter 400ms;
 }
 
-
 .dashboard-wrapper {
   display: flex;
+  flex-wrap: wrap; /* Allow items to wrap for smaller screens */
   min-height: 100vh;
 }
 
@@ -6857,11 +6860,14 @@ body.home15-funiture-template {
 
 .menu-panel ul {
   list-style: none;
+  padding: 0;
 }
 
 .menu-panel ul li {
   background-color: white;
   margin-bottom: 20px;
+  border-radius: 5px;
+  overflow: hidden; /* Ensures rounded corners are respected */
 }
 
 .menu-panel ul li a {
@@ -6871,18 +6877,19 @@ body.home15-funiture-template {
   display: block;
   padding: 10px 15px;
   border-radius: 5px;
-  /* transition: background-color  0.3s ease, color 0.3s ease; */
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .menu-active a,
 .menu-panel ul li a:hover {
   color: white;
-  background-color:  #339498;
+  background-color: #339498;
 }
 
 .order-section, .address-section, .password-section {
   padding: 20px;
   flex: 1;
+  overflow-x: auto; /* Ensures content can scroll horizontally */
 }
 
 .order-section h2, .address-section h2, .password-section h2 {
@@ -6893,10 +6900,15 @@ body.home15-funiture-template {
   width: 100%;
   border-collapse: collapse;
   background-color: white;
+
+  overflow-x: auto;
 }
 
 .orders-grid thead {
   background-color: #f4f4f4;
+  position: sticky;
+  top: 0; /* Keep the header sticky at the top */
+  z-index: 1; /* Ensure the header is on top of rows */
 }
 
 .orders-grid th, .orders-grid td {
@@ -6912,6 +6924,68 @@ body.home15-funiture-template {
 .orders-grid tr:hover {
   background-color: #f0f0f0;
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .dashboard-wrapper {
+    flex-direction: column; /* Stack sidebar and content vertically */
+  }
+
+  .menu-panel {
+    width: 100%; /* Full width on smaller screens */
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .order-section, .address-section, .password-section {
+    padding: 10px; /* Reduce padding */
+  }
+
+  .orders-grid {
+   
+    overflow-x: auto;
+  }
+
+  .orders-grid thead {
+    display: table-header-group; /* Ensure the headers are displayed */
+    position: sticky;
+    top: 0; /* Keep the header fixed at the top */
+    background-color: #f4f4f4;
+  }
+
+  .orders-grid tr {
+    display: block;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .orders-grid td {
+    display: block;
+    text-align: right;
+    padding: 5px 10px;
+    position: relative;
+  }
+
+  .orders-grid td::before {
+    content: attr(data-label); /* Use data-label for accessible labels */
+    position: absolute;
+    left: 10px;
+    text-align: left;
+    font-weight: bold;
+    color: #555;
+  }
+
+  .menu-panel ul li a {
+    font-size: 14px; /* Smaller font size for links */
+    padding: 8px 10px; /* Reduce padding */
+  }
+
+  .menu-panel ul li {
+    margin-bottom: 10px; /* Reduce spacing */
+  }
+}
+
+
 
 .action-btn {
   padding: 5px 10px;
@@ -7193,3 +7267,8 @@ border-radius:8px;
   background-color: #007bff !important;
 }
 
+@media (max-width: 475px) {
+  .moblog{
+    margin-left: 60px !important;
+  }
+}

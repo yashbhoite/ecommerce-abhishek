@@ -271,20 +271,32 @@
                             <label for="product-category-men">Product Category</label>
                             <select id="product-category-men" name="product-category-men"
                                 value="{{ product[9] if product else '' }}">
-                                <option value="Shirt" {{ 'selected' if product and product[9] == 'Shirt' else '' }}>Shirts</option>
+                                <option value="Shirts" {{ 'selected' if product and product[9] == 'Shirts' else '' }}>Shirts</option>
                                 <option value="Tshirts" {{ 'selected' if product and product[9] == 'Tshirts' else '' }}>Tshirts</option>
-                                <option value="Trousers" {{ 'selected' if product and product[9] == 'Trousers' else '' }}>Trousers</option>
-                                <option value="Shoes" {{ 'selected' if product and product[9] == 'Shoes' else '' }}>Shoes</option>
+                                <option value="Jeans&Trousers" {{ 'selected' if product and product[9] == 'Jeans&Trousers' else '' }}>Jeans&Trousers
+                                </option>
+                                <option value="Shorts&Chinos" {{ 'selected' if product and product[9] == 'Shorts&Chinos' else '' }}>Shorts&Chinos
+                                </option>
+                                <option value="Jackets&Hoodies" {{ 'selected' if product and product[9] == 'Jackets&Hoodies' else '' }}>Jackets&Hoodies</option>
+                                <option value="Sweaters&Sweatshirts" {{ 'selected' if product and product[9] == 'Sweaters&Sweatshirts' else '' }}>Sweaters&Sweatshirts</option>
+                                <option value="Sneakers&CasualShoes" {{ 'selected' if product and product[9] == 'Sneakers&CasualShoes' else '' }}>Sneakers&CasualShoes</option>
+                                <option value="FormalShoes" {{ 'selected' if product and product[9] == 'FormalShoes' else '' }}>FormalShoes</option>
+                                <option value="Sandals&Slippers" {{ 'selected' if product and product[9] == 'Sandals&Slippers' else '' }}>Sandals&Slippers</option>
                             </select>
                         </div>
-                        <div class="col-lg-6" id="div2">
+                        <div class="col-lg-6" id="div2" style="display: none;">
                             <label for="product-category-women">Product Category</label>
                             <select id="product-category-women" name="product-category-women"
                                 value="{{ product[9] if product else '' }}">
-                                <option value="WesternWear">Western Wear</option>
-                                <option value="EthnicWear">Ethnic Wear</option>
-                                <option value="Lingerie&Nightwear">Lingerie & Nightwear</option>
-                                <option value="Sportswear">Sportswear</option>
+                                <option value="Tops" {{ 'selected' if product and product[9] == 'Tops' else '' }}>Tops</option>
+                                <option value="Dresses" {{ 'selected' if product and product[9] == 'Dresses' else '' }}>Dresses</option>
+                                <option value="Jeans&Pants" {{ 'selected' if product and product[9] == 'Jeans&Pants' else '' }}>Jeans&Pants</option>
+                                <option value="Skirts&Shorts" {{ 'selected' if product and product[9] == 'Skirts&Shorts' else '' }}>Skirts&Shorts</option>
+                                <option value="Sweaters" {{ 'selected' if product and product[9] == 'Sweaters' else '' }}>Sweaters</option>
+                                <option value="Jackets&Coats" {{ 'selected' if product and product[9] == 'Jackets&Coats' else '' }}>Jackets&Coats</option>
+                                <option value="Flats&Sandals" {{ 'selected' if product and product[9] == 'Flats&Sandals' else '' }}>Flats&Sandals</option>
+                                <option value="Heels&Wedges" {{ 'selected' if product and product[9] == 'Heels&Wedges' else '' }}>Heels&Wedges</option>
+                                <option value="Sneakers&CasualShoes" {{ 'selected' if product and product[9] == 'Sneakers&CasualShoes' else '' }}>Sneakers&CasualShoes   </option>
                             </select>
                         </div>
                     </div>

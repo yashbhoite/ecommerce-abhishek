@@ -159,6 +159,7 @@
                                             <th class="product-price text-center alt-font">Order ID</th>
                                             <th class="stock-status text-center alt-font">Payment Method</th>
                                             <th class="status text-center alt-font">Status</th>
+                                            <th class="status text-center alt-font">Status Update</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -186,8 +187,8 @@
                                                         <option value="Shipped" {% if first_order[16] == 'Shipped' %}selected{% endif %}>Shipped</option>
                                                         <option value="Delivered" {% if first_order[16] == 'Delivered' %}selected{% endif %}>Delivered</option>
                                                     </select>
-                                                    <button type="button" onclick="updateOrderStatus('{{ first_order[8] }}', '{{ first_order[10] }}', '{{ first_order[12] }}')">Update</button>
                                                 </td>
+                                                <td><button type="button" onclick="updateOrderStatus('{{ first_order[8] }}', '{{ first_order[10] }}', '{{ first_order[12] }}')">Update</button></td>
                                             </tr>
                                 
                                             <!-- Additional Product Rows -->
@@ -201,7 +202,10 @@
                                                         <option value="Shipped" {% if product[16] == 'Shipped' %}selected{% endif %}>Shipped</option>
                                                         <option value="Delivered" {% if product[16] == 'Delivered' %}selected{% endif %}>Delivered</option>
                                                     </select>
+                                                </td>
+                                                <td>
                                                     <button type="button" onclick="updateOrderStatus('{{ product[8] }}', '{{ product[10] }}', '{{ product[12] }}')">Update</button>
+
                                                 </td>
                                             </tr>
                                             {% endfor %}
@@ -409,51 +413,56 @@
         <!--Footer-->
         <footer id="footer">
 
+
             <div class="site-footer">
+        
                 <div class="container">
+                    <hr>
                     <!--Footer Links-->
                     <div class="footer-top">
+        
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
                                 <h4 class="h4">Quick Shop</h4>
                                 <ul>
-                                    <li><a href="#">Women</a></li>
-                                    <li><a href="#">Men</a></li>
+                                    <li><a href="/shopwomen">Women</a></li>
+                                    <li><a href="/shopfullwidth">Men</a></li>
                                     <li><a href="#">Kids</a></li>
-                                    <li><a href="#">Sportswear</a></li>
-                                    <li><a href="#">Sale</a></li>
+                                    <li><a href="#">Footwear</a></li>
                                 </ul>
                             </div>
                             <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
                                 <h4 class="h4">Informations</h4>
                                 <ul>
-                                    <li><a href="#">About us</a></li>
-                                    <li><a href="#">Careers</a></li>
+                                    <li><a href="/aboutus">About us</a></li>
+                                    <!-- <li><a href="#">Careers</a></li>
                                     <li><a href="#">Privacy policy</a></li>
-                                    <li><a href="#">Terms &amp; condition</a></li>
-                                    <li><a href="#">My Account</a></li>
+                                    <li><a href="#">Terms &amp; condition</a></li> -->
+                                    <li><a href="/myaccount">My Account</a></li>
                                 </ul>
                             </div>
                             <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
                                 <h4 class="h4">Customer Services</h4>
                                 <ul>
-                                    <li><a href="#">Request Personal Data</a></li>
-                                    <li><a href="#">FAQ's</a></li>
-                                    <li><a href="#">Contact Us</a></li>
+                                    <!-- <li><a href="#">Request Personal Data</a></li>
+                                    <li><a href="#">FAQ's</a></li> -->
+                                    <li><a href="/contactus">Contact Us</a></li>
                                     <li><a href="#">Orders and Returns</a></li>
-                                    <li><a href="#">Support Center</a></li>
+                                    <!-- <li><a href="#">Support Center</a></li> -->
                                 </ul>
                             </div>
                             <div class="col-12 col-sm-12 col-md-3 col-lg-3 contact-box">
                                 <h4 class="h4">Contact Us</h4>
                                 <ul class="addressFooter">
-                                    <li><i class="icon anm anm-map-marker-al"></i>
+                                    <li><i class="icon anm anm-map-marker-al" style="color: #deb992 !important;"></i>
                                         <p>55 Gallaxy Enque,<br>2568 steet, 23568 NY</p>
                                     </li>
-                                    <li class="phone"><i class="icon anm anm-phone-s"></i>
+                                    <li class="phone"><i class="icon anm anm-phone-s"
+                                            style="color: #deb992 !important; "></i>
                                         <p>+91 123456789</p>
                                     </li>
-                                    <li class="email"><i class="icon anm anm-envelope-l"></i>
+                                    <li class="email"><i class="icon anm anm-envelope-l"
+                                            style="color: #deb992 !important; "></i>
                                         <p>sales@yousite.com</p>
                                     </li>
                                 </ul>
@@ -463,15 +472,10 @@
                     <!--End Footer Links-->
                     <hr>
                     <div class="footer-bottom">
-
-                        <!--Footer Copyright-->
-                        <div class="row">
-                            <div class="text-lg-center"> <a href="templateshub.net">Designed by WebSharks</a></div>
-                            <!--End Footer Copyright-->
-                            <!--Footer Payment Icon-->
-                        </div>
-                        <!--End Footer Payment Icon-->
-
+        
+                        <p class="text-center" style="font-size: medium; font-weight: 500; color: #1ba098;">Designed By
+                            Websharks</p>
+        
                     </div>
                 </div>
             </div>
