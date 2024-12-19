@@ -358,7 +358,7 @@
                         <div class="site-cart">
                             <a href="/cart" title="Cart">
                                 <i class="anm anm-bag-l" style="color: #deb992; font-size: 22px !important;"></i>
-                                <!-- <span id="CartCount" class="site-header__cart-count" data-cart-render="item_count">2</span> -->
+                                <span id="CartCount" class="site-header__cart-count" data-cart-render="item_count" style="color: #deb992; font-size: medium;">{{ cart_count }}</span>
                             </a>
 
                         </div>
@@ -499,10 +499,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
-                        <div class="alert alert-success text-uppercase" role="alert">
+                        <!-- <div class="alert alert-success text-uppercase" role="alert">
                             <i class="icon anm anm-truck-l icon-large"></i> &nbsp;<strong>Congratulations!</strong>
                             You've got free shipping!
-                        </div>
+                        </div> -->
                         <form action="#" method="post" class="cart style2">
                             <div class="table-responsive">
                                 <table>
@@ -584,7 +584,7 @@
 
                     <div class="container mt-4">
                         <div class="row">
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-4">
+                            <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-4">
                                 <h5>Discount Codes</h5>
                                 <form action="#" method="post">
                                     <div class="form-group">
@@ -596,8 +596,8 @@
                                                 value="Apply Coupon"></div>
                                     </div>
                                 </form>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-4">
+                            </div> -->
+                            <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-4">
                                 <h5>Estimate Shipping and Tax</h5>
                                 <form action="#" method="post">
 
@@ -611,7 +611,7 @@
                                                 value="Calculate shipping"></div>
                                     </div>
                                 </form>
-                            </div>
+                            </div> -->
 
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4 cart__footer">
                                 <div class="solid-border">
@@ -643,10 +643,11 @@
                                             I agree with the terms and conditions
                                         </label>
                                     </p>
-                                    <a href="/checkout">
+                                    <a href="/checkout"
+                                        class="checkout-link {% if cart_count == 0 %}disabled-link{% endif %}">
                                         <input type="submit" name="checkout" id="cartCheckout"
-                                            class="btn btn--small-wide checkout" value="Proceed To Checkout">
-
+                                            class="btn btn--small-wide checkout" value="Proceed To Checkout" {% if
+                                            cart_count==0 %}disabled{% endif %}>
                                     </a>
                                     <div class="paymnet-img" style="margin-top: 1%;"><img
                                             src="../static/images/payment-img.jpg" alt="Payment"></div>

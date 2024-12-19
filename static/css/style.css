@@ -133,6 +133,11 @@ input,
 textarea {
   padding: 10px 18px;
 }
+.disabled-link {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -2103,6 +2108,12 @@ a.quick-view {
 
 .text-danger {
   color: red;
+}
+.text-safe {
+  color: green !important;
+}
+.text-deliver {
+  color: #1ba098 !important;
 }
 
 .grid-products .item .product-price {
@@ -6655,16 +6666,19 @@ body.home15-funiture-template {
 .footer-5 .site-footer hr {
   border-color: #eeeeee;
 }
-
+.producname a:hover{
+  color: #081525;
+}
 /* Newsletter */
 .newsletter-section {
   background-color: #f9f9f9;
   border: 1px solid #e8e9eb;
-  padding: 35px 0;
+  padding-top: 40px;
 }
 .newsletter-section .footer-newsletter {
   width: 40%;
   margin-top: 5px;
+  margin-left: 5px;
 }
 .newsletter-section .section-header {
   margin: 0 20px 0 0;
@@ -6848,14 +6862,14 @@ body.home15-funiture-template {
 .dashboard-wrapper {
   display: flex;
   flex-wrap: wrap; /* Allow items to wrap for smaller screens */
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 .menu-panel {
   width: 250px;
-  background-color: #f8f9fa;
+  background-color: #081525;
   padding: 20px;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #1ba098;
 }
 
 .menu-panel ul {
@@ -6899,31 +6913,38 @@ body.home15-funiture-template {
 .orders-grid {
   width: 100%;
   border-collapse: collapse;
-  background-color: white;
-
+  background-color: #081525;
+  border: 1px solid #1ba098;
   overflow-x: auto;
 }
 
 .orders-grid thead {
-  background-color: #f4f4f4;
+  background-color: #deb992;
   position: sticky;
   top: 0; /* Keep the header sticky at the top */
   z-index: 1; /* Ensure the header is on top of rows */
+  color: #081525;
 }
 
-.orders-grid th, .orders-grid td {
+.orders-grid th{
   padding: 10px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  /* border-bottom: 1px solid #ddd; */
 }
-
+.orders-grid td{
+  padding: 10px;
+  text-align: left;
+  color: #deb992;
+  /* border-bottom: 1px solid #ddd; */
+}
 .orders-grid th {
   font-weight: bold;
 }
 
-.orders-grid tr:hover {
-  background-color: #f0f0f0;
-}
+/* .orders-grid tr:hover {
+  background-color: #869ba9;
+  color: #081525 !important;
+} */
 
 /* Responsive styles */
 @media (max-width: 768px) {
@@ -6940,6 +6961,7 @@ body.home15-funiture-template {
   .order-section, .address-section, .password-section {
     padding: 10px; /* Reduce padding */
   }
+  
 
   .orders-grid {
    

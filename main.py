@@ -275,6 +275,13 @@ def index():
     # Connect to the database
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
+    user_email = session.get('user_email')
+    if user_email:
+        # Query to count items in the cart for the logged-in user
+        cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (user_email,))
+        cart_count = cursor.fetchone()[0]
+    else:
+        cart_count = 0  # If no user is logged in, the cart count is 0
 
     # Fetch products for each gender category
     # cursor.execute("SELECT * FROM products WHERE gender = 'Women'")
@@ -296,7 +303,7 @@ def index():
     conn.close()
     
     # Render template with the fetched products
-    return render_template("index.html",relatedproducts=relatedproducts,newarrivalsmen=newarrivalsmen,newarrivalswomen=newarrivalswomen)
+    return render_template("index.html",relatedproducts=relatedproducts,newarrivalsmen=newarrivalsmen,newarrivalswomen=newarrivalswomen, cart_count=cart_count)
 
 
 @app.route('/cart')
@@ -310,6 +317,14 @@ def cart():
     cursor = conn.cursor()
     cursor.execute("SELECT productimage, productname, productsize, productprice, productquantity, totalprice, productcolor FROM cart WHERE user_email = ?", (user_email,))
     cart_items = cursor.fetchall()
+
+
+    if user_email:
+        # Query to count items in the cart for the logged-in user
+        cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (user_email,))
+        cart_count = cursor.fetchone()[0]
+    else:
+        cart_count = 0  # If no user is logged in, the cart count is 0
 
     # Add a flag to indicate if productname is comma-separated
     cart_items = [
@@ -331,7 +346,7 @@ def cart():
 
     conn.close()
 
-    return render_template('cart-variant1.html', cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total)
+    return render_template('cart-variant1.html', cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total, cart_count=cart_count)
 
 
 @app.route('/get-product-price', methods=['POST'])
@@ -497,12 +512,33 @@ def clear_cart():
 
 @app.route('/contactus')
 def contactus():
-    return render_template('contact-us.html')
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+    user_email = session.get('user_email')
+    if user_email:
+        # Query to count items in the cart for the logged-in user
+        cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (user_email,))
+        cart_count = cursor.fetchone()[0]
+    else:
+        cart_count = 0  # If no user is logged in, the cart count is 0
+    conn.close
+    return render_template('contact-us.html', cart_count=cart_count)
 
 
 @app.route('/aboutus')
 def aboutus():
-    return render_template('about-us.html')
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+    user_email = session.get('user_email')
+    if user_email:
+        # Query to count items in the cart for the logged-in user
+        cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (user_email,))
+        cart_count = cursor.fetchone()[0]
+    else:
+        cart_count = 0  # If no user is logged in, the cart count is 0
+    conn.close
+    return render_template('about-us.html', cart_count=cart_count)
+
 
 @app.route('/send-message', methods=['POST'])
 def send_message():
@@ -689,10 +725,17 @@ def myaccount():
     """, (email,))
     address_data = cursor.fetchone()  # Fetch a single record
 
+    if email:
+        # Query to count items in the cart for the logged-in user
+        cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (email,))
+        cart_count = cursor.fetchone()[0]
+    else:
+        cart_count = 0  # If no user is logged in, the cart count is 0
+
 
     conn.close()
 
-    return render_template('myaccount.html', order_items=order_items, address_data=address_data)
+    return render_template('myaccount.html', order_items=order_items, address_data=address_data, cart_count=cart_count)
 
 
 
@@ -758,11 +801,12 @@ def wishlist():
         totalprice,
         address,
         status,
-        (SELECT SUM(totalprice) FROM orders WHERE razorpay_order_id = o.razorpay_order_id) AS total_value
+        (SELECT SUM(totalprice) FROM orders WHERE razorpay_order_id = o.razorpay_order_id) AS total_value,
+        DATE(timestamp) AS order_date
     FROM 
         orders o
     ORDER BY 
-        razorpay_order_id, productname
+        order_date DESC
     """).fetchall()
 
     # Group orders by razorpay_order_id
@@ -780,7 +824,7 @@ def wishlist():
 
     # Transform grouped orders into a list for template rendering
     grouped_orders_list = [{"orders": data["orders"], "total_value": data["total_value"], "rowspan": data["rowspan"]} for data in grouped_orders.values()]
-
+    
     cancel = my_cursor.execute("""
     SELECT 
         firstname,
@@ -844,10 +888,31 @@ def wishlist():
             AND o.color = r.color
     """).fetchall()
 
+    # Fetch counts for each status from the orders table
+    my_cursor.execute("SELECT COUNT(*) FROM orders WHERE status = 'Placed'")
+    placed_count = my_cursor.fetchone()[0]
+
+    my_cursor.execute("SELECT COUNT(*) FROM orders WHERE status = 'Shipped'")
+    shipped_count = my_cursor.fetchone()[0]
+
+    my_cursor.execute("SELECT COUNT(*) FROM orders WHERE status = 'Delivered'")
+    delivered_count = my_cursor.fetchone()[0]
+
+    my_cursor.execute("SELECT COUNT(*) FROM orders WHERE status = 'Cancelled'")
+    cancelled_count = my_cursor.fetchone()[0]
+
+    # Fetch count for Returned status from the return table
+    my_cursor.execute("SELECT COUNT(*) FROM return")
+    returned_count = my_cursor.fetchone()[0]
+
     connection.commit()
     connection.close()
     
-    return render_template("wishlist.html", grouped_orders=grouped_orders_list, product=product, return_requests=return_requests, cancel=cancel)
+    return render_template("wishlist.html", grouped_orders=grouped_orders_list, product=product, return_requests=return_requests, cancel=cancel,placed_count=placed_count, 
+                           shipped_count=shipped_count, 
+                           delivered_count=delivered_count, 
+                           cancelled_count=cancelled_count, 
+                           returned_count=returned_count)
 
 
 @app.route('/update-order-status', methods=['POST'])
@@ -945,9 +1010,17 @@ def shopfullwidth():
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
     lala = my_cursor.execute("SELECT * from products where gender='Men' ").fetchall()
+    email = session.get('user_email')
+
+    if email:
+        # Query to count items in the cart for the logged-in user
+        my_cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (email,))
+        cart_count = my_cursor.fetchone()[0]
+    else:
+        cart_count = 0  # If no user is logged in, the cart count is 0
     connection.commit()
     connection.close()
-    return render_template("shop-fullwidth.html",lala=lala)
+    return render_template("shop-fullwidth.html",lala=lala, cart_count=cart_count)
 
 @app.route('/shopfullwidth/<string:id>')
 def shopfullwidthcategories(id):
@@ -955,27 +1028,52 @@ def shopfullwidthcategories(id):
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
     lala = my_cursor.execute("SELECT * from products where category=? ",(id,)).fetchall()
+    email = session.get('user_email')
+
+    if email:
+        # Query to count items in the cart for the logged-in user
+        my_cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (email,))
+        cart_count = my_cursor.fetchone()[0]
+    else:
+        cart_count = 0  # If no user is logged in, the cart count is 0
     connection.commit()
     connection.close()
-    return render_template("shop-fullwidth.html",lala=lala)
+    return render_template("shop-fullwidth.html",lala=lala, cart_count=cart_count)
 
 @app.route('/shopwomen')
 def shopfullwidthwomen():
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
     lala = my_cursor.execute("SELECT * from products where gender='Women' ").fetchall()
+    email = session.get('user_email')
+
+    if email:
+        # Query to count items in the cart for the logged-in user
+        my_cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (email,))
+        cart_count = my_cursor.fetchone()[0]
+    else:
+        cart_count = 0  # If no user is logged in, the cart count is 0
     connection.commit()
     connection.close()
-    return render_template("shop-fullwidth-women.html",lala=lala)
+    return render_template("shop-fullwidth-women.html",lala=lala, cart_count=cart_count)
 
 @app.route('/shopwomen/<string:id>')
 def shopwomencategories(id):
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
     lala = my_cursor.execute("SELECT * from products where category=? ",(id,)).fetchall()
+    email = session.get('user_email')
+
+    if email:
+        # Query to count items in the cart for the logged-in user
+        my_cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (email,))
+        cart_count = my_cursor.fetchone()[0]
+    else:
+        cart_count = 0  # If no user is logged in, the cart count is 0
+
     connection.commit()
     connection.close()
-    return render_template("shop-fullwidth-women.html",lala=lala)
+    return render_template("shop-fullwidth-women.html",lala=lala, cart_count=cart_count)
 
 @app.route('/filter', methods=['GET'])
 def filter_products():
@@ -1019,11 +1117,20 @@ def filter_products():
             if selected_size in product[11].split(',')
         ]
 
+    email = session.get('user_email')
+
+    if email:
+        # Query to count items in the cart for the logged-in user
+        my_cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (email,))
+        cart_count = my_cursor.fetchone()[0]
+    else:
+        cart_count = 0  # If no user is logged in, the cart count is 0
+
     # Render filtered products
     if current_url == 'Men':
-        return render_template('shop-fullwidth.html', lala=filtered_products, min_price=min_price, max_price=max_price, color=selected_color, size=selected_size, brands=selected_brands)
+        return render_template('shop-fullwidth.html', lala=filtered_products, min_price=min_price, max_price=max_price, color=selected_color, size=selected_size, brands=selected_brands, cart_count=cart_count)
     else:
-        return render_template('shop-fullwidth-women.html', lala=filtered_products, min_price=min_price, max_price=max_price, color=selected_color, size=selected_size, brands=selected_brands)
+        return render_template('shop-fullwidth-women.html', lala=filtered_products, min_price=min_price, max_price=max_price, color=selected_color, size=selected_size, brands=selected_brands, cart_count=cart_count)
 
 
 
@@ -1041,11 +1148,20 @@ def show_products():
     else:
         cursor.execute("SELECT * FROM products")
     
+    email = session.get('user_email')
+
+    if email:
+        # Query to count items in the cart for the logged-in user
+        cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (email,))
+        cart_count = cursor.fetchone()[0]
+    else:
+        cart_count = 0  # If no user is logged in, the cart count is 0
+    
     # Fetch all matching products
     products = cursor.fetchall()
     conn.close()
 
-    return render_template('shop-fullwidth.html', lala=products)
+    return render_template('shop-fullwidth.html', lala=products, cart_count=cart_count)
 
 # @app.route('/buy')
 # def buy():
@@ -1261,6 +1377,15 @@ def productinfo(id):
     avg_rating = round(review_data[0], 1) if review_data[0] else 0
     review_count = review_data[1] if review_data[1] else 0
 
+    email = session.get('user_email')
+
+    if email:
+        # Query to count items in the cart for the logged-in user
+        my_cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (email,))
+        cart_count = my_cursor.fetchone()[0]
+    else:
+        cart_count = 0  # If no user is logged in, the cart count is 0
+
     connection.close()
     return render_template(
         "product-layout-1.html",
@@ -1273,11 +1398,36 @@ def productinfo(id):
         colors=colors,
         relatedproducts=relatedproducts,
         stock=stock,
-        selected_size=selected_size
+        selected_size=selected_size,
+        cart_count=cart_count
     )
 
-@app.route('/submit-review/<string:sku>', methods=['POST'])
-def submit_review(sku):
+
+@app.route('/get-sku')
+def get_sku():
+    product_name = request.args.get('product_name')
+    color = request.args.get('color')
+
+    connection = sqlite3.connect('product.db')
+    my_cursor = connection.cursor()
+
+    # Query to fetch the SKU
+    sku = my_cursor.execute(
+        "SELECT sku FROM products WHERE name = ? AND color = ?", 
+        (product_name, color)
+    ).fetchone()
+
+    connection.close()
+
+    if sku:
+        return jsonify({"sku": sku[0]})
+    else:
+        return jsonify({"sku": None})
+
+
+
+@app.route('/submit-review-dynamic/<string:product_name>/<string:color>', methods=['POST'])
+def submit_review_dynamic(product_name, color):
     if 'user_email' not in session:
         return redirect(url_for('login'))  # Redirect to login if user is not logged in
 
@@ -1290,6 +1440,18 @@ def submit_review(sku):
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
 
+    # Fetch SKU based on product_name and color
+    my_cursor.execute("""
+        SELECT sku FROM products WHERE name = ? AND color = ?
+    """, (product_name, color))
+    result = my_cursor.fetchone()
+    
+    if not result:
+        connection.close()
+        return "SKU not found for the given product name and color", 404
+
+    sku = result[0]
+
     # Insert review into the reviews table
     my_cursor.execute("""
         INSERT INTO reviews (user_email, name, rating, title, body, sku)
@@ -1301,6 +1463,7 @@ def submit_review(sku):
 
     # Redirect back to the product page
     return redirect(url_for('productinfo', id=sku))
+
 
 
 @app.route('/addproduct')
@@ -1322,6 +1485,12 @@ def checkout():
     cursor.execute("SELECT productimage, productname, productsize, productprice, productquantity, totalprice, productcolor FROM cart WHERE user_email = ?", (user_email,))
     cart_items = cursor.fetchall()
     
+    if user_email:
+        # Query to count items in the cart for the logged-in user
+        cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (user_email,))
+        cart_count = cursor.fetchone()[0]
+    else:
+        cart_count = 0  # If no user is logged in, the cart count is 0
     
     # Calculate subtotal (sum of totalprice) for the logged-in user's cart items
     cursor.execute("SELECT SUM(totalprice) FROM cart WHERE user_email = ?", (user_email,))
@@ -1337,7 +1506,7 @@ def checkout():
 
     conn.close()
     
-    return render_template('checkout.html', cart_items=cart_items,userdetails=user, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total)
+    return render_template('checkout.html', cart_items=cart_items,userdetails=user, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total, cart_count=cart_count)
 
 @app.route('/select-color', methods=['POST'])
 def select_color():
@@ -1399,6 +1568,13 @@ def confirm_address():
     cursor.execute("SELECT * FROM useradr WHERE email = ?", (email,))
     user = cursor.fetchone()
 
+    if email:
+        # Query to count items in the cart for the logged-in user
+        cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (email,))
+        cart_count = cursor.fetchone()[0]
+    else:
+        cart_count = 0  # If no user is logged in, the cart count is 0
+
     if user:
         # Update existing user's address details
         cursor.execute('''
@@ -1442,7 +1618,7 @@ def confirm_address():
         message=message, userdetails=userdetails,
         email=email, firstname=firstname, lastname=lastname, mobile=mobile, 
         address=address, city=city, pincode=pincode, state=state, country=country, 
-        cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total
+        cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total, cart_count=cart_count
     )
 
 

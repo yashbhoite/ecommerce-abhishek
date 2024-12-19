@@ -40,97 +40,138 @@
             <div class="page section-header text-center">
                 <div class="page-title">
                     <div class="wrapper">
-                        <h1 class="page-width">Order History</h1>
+                        <h1 class="page-width" style="color: #deb992;">Admin Panel</h1>
                     </div>
                 </div>
                 <div class="newsletter-section">
                     <div class="container">
                         <div class="row">
                             <div
-                                class="col-12 col-sm-12 col-md-12 col-lg-7 w-100 d-flex justify-content-start align-items-center">
+                                class="col-12 col-sm-12 col-md-12 col-lg-12 w-100 d-flex justify-content-start align-items-center">
                                 <div class="display-table">
                                     <div class="display-table-cell footer-newsletter">
 
-                                        <form action="#" method="post">
+                                        <form>
                                             <div class="input-group">
-                                                <input type="text" class="input-group__field newsletter__input"
-                                                    name="text" value="" placeholder="Search for orders" required="">
+                                                <input type="text" id="searchOrder" style="color: #081525;"
+                                                    class="input-group__field newsletter__input"
+                                                    placeholder="Search for orders">
                                                 <span class="input-group__btn">
-                                                    <button type="submit" class="btn newsletter__submit" name="commit"
-                                                        id="Subscribe"><span
-                                                            class="newsletter__submit-text--large">Search</span></button>
+                                                    <button type="button" class="btn newsletter__submit"
+                                                        onclick="searchOrders()">
+                                                        <span class="newsletter__submit-text--large">Search</span>
+                                                    </button>
+                                                    <button type="button" class="btn newsletter__submit" name="clear"
+                                                        id="clearButton" onclick="clearFilter()" >Clear Filter</button>
                                                 </span>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-7 w-100 d-flex justify-content-start align-items-center"
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 w-100 d-flex justify-content-start align-items-center"
                                 style="margin-top: 1%;">
                                 <div class="display-table">
-                                   <div class="row">
-                                    <div class="col-lg-3 col-sm-6 col-md-3  display-table-cell footer-newsletter">
+                                    <div class="row">
+                                        <div class="col-lg-1 col-sm-6 col-md-3  display-table-cell footer-newsletter">
 
 
-                                        <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
-                                        <span class="input-group__btn">
-                                            <a href="/addproduct" target="_blank"> <button type="submit"
-                                                    class="btn newsletter__submit" name="commit" id="Subscribe"><span
-                                                        class="newsletter__submit-text--large">Add
-                                                        Product</span></button></a>
-                                        </span>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-6 col-md-3 display-table-cell footer-newsletter">
+                                            <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
+                                            <span class="input-group__btn">
+                                                <a href="/addproduct" target="_blank"> <button type="submit"
+                                                        class="btn newsletter__submit" name="commit"
+                                                        id="Subscribe"><span class="newsletter__submit-text--large">Add
+                                                            Product</span></button></a>
+                                            </span>
+                                        </div>
+                                        <div class="col-lg-1 col-sm-6 col-md-3 display-table-cell footer-newsletter">
 
 
-                                        <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
-                                        <span class="input-group__btn">
-                                             <button type="submit"
-                                                    class="btn newsletter__submit" name="commit" onclick="showEditProduct()" id="editProductBtn"><span
+                                            <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
+                                            <span class="input-group__btn">
+                                                <button type="submit" class="btn newsletter__submit" name="commit"
+                                                    onclick="showEditProduct()" id="editProductBtn"><span
                                                         class="newsletter__submit-text--large">Edit
                                                         Product</span></button>
-                                        </span>
-                                    </div>
+                                            </span>
+                                        </div>
 
-                                    <div class="col-lg-3 col-sm-6 col-md-3 display-table-cell footer-newsletter">
+                                        <div class="col-lg-1 col-sm-6 col-md-3 display-table-cell footer-newsletter">
 
 
-                                        <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
-                                        <span class="input-group__btn">
-                                            <button type="submit"
-                                                    class="btn newsletter__submit" name="commit" onclick="showOrderHistory()" id="ordersBtn"><span
+                                            <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
+                                            <span class="input-group__btn">
+                                                <button type="submit" class="btn newsletter__submit" name="commit"
+                                                    onclick="showOrderHistory()" id="ordersBtn"><span
                                                         class="newsletter__submit-text--large">Order History
                                                     </span></button>
-                                        </span>
-                                    </div>
+                                            </span>
+                                        </div>
 
-                                    <div class="col-lg-3 col-sm-6 col-md-3 display-table-cell footer-newsletter">
+                                        <div class="col-lg-1 col-sm-6 col-md-3 display-table-cell footer-newsletter">
 
 
-                                        <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
-                                        <span class="input-group__btn">
-                                            <button type="submit"
-                                                    class="btn newsletter__submit" name="commit" onclick="showReturnHistory()" id="returnBtn"><span
-                                                        class="newsletter__submit-text--large">Return 
+                                            <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
+                                            <span class="input-group__btn">
+                                                <button type="submit" class="btn newsletter__submit" name="commit"
+                                                    onclick="showReturnHistory()" id="returnBtn"><span
+                                                        class="newsletter__submit-text--large">Return History
                                                     </span></button>
-                                        </span>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-6 col-md-3 display-table-cell footer-newsletter">
+                                            </span>
+                                        </div>
+                                        <div class="col-lg-1 col-sm-6 col-md-3 display-table-cell footer-newsletter">
 
 
-                                        <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
-                                        <span class="input-group__btn">
-                                            <button type="submit"
-                                                    class="btn newsletter__submit" name="commit" onclick="showCancelled()" id="returnBtn"><span
-                                                        class="newsletter__submit-text--large">Cancelled Orders 
+                                            <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
+                                            <span class="input-group__btn">
+                                                <button type="submit" class="btn newsletter__submit" name="commit"
+                                                    onclick="showCancelled()" id="returnBtn"><span
+                                                        class="newsletter__submit-text--large">Cancelled Orders
                                                     </span></button>
-                                        </span>
+                                            </span>
+                                        </div>
                                     </div>
-                                   </div>
 
                                 </div>
 
                             </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 w-100 d-flex justify-content-start align-items-center" style="margin-top: 10px;">
+                                <div class="display-table" >
+                                    <div class="wishlist-table table-content table-responsive" >
+                                        <table class="table table-bordered" style="background-color: #081525;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="stock-status text-center alt-font">Status</th> 
+                                                    <th class="stock-status text-center alt-font">Count</th>       
+                                                </tr>
+                                            </thead>
+                                            <tbody style="font-size:medium;">
+                                                <tr>
+                                                    <td class="product-subtotal text-center text-safe">Placed</td>  
+                                                    <td class="product-subtotal text-center">{{ placed_count }}</td>      
+                                                </tr>
+                                                <tr>
+                                                    <td class="product-subtotal text-center">Shipped</td>  
+                                                    <td class="product-subtotal text-center">{{ shipped_count }}</td>      
+                                                </tr>
+                                                <tr>
+                                                    <td class="product-subtotal text-center text-deliver">Delivered</td>  
+                                                    <td class="product-subtotal text-center">{{ delivered_count }}</td>      
+                                                </tr>
+                                                <tr>
+                                                    <td class="product-subtotal text-center text-danger">Cancelled</td>  
+                                                    <td class="product-subtotal text-center">{{ cancelled_count }}</td>      
+                                                </tr>
+                                                <tr>
+                                                    <td class="product-subtotal text-center">Returned</td>  
+                                                    <td class="product-subtotal text-center">{{ returned_count }}</td>      
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>   
+
 
 
                         </div>
@@ -143,12 +184,13 @@
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
                         <h2 style="color: #deb992;">Orders History</h2>
-            
+
                         <form action="#">
                             <div class="wishlist-table table-content table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
+                                            <th class="status text-center alt-font">Date</th>
                                             <th class="product-name text-center alt-font">Customer Name</th>
                                             <th class="product-price text-center alt-font">Phone No.</th>
                                             <th class="product-subtotal text-center alt-font">Email</th>
@@ -162,69 +204,97 @@
                                             <th class="status text-center alt-font">Status Update</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="orderHistoryTableBody">
                                         {% for order_group in grouped_orders %}
-                                            {% set first_order = order_group.orders[0] %}
-                                            <tr>
-                                                <!-- Customer Details -->
-                                                <td class="text-center" rowspan="{{ order_group.rowspan }}">{{ first_order[0] }} {{ first_order[1] }}</td>
-                                                <td class="text-center" rowspan="{{ order_group.rowspan }}">{{ first_order[3] }}</td>
-                                                <td class="text-center" rowspan="{{ order_group.rowspan }}">{{ first_order[2] }}</td>
-                                
-                                                <!-- First Product Details -->
-                                                <td class="text-center {% if first_order[16] == 'Cancelled' %}text-danger{% endif %}">{{ first_order[10] }} (Size: {{ first_order[11] }}, Color: {{ first_order[12] }}, Qty: {{ first_order[13] }})</td>
-                                                <td class="text-center" rowspan="{{ order_group.rowspan }}">{{ first_order[15] }}, {{ first_order[4] }}, {{ first_order[5] }}, {{ first_order[6] }}</td>
-                                                <td class="text-center">₹ {{ first_order[14] }}</td>
-                                                <td class="text-center" rowspan="{{ order_group.rowspan }}">₹ {{ order_group.total_value }}</td>
-                                                <td class="text-center" rowspan="{{ order_group.rowspan }}">{{ first_order[8] }}</td>
-                                                <td class="text-center" rowspan="{{ order_group.rowspan }}">{{ first_order[7]}}</td>
-                                                <td class="text-center">
-                                                    <input type="hidden" name="razorpay_order_id" value="{{ first_order[8] }}">
-                                                    <input type="hidden" name="productname" value="{{ first_order[10] }}">
-                                                    <input type="hidden" name="color" value="{{ first_order[12] }}">
-                                                    <select name="status" id="status_{{ first_order[8] }}_{{ first_order[10] }}_{{ first_order[12] }}">
-                                                        <option value="Placed" {% if first_order[16] == 'Placed' %}selected{% endif %}>Placed</option>
-                                                        <option value="Shipped" {% if first_order[16] == 'Shipped' %}selected{% endif %}>Shipped</option>
-                                                        <option value="Delivered" {% if first_order[16] == 'Delivered' %}selected{% endif %}>Delivered</option>
-                                                    </select>
-                                                </td>
-                                                <td><button type="button" onclick="updateOrderStatus('{{ first_order[8] }}', '{{ first_order[10] }}', '{{ first_order[12] }}')">Update</button></td>
-                                            </tr>
-                                
-                                            <!-- Additional Product Rows -->
-                                            {% for product in order_group.orders[1:] %}
-                                            <tr>
-                                                <td class="text-center {% if product[16] == 'Cancelled' %}text-danger{% endif %}">{{ product[10] }} (Size: {{ product[11] }}, Color: {{ product[12] }}, Qty: {{ product[13] }})</td>
-                                                <td class="text-center">₹ {{ product[14] }}</td>
-                                                <td class="text-center">
-                                                    <select name="status" id="status_{{ product[8] }}_{{ product[10] }}_{{ product[12] }}">
-                                                        <option value="Placed" {% if product[16] == 'Placed' %}selected{% endif %}>Placed</option>
-                                                        <option value="Shipped" {% if product[16] == 'Shipped' %}selected{% endif %}>Shipped</option>
-                                                        <option value="Delivered" {% if product[16] == 'Delivered' %}selected{% endif %}>Delivered</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <button type="button" onclick="updateOrderStatus('{{ product[8] }}', '{{ product[10] }}', '{{ product[12] }}')">Update</button>
+                                        {% set first_order = order_group.orders[0] %}
+                                        <tr>
+                                            <td class="text-center" rowspan="{{ order_group.rowspan }}">{{ first_order[18] }}</td>
+                                            <!-- Customer Details -->
+                                            <td class="text-center" rowspan="{{ order_group.rowspan }}">{{
+                                                first_order[0] }} {{ first_order[1] }}</td>
+                                            <td class="text-center" rowspan="{{ order_group.rowspan }}">{{
+                                                first_order[3] }}</td>
+                                            <td class="text-center" rowspan="{{ order_group.rowspan }}">{{
+                                                first_order[2] }}</td>
 
-                                                </td>
-                                            </tr>
-                                            {% endfor %}
+                                            <!-- First Product Details -->
+                                            <td
+                                                class="text-center {% if first_order[16] == 'Cancelled' %}text-danger{% endif %} {% if first_order[16] == 'Placed' %}text-safe{% endif %} {% if first_order[16] == 'Delivered' %}text-deliver{% endif %}">
+                                                {{ first_order[10] }} (Size: {{ first_order[11] }}, Color: {{
+                                                first_order[12] }}, Qty: {{ first_order[13] }})</td>
+                                            <td class="text-center" rowspan="{{ order_group.rowspan }}">{{
+                                                first_order[15] }},<br> {{ first_order[4] }}, {{ first_order[5] }}, {{
+                                                first_order[6] }}</td>
+                                            <td class="text-center">₹ {{ first_order[14] }}</td>
+                                            <td class="text-center" rowspan="{{ order_group.rowspan }}">₹ {{
+                                                order_group.total_value }}</td>
+                                            <td class="text-center" rowspan="{{ order_group.rowspan }}"
+                                                data-order-id="{{ first_order[8] }}">{{ first_order[8] }}</td>
+                                            <td class="text-center" rowspan="{{ order_group.rowspan }}">{{
+                                                first_order[7]}}</td>
+                                            
+                                            <td class="text-center">
+                                                <input type="hidden" name="razorpay_order_id"
+                                                    value="{{ first_order[8] }}">
+                                                <input type="hidden" name="productname" value="{{ first_order[10] }}">
+                                                <input type="hidden" name="color" value="{{ first_order[12] }}">
+                                                <select name="status"
+                                                    id="status_{{ first_order[8] }}_{{ first_order[10] }}_{{ first_order[12] }}">
+                                                    <option value="Placed" {% if first_order[16]=='Placed' %}selected{%
+                                                        endif %}>Placed</option>
+                                                    <option value="Shipped" {% if first_order[16]=='Shipped'
+                                                        %}selected{% endif %}>Shipped</option>
+                                                    <option value="Delivered" {% if first_order[16]=='Delivered'
+                                                        %}selected{% endif %}>Delivered</option>
+                                                </select>
+                                            </td>
+                                            <td><button type="button"
+                                                    onclick="updateOrderStatus('{{ first_order[8] }}', '{{ first_order[10] }}', '{{ first_order[12] }}')">Update</button>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Additional Product Rows -->
+                                        {% for product in order_group.orders[1:] %}
+                                        <tr>
+                                            <td
+                                                class="text-center {% if product[16] == 'Cancelled' %}text-danger{% endif %} {% if product[16] == 'Placed' %}text-safe{% endif %} {% if product[16] == 'Delivered' %}text-deliver{% endif %}">
+                                                {{ product[10] }} (Size: {{ product[11] }}, Color: {{ product[12] }},
+                                                Qty: {{ product[13] }})</td>
+                                            <td class="text-center">₹ {{ product[14] }}</td>
+                                            <td class="text-center">
+                                                <select name="status"
+                                                    id="status_{{ product[8] }}_{{ product[10] }}_{{ product[12] }}">
+                                                    <option value="Placed" {% if product[16]=='Placed' %}selected{%
+                                                        endif %}>Placed</option>
+                                                    <option value="Shipped" {% if product[16]=='Shipped' %}selected{%
+                                                        endif %}>Shipped</option>
+                                                    <option value="Delivered" {% if product[16]=='Delivered'
+                                                        %}selected{% endif %}>Delivered</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <button type="button"
+                                                    onclick="updateOrderStatus('{{ product[8] }}', '{{ product[10] }}', '{{ product[12] }}')">Update</button>
+
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
                                         {% endfor %}
                                     </tbody>
                                 </table>
-                                
+
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            
-            
-            
+
+
+
 
             <div class="container" id="editProductTable" style="display: none;">
                 <div class="row">
-                    
+
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
                         <h2 style="color: #deb992;">Edit Product</h2>
                         <form action="#">
@@ -242,7 +312,7 @@
                                             <th class="stock-status text-center alt-font">Vendor</th>
                                             <th>EDIT</th>
                                             <th>DELETE</th>
-                                            
+
 
                                         </tr>
                                     </thead>
@@ -255,16 +325,18 @@
                                                 {{pro[7]}}
                                             </td>
                                             <td class="product-name text-center">{{pro[2]}}</td>
-                                            <td class="product-price text-center"><span
-                                                    class="amount"> ₹ {{pro[3]}}</span></td>
+                                            <td class="product-price text-center"><span class="amount"> ₹
+                                                    {{pro[3]}}</span></td>
                                             <td class="stock text-center">
-                                            {{pro[8]}}
+                                                {{pro[8]}}
                                             </td>
                                             <td class="product-subtotal text-center">{{pro[9]}}</td>
                                             <td class="product-subtotal text-center">{{pro[11]}}</td>
                                             <td class="product-subtotal text-center">{{pro[17]}}</td>
-                                            <td><a href="{{ url_for('edit_product', sku=pro[7]) }}" class="action-btn cancel-btn">Edit</a></td>
-                                            <td><button class="action-btn cancel-btn" onclick="deleteProduct('{{ pro[7] }}')">DELETE</button></td>
+                                            <td><a href="{{ url_for('edit_product', sku=pro[7]) }}"
+                                                    class="action-btn cancel-btn">Edit</a></td>
+                                            <td><button class="action-btn cancel-btn"
+                                                    onclick="deleteProduct('{{ pro[7] }}')">DELETE</button></td>
                                         </tr>
                                         {% endfor %}
 
@@ -312,10 +384,12 @@
                                             </td>
                                             <td class="product-name text-center">{{request[9]}}</td>
                                             <td class="text-center">
-                                                {{ request[10] }} (Size: {{ request[11] }}, Color: {{ request[12] }}, Qty: {{ request[13] }})
+                                                {{ request[10] }} (Size: {{ request[11] }}, Color: {{ request[12] }},
+                                                Qty: {{ request[13] }})
                                             </td>
                                             <td class="stock text-center">
-                                                <span class="in-stock">{{request[3]}}, {{request[4]}}, {{request[5]}}, {{request[6]}}</span>
+                                                <span class="in-stock">{{request[3]}}, {{request[4]}}, {{request[5]}},
+                                                    {{request[6]}}</span>
                                             </td>
                                             <td class="product-subtotal text-center"> ₹ {{request[14]}}</td>
                                             <td class="product-subtotal text-center">{{request[7]}}</td>
@@ -323,10 +397,10 @@
                                             <td class="product-subtotal text-center">{{request[15]}}</td>
                                             <td class="product-subtotal text-center">
                                                 {% if request[17] and request[18] %}
-                                                    <a href="{{ request[17] }}" target="_blank">Image1</a>, 
-                                                    <a href="{{ request[18] }}" target="_blank">Image2</a>
+                                                <a href="{{ request[17] }}" target="_blank">Image1</a>,
+                                                <a href="{{ request[18] }}" target="_blank">Image2</a>
                                                 {% else %}
-                                                    No images
+                                                No images
                                                 {% endif %}
                                             </td>
                                             <td class="product-subtotal text-center">{{request[16]}}</td>
@@ -334,14 +408,19 @@
                                                 <input type="hidden" name="razorpay_order_id" value="{{ request[7] }}">
                                                 <input type="hidden" name="productname" value="{{ request[10] }}">
                                                 <input type="hidden" name="color" value="{{ request[12] }}">
-                                                <select name="returnstatus" id="returnstatus_{{ request[7] }}_{{ request[10] }}_{{ request[12] }}">
-                                                    <option value="Placed" {% if request[19] == 'Placed' %}selected{% endif %}>Placed</option>
-                                                    <option value="Shipped" {% if request[19] == 'Shipped' %}selected{% endif %}>Shipped</option>
-                                                    <option value="Delivered" {% if request[19] == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                                <select name="returnstatus"
+                                                    id="returnstatus_{{ request[7] }}_{{ request[10] }}_{{ request[12] }}">
+                                                    <option value="Placed" {% if request[19]=='Placed' %}selected{%
+                                                        endif %}>Placed</option>
+                                                    <option value="Shipped" {% if request[19]=='Shipped' %}selected{%
+                                                        endif %}>Shipped</option>
+                                                    <option value="Delivered" {% if request[19]=='Delivered'
+                                                        %}selected{% endif %}>Delivered</option>
                                                 </select>
-                                                <button type="button" onclick="updateReturnStatus('{{ request[7] }}','{{ request[10] }}','{{ request[12] }}')">Update</button>
+                                                <button type="button"
+                                                    onclick="updateReturnStatus('{{ request[7] }}','{{ request[10] }}','{{ request[12] }}')">Update</button>
                                             </td>
-                                            
+
                                         </tr>
                                         {% endfor %}
 
@@ -372,12 +451,12 @@
                                             <th class="product-price text-center alt-font">Order Value</th>
                                             <th class="product-price text-center alt-font">Order ID</th>
                                             <th class="stock-status text-center alt-font">Payment Method</th>
-                                           
+
 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    
+
                                         {% for order in cancel %}
                                         <tr>
                                             <td class="product-remove text-center" valign="middle">{{order[0]}}
@@ -387,16 +466,18 @@
                                             </td>
                                             <td class="product-name text-center">{{order[2]}}</td>
                                             <td class="text-center">
-                                                {{order[10]}} (Size: {{order[11]}}, Color: {{order[12]}}, Qty: {{order[13]}})
+                                                {{order[10]}} (Size: {{order[11]}}, Color: {{order[12]}}, Qty:
+                                                {{order[13]}})
                                             </td>
                                             <td class="stock text-center">
-                                                <span class="in-stock">{{order[15]}}, {{order[4]}}, {{order[5]}}, {{order[6]}}</span>
+                                                <span class="in-stock">{{order[15]}}, {{order[4]}}, {{order[5]}},
+                                                    {{order[6]}}</span>
                                             </td>
                                             <td class="product-subtotal text-center"> ₹ {{order[14]}}</td>
                                             <td class="product-subtotal text-center">{{order[8]}}</td>
                                             <td class="product-subtotal text-center">{{order[7]}}</td>
-                                            
-                                            
+
+
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -415,12 +496,12 @@
 
 
             <div class="site-footer">
-        
+
                 <div class="container">
                     <hr>
                     <!--Footer Links-->
                     <div class="footer-top">
-        
+
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
                                 <h4 class="h4">Quick Shop</h4>
@@ -472,10 +553,10 @@
                     <!--End Footer Links-->
                     <hr>
                     <div class="footer-bottom">
-        
+
                         <p class="text-center" style="font-size: medium; font-weight: 500; color: #1ba098;">Designed By
                             Websharks</p>
-        
+
                     </div>
                 </div>
             </div>
@@ -505,7 +586,7 @@
             document.getElementById("returnTable").style.display = "none";
             document.getElementById("CancelTable").style.display = "none";
         }
-    
+
         function showOrderHistory() {
             document.getElementById("editProductTable").style.display = "none";
             document.getElementById("orderHistoryTable").style.display = "block";
@@ -513,7 +594,7 @@
             document.getElementById("CancelTable").style.display = "none";
         }
 
-        function showReturnHistory(){
+        function showReturnHistory() {
             document.getElementById("editProductTable").style.display = "none";
             document.getElementById("orderHistoryTable").style.display = "none";
             document.getElementById("returnTable").style.display = "block";
@@ -528,79 +609,162 @@
     </script>
 
 
-<script>
-    function deleteProduct(sku) {
-        if (confirm("Are you sure you want to delete this product?")) {
-            fetch(`/delete-product/${sku}`, {
-                method: 'DELETE',
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Product deleted successfully!");
-                    location.reload();  // Reloads the page to reflect the deleted item
-                } else {
-                    alert("Failed to delete product. Please try again.");
-                }
-            })
-            .catch(error => console.error("Error:", error));
+    <script>
+        function deleteProduct(sku) {
+            if (confirm("Are you sure you want to delete this product?")) {
+                fetch(`/delete-product/${sku}`, {
+                    method: 'DELETE',
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert("Product deleted successfully!");
+                            location.reload();  // Reloads the page to reflect the deleted item
+                        } else {
+                            alert("Failed to delete product. Please try again.");
+                        }
+                    })
+                    .catch(error => console.error("Error:", error));
+            }
         }
-    }
+    </script>
+
+    <script>
+        function updateOrderStatus(orderId, productName, color) {
+            var status = document.getElementById('status_' + orderId + '_' + productName + '_' + color).value;
+
+            $.ajax({
+                url: '/update-order-status',
+                type: 'POST',
+                data: {
+                    razorpay_order_id: orderId,
+                    productname: productName,
+                    color: color,
+                    status: status
+                },
+                success: function (response) {
+                    console.log('Order updated successfully!');
+                    location.reload(); // Optionally reload the page to show updated status
+                },
+                error: function (xhr, status, error) {
+                    if (xhr.status === 403) {
+                        alert("Cannot update status for a cancelled order.");
+                    } else {
+                        alert("Error updating order status: " + error);
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function updateReturnStatus(orderId, productName, color) {
+            const status = document.getElementById('returnstatus_' + orderId + '_' + productName + '_' + color).value;
+
+            $.ajax({
+                url: '/update-return-status',
+                type: 'POST',
+                data: {
+                    razorpay_order_id: orderId,
+                    productname: productName,
+                    color: color,
+                    returnstatus: status
+                },
+                success: function (response) {
+                    console.log('Return updated successfully!');
+                    location.reload(); // Optionally reload the page to show updated status
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error updating return status:', error);
+                }
+            });
+        }
     </script>
 
 <script>
-    function updateOrderStatus(orderId, productName, color) {
-        var status = document.getElementById('status_' + orderId + '_' + productName + '_' + color).value;
-    
-        $.ajax({
-            url: '/update-order-status',
-            type: 'POST',
-            data: {
-                razorpay_order_id: orderId,
-                productname: productName,
-                color: color,
-                status: status
-            },
-            success: function(response) {
-                console.log('Order updated successfully!');
-                location.reload(); // Optionally reload the page to show updated status
-            },
-            error: function(xhr, status, error) {
-                if (xhr.status === 403) {
-                    alert("Cannot update status for a cancelled order.");
+    function searchOrders() {
+        // Get the search input value
+        const searchInput = document.getElementById('searchOrder').value.trim().toLowerCase();
+
+        // Get the specific table by its ID and then fetch its rows
+        const orderHistoryTable = document.querySelector('#orderHistoryTableBody');
+        if (!orderHistoryTable) {
+            console.error('Order History Table not found!');
+            return;
+        }
+
+        // Get all rows inside the tbody of the Order History table
+        const rows = orderHistoryTable.querySelectorAll('tr');
+
+        // Variable to track if the current group of rows matches the search
+        let currentOrderGroupVisible = false;
+
+        // Loop through each row to check for a match
+        rows.forEach(row => {
+            // Get the Order ID cell using the `data-order-id` attribute
+            const orderIdCell = row.querySelector('[data-order-id]');
+            const customerNameCell = row.querySelector('td:nth-child(2)');
+            const dateCell = row.querySelector('td:nth-child(1)');
+            const productCell = row.querySelector('td:nth-child(5)');
+            const statusCell = row.querySelector('select[name="status"]');
+
+            // If the row contains the Order ID, it's a parent row
+            if (orderIdCell) {
+                const orderId = orderIdCell.getAttribute('data-order-id').toLowerCase();
+                const customerName = customerNameCell ? customerNameCell.textContent.toLowerCase() : '';
+                const date = dateCell ? dateCell.textContent.toLowerCase() : '';
+                const productName = productCell ? productCell.textContent.toLowerCase() : '';
+                const status = statusCell ? statusCell.value.toLowerCase() : '';
+
+                // Show or hide the parent row based on the search input
+                if (
+                    orderId.includes(searchInput) ||
+                    customerName.includes(searchInput) ||
+                    date.includes(searchInput) ||
+                    productName.includes(searchInput) ||
+                    status.includes(searchInput)
+                ) {
+                    row.style.display = '';
+                    currentOrderGroupVisible = true; // Set group visibility to true
                 } else {
-                    alert("Error updating order status: " + error);
+                    row.style.display = 'none';
+                    currentOrderGroupVisible = false; // Reset group visibility
+                }
+            } else {
+                // For additional rows, display them only if the parent group is visible
+                if (currentOrderGroupVisible) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
                 }
             }
         });
     }
+</script>
+
+
+    <script>
+        function clearFilter() {
+            // Clear the search input
+            document.getElementById('searchOrder').value = '';
+
+            // Show all rows in the Order History table
+            const orderHistoryTable = document.querySelector('#orderHistoryTableBody');
+            if (!orderHistoryTable) {
+                console.error('Order History Table not found!');
+                return;
+            }
+
+            // Get all rows and make them visible
+            const rows = orderHistoryTable.querySelectorAll('tr');
+            rows.forEach(row => {
+                row.style.display = '';
+            });
+        }
     </script>
 
-<script>
-    function updateReturnStatus(orderId, productName, color) {
-        const status = document.getElementById('returnstatus_' + orderId + '_' + productName + '_' + color).value;
-    
-        $.ajax({
-            url: '/update-return-status',
-            type: 'POST',
-            data: {
-                razorpay_order_id: orderId,
-                productname: productName,
-                color: color,
-                returnstatus: status
-            },
-            success: function(response) {
-                console.log('Return updated successfully!');
-                location.reload(); // Optionally reload the page to show updated status
-            },
-            error: function(xhr, status, error) {
-                console.log('Error updating return status:', error);
-            }
-        });
-    }
-    </script>
-    
-    
+
+
 
 </body>
 
