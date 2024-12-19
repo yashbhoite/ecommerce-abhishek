@@ -147,6 +147,10 @@
                                             </thead>
                                             <tbody style="font-size:medium;">
                                                 <tr>
+                                                    <td class="product-subtotal text-center text-white">Not Confirmed</td>  
+                                                    <td class="product-subtotal text-center">{{ not_confirmed }}</td>      
+                                                </tr>
+                                                <tr>
                                                     <td class="product-subtotal text-center text-safe">Placed</td>  
                                                     <td class="product-subtotal text-center">{{ placed_count }}</td>      
                                                 </tr>
@@ -219,15 +223,14 @@
 
                                             <!-- First Product Details -->
                                             <td
-                                                class="text-center {% if first_order[16] == 'Cancelled' %}text-danger{% endif %} {% if first_order[16] == 'Placed' %}text-safe{% endif %} {% if first_order[16] == 'Delivered' %}text-deliver{% endif %}">
+                                                class="text-center {% if first_order[16] == 'Cancelled' %}text-danger{% endif %} {% if first_order[16] == 'Confirmed and Placed' %}text-safe{% endif %} {% if first_order[16] == 'Delivered' %}text-deliver{% endif %} {% if first_order[16] == 'Waiting for Confirmation' %}text-white{% endif %}">
                                                 {{ first_order[10] }} (Size: {{ first_order[11] }}, Color: {{
                                                 first_order[12] }}, Qty: {{ first_order[13] }})</td>
                                             <td class="text-center" rowspan="{{ order_group.rowspan }}">{{
                                                 first_order[15] }},<br> {{ first_order[4] }}, {{ first_order[5] }}, {{
                                                 first_order[6] }}</td>
                                             <td class="text-center">₹ {{ first_order[14] }}</td>
-                                            <td class="text-center" rowspan="{{ order_group.rowspan }}">₹ {{
-                                                order_group.total_value }}</td>
+                                            <td class="text-center" rowspan="{{ order_group.rowspan }}"><b>₹ {{ first_order[20] }}</b> <br> (Shipping Charges: {{ first_order[19] }})</td>
                                             <td class="text-center" rowspan="{{ order_group.rowspan }}"
                                                 data-order-id="{{ first_order[8] }}">{{ first_order[8] }}</td>
                                             <td class="text-center" rowspan="{{ order_group.rowspan }}">{{
@@ -240,8 +243,10 @@
                                                 <input type="hidden" name="color" value="{{ first_order[12] }}">
                                                 <select name="status"
                                                     id="status_{{ first_order[8] }}_{{ first_order[10] }}_{{ first_order[12] }}">
-                                                    <option value="Placed" {% if first_order[16]=='Placed' %}selected{%
-                                                        endif %}>Placed</option>
+                                                    <option value="Waiting for Confirmation" {% if first_order[16]=='Waiting for Confirmation' %}selected{%
+                                                        endif %}>Waiting for Confirmation</option>
+                                                    <option value="Confirmed and Placed" {% if first_order[16]=='Confirmed and Placed' %}selected{%
+                                                        endif %}>Confirmed and Placed</option>
                                                     <option value="Shipped" {% if first_order[16]=='Shipped'
                                                         %}selected{% endif %}>Shipped</option>
                                                     <option value="Delivered" {% if first_order[16]=='Delivered'
@@ -257,15 +262,17 @@
                                         {% for product in order_group.orders[1:] %}
                                         <tr>
                                             <td
-                                                class="text-center {% if product[16] == 'Cancelled' %}text-danger{% endif %} {% if product[16] == 'Placed' %}text-safe{% endif %} {% if product[16] == 'Delivered' %}text-deliver{% endif %}">
+                                                class="text-center {% if product[16] == 'Cancelled' %}text-danger{% endif %} {% if product[16] == 'Confirmed and Placed' %}text-safe{% endif %} {% if product[16] == 'Delivered' %}text-deliver{% endif %} {% if product[16] == 'Waiting for Confirmation' %}text-white{% endif %}">
                                                 {{ product[10] }} (Size: {{ product[11] }}, Color: {{ product[12] }},
                                                 Qty: {{ product[13] }})</td>
                                             <td class="text-center">₹ {{ product[14] }}</td>
                                             <td class="text-center">
                                                 <select name="status"
                                                     id="status_{{ product[8] }}_{{ product[10] }}_{{ product[12] }}">
-                                                    <option value="Placed" {% if product[16]=='Placed' %}selected{%
-                                                        endif %}>Placed</option>
+                                                    <option value="Waiting for Confirmation" {% if product[16]=='Waiting for Confirmation' %}selected{%
+                                                        endif %}>Waiting for Confirmation</option>
+                                                    <option value="Confirmed and Placed" {% if product[16]=='Confirmed and Placed' %}selected{%
+                                                        endif %}>Confirmed and Placed</option>
                                                     <option value="Shipped" {% if product[16]=='Shipped' %}selected{%
                                                         endif %}>Shipped</option>
                                                     <option value="Delivered" {% if product[16]=='Delivered'
@@ -359,6 +366,7 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
+                                            <th class="product-name alt-font text-center">Date</th>
                                             <th class="product-name text-center alt-font">Customer name</th>
                                             <th class="product-price text-center alt-font">Phone No.</th>
                                             <th class="product-subtotal text-center alt-font">Email</th>
@@ -377,6 +385,7 @@
                                     <tbody>
                                         {% for request in return_requests %}
                                         <tr>
+                                            <td class="product-date text-center">{{ request[20] }}</td>
                                             <td class="product-remove text-center" valign="middle">{{request[0]}}
                                                 {{request[1]}}</td>
                                             <td class="product-thumbnail text-center">
@@ -410,16 +419,19 @@
                                                 <input type="hidden" name="color" value="{{ request[12] }}">
                                                 <select name="returnstatus"
                                                     id="returnstatus_{{ request[7] }}_{{ request[10] }}_{{ request[12] }}">
-                                                    <option value="Placed" {% if request[19]=='Placed' %}selected{%
-                                                        endif %}>Placed</option>
-                                                    <option value="Shipped" {% if request[19]=='Shipped' %}selected{%
-                                                        endif %}>Shipped</option>
-                                                    <option value="Delivered" {% if request[19]=='Delivered'
-                                                        %}selected{% endif %}>Delivered</option>
+                                                    <option value="Waiting for Confirmation" {% if request[19]=='Waiting for Confirmation' %}selected{%
+                                                        endif %}>Waiting for Confirmation</option>
+                                                    <option value="Confirmed and Re-Placed" {% if request[19]=='Confirmed and Re-Placed' %}selected{%
+                                                        endif %}>Confirmed and Re-Placed</option>
+                                                    <option value="Re-Shipped" {% if request[19]=='Re-Shipped' %}selected{%
+                                                        endif %}>Re-Shipped</option>
+                                                    <option value="Re-Delivered" {% if request[19]=='Re-Delivered'
+                                                        %}selected{% endif %}>Re-Delivered</option>
                                                 </select>
                                                 <button type="button"
                                                     onclick="updateReturnStatus('{{ request[7] }}','{{ request[10] }}','{{ request[12] }}')">Update</button>
                                             </td>
+
 
                                         </tr>
                                         {% endfor %}
@@ -443,6 +455,7 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
+                                            <th class="stock-status text-center alt-font">Date</th>
                                             <th class="product-name text-center alt-font">Customer name</th>
                                             <th class="product-price text-center alt-font">Phone No.</th>
                                             <th class="product-subtotal text-center alt-font">Email</th>
@@ -459,6 +472,9 @@
 
                                         {% for order in cancel %}
                                         <tr>
+                                            <td class="product-thumbnail text-center">
+                                                {{order[17]}}
+                                            </td>
                                             <td class="product-remove text-center" valign="middle">{{order[0]}}
                                                 {{order[1]}}</td>
                                             <td class="product-thumbnail text-center">

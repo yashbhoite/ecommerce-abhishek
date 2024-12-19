@@ -710,10 +710,10 @@ textarea:-ms-input-placeholder {
 
 .top-header {
   color: #fff;
-  padding-top: 8px;
+  padding-top: 10px;
   padding-bottom: 10px;
   background: #141414;
-  height: 38px;
+  height: 42px;
 }
 .top-header a {
   color: #fff;
@@ -1357,6 +1357,7 @@ textarea:-ms-input-placeholder {
 }
 .slideshow .slide {
   position: relative;
+  height: 400px;
 }
 .slideshow .wrap-caption.center {
   max-width: 1200px;
@@ -1465,7 +1466,7 @@ textarea:-ms-input-placeholder {
   z-index: 3;
 }
 .slideshow .slick-slide img {
-  width: 100%;
+  /* width: 100%; */
 }
 .slideshow .slick-prev,
 .slideshow .slick-next {
@@ -2114,6 +2115,9 @@ a.quick-view {
 }
 .text-deliver {
   color: #1ba098 !important;
+}
+.text-white{
+  color: white !important;
 }
 
 .grid-products .item .product-price {
@@ -5049,6 +5053,10 @@ input.checkbox {
   color: #deb992;
 }
 .cart__meta-text {
+  color: #1ba098;
+  font-size: 12px;
+}
+.cart__meta1-text {
   color: #1ba098;
   font-size: 12px;
 }

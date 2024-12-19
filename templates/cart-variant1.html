@@ -559,7 +559,7 @@
                                                 <div><span class="money">{{ item[5] }}</span></div>
                                             </td>
                                             <td class="text-center small--hide">
-                                                <a href="/remove-from-cart/{{ item[1] }}/{{ item[2] }}"
+                                                <a href="/remove-from-cart/{{ item[1] }}/{{ item[2] }}/{{ item[6] }}"
                                                     class="btn btn--secondary cart__remove" title="Remove item">
                                                     <i class="icon icon anm anm-times-l"></i>
                                                 </a>
@@ -619,7 +619,9 @@
                                         <span class="col-12 col-sm-6 cart__subtotal-title">Subtotal</span>
                                         <span class="col-12 col-sm-6 text-right">
                                             <span class="money">${{ subtotal }}</span> <!-- Display dynamic subtotal -->
+                                            <p style="margin-top: 5px; color: #869ba9;"><i>(Total Items: {{total_quantity}})</i></p>
                                         </span>
+                                        
                                     </div>
 
                                     <div class="row border-bottom pb-2 pt-2">
@@ -773,7 +775,8 @@
                     },
                     body: JSON.stringify({
                         productName: productName,
-                        color: productColor
+                        color: productColor,
+                        size: productSize
                     }),
                 })
                     .then(response => response.json())
@@ -785,16 +788,13 @@
     
                         let productsTotalPrice = parseFloat(data.totalprice);
     
-                        // Disable buttons if conditions are not met
                         if (newTotalPrice < productsTotalPrice) {
-                            row.querySelector('.plus').classList.add('disabled');
-                            row.querySelector('.minus').classList.add('disabled');
-                            quantityInput.disabled = true;
-                        } else {
-                            row.querySelector('.plus').classList.remove('disabled');
-                            row.querySelector('.minus').classList.remove('disabled');
-                            quantityInput.disabled = false;
-                        }
+                    row.querySelector('.plus').style.display = 'none';
+                    row.querySelector('.minus').style.display = 'none';
+                } else {
+                    row.querySelector('.plus').style.display = '';
+                    row.querySelector('.minus').style.display = '';
+                }
                     })
                     .catch(error => console.error('Error:', error));
             });
@@ -813,7 +813,7 @@
             }
         });
         // Function to handle quantity change
-        function updateQuantity(element, productName, productSize, pricePerItem) {
+        function updateQuantity(element, productName, productSize, productColor, pricePerItem) {
             let quantityInput = element.parentNode.querySelector('.cart__qty-input');
             let newQuantity = parseInt(quantityInput.value);
 
@@ -832,11 +832,13 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     console.log('Cart updated successfully');
+                    location.reload();
                 }
             };
             xhr.send(JSON.stringify({
                 productName: productName,
                 productSize: productSize,
+                productColor: productColor,
                 newQuantity: newQuantity,
                 newTotalPrice: newTotalPrice
             }));
@@ -850,9 +852,10 @@
 
                 let productName = this.closest('tr').querySelector('.list-view-item__title a').innerText;
                 let productSize = this.closest('tr').querySelector('.cart__meta-text').innerText.split('Size: ')[1];
+                let productColor = this.closest('tr').querySelector('.cart__meta1-text').innerText.split('Color: ')[1];
                 let pricePerItem = parseFloat(this.closest('tr').querySelector('.cart__price-wrapper .money').innerText);
 
-                updateQuantity(this, productName, productSize, pricePerItem);
+                updateQuantity(this, productName, productSize, productColor, pricePerItem);
             });
         });
 </script>

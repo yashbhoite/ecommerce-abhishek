@@ -1,6 +1,6 @@
 @media only screen and (max-width: 1450px) {
   .slideshow .slideshow__title {
-    font-size: 55px;
+    font-size: 35px;
   }
   .home2-default .slideshow .slideshow__title {
     font-size: 50px;
@@ -1300,13 +1300,13 @@
     display: none;
   }
   .sliderFull .slideshow__subtitle {
-    display: block;
+    display: none;
   }
   .sliderFull .btn {
     display: inline-block;
   }
   .sliderFull .slideshow__title {
-    font-size: 30px;
+    font-size: 25px;
   }
   .sliderFull .slideshow__subtitle {
     margin-bottom: 10px;
@@ -1493,7 +1493,7 @@
   .top-header .fa,
   .top-header span.selected-currency,
   .language-dd {
-    font-size: 11px;
+    font-size: 14px;
     letter-spacing: 0;
   }
 

@@ -346,7 +346,7 @@ def cart():
 
     conn.close()
 
-    return render_template('cart-variant1.html', cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total, cart_count=cart_count)
+    return render_template('cart-variant1.html', cart_items=cart_items, subtotal=subtotal, shipping_charges=shipping_charges, grand_total=grand_total, cart_count=cart_count, total_quantity=total_quantity)
 
 
 @app.route('/get-product-price', methods=['POST'])
@@ -354,16 +354,17 @@ def get_product_price():
     data = request.json
     name = data.get('productName')
     color = data.get('color')
+    size = data.get('size')
 
-    print(f"Received name: {name}, color: {color}")  # Debug log
+    print(f"Received name: {name}, color: {color}, size: {size}")  # Debug log
 
     # Fetch totalprice from the products table
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
     cursor.execute("""
         SELECT price FROM products
-        WHERE name = ? AND color = ?
-    """, (name, color))
+        WHERE name = ? AND color = ? AND INSTR(size, ?) > 0
+    """, (name, color, size))
     result = cursor.fetchone()
     conn.close()
 
@@ -470,28 +471,30 @@ def update_cart_item():
     data = request.get_json()
     product_name = data.get('productName')
     product_size = data.get('productSize')
+    product_color = data.get('productColor')
     new_quantity = data.get('newQuantity')
     new_total_price = data.get('newTotalPrice')
 
     # Update the cart table in the database
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
+    
     cursor.execute("""
         UPDATE cart
         SET productquantity = ?, totalprice = ?
-        WHERE productname = ? AND productsize = ?
-    """, (new_quantity, new_total_price, product_name, product_size))
+        WHERE productname = ? AND productsize = ? AND productcolor = ?
+    """, (new_quantity, new_total_price, product_name, product_size,product_color))
     conn.commit()
     conn.close()
 
     return jsonify({'status': 'success'})
 
 
-@app.route('/remove-from-cart/<productname>/<productsize>', methods=['GET'])
-def remove_from_cart(productname, productsize):
+@app.route('/remove-from-cart/<productname>/<productsize>/<productcolor>', methods=['GET'])
+def remove_from_cart(productname, productsize, productcolor):
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM cart WHERE productname = ? AND productsize = ?", (productname, productsize))
+    cursor.execute("DELETE FROM cart WHERE productname = ? AND productsize = ? AND productcolor = ?", (productname, productsize, productcolor))
     conn.commit()
     conn.close()
     return redirect(url_for('cart'))
@@ -709,7 +712,8 @@ def myaccount():
             o.timestamp, 
             o.razorpay_order_id,
             o.status,
-            COALESCE(r.status, 'No Return') AS status
+            COALESCE(r.status, 'No Return') AS status,
+            o.grand
         FROM orders o
         LEFT JOIN return r 
         ON o.razorpay_order_id = r.orderid AND o.productname = r.productname AND o.color = r.color
@@ -802,11 +806,13 @@ def wishlist():
         address,
         status,
         (SELECT SUM(totalprice) FROM orders WHERE razorpay_order_id = o.razorpay_order_id) AS total_value,
-        DATE(timestamp) AS order_date
+        timestamp,
+        shipping,
+        grand
     FROM 
         orders o
     ORDER BY 
-        order_date DESC
+        timestamp DESC
     """).fetchall()
 
     # Group orders by razorpay_order_id
@@ -843,11 +849,14 @@ def wishlist():
         quantity,
         totalprice,
         address,
-        status
+        status,
+        cancel
     FROM 
         orders
     WHERE 
         status = 'Cancelled'
+    ORDER BY
+        cancel DESC
     """).fetchall()
 
     print(orders)  # For debugging purposes
@@ -876,7 +885,8 @@ def wishlist():
             r.details,
             r.image1,
             r.image2,
-            r.status
+            r.status,
+            r.timestamp
         FROM 
             orders o
         INNER JOIN 
@@ -886,10 +896,15 @@ def wishlist():
             AND o.productname = r.productname
             AND o.razorpay_order_id = r.orderid
             AND o.color = r.color
+        ORDER BY
+            r.timestamp DESC
     """).fetchall()
 
     # Fetch counts for each status from the orders table
-    my_cursor.execute("SELECT COUNT(*) FROM orders WHERE status = 'Placed'")
+    my_cursor.execute("SELECT COUNT(*) FROM orders WHERE status = 'Waiting for Confirmation'")
+    not_confirmed = my_cursor.fetchone()[0]
+
+    my_cursor.execute("SELECT COUNT(*) FROM orders WHERE status = 'Confirmed and Placed'")
     placed_count = my_cursor.fetchone()[0]
 
     my_cursor.execute("SELECT COUNT(*) FROM orders WHERE status = 'Shipped'")
@@ -912,7 +927,7 @@ def wishlist():
                            shipped_count=shipped_count, 
                            delivered_count=delivered_count, 
                            cancelled_count=cancelled_count, 
-                           returned_count=returned_count)
+                           returned_count=returned_count, not_confirmed=not_confirmed)
 
 
 @app.route('/update-order-status', methods=['POST'])
@@ -932,7 +947,7 @@ def update_order_status():
 
     # Check current status
     my_cursor.execute("""
-        SELECT status FROM orders 
+        SELECT status, email FROM orders 
         WHERE razorpay_order_id = ? AND productname = ? AND color = ?
     """, (razorpay_order_id, productname, color))
     current_status = my_cursor.fetchone()
@@ -953,6 +968,46 @@ def update_order_status():
     """, (new_status, razorpay_order_id, productname, color))
 
     connection.commit()
+
+    # Send email if the status is changed to "Confirmed and Placed"
+    if new_status == "Confirmed and Placed":
+        user_email = current_status[1]  # Fetch email from the query result
+        subject = "Order Confirmation"
+        body = f"""
+        Dear Customer,
+
+        Your order for {productname} in {color} has been confirmed and placed successfully.
+
+        Order ID: {razorpay_order_id}
+
+        Thank you for shopping with us!
+
+        Best regards,
+        Your Company Name
+        """
+
+        # Send email notification
+        try:
+            smtp_server = 'smtp.gmail.com'
+            smtp_port = 587
+            sender_email = "sharmakartik1103@gmail.com"
+            sender_password = "iggp hkmj olvh xtfr"
+
+            msg = MIMEMultipart()
+            msg['From'] = sender_email
+            msg['To'] = user_email
+            msg['Subject'] = subject
+            msg.attach(MIMEText(body, 'plain'))
+
+            server = smtplib.SMTP(smtp_server, smtp_port)
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, user_email, msg.as_string())
+            server.quit()
+
+            print(f"Email sent to {user_email}")
+        except Exception as e:
+            print(f"Email notification failed: {e}")
     connection.close()
 
     print(f"Order ID: {razorpay_order_id}, Product: {productname}, Color: {color} updated to status: {new_status}")
@@ -975,13 +1030,65 @@ def update_return_status():
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
 
+    # Check current status
+    my_cursor.execute("""
+        SELECT status, user_email FROM return 
+        WHERE orderid = ? AND productname = ? AND color = ?
+    """, (razorpay_order_id, productname, color))
+    current_status = my_cursor.fetchone()
+
+    if not current_status:
+        connection.close()
+        return "Order not found", 404
+
+
     my_cursor.execute("""
         UPDATE return
         SET status = ?
         WHERE orderid = ? AND productname = ? AND color = ?
     """, (new_status, razorpay_order_id, productname, color))
 
+
     connection.commit()
+    # Send email if the status is changed to "Confirmed and Placed"
+    if new_status == "Confirmed and Re-Placed":
+        user_email = current_status[1]  # Fetch email from the query result
+        subject = "Order Confirmation"
+        body = f"""
+        Dear Customer,
+
+        Your order for {productname} in {color} has been confirmed and placed for return successfully.
+
+        Order ID: {razorpay_order_id}
+
+        Thank you for shopping with us!
+
+        Best regards,
+        Your Company Name
+        """
+
+        # Send email notification
+        try:
+            smtp_server = 'smtp.gmail.com'
+            smtp_port = 587
+            sender_email = "sharmakartik1103@gmail.com"
+            sender_password = "iggp hkmj olvh xtfr"
+
+            msg = MIMEMultipart()
+            msg['From'] = sender_email
+            msg['To'] = user_email
+            msg['Subject'] = subject
+            msg.attach(MIMEText(body, 'plain'))
+
+            server = smtplib.SMTP(smtp_server, smtp_port)
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, user_email, msg.as_string())
+            server.quit()
+
+            print(f"Email sent to {user_email}")
+        except Exception as e:
+            print(f"Email notification failed: {e}")
     connection.close()
 
     print(f"Return status updated: {razorpay_order_id}, {productname}, {color} to {new_status}")
@@ -1729,21 +1836,37 @@ def place_order():
         razorpay_order_id = f"COD-{uuid4()}"  # Generate a unique ID for COD
         payment_info = "COD"
 
-    status = "Placed"  # Static status for successful orders
+    status = "Waiting for Confirmation"  # Static status for successful orders
+    cancel_timestamp = 0
+    
 
     # Fetch cart items for the logged-in user
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
+
+    # Calculate subtotal (sum of totalprice)
+    cursor.execute("SELECT SUM(totalprice) FROM cart WHERE user_email = ?", (user_email,))
+    subtotal = cursor.fetchone()[0]
+    if subtotal is None:
+        subtotal = 0
+
+    # Set shipping charges and calculate grand total
+    cursor.execute("SELECT SUM(productquantity) FROM cart WHERE user_email = ?", (user_email,))
+    total_quantity = cursor.fetchone()[0] or 0
+    shipping_charges = 40 if total_quantity <= 3 else 70
+    grand_total = subtotal + shipping_charges
+
+
     cursor.execute("SELECT productname, productsize, productcolor, productquantity, totalprice FROM cart WHERE user_email = ?", (user_email,))
     cart_items = cursor.fetchall()
 
-    current_timestamp = datetime.now()
+    current_timestamp = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
 
     # Insert order into orders table for each cart item
     for item in cart_items:
-        cursor.execute('''INSERT INTO orders (firstname, lastname, email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice, razorpay_payment_id, razorpay_order_id, payment_info, status, timestamp)
-                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                       (firstname, lastname, user_email, mobile, address, city, state, pincode, item[0], item[1], item[2], item[3], item[4], razorpay_payment_id, razorpay_order_id, payment_info, status, current_timestamp))
+        cursor.execute('''INSERT INTO orders (firstname, lastname, email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice, razorpay_payment_id, razorpay_order_id, payment_info, status, timestamp, shipping, grand, cancel)
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                       (firstname, lastname, user_email, mobile, address, city, state, pincode, item[0], item[1], item[2], item[3], item[4], razorpay_payment_id, razorpay_order_id, payment_info, status, current_timestamp, shipping_charges, grand_total, cancel_timestamp))
         conn.commit()
 
     cursor.execute("DELETE FROM cart WHERE user_email = ?", (user_email,))
@@ -1886,15 +2009,16 @@ def request_return():
             input2_file.save(input2_path)
             input2 = input2_path
 
-    status = "Placed"
+    status = "Waiting for Confirmation"
+    timestamp = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     # Insert the return request into the return table
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
 
     cursor.execute('''
-        INSERT INTO return (user_email, productname, size, color, quantity, totalprice, reason, details, orderid, image1, image2, status)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ''', (user_email, productname, size, color, quantity, totalprice, reason, details, orderid, input1, input2, status))
+        INSERT INTO return (user_email, productname, size, color, quantity, totalprice, reason, details, orderid, image1, image2, status, timestamp)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (user_email, productname, size, color, quantity, totalprice, reason, details, orderid, input1, input2, status, timestamp))
 
     conn.commit()
     conn.close()
@@ -1944,15 +2068,17 @@ def cancel_order():
     """, (razorpay_order_id, product_name))
     result = my_cursor.fetchone()
 
-    if result and result[0] == 'Placed':
-        # Update status to 'Cancelled'
+    if result and result[0] in ['Waiting for Confirmation', 'Confirmed and Placed']:
+    # Update status to 'Cancelled'
+        cancel_timestamp = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
         my_cursor.execute("""
             UPDATE orders 
-            SET status = 'Cancelled' 
-            WHERE razorpay_order_id = ? AND productname = ?
-        """, (razorpay_order_id, product_name))
+            SET status = 'Cancelled', cancel = ? 
+            WHERE razorpay_order_id = ? 
+            AND productname = ? 
+            AND status IN ('Waiting for Confirmation', 'Confirmed and Placed')
+        """, (cancel_timestamp,razorpay_order_id, product_name))
         connection.commit()
-        # Send email notification
         try:
             smtp_server = 'smtp.gmail.com'
             smtp_port = 587

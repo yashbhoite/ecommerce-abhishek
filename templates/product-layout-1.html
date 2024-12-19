@@ -829,17 +829,16 @@
 
                 </div>
 
-                <p id="freeShipMsg" class="freeShipMsg" data-price="199" style="margin-top: 20px;">
+                <!-- <p id="freeShipMsg" class="freeShipMsg" data-price="199" style="margin-top: 20px;">
                   <i class="fa fa-truck" aria-hidden="true" style="color: #081525;"></i> GETTING
                   CLOSER! ONLY
                   <b class="freeShip"><span class="money" data-currency-usd="$199.00"
                       data-currency="USD">$199.00</span></b>
                   AWAY FROM <b>FREE SHIPPING!</b>
-                </p>
-                <p class="shippingMsg">
+                </p> -->
+                <p class="shippingMsg" style="margin-top: 60px;">
                   <i class="fa fa-clock-o" aria-hidden="true" style="color: #081525;"></i> ESTIMATED
-                  DELIVERY BETWEEN <b id="fromDate">Wed. May 1</b> and
-                  <b id="toDate">Tue. May 7</b>.
+                  DELIVERY BETWEEN <b id="fromDate">5 to 8 Days</b>.
                 </p>
                 <!-- <div class="userViewMsg" data-user="20" data-time="11000">
                     <i class="fa fa-users" aria-hidden="true"></i>
@@ -1934,11 +1933,16 @@
     });
   </script>
 
-  {% if message %}
-  <script>
-    alert("{{ message }}");
-  </script>
-  {% endif %}
+<script>
+  // Display alert if session message is set
+  document.addEventListener('DOMContentLoaded', () => {
+    const message = "{{ session.pop('message', '') }}"; // Pop the message to clear it after use
+    if (message) {
+      alert(message); // Show the alert message
+      window.location.href = "{{ url_for('cart') }}"; // Redirect to the cart page
+    }
+  });
+</script>
 
 
   <script>

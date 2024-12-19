@@ -539,6 +539,7 @@
                                     <th>Color</th>
                                     <th>Quantity</th>
                                     <th>Total Price</th>
+                                    <th>Order Value</th>
                                     <th>Action</th>
                                     <th>Status</th>
                                     <th>Return Status</th>
@@ -567,9 +568,10 @@
                                     </td>
                                     <td class="quantity">{{ item[3] }}</td>
                                     <td class="totalprice">₹{{ item[4] }}</td>
+                                    <td class="ordervalue">₹{{ item[9] }}</td>
                                     <td>
 
-                                        {% if item[7] == 'Placed' %}
+                                        {% if item[7] in ['Waiting for Confirmation', 'Confirmed and Placed'] %}
                                         <button class="action-btn cancel-btn" data-order-id="{{ item[6] }}"
                                             data-product-name="{{ item[0] }}">
                                             Cancel
@@ -596,36 +598,52 @@
                                             <button class="action-btn request-return-btn">Request Return</button>
                                         </div>
                                     </td>
-                                    <td class="status">{{ item[7] }}</td>
+                                    <td class="status">{{ item[7] }}<p style="color: #869ba9;">(Delivery expected in 5-8 days)</p></td>
                                     <td class="status">{{ item[8] }}</td>
                                     <td class="review">
                                         {% if item[7] == 'Delivered' %}
-                                        <button class="action-btn review-btn" data-review-id="{{ loop.index }}">Review</button>
-                                        <div id="review-form-{{ loop.index }}" class="hidden review-form" style="margin-top: 10px;">
-                                            <form method="post" action="{{ url_for('submit_review_dynamic', product_name=item[0], color=item[2].strip()) }}" class="new-review-form">
+                                        <button class="action-btn review-btn"
+                                            data-review-id="{{ loop.index }}">Review</button>
+                                        <div id="review-form-{{ loop.index }}" class="hidden review-form"
+                                            style="margin-top: 10px;">
+                                            <form method="post"
+                                                action="{{ url_for('submit_review_dynamic', product_name=item[0], color=item[2].strip()) }}"
+                                                class="new-review-form">
                                                 <h3 class="spr-form-title">Write a review</h3>
                                                 <fieldset class="spr-form-contact">
                                                     <div class="spr-form-contact-name">
                                                         <label class="spr-form-label" for="review_author">Name</label>
-                                                        <input class="spr-form-input spr-form-input-text" id="review_author" type="text" name="review[author]" placeholder="Enter your name" />
+                                                        <input class="spr-form-input spr-form-input-text"
+                                                            id="review_author" type="text" name="review[author]"
+                                                            placeholder="Enter your name" />
                                                     </div>
                                                 </fieldset>
                                                 <fieldset class="spr-form-review">
                                                     <div class="spr-form-review-rating">
                                                         <label class="spr-form-label">Rating</label>
-                                                        <input class="spr-form-input" type="number" name="review[rating]" min="1" max="5" placeholder="Enter rating (1-5)" />
+                                                        <input class="spr-form-input" type="number"
+                                                            name="review[rating]" min="1" max="5"
+                                                            placeholder="Enter rating (1-5)" />
                                                     </div>
                                                     <div class="spr-form-review-title">
-                                                        <label class="spr-form-label" for="review_title">Review Title</label>
-                                                        <input class="spr-form-input spr-form-input-text" id="review_title" type="text" name="review[title]" placeholder="Give your review a title" />
+                                                        <label class="spr-form-label" for="review_title">Review
+                                                            Title</label>
+                                                        <input class="spr-form-input spr-form-input-text"
+                                                            id="review_title" type="text" name="review[title]"
+                                                            placeholder="Give your review a title" />
                                                     </div>
                                                     <div class="spr-form-review-body">
-                                                        <label class="spr-form-label" for="review_body">Body of Review</label>
-                                                        <textarea class="spr-form-input spr-form-input-textarea" id="review_body" name="review[body]" rows="5" placeholder="Write your comments here"></textarea>
+                                                        <label class="spr-form-label" for="review_body">Body of
+                                                            Review</label>
+                                                        <textarea class="spr-form-input spr-form-input-textarea"
+                                                            id="review_body" name="review[body]" rows="5"
+                                                            placeholder="Write your comments here"></textarea>
                                                     </div>
                                                 </fieldset>
                                                 <fieldset class="spr-form-actions">
-                                                    <input type="submit" class="spr-button spr-button-primary btn btn-primary" value="Submit Review" />
+                                                    <input type="submit"
+                                                        class="spr-button spr-button-primary btn btn-primary"
+                                                        value="Submit Review" />
                                                 </fieldset>
                                             </form>
                                         </div>
@@ -643,9 +661,11 @@
                 <section id="address-section" class="address-section" style="display:none;">
                     <h2 style="color: #deb992;">Billing Address</h2>
                     {% if address_data %}
-                    <p style="color: #deb992;"><strong>{{ address_data[1] }} {{ address_data[2] }}</strong></p> <!-- Firstname Lastname -->
+                    <p style="color: #deb992;"><strong>{{ address_data[1] }} {{ address_data[2] }}</strong></p>
+                    <!-- Firstname Lastname -->
                     <p style="color: #deb992;">{{ address_data[4] }}, {{ address_data[5] }}</p> <!-- Address, City -->
-                    <p style="color: #deb992;">{{ address_data[7] }} - {{ address_data[6] }}</p> <!-- State - Pincode -->
+                    <p style="color: #deb992;">{{ address_data[7] }} - {{ address_data[6] }}</p>
+                    <!-- State - Pincode -->
                     <p style="color: #deb992;">Mobile: {{ address_data[3] }}</p> <!-- Mobile -->
                     <button class="action-btn" id="editAddressBtn">Edit Address</button>
                     {% else %}
@@ -1076,7 +1096,7 @@
                 const returnForm = this.closest('td').querySelector('.return-form');
                 returnForm.classList.toggle('hidden');
 
-                
+
             });
         });
 
@@ -1157,20 +1177,20 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-    const reviewButtons = document.querySelectorAll('.review-btn');
+            const reviewButtons = document.querySelectorAll('.review-btn');
 
-    reviewButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-            const reviewId = button.getAttribute('data-review-id');
-            const reviewForm = document.getElementById(`review-form-${reviewId}`);
+            reviewButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const reviewId = button.getAttribute('data-review-id');
+                    const reviewForm = document.getElementById(`review-form-${reviewId}`);
 
-            // Toggle visibility of the review form
-            if (reviewForm) {
-                reviewForm.classList.toggle('hidden');
-            }
+                    // Toggle visibility of the review form
+                    if (reviewForm) {
+                        reviewForm.classList.toggle('hidden');
+                    }
+                });
+            });
         });
-    });
-});
 
     </script>
 
@@ -1202,55 +1222,55 @@
     </script>
 
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const productLinks = document.querySelectorAll(".product-link");
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const productLinks = document.querySelectorAll(".product-link");
 
-        productLinks.forEach(link => {
-            link.addEventListener("click", function (event) {
-                event.preventDefault(); // Prevent default link behavior
+            productLinks.forEach(link => {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault(); // Prevent default link behavior
 
-                const productName = this.dataset.productName;
-                const color = this.dataset.color;
+                    const productName = this.dataset.productName;
+                    const color = this.dataset.color;
 
-                // Split product names and colors into arrays
-                const productNames = productName.split(",");
-                const colors = color.split(",");
+                    // Split product names and colors into arrays
+                    const productNames = productName.split(",");
+                    const colors = color.split(",");
 
-                // Map product names to colors, ensuring default or valid pairing
-                const productsWithColors = productNames.map((name, index) => ({
-                    name: name.trim(),
-                    color: (colors[index] || "").trim(), // Default to "" if no matching color
-                }));
+                    // Map product names to colors, ensuring default or valid pairing
+                    const productsWithColors = productNames.map((name, index) => ({
+                        name: name.trim(),
+                        color: (colors[index] || "").trim(), // Default to "" if no matching color
+                    }));
 
-                // Loop through each product-color pair and make AJAX requests
-                productsWithColors.forEach(({ name, color }) => {
-                    // Skip if color is empty and notify user (optional)
-                    if (!color) {
-                        console.warn(`Skipping product "${name}" due to missing color.`);
-                        return; // Skip this iteration
-                    }
+                    // Loop through each product-color pair and make AJAX requests
+                    productsWithColors.forEach(({ name, color }) => {
+                        // Skip if color is empty and notify user (optional)
+                        if (!color) {
+                            console.warn(`Skipping product "${name}" due to missing color.`);
+                            return; // Skip this iteration
+                        }
 
-                    // AJAX request to fetch SKU
-                    fetch(`/get-sku?product_name=${encodeURIComponent(name)}&color=${encodeURIComponent(color)}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.sku) {
-                                // Navigate to productinfo route with the fetched SKU
-                                window.location.href = `/product/${data.sku}`;
-                            } else {
-                                alert(`Product found for Name: "${name}"`);
-                            }
-                        })
-                        .catch(error => {
-                            console.error("Error fetching SKU:", error);
-                            alert("Failed to fetch product details. Please try again.");
-                        });
+                        // AJAX request to fetch SKU
+                        fetch(`/get-sku?product_name=${encodeURIComponent(name)}&color=${encodeURIComponent(color)}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.sku) {
+                                    // Navigate to productinfo route with the fetched SKU
+                                    window.location.href = `/product/${data.sku}`;
+                                } else {
+                                    alert(`Product found for Name: "${name}"`);
+                                }
+                            })
+                            .catch(error => {
+                                console.error("Error fetching SKU:", error);
+                                alert("Failed to fetch product details. Please try again.");
+                            });
+                    });
                 });
             });
         });
-    });
-</script>
+    </script>
 
 
     <script>
@@ -1296,7 +1316,7 @@
         });
     </script>
 
-    
+
 
 
 </body>
