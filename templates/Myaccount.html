@@ -90,10 +90,13 @@
                     <!--Desktop Logo-->
                     <div class="logo col-md-2 col-lg-2 d-none d-lg-block">
                         <a href="/">
-                            <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics"
-                                title="FashionHolics" />
-
+                           <div style="display: flex;align-items: center;">
+                            <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics" 
+                                    title="FashionHolics" />
+                        <h3 style="color: #deb992;font-family: Poppins, Helvetica, Tahoma, Arial, serif;font-weight: 600;margin-bottom: 0px;white-space: nowrap;font-size: 1vw;">FASHION HOLICS</h3>
+                    </div>  
                         </a>
+               
                     </div>
                     <!--End Desktop Logo-->
                     <div class="col-2 col-sm-3 col-md-3 col-lg-8"
@@ -361,11 +364,13 @@
                     <div class="col-6 col-sm-6 col-md-6 col-lg-2 d-block d-lg-none mobile-logo">
                         <div class="logo moblog">
                             <a href="/">
-                                <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics"
-                                    title="FashionHolics" />
-
+                                <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics" 
+                                        title="FashionHolics" />
+                                        
                             </a>
+                            <h3 style="color: #deb992;font-family: Poppins, Helvetica, Tahoma, Arial, serif;font-weight: 600;margin-bottom: 0px;white-space: nowrap;font-size: 2.5vw;">FASHION HOLICS</h3>  
                         </div>
+                       
                     </div>
                     <!--Mobile Logo-->
                     <div class="col-4 col-sm-3 col-md-3 col-lg-2">
@@ -523,7 +528,7 @@
                 <aside class="menu-panel">
                     <ul>
                         <li class="menu-active" id="orders-tab"><a href="#" onclick="showOrders()">Orders</a></li>
-                        <li id="address-tab"><a href="#" onclick="showAddress()">Address</a></li>
+                        <li id="address-tab"><a href="#" onclick="showAddress()">Account details</a></li>
                         <li id="password-tab"><a href="#" onclick="showPassword()">Reset Password</a></li>
                     </ul>
                 </aside>
@@ -662,6 +667,7 @@
                     <h2 style="color: #deb992;">Billing Address</h2>
                     {% if address_data %}
                     <p style="color: #deb992;"><strong>{{ address_data[1] }} {{ address_data[2] }}</strong></p>
+                    <p style="color: #deb992;"><strong>Email :- {{ address_data[0] }}</strong></p>
                     <!-- Firstname Lastname -->
                     <p style="color: #deb992;">{{ address_data[4] }}, {{ address_data[5] }}</p> <!-- Address, City -->
                     <p style="color: #deb992;">{{ address_data[7] }} - {{ address_data[6] }}</p>

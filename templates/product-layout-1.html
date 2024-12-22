@@ -113,10 +113,13 @@
           <!--Desktop Logo-->
           <div class="logo col-md-2 col-lg-2 d-none d-lg-block">
             <a href="/">
+               <div style="display: flex;align-items: center;">
                 <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics" 
                         title="FashionHolics" />
-                    
+            <h3 style="color: #deb992;font-family: Poppins, Helvetica, Tahoma, Arial, serif;font-weight: 600;margin-bottom: 0px;white-space: nowrap;font-size: 1vw;">FASHION HOLICS</h3>
+        </div>  
             </a>
+   
         </div>
           <!--End Desktop Logo-->
           <div class="col-2 col-sm-3 col-md-3 col-lg-8">
@@ -369,14 +372,16 @@
             <!--End Desktop Menu-->
           </div>
           <div class="col-6 col-sm-6 col-md-6 col-lg-2 d-block d-lg-none mobile-logo">
-            <div class="logo col-md-2 col-lg-2 d-none d-lg-block">
-              <a href="/">
-                  <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics" 
-                          title="FashionHolics" />
-                      
-              </a>
-          </div>
-          </div>
+            <div class="logo moblog">
+                <a href="/">
+                    <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics" 
+                            title="FashionHolics" />
+                            
+                </a>
+                <h3 style="color: #deb992;font-family: Poppins, Helvetica, Tahoma, Arial, serif;font-weight: 600;margin-bottom: 0px;white-space: nowrap;font-size: 2.5vw;">FASHION HOLICS</h3>  
+            </div>
+           
+        </div>
           <div class="col-4 col-sm-3 col-md-3 col-lg-2">
             <div class="site-cart">
               <a href="/cart" title="Cart">
@@ -786,7 +791,7 @@
                     </div>
 
 
-                    <button type="submit" name="add" class="btn product-form__cart-submit productbtn"
+                    <button id="addToCartBtn" type="submit" name="add" class="btn product-form__cart-submit productbtn"
                       style="width: 80%; padding: 12px; border-radius: 0.5rem; margin-top: -px;color: #deb992;" {% if
                       stock==0 %}disabled{% endif %}>
                       Add to cart
@@ -806,16 +811,18 @@
                 <div class="shopify-payment-button" data-shopify="payment-button">
                   <button type="button" id="bidButton"
                     class="shopify-payment-button__button shopify-payment-button__button--unbranded btn product-form__cart-submit productbtn"
-                    {% if stock==0 %}disabled{% endif %}>
+                    data-stock="{{ stock }}">
                     Bid for it
                   </button>
                 </div>
+
+                
                 <div id="chatbot" class="chatbot">
                   <div class="chat-header">
                     <h3>Chatbot</h3>
                     <button id="closeChat">X</button>
                   </div>
-                  <div class="chat-content" id="chatContent"></div>
+                  <div class="chat-content" id="chatContent"  data-logged-in="{{ 'true' if session.get('logged_in') else 'false' }}"></div>
                   <div class="chat-input">
                     <input type="number" id="bidInput" placeholder="Enter your bid amount">
                     <button id="submitBid">Submit</button>
@@ -829,16 +836,17 @@
 
                 </div>
 
-                <!-- <p id="freeShipMsg" class="freeShipMsg" data-price="199" style="margin-top: 20px;">
+                <p id="freeShipMsg" class="freeShipMsg" data-price="199" style="margin-top: 20px;">
                   <i class="fa fa-truck" aria-hidden="true" style="color: #081525;"></i> GETTING
                   CLOSER! ONLY
                   <b class="freeShip"><span class="money" data-currency-usd="$199.00"
                       data-currency="USD">$199.00</span></b>
                   AWAY FROM <b>FREE SHIPPING!</b>
-                </p> -->
-                <p class="shippingMsg" style="margin-top: 60px;">
+                </p>
+                <p class="shippingMsg">
                   <i class="fa fa-clock-o" aria-hidden="true" style="color: #081525;"></i> ESTIMATED
-                  DELIVERY BETWEEN <b id="fromDate">5 to 8 Days</b>.
+                  DELIVERY BETWEEN <b id="fromDate">Wed. May 1</b> and
+                  <b id="toDate">Tue. May 7</b>.
                 </p>
                 <!-- <div class="userViewMsg" data-user="20" data-time="11000">
                     <i class="fa fa-users" aria-hidden="true"></i>
@@ -894,9 +902,14 @@
             <div class="tab-container">
               <div id="tab1" class="tab-content">
                 <div class="product-description rte">
-                  <p style="color: #081525;">
-                    {{ name[1] }}
-                  </p>
+                  {% for line in description %}
+            {% if ':' in line %}
+                <h2>{{ line.split(':')[0] }}</h2>
+                <p>{{ line.split(':', 1)[1].strip() }}</p>
+            {% else %}
+                <p>{{ line }}</p>
+            {% endif %}
+        {% endfor %}
                 </div>
               </div>
 
@@ -1052,6 +1065,10 @@
               <div id="tab4" class="tab-content">
                 <p>At <b>Fashion Holics</b>, we want you to be completely satisfied with your purchase. If for any
                   reason you're not happy with your order, we offer a return policy under the following conditions:</p>
+                  <h4>Cancellation Policies</h4>
+                  <ul>
+                    <li>Once a product has been shipped, cancellation is no longer permitted.</li>
+                  </ul>
                 <h4>Eligibility for Return</h4>
 
                 <ul>
@@ -1480,6 +1497,12 @@
     <script src="../static/js/vendor/photoswipe-ui-default.min.js"></script>
     <script>
 
+document.getElementById('addToCartBtn').addEventListener('click', function (event) {
+    // Prevent the form from submitting if needed (optional depending on form behavior)
+    alert('Item has been added to the cart!');
+});
+
+
       function updateSelection(productId, size) {
         // Remove the "selected" class from all labels
         const labels = document.querySelectorAll(".swatchLbl");
@@ -1581,17 +1604,27 @@
       }
 
       document.addEventListener("DOMContentLoaded", function () {
+        // document.getElementById('submitBid').disabled = false;
         let currentLevel = 'level1'; // Track current discount level
         let path = window.location.pathname;
         const productId = path.match(/\/product\/(\d+)/)[1];
         const price = "{{name[3]}}"; // Pass product ID to the JS
 
         document.getElementById('bidButton').addEventListener('click', () => {
-          currentLevel = 'level1'; // Reset to level 1 when chatbot opens
-          document.getElementById('chatbot').style.display = 'block';
-          document.getElementById('chatContent').innerHTML = ''; // Clear previous messages
-          enableInput();
-        });
+        // Get stock value from the data attribute
+        const stock = parseInt(document.getElementById('bidButton').getAttribute('data-stock'), 10);
+
+        // Check stock status in the JavaScript function
+        if (stock === 0) {
+            alert("Sorry, this item is out of stock!");
+        } else {
+            // Reset to level 1 when chatbot opens
+            currentLevel = 'level1';
+            document.getElementById('chatbot').style.display = 'block';
+            document.getElementById('chatContent').innerHTML = ''; // Clear previous messages
+            enableInput();
+        }
+    });
 
         document.getElementById('closeChat').addEventListener('click', () => {
           document.getElementById('chatbot').style.display = 'none';
@@ -1622,17 +1655,29 @@
           document.getElementById('options').style.display = 'none';
 
           if (currentLevel === 'level1' || currentLevel === 'level3') {
-            document.getElementById('chatContent').innerHTML += `
+    // Retrieve the login status from the data attribute
+    const isLoggedIn = document.getElementById('chatContent').getAttribute('data-logged-in') === 'true';
+
+    if (isLoggedIn) {
+        document.getElementById('chatContent').innerHTML += `
             <p>Great! You have accepted the offer.</p>
             <button id="addToCartButton">Add to Cart</button>
         `;
 
-            document.getElementById('addToCartButton').addEventListener('click', () => {
-              const bidAmount = document.getElementById('bidInput').value;
-              const selectedSize = document.querySelector('input[name="productsize"]:checked').value;
-              addToCart(productId, bidAmount, selectedSize);
-            });
-          } else if (currentLevel === 'level2') {
+        document.getElementById('addToCartButton').addEventListener('click', () => {
+            const bidAmount = document.getElementById('bidInput').value;
+            const selectedSize = document.querySelector('input[name="productsize"]:checked').value;
+            addToCart(productId, bidAmount, selectedSize);
+        });
+    } else {
+      const currentPage = window.location.href; // Get the current page's URL
+        document.getElementById('chatContent').innerHTML += `
+            <p>Great! You have accepted the offer.</p>
+    <p>Please <a href="/login?next=${encodeURIComponent(currentPage)}">login</a> to see the 'Add to Cart' button.</p>
+        `;
+    }
+}
+ else if (currentLevel === 'level2') {
             try {
               // Fetch product details from the backend
               const response = await fetch(`/product-details/${productId}`);
@@ -1761,6 +1806,8 @@
             enableInput();
             currentLevel = 'level1';
             document.getElementById('options').style.display = 'none';
+            document.getElementById('submitBid').style.display = 'none';
+
             return;
           }
 
@@ -1933,16 +1980,11 @@
     });
   </script>
 
-<script>
-  // Display alert if session message is set
-  document.addEventListener('DOMContentLoaded', () => {
-    const message = "{{ session.pop('message', '') }}"; // Pop the message to clear it after use
-    if (message) {
-      alert(message); // Show the alert message
-      window.location.href = "{{ url_for('cart') }}"; // Redirect to the cart page
-    }
-  });
-</script>
+  {% if message %}
+  <script>
+    alert("{{ message }}");
+  </script>
+  {% endif %}
 
 
   <script>

@@ -190,11 +190,6 @@ def get_product_details(product_id):
 
 @app.route('/bid', methods=['POST'])
 def bid():
-    if not session.get('logged_in'):
-        return jsonify({
-            "message": "You must log in to submit a bid.",
-            "redirect_url": "/login"  # Provide login URL
-        }), 401  # Unauthorized
     bid_amount = int(request.json['bidAmount'])
     level = request.json.get('level', 'level1')
     path = request.json.get('path')
@@ -317,7 +312,8 @@ def cart():
     cursor = conn.cursor()
     cursor.execute("SELECT productimage, productname, productsize, productprice, productquantity, totalprice, productcolor FROM cart WHERE user_email = ?", (user_email,))
     cart_items = cursor.fetchall()
-
+    print("-------------------cart----------------------------")
+    print(cart_items)
 
     if user_email:
         # Query to count items in the cart for the logged-in user
@@ -358,22 +354,40 @@ def get_product_price():
 
     print(f"Received name: {name}, color: {color}, size: {size}")  # Debug log
 
-    # Fetch totalprice from the products table
-    conn = sqlite3.connect('product.db')
-    cursor = conn.cursor()
-    cursor.execute("""
-        SELECT price FROM products
-        WHERE name = ? AND color = ? AND INSTR(size, ?) > 0
-    """, (name, color, size))
-    result = cursor.fetchone()
-    conn.close()
+    if len(name) == 2:  # If there are two products
+        total_price = 0
+        conn = sqlite3.connect('product.db')
+        cursor = conn.cursor()
+        for product_name in name:
+            # Query for each product's price based on the name, color, and size
+            cursor.execute("""
+                SELECT price FROM products WHERE name = ? AND color = ? AND size = ?
+            """, (product_name.strip(), color.strip(), size.strip()))
 
-    print(f"Query result: {result}")  # Debug log
+            price = cursor.fetchone()
+            if price:
+                total_price += price[0]  # Add the price of the product to total_price
+            else:
+                print(f"Price not found for {product_name.strip()}, {color.strip()}, {size.strip()}")
 
-    if result:
-        return jsonify({'totalprice': result[0]})
+        print(f"Total price for both products: {total_price}")
     else:
-        return jsonify({'error': 'Product not found'}), 404
+    # Fetch totalprice from the products table
+        conn = sqlite3.connect('product.db')
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT price FROM products
+            WHERE name = ? AND color = ? AND INSTR(size, ?) > 0
+        """, (name, color, size))
+        result = cursor.fetchone()
+        conn.close()
+
+        print(f"Query result: {result}")  # Debug log
+
+        if result:
+            return jsonify({'totalprice': result[0]})
+        else:
+            return jsonify({'error': 'Product not found'}), 404
 
 
 #addtocartfromchatbotwithoffer
@@ -782,6 +796,8 @@ def adduser():
 
 @app.route('/wishlist')
 def wishlist():
+    if not session.get('logged_in') or not session.get('is_admin'):
+        return redirect(url_for('login'))  #
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
     
@@ -1413,6 +1429,7 @@ def delete_product(sku):
 
 @app.route('/product/<string:id>')
 def productinfo(id):
+    logged_in = session.get('logged_in', False)
     selected_size = request.args.get('size')  # Capture the size from query params
     print("------------captured size---------------------")
     print(selected_size)
@@ -1433,7 +1450,10 @@ def productinfo(id):
     colors = coloroptions_str[0].split(",")
     name = my_cursor.execute(
         "Select * from products where sku=?", (id,)).fetchone()
-    print(name)
+
+    
+    description = name[1].split('\n')  # Split the description into individual lines
+
 
     sizes = my_cursor.execute(
         "Select size from products where sku=?", (id,)).fetchone()
@@ -1506,7 +1526,7 @@ def productinfo(id):
         relatedproducts=relatedproducts,
         stock=stock,
         selected_size=selected_size,
-        cart_count=cart_count
+        cart_count=cart_count,logged_in=logged_in,description=description
     )
 
 
