@@ -206,6 +206,7 @@
                                             <th class="stock-status text-center alt-font">Payment Method</th>
                                             <th class="status text-center alt-font">Status</th>
                                             <th class="status text-center alt-font">Status Update</th>
+                                            <th class="status text-center alt-font">Add Tracking Link</th>
                                         </tr>
                                     </thead>
                                     <tbody id="orderHistoryTableBody">
@@ -253,8 +254,17 @@
                                                         %}selected{% endif %}>Delivered</option>
                                                 </select>
                                             </td>
-                                            <td><button type="button"
+                                            <td class="text-center"><button type="button"
                                                     onclick="updateOrderStatus('{{ first_order[8] }}', '{{ first_order[10] }}', '{{ first_order[12] }}')">Update</button>
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" onclick="showLinkInput('{{ first_order[8] }}', '{{ first_order[10] }}', '{{ first_order[12] }}')">Add Link</button>
+                                                <div id="linkInput_{{ first_order[8] }}_{{ first_order[10] }}_{{ first_order[12] }}" style="display: none;">
+                                                    <input type="text" id="trackingLink_{{ first_order[8] }}_{{ first_order[10] }}_{{ first_order[12] }}" placeholder="Enter Tracking Link">
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" onclick="saveTrackingLink('{{ first_order[8] }}', '{{ first_order[10] }}', '{{ first_order[12] }}')">Add</button>
                                             </td>
                                         </tr>
 
@@ -283,6 +293,15 @@
                                                 <button type="button"
                                                     onclick="updateOrderStatus('{{ product[8] }}', '{{ product[10] }}', '{{ product[12] }}')">Update</button>
 
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" onclick="showLinkInput('{{ product[8] }}', '{{ product[10] }}', '{{ product[12] }}')">Add Link</button>
+                                                <div id="linkInput_{{ product[8] }}_{{ product[10] }}_{{ product[12] }}" style="display: none;">
+                                                    <input type="text" id="trackingLink_{{ product[8] }}_{{ product[10] }}_{{ product[12] }}" placeholder="Enter Tracking Link">
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" onclick="saveTrackingLink('{{ product[8] }}', '{{ product[10] }}', '{{ product[12] }}')">Add</button>
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -778,6 +797,47 @@
             });
         }
     </script>
+
+
+<script>
+    function showLinkInput(orderId, productName, color) {
+        const linkInputDiv = document.getElementById(`linkInput_${orderId}_${productName}_${color}`);
+        linkInputDiv.style.display = 'block';
+    }
+
+    function saveTrackingLink(orderId, productName, color) {
+        const trackingLink = document.getElementById(`trackingLink_${orderId}_${productName}_${color}`).value;
+
+        if (!trackingLink) {
+            alert('Please enter a tracking link!');
+            return;
+        }
+
+        fetch('/add-tracking-link', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                orderId: orderId,
+                productName: productName,
+                color: color,
+                trackingLink: trackingLink,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Tracking link added successfully!');
+                    location.reload();
+                } else {
+                    alert('Failed to add tracking link: ' + data.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+
 
 
 

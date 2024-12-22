@@ -500,7 +500,7 @@
                         <h3><i class="icon anm anm-user-al"></i> Returning customer? <a href="#customer-login" id="customer" class="text-decoration-underline" data-toggle="collapse">Click here to login</a></h3>
                         <div id="customer-login" class="collapse customer-content">
                             <div class="customer-info">
-                                <p class="coupon-text">If you have shopped with us before, please enter your details in the boxes below. If you are a new customer, please proceed to the Billing &amp; Shipping section.</p>
+                                <p class="coupon-text">If you have shopped with us before, please enter your details in the boxes below to fetch your current address. If you are a new customer, please proceed to add your address.</p>
                                 <form method="POST" action="/userdetails">
                                     <div class="row">
                                         <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
@@ -514,12 +514,12 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-check width-100 margin-20px-bottom">
+                                            <!-- <div class="form-check width-100 margin-20px-bottom">
                                                 <label class="form-check-label">
                                                     <input type="checkbox" class="form-check-input" value=""> Remember me!
                                                 </label>
                                                 <a href="#" class="float-right">Forgot your password?</a>
-                                            </div>
+                                            </div> -->
                                             <button type="submit" class="btn btn-primary mt-3">Submit</button>
                                         </div>
                                     </div>
@@ -529,7 +529,7 @@
                     </div>
                 </div>
 
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+                <!-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
                     <div class="customer-box customer-coupon">
                         <h3 class="font-15 xs-font-13"><i class="icon anm anm-gift-l"></i> Have a coupon? <a href="#have-coupon" class="text-decoration-underline" data-toggle="collapse">Click here to enter your code</a></h3>
                         <div id="have-coupon" class="collapse coupon-checkout-content">
@@ -543,7 +543,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="row billing-fields">
@@ -593,7 +593,7 @@
                                 </div>
                                 <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <label for="country">Country <span class="required-f">*</span></label>
-                                    <input type="text" id="country" name="country" value="{{ userdetails[8] if userdetails else '' }}" required>
+                                    <input type="text" id="country" name="country" value="India" readonly>
                                 </div>
                             </div>
                             <div class="row">

@@ -727,7 +727,8 @@ def myaccount():
             o.razorpay_order_id,
             o.status,
             COALESCE(r.status, 'No Return') AS status,
-            o.grand
+            o.grand,
+            o.link
         FROM orders o
         LEFT JOIN return r 
         ON o.razorpay_order_id = r.orderid AND o.productname = r.productname AND o.color = r.color
@@ -1109,6 +1110,39 @@ def update_return_status():
 
     print(f"Return status updated: {razorpay_order_id}, {productname}, {color} to {new_status}")
     return jsonify({'success': True, 'message': 'Return status updated successfully.'})
+
+
+@app.route('/add-tracking-link', methods=['POST'])
+def add_tracking_link():
+    data = request.json
+    order_id = data.get('orderId')
+    product_name = data.get('productName')
+    color = data.get('color')
+    tracking_link = data.get('trackingLink')
+
+    if not (order_id and product_name and color and tracking_link):
+        return jsonify({'success': False, 'error': 'Missing required parameters'}), 400
+
+    try:
+        conn = sqlite3.connect('product.db')
+        cursor = conn.cursor()
+
+        # Update the link in the orders table
+        cursor.execute("""
+            UPDATE orders
+            SET link = ?
+            WHERE razorpay_order_id = ? AND productname = ? AND color = ?
+        """, (tracking_link, order_id, product_name, color))
+        conn.commit()
+
+        if cursor.rowcount == 0:
+            return jsonify({'success': False, 'error': 'No matching order found'}), 404
+
+        conn.close()
+        return jsonify({'success': True})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 
 
 
@@ -1858,6 +1892,7 @@ def place_order():
 
     status = "Waiting for Confirmation"  # Static status for successful orders
     cancel_timestamp = 0
+    link = "No link"
     
 
     # Fetch cart items for the logged-in user
@@ -1884,9 +1919,9 @@ def place_order():
 
     # Insert order into orders table for each cart item
     for item in cart_items:
-        cursor.execute('''INSERT INTO orders (firstname, lastname, email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice, razorpay_payment_id, razorpay_order_id, payment_info, status, timestamp, shipping, grand, cancel)
-                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                       (firstname, lastname, user_email, mobile, address, city, state, pincode, item[0], item[1], item[2], item[3], item[4], razorpay_payment_id, razorpay_order_id, payment_info, status, current_timestamp, shipping_charges, grand_total, cancel_timestamp))
+        cursor.execute('''INSERT INTO orders (firstname, lastname, email, mobile, address, city, state, pincode, productname, size, color, quantity, totalprice, razorpay_payment_id, razorpay_order_id, payment_info, status, timestamp, shipping, grand, cancel, link)
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                       (firstname, lastname, user_email, mobile, address, city, state, pincode, item[0], item[1], item[2], item[3], item[4], razorpay_payment_id, razorpay_order_id, payment_info, status, current_timestamp, shipping_charges, grand_total, cancel_timestamp, link))
         conn.commit()
 
     cursor.execute("DELETE FROM cart WHERE user_email = ?", (user_email,))

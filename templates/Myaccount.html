@@ -548,7 +548,9 @@
                                     <th>Action</th>
                                     <th>Status</th>
                                     <th>Return Status</th>
+                                    <th>Track Order</th>
                                     <th>Review</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -605,6 +607,13 @@
                                     </td>
                                     <td class="status">{{ item[7] }}<p style="color: #869ba9;">(Delivery expected in 5-8 days)</p></td>
                                     <td class="status">{{ item[8] }}</td>
+                                    <td class="link">
+                                        {% if item[10] != "No link" %}
+                                            <a href="{{ item[10] }}" target="_blank">
+                                                <button type="button" class="action-btn">Track</button>
+                                            </a>
+                                        {% endif %}
+                                    </td>
                                     <td class="review">
                                         {% if item[7] == 'Delivered' %}
                                         <button class="action-btn review-btn"
