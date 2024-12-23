@@ -2,6 +2,7 @@ import razorpay
 from email import message
 from unicodedata import name
 from flask import flash,Flask, redirect, render_template, request, url_for, session, jsonify
+import requests
 import smtplib
 import sqlite3
 import uuid as uuid
@@ -11,9 +12,11 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from werkzeug.utils import secure_filename
 import random
+import string
 import re
 from datetime import datetime, timedelta
 from uuid import uuid4
+
 
 
 app = Flask(__name__)
@@ -21,6 +24,9 @@ app.secret_key = 'yash'
 upload_folder = 'static/images/pics/'
 app.config['upload_folder'] = upload_folder
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+
+
 
 def send_password_reset_email(email, temp_password):
     sender_email = "sharmakartik1103@gmail.com"
@@ -609,28 +615,34 @@ def login():
     print("------------next page----------------------")
     print(next_page)
     if request.method == 'POST':
-        email = request.form['customer[email]']
+        identifier = request.form['customer[identifier]']  # This can be email or phone
         password = request.form['customer[password]']
         
         # Connect to the database
         conn = sqlite3.connect('product.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM users WHERE email = ?", [email])
+
+        # Check if the identifier is an email or phone
+        if "@" in identifier:  # Simple check for email format
+            cursor.execute("SELECT * FROM users WHERE email = ?", [identifier])
+        else:
+            cursor.execute("SELECT * FROM users WHERE phone = ?", [identifier])
+        
         user = cursor.fetchone()
         conn.close()
         
         if user:
             # If the user exists, check the password
-            if user[3] == password:
+            if user[3] == password:  # Assuming password is in the 4th column
                 # Successful login
                 session['logged_in'] = True
-                session['user_email'] = email
-                session['is_admin'] = email == 'admin@a.com' and password == 'admin'  # Set admin flag
+                session['user_email'] = user[2]  # Assuming email is in the 3rd column
+                session['is_admin'] = user[2] == 'admin@a.com' and password == 'admin'  # Set admin flag
 
                 return redirect(next_page)  # Redirect to the original page
             else:
                 # Incorrect password
-                return render_template('login.html', email=email, message="Password is incorrect.")
+                return render_template('login.html', identifier=identifier, message="Password is incorrect.")
         else:
             # User does not exist
             return redirect(url_for('register', message="Account does not exist. Please create an account."))
@@ -767,6 +779,39 @@ def product():
     message = session.pop('message', None)
     return render_template('product-layout-1.html', productname=productname, productprice=productprice, message=message)
 
+@app.route('/send-verification-code', methods=['POST'])
+def send_verification_code():
+    data = request.json
+    email = data.get('email')
+
+    if not email:
+        return jsonify({"success": False, "message": "Email is required."})
+
+    # Generate a 6-character verification code
+    verification_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    
+    # Mock email sending (replace this with actual email sending logic)
+    sender_email = "sharmakartik1103@gmail.com"
+    sender_password = "iggp hkmj olvh xtfr"
+    subject = "Email Verification Code"
+    message = f"Your verification code is: {verification_code}"
+
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = email
+    msg['Subject'] = subject
+    msg.attach(MIMEText(message, 'plain'))
+
+    try:
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, email, msg.as_string())
+            print("Email sent successfully.")
+    except Exception as e:
+        print(f"Error sending email: {e}")
+
+    return jsonify({"success": True, "code": verification_code})
 
 @app.route('/adduser', methods=['GET', 'POST'])
 def adduser():
@@ -774,21 +819,38 @@ def adduser():
         firstname = request.form['firstname']
         lastname = request.form['lastname']
         email = request.form['email']
+        phone = request.form['phone']
         password = request.form['password']
+
+        # Check if at least one of email or phone is provided
+        if not email and not phone:
+            return render_template('register.html', error="Please enter either an email or a phone number.")
+        
+        # Validate phone number (Basic validation for 10 digits)
+        if phone and not re.match(r"^[0-9]{10}$", phone):
+            return render_template('register.html', error="Please enter a valid 10-digit phone number.")
+
+
 
         # Check if the user with the same email exists
         conn = sqlite3.connect('product.db')
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM users WHERE email=?", (email,))
         existing_user = cursor.fetchone()
+        cursor.execute("SELECT * FROM users WHERE phone=?", (phone,))
+        existing_phone = cursor.fetchone()
 
         if existing_user:
             conn.close()
             return render_template('register.html', error="Email already exists")
+        
+        if existing_phone:
+            conn.close()
+            return render_template('register.html', error="Phone No. already exists")
 
         # Insert new user
-        cursor.execute("INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)",
-                       (firstname, lastname, email, password))
+        cursor.execute("INSERT INTO users (firstname, lastname, email, password, phone) VALUES (?, ?, ?, ?, ?)",
+                       (firstname, lastname, email, password, phone))
         conn.commit()
         conn.close()
 
