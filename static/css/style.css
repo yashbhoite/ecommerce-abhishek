@@ -4838,7 +4838,7 @@ table {
 }
 .order-button-payment .btn {
   font-size: 18px;
-  font-size: 700;
+  /* font-size: 700; */
   padding: 10px 20px;
   color: #deb992;
   border: 1px solid #1ba098;
