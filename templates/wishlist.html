@@ -1,3 +1,5 @@
+wishlist
+
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
@@ -127,6 +129,17 @@
                                                 <button type="submit" class="btn newsletter__submit" name="commit"
                                                     onclick="showCancelled()" id="returnBtn"><span
                                                         class="newsletter__submit-text--large">Cancelled Orders
+                                                    </span></button>
+                                            </span>
+                                        </div>
+                                        <div class="col-lg-1 col-sm-6 col-md-3 display-table-cell footer-newsletter" style="margin-left: 27px;">
+
+
+                                            <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
+                                            <span class="input-group__btn">
+                                                <button type="submit" class="btn newsletter__submit" name="commit"
+                                                    onclick="showReels()" id="returnBtn"><span
+                                                        class="newsletter__submit-text--large">Add Reels
                                                     </span></button>
                                             </span>
                                         </div>
@@ -523,6 +536,43 @@
                 </div>
             </div>
 
+            <div class="container" id="ReelTable" style="display: none;">
+                <p>Reels</p>
+                <form action="/videoadddb" method="POST" enctype="multipart/form-data">
+                    <label for="video">Choose Video File:</label>
+                    <input type="file" id="video" name="video" accept="video/*" required>
+                    <br><br>
+                    <button type="submit">Upload Video</button>
+                </form><br><br>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th style="font-size: large;font-weight: bold;color: #deb992;">Video Name</th>
+                            <th style="font-size: large;font-weight: bold;color: #deb992;">Upload Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if videos %}
+                            {% for video in videos %}
+                                <tr>
+                                    <td style="color: #deb992;">{{ video[0] }}</td>  <!-- Video Name -->
+                                    <td style="color: #deb992;">{{ video[1] }}</td>  <!-- Upload Time -->
+                                    <td>
+                                        <form action="/delete_video/{{ video[0] }}" method="POST" style="display:inline;">
+                                            <button type="submit" style="color: red;">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="2">No videos found.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>                
+            </div>
+
         </div>
         <!--End Body Content-->
 
@@ -620,6 +670,13 @@
             document.getElementById("orderHistoryTable").style.display = "none";
             document.getElementById("returnTable").style.display = "none";
             document.getElementById("CancelTable").style.display = "none";
+        }
+        function showReels() {
+            document.getElementById("editProductTable").style.display = "none";
+            document.getElementById("orderHistoryTable").style.display = "none";
+            document.getElementById("returnTable").style.display = "none";
+            document.getElementById("CancelTable").style.display = "none";
+            document.getElementById("ReelTable").style.display = "block";
         }
 
         function showOrderHistory() {

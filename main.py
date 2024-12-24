@@ -22,8 +22,12 @@ from uuid import uuid4
 app = Flask(__name__)
 app.secret_key = 'yash'
 upload_folder = 'static/images/pics/'
+VIDEO_FOLDER = 'static/videos/'
 app.config['upload_folder'] = upload_folder
+app.config['VIDEO_FOLDER'] = VIDEO_FOLDER
+ALLOWED_VIDEO_EXTENSIONS = {'mp4', 'avi', 'mov', 'mkv'}
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+os.makedirs(VIDEO_FOLDER, exist_ok=True)
 
 
 
@@ -51,6 +55,8 @@ def send_password_reset_email(email, temp_password):
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_VIDEO_EXTENSIONS
 
 
 # class process():
@@ -301,10 +307,12 @@ def index():
     print("---------------new arrivals--------------------")
     print(newarrivalsmen)
     print(newarrivalswomen)
+    cursor.execute("SELECT name, uploadtime FROM reels")
+    videos = cursor.fetchall()
     conn.close()
     
     # Render template with the fetched products
-    return render_template("index.html",relatedproducts=relatedproducts,newarrivalsmen=newarrivalsmen,newarrivalswomen=newarrivalswomen, cart_count=cart_count)
+    return render_template("index.html",relatedproducts=relatedproducts,newarrivalsmen=newarrivalsmen,newarrivalswomen=newarrivalswomen, cart_count=cart_count,videos=videos)
 
 
 @app.route('/cart')
@@ -998,6 +1006,8 @@ def wishlist():
     # Fetch count for Returned status from the return table
     my_cursor.execute("SELECT COUNT(*) FROM return")
     returned_count = my_cursor.fetchone()[0]
+    my_cursor.execute("SELECT name, uploadtime FROM reels")
+    videos = my_cursor.fetchall()
 
     connection.commit()
     connection.close()
@@ -1006,7 +1016,71 @@ def wishlist():
                            shipped_count=shipped_count, 
                            delivered_count=delivered_count, 
                            cancelled_count=cancelled_count, 
-                           returned_count=returned_count, not_confirmed=not_confirmed)
+                           returned_count=returned_count, not_confirmed=not_confirmed,videos=videos)
+
+
+@app.route('/videoadddb', methods=["POST"])
+def upload_video():
+    if "video" not in request.files:
+        flash("No file part")
+        return redirect(url_for("wishlist"))
+
+    video = request.files["video"]
+
+    if video.filename == "":
+        flash("No video selected")
+        return redirect(url_for("wishlist"))
+
+    if not allowed_file(video.filename):
+        flash("File type not allowed. Please upload MP4, AVI, MOV, or MKV videos.")
+        return redirect(url_for("wishlist"))
+
+    # Save the video locally
+    filename = video.filename
+    video_path = os.path.join(app.config['VIDEO_FOLDER'], filename)
+    video.save(video_path)
+
+    # Save video details to the database
+    upload_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+
+    # Ensure the table exists
+    cursor.execute('''CREATE TABLE IF NOT EXISTS reels (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        name TEXT NOT NULL,
+                        uploadtime TEXT NOT NULL
+                      )''')
+
+    cursor.execute("INSERT INTO reels (name, uploadtime) VALUES (?, ?)", (filename, upload_time))
+    conn.commit()
+    conn.close()
+
+    flash("Video uploaded successfully!")
+    return redirect(url_for("wishlist"))
+
+
+@app.route('/delete_video/<filename>', methods=["POST"])
+def delete_video(filename):
+    # Path to the video file
+    video_path = os.path.join(app.config['VIDEO_FOLDER'], filename)
+
+    # Delete video file from local storage
+    if os.path.exists(video_path):
+        os.remove(video_path)
+    else:
+        flash("Video file not found locally!")
+
+    # Delete video details from the database
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM reels WHERE name = ?", (filename,))
+    conn.commit()
+    conn.close()
+
+    flash("Video deleted successfully!")
+    return redirect(url_for("wishlist"))
+
 
 
 @app.route('/update-order-status', methods=['POST'])
