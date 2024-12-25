@@ -634,6 +634,14 @@
     padding: 20px;
   }
 }
+@media only screen and (max-width: 767px){
+  .product-home-style{
+    font-size: small !important;
+  }
+  .product-home-style2{
+    padding: 0 10px 0 16px !important;
+  }
+}
 
 @media only screen and (min-width: 767px) {
   .home6-modern #page-content {
@@ -1493,8 +1501,18 @@
   .top-header .fa,
   .top-header span.selected-currency,
   .language-dd {
-    font-size: 14px;
+    font-size: 12px;
     letter-spacing: 0;
+    margin-top: 5px;
+    margin-right: 22px;
+  }
+
+  .home-parallax-style{
+    font-size: xx-large !important;
+  }
+
+  .home-img{
+    display: none !important;
   }
 
   .container-fluid,

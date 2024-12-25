@@ -237,7 +237,7 @@ def bid():
     # Handle bid for each level
     if level == 'level1' and bid_amount >= level1_price:
         return jsonify({
-            "message": f"Sure, we can have a deal!. Do you want to proceed with the payment?",
+            "message": f"🎉 Deal Locked! You've got it! Ready to secure your pick with an easy payment? 🛒💳",
             "status": "level1",
             "level2_price": level2_price,
             "level3_price": level3_price,
@@ -245,7 +245,7 @@ def bid():
         })
     elif level == 'level2' and bid_amount >= level2_price:
         return jsonify({
-            "message": f"Score a double deal! 🎉 Grab TWO stylish T-shirts for just ₹ {level2_price} per piece. Don't miss out on leveling up your wardrobe with this perfect pair-up – trendy, comfy, and all yours at an unbeatable price! 👕✨. Do you accept it?",
+            "message": f"💥 Score Big! Grab TWO stylish pieces at just ₹ {level2_price} per item! Perfectly paired, ultra-trendy, and comfy – time to elevate your style game. 👗👕✨ Are you in for this awesome deal?",
             "status": "level2",
             "level2_price": level2_price,
             "level3_price": level3_price,
@@ -257,7 +257,7 @@ def bid():
         })
     elif level == 'level3' and bid_amount >= level3_price:
         return jsonify({
-            "message": f"Final offer with Level 3: ₹ {level3_price} discount on a single item! Accept?",
+            "message": f"🚨 Last Chance Alert! 🚨 Snag this exclusive deal – ₹ {level3_price} discount on your favorite pick! 🔥 Don't let it slip away. Ready to claim it?",
             "status": "level3",
             "level2_price": level2_price,
             "level3_price": level3_price,
@@ -265,7 +265,7 @@ def bid():
         })
     else:
         return jsonify({
-            "message": "Thank you for your bid! It seems your current offer doesn’t quite meet the discount criteria. Please consider raising your bid a bit to get closer to a deal.",
+            "message": "🙌 Thanks for your bid! You're almost there. 🔄 How about tweaking your offer slightly to unlock a killer deal? The treasure is just within reach!",
             "status": "level3",
             "level2_price": level2_price,
             "level3_price": level3_price,
@@ -645,7 +645,7 @@ def login():
                 # Successful login
                 session['logged_in'] = True
                 session['user_email'] = user[2]  # Assuming email is in the 3rd column
-                session['is_admin'] = user[2] == 'admin@a.com' and password == 'admin'  # Set admin flag
+                session['is_admin'] = user[2] == 'yash2505bhoite@gmail.com' and password == 'admin'  # Set admin flag
 
                 return redirect(next_page)  # Redirect to the original page
             else:

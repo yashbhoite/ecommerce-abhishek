@@ -405,7 +405,7 @@
 
 
 
-                <li><a href="/product" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
+                <li><a href="/shopwomen" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
                     
                     <ul>
                                   <li><a href="/shopwomen/Tops" class="site-nav">Tops</a></li>
@@ -669,52 +669,34 @@
                 <div class="container-fluid">
                     <div class="collection-grid">
                         <div class="collection-grid-item">
-                            <a href="/shopwomen" class="collection-grid-item__link">
-                                <img data-src="../static/images/collection/fashion.jpg"
-                                    src="../static/images/collection/fashion.jpg" alt="Fashion"
+                            <a href="/shopfullwidth" class="collection-grid-item__link">
+                                <img data-src="../static/images/collection/Shirt.jpeg"
+                                    src="../static/images/collection/Shirt.jpeg" alt="Fashion"
                                     class="blur-up lazyload" />
                                 <div class="collection-grid-item__title-wrapper">
-                                    <h3 class="collection-grid-item__title btn btn--secondary no-border">t-Shirts</h3>
+                                    <h3 class="collection-grid-item__title btn btn--secondary no-border">Shirts</h3>
                                 </div>
                             </a>
                         </div>
                         <div class="collection-grid-item">
-                            <a href="/shopwomen" class="collection-grid-item__link">
-                                <img class="blur-up lazyload" data-src="../static/images/collection/cosmetic.jpg"
-                                    src="../static/images/collection/cosmetic.jpg" alt="Cosmetic" />
+                            <a href="/shopfullwidth" class="collection-grid-item__link">
+                                <img class="blur-up lazyload" data-src="../static/images/collection/Jeans.jpg"
+                                    src="../static/images/collection/Jeans.jpg" alt="Cosmetic" />
                                 <div class="collection-grid-item__title-wrapper">
-                                    <h3 class="collection-grid-item__title btn btn--secondary no-border">sarees</h3>
+                                    <h3 class="collection-grid-item__title btn btn--secondary no-border">T-Shirts</h3>
                                 </div>
                             </a>
                         </div>
                         <div class="collection-grid-item blur-up lazyloaded">
                             <a href="/shopwomen" class="collection-grid-item__link">
-                                <img data-src="../static/images/collection/bag.jpg"
-                                    src="../static/images/collection/bag.jpg" alt="Bag" class="blur-up lazyload" />
+                                <img data-src="../static/images/collection/Tshirt.jpeg"
+                                    src="../static/images/collection/Tshirt.jpeg" alt="Bag" class="blur-up lazyload" />
                                 <div class="collection-grid-item__title-wrapper">
-                                    <h3 class="collection-grid-item__title btn btn--secondary no-border">shirts</h3>
+                                    <h3 class="collection-grid-item__title btn btn--secondary no-border">Jeans</h3>
                                 </div>
                             </a>
                         </div>
-                        <div class="collection-grid-item">
-                            <a href="/shopwomen" class="collection-grid-item__link">
-                                <img data-src="../static/images/collection/accessories.jpg"
-                                    src="../static/images/collection/accessories.jpg" alt="Accessories"
-                                    class="blur-up lazyload" />
-                                <div class="collection-grid-item__title-wrapper">
-                                    <h3 class="collection-grid-item__title btn btn--secondary no-border">jeans</h3>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="collection-grid-item">
-                            <a href="/shopwomen" class="collection-grid-item__link">
-                                <img data-src="../static/images/collection/shoes.jpg"
-                                    src="../static/images/collection/shoes.jpg" alt="Shoes" class="blur-up lazyload" />
-                                <div class="collection-grid-item__title-wrapper">
-                                    <h3 class="collection-grid-item__title btn btn--secondary no-border">kurtis</h3>
-                                </div>
-                            </a>
-                        </div>
+                     
                     </div>
                 </div>
             </div>
@@ -725,11 +707,11 @@
             <div class="section">
                 <div class="hero hero--large hero__overlay bg-size"
                     style="background-size: cover; background-position: center center; background-repeat: no-repeat;">
-                    <img class="bg-img" src="../static/images/parallax-banners/parallax-banner-2a.png">
+                    <img class="bg-img home-img" src="../static/images/parallax-banners/parallax-banner-2a.png">
                     <div class="hero__inner">
                         <div class="container">
                             <div class="wrap-text left text-small font-bold">
-                                <h2 class="h2 mega-title" style="color: #081525;">FASHIONHOLICS<br> A Fashion HUB</h2>
+                                <h2 class="h2 mega-title home-parallax-style" style="color: #081525;">FASHIONHOLICS<br> A Fashion HUB</h2>
                                 <div class="rte-setting mega-subtitle">Discover and elevate your style with trendsetting outfits at our fashion store!</div>
                                 <a href="#" class="btn"
                                     style="background-color: #081525; font-weight: 500;color: #deb992;">Purchase Now</a>
@@ -809,13 +791,13 @@
                                     <div class="product-details hoverDetails text-center mobile">
                                         <!-- product name -->
                                         <div class="product-name">
-                                            <a href="/product/{{product[7]}}">{{product[0]}}</a>
+                                            <a href="/product/{{product[7]}}" class="product-home-style" style="font-size: large;">{{product[0]}}</a>
                                         </div>
                                         <!-- End product name -->
                                         <!-- product price -->
-                                        <div class="product-price">
+                                        <div class="product-price product-home-style">
                                             <!-- <span class="old-price" style="color: #deb992;">₹500.00</span> -->
-                                            <span class="price" style="color: #081525 !important;">₹
+                                            <span class="price product-home-style" style="color: #deb992 !important;font-size: large;">₹
                                                 {{product[3]}}</span>
                                         </div>
                                         <!-- End product price -->
@@ -823,7 +805,7 @@
                                         <!-- product button -->
 
                                         <!-- end product button -->
-                                        <form class="variants add" action="#" style="padding: 0 50px 0 50px;"
+                                        <form class="variants add product-home-style2" action="#" style="padding: 0 10px 0 20px;"
                                         onclick="window.location.href='/product/{{product[7]}}'"
                                         method="post">
                                         <button class="btn btn-addto-cart" type="button"
@@ -871,10 +853,12 @@
                         </button>
                         <div id="item-list" class="item-list">
                             {% for video in videos %}
+                           <a href="https://www.instagram.com/fashion_holics23/profilecard/?igsh=MXRsMDg5a3dsNGdhZw==">
                             <video controls>
                                 <source id="item" class="item1" src="../static/videos/{{video[0]}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
+                           </a>
                             {% endfor %}
 
                             
@@ -941,7 +925,7 @@
                                     <li><a href="/shopwomen">Women</a></li>
                                     <li><a href="/shopfullwidth">Men</a></li>
                                     <li><a href="#">Kids</a></li>
-                                    <li><a href="#">Footwear</a></li>
+                                    <!-- <li><a href="#">Footwear</a></li> -->
                                 </ul>
                             </div>
                             <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
@@ -960,7 +944,7 @@
                                     <!-- <li><a href="#">Request Personal Data</a></li>
                                     <li><a href="#">FAQ's</a></li> -->
                                     <li><a href="#">Contact Us</a></li>
-                                    <li><a href="#">Orders and Returns</a></li>
+                                    <li><a href="../static/images/collection/Fashion_Holics_Return_Policy.pdf" target="_blank">Orders and Returns</a></li>
                                     <!-- <li><a href="#">Support Center</a></li> -->
                                 </ul>
                             </div>
@@ -968,7 +952,7 @@
                                 <h4 class="h4">Contact Us</h4>
                                 <ul class="addressFooter">
                                     <li><i class="icon anm anm-map-marker-al" style="color: #deb992 !important;"></i>
-                                        <p>ram nagar road no 28 near sadhna juniour college <br> wagle estate thane 400604</p>
+                                        <p>Ram nagar, Road no 28, Near sadhna juniour college <br> Wagle estate, Thane 400604</p>
                                     </li>
                                     <li class="phone"><i class="icon anm anm-phone-s"
                                             style="color: #deb992 !important; "></i>

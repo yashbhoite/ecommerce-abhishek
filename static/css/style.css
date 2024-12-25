@@ -7213,8 +7213,8 @@ border-radius:8px;
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 320px;
-  max-height: 500px; /* Limits chatbot height to avoid overlapping */
+  width: 370px;
+  height: 400px; /* Limits chatbot height to avoid overlapping */
   /* border: 1px solid #ccc;
   border-radius: 10px; */
   border-top-left-radius: 10px;
