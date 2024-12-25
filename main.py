@@ -265,7 +265,7 @@ def bid():
         })
     else:
         return jsonify({
-            "message": "🙌 Thanks for your bid! You're almost there. 🔄 How about tweaking your offer slightly to unlock a killer deal? The treasure is just within reach!",
+            "message": "Thanks for your bid! You're almost there. How about tweaking your offer slightly to unlock a killer deal? The treasure is just within reach!",
             "status": "level3",
             "level2_price": level2_price,
             "level3_price": level3_price,

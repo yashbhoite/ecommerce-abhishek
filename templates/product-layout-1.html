@@ -1831,7 +1831,7 @@ document.getElementById('addToCartBtn').addEventListener('click', function (even
               scrollToBottom();
 
               // Check if the message is the one that indicates a low bid
-              if (newMessage.textContent.includes("It seems your current offer doesn’t quite meet the discount criteria.")) {
+              if (newMessage.textContent.includes("Thanks for your bid! You're almost there. How about tweaking your offer slightly to unlock a killer deal? The treasure is just within reach!")) {
                 // Disable bid submission buttons to avoid repeated submission
                 document.getElementById('accept').disabled = true;
                 document.getElementById('decline').disabled = true;
