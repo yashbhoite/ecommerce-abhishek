@@ -90,13 +90,15 @@
                     <!--Desktop Logo-->
                     <div class="logo col-md-2 col-lg-2 d-none d-lg-block">
                         <a href="/">
-                           <div style="display: flex;align-items: center;">
-                            <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics" 
+                            <div style="display: flex;align-items: center;">
+                                <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics"
                                     title="FashionHolics" />
-                        <h3 style="color: #deb992;font-family: Poppins, Helvetica, Tahoma, Arial, serif;font-weight: 600;margin-bottom: 0px;white-space: nowrap;font-size: 1vw;">FASHION HOLICS</h3>
-                    </div>  
+                                <h3
+                                    style="color: #deb992;font-family: Poppins, Helvetica, Tahoma, Arial, serif;font-weight: 600;margin-bottom: 0px;white-space: nowrap;font-size: 1vw;">
+                                    FASHION HOLICS</h3>
+                            </div>
                         </a>
-               
+
                     </div>
                     <!--End Desktop Logo-->
                     <div class="col-2 col-sm-3 col-md-3 col-lg-8"
@@ -364,13 +366,15 @@
                     <div class="col-6 col-sm-6 col-md-6 col-lg-2 d-block d-lg-none mobile-logo">
                         <div class="logo moblog">
                             <a href="/">
-                                <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics" 
-                                        title="FashionHolics" />
-                                        
+                                <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics"
+                                    title="FashionHolics" />
+
                             </a>
-                            <h3 style="color: #deb992;font-family: Poppins, Helvetica, Tahoma, Arial, serif;font-weight: 600;margin-bottom: 0px;white-space: nowrap;font-size: 2.5vw;">FASHION HOLICS</h3>  
+                            <h3
+                                style="color: #deb992;font-family: Poppins, Helvetica, Tahoma, Arial, serif;font-weight: 600;margin-bottom: 0px;white-space: nowrap;font-size: 2.5vw;">
+                                FASHION HOLICS</h3>
                         </div>
-                       
+
                     </div>
                     <!--Mobile Logo-->
                     <div class="col-4 col-sm-3 col-md-3 col-lg-2">
@@ -400,7 +404,7 @@
                 </li>
 
 
-                <li><a href="/shopfullwidth" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
+                <li><a href="#" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
                     <ul>
                         <li><a href="/shopfullwidth/Shirts" class="site-nav">Shirts</a></li>
                         <li><a href="/shopfullwidth/Tshirts" class="site-nav">Tshirts</a></li>
@@ -418,7 +422,7 @@
 
 
 
-                <li><a href="/shopwomen" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
+                <li><a href="/product" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
 
                     <ul>
                         <li><a href="/shopwomen/Tops" class="site-nav">Tops</a></li>
@@ -437,7 +441,8 @@
                             class="anm anm-angle-down-l"></i></a>
 
                 </li>
-          
+                <li class="lvl1"><a href="#">New Arrivals</a>
+                </li>
 
                 <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
                 </li>
@@ -452,7 +457,7 @@
                 </li>
 
 
-                <li><a href="/shopfullwidth" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
+                <li><a href="#" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
                     <ul>
                         <li><a href="/shopfullwidth/Shirts" class="site-nav">Shirts</a></li>
                         <li><a href="/shopfullwidth/Tshirts" class="site-nav">Tshirts</a></li>
@@ -471,7 +476,7 @@
 
 
 
-                <li><a href="/shopwomen" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
+                <li><a href="/product" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
 
                     <ul>
                         <li><a href="/shopwomen/Tops" class="site-nav">Tops</a></li>
@@ -489,6 +494,8 @@
                             style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
                             class="anm anm-angle-down-l"></i></a>
 
+                </li>
+                <li class="lvl1"><a href="#">New Arrivals</a>
                 </li>
 
                 <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
@@ -532,8 +539,8 @@
                 <section id="order-section" class="order-section" style="width: 100vw;">
                     <h2 style="color: #deb992;">Orders</h2>
                     <div class="table-container" style="overflow-x: auto;">
-                        <table class="orders-grid">
-                            <thead>
+                        <table class="wishlist-table table">
+                            <thead style="color: #deb992;">
                                 <tr>
                                     <th>Order ID</th>
                                     <th>Product Name</th>
@@ -547,10 +554,10 @@
                                     <th>Return Status</th>
                                     <th>Track Order</th>
                                     <th>Review</th>
-                                    
+
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody style="color: #deb992;">
                                 {% for item in order_items %}
                                 <tr>
                                     <td class="orderid">{{ item[6] }}</td>
@@ -586,29 +593,38 @@
                                             data-timestamp="{{ item[5] }}">Return</button>
                                         {% endif %}
                                         <div class="return-form hidden">
-                                            <select class="reason-dropdown">
+                                            <select class="reason-dropdown" required>
                                                 <option value="">Select a reason</option>
                                                 <option value="Size issue">Size issue</option>
                                                 <option value="Damaged Product">Damaged Product</option>
                                             </select>
-                                            <textarea class="return-details"
-                                                placeholder="Describe the problem"></textarea>
+                                            <textarea class="return-details" placeholder="Describe the problem"
+                                                required></textarea>
                                             <div class="image-upload hidden">
                                                 <label for="image1">Upload Image 1:</label>
-                                                <input type="file" id="input1" name="input1" accept=".jpg,.jpeg,.png">
+                                                <input type="file" id="input1" name="input1" accept=".jpg,.jpeg,.png"
+                                                    required>
                                                 <label for="image2">Upload Image 2:</label>
-                                                <input type="file" id="input2" name="input2" accept=".jpg,.jpeg,.png">
+                                                <input type="file" id="input2" name="input2" accept=".jpg,.jpeg,.png"
+                                                    required>
                                             </div>
-                                            <button class="action-btn request-return-btn">Request Return</button>
+                                            <button class="action-btn request-return-btn"
+                                                id="request-return-btn">Request Return</button>
+                                            <div id="loader" style="display: none;">
+                                                <h2 style="color: #deb992;">Processing your order...</h2>
+                                            </div>
                                         </div>
                                     </td>
-                                    <td class="status">{{ item[7] }}<p style="color: #869ba9;">(Delivery expected in 5-8 days)</p></td>
+                                    <td class="status">{{ item[7] }}{% if item[7]!='Delivered' %}<p
+                                            style="color: #869ba9;">(Delivery expected in 5-8
+                                            days)</p>{% endif %}
+                                    </td>
                                     <td class="status">{{ item[8] }}</td>
                                     <td class="link">
                                         {% if item[10] != "No link" %}
-                                            <a href="{{ item[10] }}" target="_blank">
-                                                <button type="button" class="action-btn">Track</button>
-                                            </a>
+                                        <a href="{{ item[10] }}" target="_blank">
+                                            <button type="button" class="action-btn">Track</button>
+                                        </a>
                                         {% endif %}
                                     </td>
                                     <td class="review">
@@ -617,8 +633,7 @@
                                             data-review-id="{{ loop.index }}">Review</button>
                                         <div id="review-form-{{ loop.index }}" class="hidden review-form"
                                             style="margin-top: 10px;">
-                                            <form method="post"
-                                                action="{{ url_for('submit_review_dynamic', product_name=item[0], color=item[2].strip()) }}"
+                                            <form method="post" action="/submit-review-dynamic"
                                                 class="new-review-form">
                                                 <h3 class="spr-form-title">Write a review</h3>
                                                 <fieldset class="spr-form-contact">
@@ -626,20 +641,38 @@
                                                         <label class="spr-form-label" for="review_author">Name</label>
                                                         <input class="spr-form-input spr-form-input-text"
                                                             id="review_author" type="text" name="review[author]"
-                                                            placeholder="Enter your name" />
+                                                            placeholder="Enter your name" required />
                                                     </div>
                                                 </fieldset>
                                                 <fieldset class="spr-form-review">
+                                                    <div class="spr-form-review-product">
+                                                        <label class="spr-form-label" for="product_name">Product</label>
+                                                        <select class="spr-form-input" id="product_name"
+                                                            name="review[product_name]" required>
+                                                            {% for product in item[0].split(',') %}
+                                                            <option value="{{ product }}"{% if loop.first %}selected{% endif %}>{{ product }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="spr-form-review-color">
+                                                        <label class="spr-form-label" for="color">Color</label>
+                                                        <select class="spr-form-input" id="color" name="review[color]" required>
+                                                            {% for color in item[2].split(',') %}
+                                                            <option value="{{ color.strip() }}" {% if loop.first %}selected{% endif %}>{{ color.strip() }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
                                                     <div class="spr-form-review-rating">
                                                         <label class="spr-form-label">Rating</label>
                                                         <input class="spr-form-input" type="number"
-                                                            name="review[rating]" min="1" max="5"
+                                                            name="review[rating]" min="1" max="5" required
                                                             placeholder="Enter rating (1-5)" />
                                                     </div>
                                                     <div class="spr-form-review-title">
                                                         <label class="spr-form-label" for="review_title">Review
                                                             Title</label>
-                                                        <input class="spr-form-input spr-form-input-text"
+                                                        <input class="spr-form-input spr-form-input-text" required
                                                             id="review_title" type="text" name="review[title]"
                                                             placeholder="Give your review a title" />
                                                     </div>
@@ -648,7 +681,7 @@
                                                             Review</label>
                                                         <textarea class="spr-form-input spr-form-input-textarea"
                                                             id="review_body" name="review[body]" rows="5"
-                                                            placeholder="Write your comments here"></textarea>
+                                                            placeholder="Write your comments here" required></textarea>
                                                     </div>
                                                 </fieldset>
                                                 <fieldset class="spr-form-actions">
@@ -658,6 +691,7 @@
                                                 </fieldset>
                                             </form>
                                         </div>
+
                                         {% endif %}
                                     </td>
                                 </tr>
@@ -718,12 +752,13 @@
                                         <input type="text" id="address" name="address"
                                             value="{{ address_data[4] if address_data else '' }}" required>
                                     </div>
-                               
                                     <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                         <label for="pincode">Pincode <span class="required-f">*</span></label>
                                         <input type="text" id="pincode" name="pincode"
-                                            value="{{ address_data[6] if address_data else '' }}" required oninput="fetchLocationDetails()">
+                                            value="{{ address_data[6] if address_data else '' }}" required
+                                            oninput="fetchLocationDetails()">
                                     </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
@@ -731,6 +766,7 @@
                                         <input type="text" id="city" name="city"
                                             value="{{ address_data[5] if address_data else '' }}" required readonly>
                                     </div>
+
                                     <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                         <label for="state">State <span class="required-f">*</span></label>
                                         <input type="text" id="state" name="state"
@@ -739,7 +775,7 @@
                                     <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                         <label for="country">Country <span class="required-f">*</span></label>
                                         <input type="text" id="country" name="country"
-                                            value="{{ address_data[8] if address_data else '' }}" required>
+                                            value="{{ address_data[8] if address_data else '' }}" required readonly>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -783,36 +819,6 @@
             </div>
             <!--End Body Content-->
             <script>
-                async function fetchLocationDetails() {
-    const pincode = document.getElementById("pincode").value;
-
-    // Validate Pincode length
-    if (pincode.length === 6) {
-        try {
-            // Fetch data from the Postal PIN Code API
-            const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
-            const data = await response.json();
-
-            if (data[0].Status === "Success" && data[0].PostOffice) {
-                const postOffice = data[0].PostOffice[0]; // Take the first matching Post Office
-
-                // Populate the city and state fields
-                document.getElementById("city").value = postOffice.District || "";
-                document.getElementById("state").value = postOffice.State || "";
-            } else {
-                alert("No details found for this Pincode.");
-                document.getElementById("city").value = "";
-                document.getElementById("state").value = "";
-            }
-        } catch (error) {
-            console.error("Error fetching location details:", error);
-            alert("Something went wrong while fetching location details.");
-        }
-    } else if (pincode.length > 6) {
-        alert("Pincode should be exactly 6 digits.");
-    }
-}
-
                 function showOrders() {
                     document.getElementById("order-section").style.display = "block";
                     document.getElementById("address-section").style.display = "none";
@@ -876,7 +882,8 @@
                                         <!-- <li><a href="#">Request Personal Data</a></li>
                                         <li><a href="#">FAQ's</a></li> -->
                                         <li><a href="/contactus">Contact Us</a></li>
-                                        <li><a href="../static/images/collection/Fashion_Holics_Return_Policy.pdf" target="_blank">Orders and Returns</a></li>
+                                        <li><a href="../static/images/collection/Fashion_Holics_Return_Policy.pdf"
+                                                target="_blank">Orders and Returns</a></li>
                                         <!-- <li><a href="#">Support Center</a></li> -->
                                     </ul>
                                 </div>
@@ -885,7 +892,8 @@
                                     <ul class="addressFooter">
                                         <li><i class="icon anm anm-map-marker-al"
                                                 style="color: #deb992 !important;"></i>
-                                            <p>Ram nagar, Road no 28, Near sadhna juniour college <br> Wagle estate, Thane 400604</p>
+                                            <p>Ram nagar, Road no 28, Near sadhna juniour college <br> Wagle estate,
+                                                Thane 400604</p>
                                         </li>
                                         <li class="phone"><i class="icon anm anm-phone-s"
                                                 style="color: #deb992 !important; "></i>
@@ -1118,37 +1126,79 @@
 
     <script>
         document.querySelectorAll('.return-btn').forEach(button => {
-            const orderTime = new Date(button.getAttribute('data-timestamp')); // Parse timestamp correctly
+            const timestampStr = button.getAttribute('data-timestamp');
+            const [date, time] = timestampStr.split(' '); // Split date and time
+            const [day, month, year] = date.split('-'); // Split DD-MM-YYYY
+            const [hours, minutes, seconds] = time.split(':'); // Split HH:mm:ss
+
+            // Create a JavaScript Date object
+            const orderTime = new Date(year, month - 1, day, hours, minutes, seconds); // Months are 0-indexed
             const currentTime = new Date();
 
-            // Calculate time difference in minutes
             const timeDiff = (currentTime - orderTime) / (1000 * 60); // Convert ms to minutes
 
-            // Disable the button if time exceeds 2 minutes
+            // Disable the button if time exceeds 50 minutes
             if (timeDiff > 50) {
                 button.disabled = true;
             }
 
-            button.addEventListener('click', function () {
-                if (button.disabled) {
+            button.addEventListener('click', function (event) {
+                // Prevent any action if the button is disabled
+                if (this.disabled) {
                     alert("Your time limit has been exceeded");
+                    event.preventDefault(); // Prevent default action (if any)
                     return;
                 }
 
                 // Show return form on click
                 const returnForm = this.closest('td').querySelector('.return-form');
-                returnForm.classList.toggle('hidden');
-
-
+                returnForm.classList.toggle('show');
             });
         });
 
 
         document.querySelectorAll('.request-return-btn').forEach(button => {
             button.addEventListener('click', async function () {
-                const row = this.closest('tr');
                 const returnForm = this.closest('.return-form');
+                const dropdown = returnForm.querySelector('.reason-dropdown');
+                const textarea = returnForm.querySelector('.return-details');
+                const imageUploadDiv = returnForm.querySelector('.image-upload');
+                const input1 = returnForm.querySelector('#input1');
+                const input2 = returnForm.querySelector('#input2');
+                const loader = document.getElementById('loader');
+                const submitButton = document.getElementById('request-return-btn');
 
+                // Validate the dropdown
+                if (!dropdown.value) {
+                    alert("Please select a reason.");
+                    dropdown.focus();
+                    event.preventDefault();
+                    return;
+                }
+
+                // Validate the textarea
+                if (!textarea.value.trim()) {
+                    alert("Please describe the problem.");
+                    textarea.focus();
+                    event.preventDefault();
+                    return;
+                }
+
+                // Validate file inputs if "Damaged Product" is selected
+                if (dropdown.value === "Damaged Product") {
+                    if (!input1.files.length || !input2.files.length) {
+                        alert("Please upload both images for Damaged Product.");
+                        event.preventDefault();
+                        return;
+                    }
+                }
+
+                // Show loader and hide the button
+                submitButton.style.display = "none";
+                loader.style.display = "block";
+
+                // Collect product data
+                const row = this.closest('tr');
                 const productData = new FormData();
                 productData.append('orderid', row.querySelector('.orderid').textContent.trim());
                 productData.append('productname', row.querySelector('.productname').textContent.trim());
@@ -1156,14 +1206,12 @@
                 productData.append('color', row.querySelector('.color').textContent.trim());
                 productData.append('quantity', row.querySelector('.quantity').textContent.trim());
                 productData.append('totalprice', row.querySelector('.totalprice').textContent.replace('₹', '').trim());
-                productData.append('reason', returnForm.querySelector('.reason-dropdown').value);
-                productData.append('details', returnForm.querySelector('.return-details').value);
+                productData.append('reason', dropdown.value);
+                productData.append('details', textarea.value);
 
-                const input1 = returnForm.querySelector('#input1').files[0];
-                const input2 = returnForm.querySelector('#input2').files[0];
+                if (input1.files[0]) productData.append('input1', input1.files[0]);
+                if (input2.files[0]) productData.append('input2', input2.files[0]);
 
-                if (input1) productData.append('input1', input1);
-                if (input2) productData.append('input2', input2);
 
                 try {
                     const response = await fetch('/request-return', {
@@ -1229,7 +1277,7 @@
 
                     // Toggle visibility of the review form
                     if (reviewForm) {
-                        reviewForm.classList.toggle('hidden');
+                        reviewForm.classList.toggle('show');
                     }
                 });
             });
@@ -1357,6 +1405,41 @@
                 });
             });
         });
+    </script>
+
+    <script>
+        // Function to fetch city data (city, pincodes, state)
+        // Function to fetch city data (city, pincodes, state) from Geonames API
+        // Function to fetch city data (city, pincodes) from Geonames API
+        async function fetchLocationDetails() {
+            const pincode = document.getElementById("pincode").value;
+
+            // Validate Pincode length
+            if (pincode.length === 6) {
+                try {
+                    // Fetch data from the Postal PIN Code API
+                    const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
+                    const data = await response.json();
+
+                    if (data[0].Status === "Success" && data[0].PostOffice) {
+                        const postOffice = data[0].PostOffice[0]; // Take the first matching Post Office
+
+                        // Populate the city and state fields
+                        document.getElementById("city").value = postOffice.District || "";
+                        document.getElementById("state").value = postOffice.State || "";
+                    } else {
+                        alert("No details found for this Pincode.");
+                        document.getElementById("city").value = "";
+                        document.getElementById("state").value = "";
+                    }
+                } catch (error) {
+                    console.error("Error fetching location details:", error);
+                    alert("Something went wrong while fetching location details.");
+                }
+            } else if (pincode.length > 6) {
+                alert("Pincode should be exactly 6 digits.");
+            }
+        }
     </script>
 
 

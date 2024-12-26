@@ -87,7 +87,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Poppins", Helvetica, Tahoma, Arial, serif;
-  color: #424242;
+  /* color: #424242; */
   font-weight: 400;
   margin: 0;
   padding: 0;
@@ -429,6 +429,64 @@ hr {
 /*======================================================================
   4. Utilities
 ========================================================================*/
+/* General styles for the table */
+.orders-grid {
+  position: relative;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.orders-grid th{
+  white-space: nowrap;
+}
+
+/* Style for the return form */
+.return-form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  z-index: 10;
+  display: none; /* Hidden by default */
+}
+
+/* Style for the review form */
+.review-form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  background-color: #081525 !important;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  z-index: 10;
+  display: none; /* Hidden by default */
+}
+
+/* Show the forms when the parent is active */
+.return-form.show,
+.review-form.show {
+  display: block;
+}
+
+/* Ensure form inputs and textareas take up the full width */
+.return-form select,
+.return-form textarea,
+.return-form input,
+.review-form input,
+.review-form textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+/* Style for the buttons */
+
 .hidden {
   display: none;
 }
@@ -3985,7 +4043,10 @@ table {
 .spr-form-contact-location,
 .spr-form-review-rating,
 .spr-form-review-title,
-.spr-form-review-body {
+.spr-form-review-body,
+.spr-form-review-product,
+.spr-form-review-color,
+.spr-form-review-title {
   /*/* *zoom: 1; */
   margin: 0 0 15px 0;
 }
@@ -6982,7 +7043,7 @@ body.home15-funiture-template {
   .menu-panel {
     width: 100%; /* Full width on smaller screens */
     border-right: none;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #1ba098;
   }
 
   .order-section, .address-section, .password-section {
@@ -7009,7 +7070,7 @@ body.home15-funiture-template {
   }
 
   .orders-grid td {
-    display: block;
+    /* display: block; */
     text-align: right;
     padding: 5px 10px;
     position: relative;
@@ -7125,11 +7186,8 @@ border-radius:8px;
 }
 
 @media (min-width: 426px) and (max-width: 769px) {
-  .top-header p{
-    width: 246px;
-  }
-  .top-headerdiv{
-    margin-left: 32%;
+  .top-header .text-right {
+    margin-top: -18px;
   }
 }
 @media (max-width: 426px) {

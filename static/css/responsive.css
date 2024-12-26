@@ -641,6 +641,32 @@
   .product-home-style2{
     padding: 0 10px 0 16px !important;
   }
+  .review-form {
+    position: absolute;
+    text-align: left;
+    top: 90px;
+    left: 0;
+    width: 60%;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    z-index: 10;
+    display: none; /* Hidden by default */
+  }
+  .return-form {
+    position: fixed;
+    text-align: left;
+    top: 140px;
+    left: 0;
+    width: 100%;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    z-index: 10;
+    display: none; /* Hidden by default */
+  }
 }
 
 @media only screen and (min-width: 767px) {
@@ -1358,6 +1384,7 @@
 
   .hero {
     height: 200px;
+    display: none;
   }
 
   .image-banner-3 {
@@ -1509,6 +1536,10 @@
 
   .home-parallax-style{
     font-size: xx-large !important;
+  }
+
+  .parallax-responsive{
+    display: block !important;
   }
 
   .home-img{

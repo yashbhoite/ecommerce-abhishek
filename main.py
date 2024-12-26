@@ -682,7 +682,9 @@ def forgot_password():
             
             # Notify the user
             send_password_reset_email(email, temp_password)
-            return render_template('forgot_password.html', message="Temporary password sent to your email.")
+            # Set a session variable for the alert message
+            session['show_alert'] = "Login with temporary password sent to your registered email"
+            return redirect(url_for('login'))  # Redirect to login page
         else:
             return render_template('forgot_password.html', message="Email not found.")
     
@@ -1723,16 +1725,21 @@ def get_sku():
 
 
 
-@app.route('/submit-review-dynamic/<string:product_name>/<string:color>', methods=['POST'])
-def submit_review_dynamic(product_name, color):
+@app.route('/submit-review-dynamic', methods=['POST'])
+def submit_review_dynamic():
     if 'user_email' not in session:
         return redirect(url_for('login'))  # Redirect to login if user is not logged in
 
     user_email = session['user_email']
     name = request.form.get('review[author]')
+    product_name = request.form.get('review[product_name]')
+    color = request.form.get('review[color]')
     rating = request.form.get('review[rating]', 0)  # Default rating to 0 if not provided
     title = request.form.get('review[title]')
     body = request.form.get('review[body]')
+
+    print(product_name)
+    print(color)
 
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
@@ -1742,7 +1749,9 @@ def submit_review_dynamic(product_name, color):
         SELECT sku FROM products WHERE name = ? AND color = ?
     """, (product_name, color))
     result = my_cursor.fetchone()
+
     
+
     if not result:
         connection.close()
         return "SKU not found for the given product name and color", 404
@@ -1760,6 +1769,7 @@ def submit_review_dynamic(product_name, color):
 
     # Redirect back to the product page
     return redirect(url_for('productinfo', id=sku))
+
 
 
 
@@ -2183,6 +2193,21 @@ def request_return():
     input1 = None
     input2 = None
 
+    conn = sqlite3.connect('product.db')
+    cursor = conn.cursor()
+
+    # Check for existing return request with the same details
+    cursor.execute('''
+        SELECT 1 FROM return 
+        WHERE user_email = ? AND orderid = ? AND productname = ? AND size = ? AND color = ?
+    ''', (user_email, orderid, productname, size, color))
+    existing_return = cursor.fetchone()
+
+    if existing_return:
+        conn.close()
+        return jsonify({'success': False, 'message': 'Return request already exists for this product.'})
+
+
     # Save images if provided
     if reason == "Damaged Product":
         input1_file = request.files.get('input1')
@@ -2203,8 +2228,7 @@ def request_return():
     status = "Waiting for Confirmation"
     timestamp = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     # Insert the return request into the return table
-    conn = sqlite3.connect('product.db')
-    cursor = conn.cursor()
+    
 
     cursor.execute('''
         INSERT INTO return (user_email, productname, size, color, quantity, totalprice, reason, details, orderid, image1, image2, status, timestamp)
