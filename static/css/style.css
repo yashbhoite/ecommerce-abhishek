@@ -4819,7 +4819,7 @@ table {
   padding: 6px 15px;
 }
 .card-header:before {
-  content: "\f078";
+  /* content: "\f078"; */
   font-family: "FontAwesome";
   font-size: 13px;
   position: absolute;
@@ -7323,5 +7323,35 @@ border-radius:8px;
 @media (max-width: 475px) {
   .moblog{
     margin-left: 60px !important;
+  }
+}
+
+
+.productList button{
+  background-color: #deb992;
+  color: #000;
+}
+
+/* .formob{
+  display: none;
+}
+.forall{
+  display: block;
+} */
+@media (max-width: 475px) {
+  .forall{
+    display: none !important;
+  }
+
+}
+
+.formobtext{
+  color: #deb992;
+}
+
+@media (min-width: 475px) {
+
+  .formob{
+    display: none !important;
   }
 }

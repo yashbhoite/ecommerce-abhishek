@@ -385,7 +385,7 @@
                 </li>
 
 
-                <li><a href="#" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
+                <li><a href="/shopfullwidth" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
                     <ul>
                         <li><a href="/shopfullwidth/Shirts" class="site-nav">Shirts</a></li>
                         <li><a href="/shopfullwidth/Tshirts" class="site-nav">Tshirts</a></li>
@@ -401,7 +401,7 @@
 
 
 
-                <li><a href="/product" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
+                <li><a href="/shopwomen" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
                     
                     <ul>
                                   <li><a href="/shopwomen/Tops" class="site-nav">Tops</a></li>
@@ -419,8 +419,7 @@
                             class="anm anm-angle-down-l"></i></a>
                    
                 </li>
-                <li class="lvl1"><a href="#">New Arrivals</a>
-                </li>
+            
 
                 <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
                 </li>
@@ -435,7 +434,7 @@
                 </li>
 
 
-                <li><a href="#" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
+                <li><a href="/shopfullwidth" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
                     <ul>
                         <li><a href="/shopfullwidth/Shirts" class="site-nav">Shirts</a></li>
                         <li><a href="/shopfullwidth/Tshirts" class="site-nav">Tshirts</a></li>
@@ -452,7 +451,7 @@
 
 
 
-                <li><a href="/product" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
+                <li><a href="/shopwomen" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
                     
                     <ul>
                         <li><a href="/shopwomen/Tops" class="site-nav">Tops</a></li>
@@ -470,8 +469,7 @@
                     class="anm anm-angle-down-l"></i></a>
            
         </li>
-                <li class="lvl1"><a href="#">New Arrivals</a>
-                </li>
+        
 
                 <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
                 </li>
@@ -619,27 +617,39 @@
 
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4 cart__footer">
                                 <div class="solid-border">
-                                    <div class="row border-bottom pb-2">
+                                    <div class="row border-bottom pb-2 forall">
                                         <span class="col-12 col-sm-6 cart__subtotal-title">Subtotal</span>
                                         <span class="col-12 col-sm-6 text-right">
-                                            <span class="money">₹{{ subtotal }}</span> <!-- Display dynamic subtotal -->
-                                            <p style="margin-top: 5px; color: #869ba9;"><i>(Total Items: {{total_quantity}})</i></p>
+                                            <span class="money ">₹{{ subtotal }}   (Total Items: {{total_quantity}})</span> <!-- Display dynamic subtotal -->
+                                            <!-- <p style="margin-top: 5px; color: #869ba9;"><i></i></p> -->
                                         </span>
                                         
                                     </div>
+                                    <div class="row border-bottom pb-2 pt-2 formob d-flex" style="justify-content: space-between;padding: 0px 10px;">
+                                        <div class=" cart__subtotal-title">Subtotal</div>
+                                        <div class="formobtext text-right">₹{{ subtotal }}   (Total Items: {{total_quantity}})</div>
+                                    </div>
 
-                                    <div class="row border-bottom pb-2 pt-2">
+                                    <div class="row border-bottom pb-2 pt-2 forall">
                                         <span class="col-12 col-sm-6 cart__subtotal-title">Shipping</span>
                                         <span class="col-12 col-sm-6 text-right">₹{{ shipping_charges }}</span>
                                     </div>
+                                    <div class="row border-bottom pb-2 pt-2 formob d-flex" style="justify-content: space-between;padding: 0px 10px;">
+                                        <div class=" cart__subtotal-title">Shipping</div>
+                                        <div class="formobtext text-right">₹{{ shipping_charges }}</div>
+                                    </div>
 
-                                    <div class="row border-bottom pb-2 pt-2">
+                                    <div class="row border-bottom pb-2 pt-2 forall">
                                         <span class="col-12 col-sm-6 cart__subtotal-title"><strong>Grand
                                                 Total</strong></span>
                                         <span class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right">
                                             <span class="money">₹{{ grand_total }}</span>
                                             <!-- Display dynamic grand total -->
                                         </span>
+                                    </div>
+                                    <div class="row border-bottom pb-2 pt-2 formob d-flex" style="justify-content: space-between;padding: 0px 10px;">
+                                        <div class=" cart__subtotal-title">Grand Total</div>
+                                        <div class="formobtext text-right"> ₹{{ grand_total }}</div>
                                     </div>
                                     <div class="cart__shipping">Shipping &amp; taxes calculated at checkout</div>
                                     <p class="cart_tearm">

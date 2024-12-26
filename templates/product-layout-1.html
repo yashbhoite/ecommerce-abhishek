@@ -470,7 +470,7 @@
         </li>
 
 
-        <li><a href="#" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
+        <li><a href="/shopfullwidth" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
             <ul>
                 <li><a href="/shopfullwidth/Shirts" class="site-nav">Shirts</a></li>
                 <li><a href="/shopfullwidth/Tshirts" class="site-nav">Tshirts</a></li>
@@ -486,7 +486,7 @@
 
 
 
-        <li><a href="/product" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
+        <li><a href="/shopwomen" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
             
             <ul>
                           <li><a href="/shopwomen/Tops" class="site-nav">Tops</a></li>
@@ -504,8 +504,7 @@
                     class="anm anm-angle-down-l"></i></a>
            
         </li>
-        <li class="lvl1"><a href="#">New Arrivals</a>
-        </li>
+     
 
         <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
         </li>
@@ -520,7 +519,7 @@
         </li>
 
 
-        <li><a href="#" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
+        <li><a href="/shopfullwidth" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
             <ul>
                 <li><a href="/shopfullwidth/Shirts" class="site-nav">Shirts</a></li>
                 <li><a href="/shopfullwidth/Tshirts" class="site-nav">Tshirts</a></li>
@@ -537,7 +536,7 @@
 
 
 
-        <li><a href="/product" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
+        <li><a href="/shopwomen" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
             
             <ul>
                 <li><a href="/shopwomen/Tops" class="site-nav">Tops</a></li>
@@ -555,8 +554,7 @@
             class="anm anm-angle-down-l"></i></a>
    
 </li>
-        <li class="lvl1"><a href="#">New Arrivals</a>
-        </li>
+
 
         <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
         </li>
@@ -637,7 +635,7 @@
                     <div class="zoompro-span">
                       <img class="blur-up lazyload zoompro" id="productimage"
                         data-zoom-image="../static/images/pics/{{name[12]}}" alt=""
-                        src="../static/images/pics/{{name[12]}}" />
+                        src="../static/images/pics/{{name[12]}}" style="height: auto;aspect-ratio: 4 / 4;object-fit: cover;"/>
                     </div>
 
                     <div class="product-buttons">
@@ -1148,11 +1146,11 @@
                   <a href="/product/{{product[7]}}">
                     <!-- image -->
                     <img class="primary blur-up lazyload" data-src="../static/images/pics/{{product[12]}}"
-                      src="../static/images/pics/{{product[12]}}" alt="image" title="product" />
+                      src="../static/images/pics/{{product[12]}}" alt="image" title="product" style="height: auto;aspect-ratio: 4 / 5;object-fit: cover;"/>
                     <!-- End image -->
                     <!-- Hover image -->
                     <img class="hover blur-up lazyload" data-src="../static/images/pics/{{product[13]}}"
-                      src="../static/images/pics/{{product[13]}}" alt="image" title="product" />
+                      src="../static/images/pics/{{product[13]}}" alt="image" title="product" style="height: auto;aspect-ratio: 4 / 6;object-fit: cover;"/>
                     <!-- End hover image -->
                     <!-- product label -->
                     <!-- <div class="product-labels rectangular">
@@ -1164,21 +1162,12 @@
                   <!-- end product image -->
 
                   <!-- Start product button -->
-                  <form class="variants add" action="#" onclick="window.location.href='#'" method="post">
+                  <form class="variants add" onclick="window.location.href='/product/{{product[7]}}'" method="post">
                     <button class="btn btn-addto-cart" type="button" tabindex="0">
-                      Select Options
+                     View More
                     </button>
                   </form>
-                  <div class="button-set">
-                    <a href="#" title="Quick View" class="quick-view" tabindex="0">
-                      <i class="icon anm anm-search-plus-r"></i>
-                    </a>
-                    <div class="wishlist-btn">
-                      <a class="wishlist add-to-wishlist" href="#">
-                        <i class="icon anm anm-heart-l"></i>
-                      </a>
-                    </div>
-                  </div>
+                 
                   <!-- end product button -->
                 </div>
                 <!-- end product image -->
