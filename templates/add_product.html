@@ -301,8 +301,8 @@
                         </div>
                     </div>
 
-                    <label for="product-tags" style="margin-top: 10px;">Product Size</label>
-                    <div class="tags">
+                    <div class="tags" id="size-l-xl">
+                        <label for="product-tags" >Product Size</label>
                         <input type="checkbox" name="size" value="XS" id="tag1" {{ 'checked' if 'XS' in product[11] else '' }}>
                         <label for="XS">XS</label>
                         <input type="checkbox" name="size" value="S" id="tag2" {{ 'checked' if 'S' in product[11] else '' }}>
@@ -316,48 +316,32 @@
                         <input type="checkbox" name="size" value="XXL" id="tag3" {{ 'checked' if 'XXL' in product[11] else '' }}>
                         <label for="XXL">XXL</label>
                     </div>
+                    <div class="tags" id="size-6-11" style="visibility: hidden; position: absolute;">
+                        <label for="product-tags">Product Size</label>
+                        <input type="checkbox" name="size" value="6" id="tag1" {{ 'checked' if '6' in product[11] else '' }}>
+                        <label for="6">6</label>
+                        <input type="checkbox" name="size" value="7" id="tag2" {{ 'checked' if '7' in product[11] else '' }}>
+                        <label for="7">7</label>
+                        <input type="checkbox" name="size" value="8" id="tag3" {{ 'checked' if '8' in product[11] else '' }}>
+                        <label for="8">8</label>
+                        <input type="checkbox" name="size" value="9" id="tag1" {{ 'checked' if '9' in product[11] else '' }}>
+                        <label for="9">9</label>
+                        <input type="checkbox" name="size" value="10" id="tag2" {{ 'checked' if '10' in product[11] else '' }}>
+                        <label for="10">10</label>
+                        <input type="checkbox" name="size" value="11" id="tag3" {{ 'checked' if '11' in product[11] else '' }}>
+                        <label for="11">11</label>
+                    </div>
                     <label for="product-tags" style="margin-top: 10px;">Color</label>
                     <div class="tags">
-                        <input type="radio" name="color" value="Red" id="tag1" {{ 'checked' if 'Red' in product[2] else '' }}>
-                        <label for="tag1">Red</label>
-                        <input type="radio" name="color" value="Blue" id="tag2" {{ 'checked' if 'Blue' in product[2] else '' }}>
-                        <label for="tag2">Blue</label>
-                        <input type="radio" name="color" value="Black" id="tag3" {{ 'checked' if 'Black' in product[2] else '' }}>
-                        <label for="tag3">Black</label>
-                        <input type="radio" name="color" value="Green" id="tag4" {{ 'checked' if 'Green' in product[2] else '' }}>
-                        <label for="tag4">Green</label>
-                        <input type="radio" name="color" value="Yellow" id="tag5" {{ 'checked' if 'Yellow' in product[2] else '' }}>
-                        <label for="tag5">Yellow</label>
-                        <input type="radio" name="color" value="White" id="tag6" {{ 'checked' if 'White' in product[2] else '' }}>
-                        <label for="tag6">White</label>
+                        <input type="text" name="color" id="tag1" value="{{product[2]}}">
                     </div>
                     <label for="product-tags" style="margin-top: 10px;">Color Options:-</label>
                     <div class="tags">
-                        <input type="checkbox" name="coloroptions" value="Red" id="tag1" {{ 'checked' if 'Red' in product[18] else '' }}>
-                        <label for="Red">Red</label>
-                        <input type="checkbox" name="coloroptions" value="White" id="tag2" {{ 'checked' if 'White' in product[18] else '' }}>
-                        <label for="White">White</label>
-                        <input type="checkbox" name="coloroptions" value="Blue" id="tag3" {{ 'checked' if 'Blue' in product[18] else '' }}>
-                        <label for="Blue">Blue</label>
-                        <input type="checkbox" name="coloroptions" value="Green" id="tag1" {{ 'checked' if 'Green' in product[18] else '' }}>
-                        <label for="Green">Green</label>
-                        <input type="checkbox" name="coloroptions" value="Yellow" id="tag2" {{ 'checked' if 'Yellow' in product[18] else '' }}>
-                        <label for="Yellow">Yellow</label>
-                        <input type="checkbox" name="coloroptions" value="Orange" id="tag3" {{ 'checked' if 'Orange' in product[18] else '' }}>
-                        <label for="Orange">Orange</label>
+                        <input type="text" name="coloroptions"  id="tag1" value="{{product[18]}}">
                     </div>
                     <label for="product-tags" style="margin-top: 10px;">Vendors</label>
                     <div class="tags">
-                        <input type="radio" name="vendor" value="Nike" id="tag1" {{ 'checked' if 'Nike' in product[17] else '' }}>
-                        <label for="tag1">Nike</label>
-                        <input type="radio" name="vendor" value="Puma" id="tag2" {{ 'checked' if 'Puma' in product[17] else '' }}>
-                        <label for="tag2">Puma</label>
-                        <input type="radio" name="vendor" value="Asics" id="tag3" {{ 'checked' if 'Asics' in product[17] else '' }}>
-                        <label for="tag3">Asics</label>
-                        <input type="radio" name="vendor" value="AllenSolly" id="tag4" {{ 'checked' if 'AllenSolly' in product[17] else '' }}>
-                        <label for="tag4">Allen Solly</label>
-                        <input type="radio" name="vendor" value="H&M" id="tag5" {{ 'checked' if 'H&M' in product[17] else '' }}>
-                        <label for="tag5">H&M</label>
+                        <input type="text" name="vendor" id="tag1" value="{{product[17]}}">
                     </div>
 
 
@@ -483,6 +467,47 @@
                 categoryWomen.disabled = true;
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const menCategory = document.getElementById('product-category-men');
+        const womenCategory = document.getElementById('product-category-women');
+        const sizeDivLXL = document.getElementById('size-l-xl');
+        const sizeDiv6to11 = document.getElementById('size-6-11');
+
+        function toggleSizeDiv() {
+            // Determine which category is active
+            const menSelectedValue = menCategory.value;
+            const womenSelectedValue = womenCategory.value;
+
+            // Define product categories that use numeric sizes for men and women
+            const menCategoriesForShoes = ['Sneakers&CasualShoes', 'FormalShoes', 'Sandals&Slippers'];
+            const womenCategoriesForShoes = ['Sneakers&CasualShoes', 'Flats&Sandals', 'Heels&Wedges'];
+
+            // Check if numeric size options should be shown for men
+            const isMenShoesCategory = menCategoriesForShoes.includes(menSelectedValue);
+            // Check if numeric size options should be shown for women
+            const isWomenShoesCategory = womenCategoriesForShoes.includes(womenSelectedValue);
+
+            if (isMenShoesCategory || isWomenShoesCategory) {
+                sizeDiv6to11.style.visibility = 'visible';
+                sizeDiv6to11.style.position = 'relative';
+                sizeDivLXL.style.visibility = 'hidden';
+                sizeDivLXL.style.position = 'absolute';
+            } else {
+                sizeDiv6to11.style.visibility = 'hidden';
+                sizeDiv6to11.style.position = 'absolute';
+                sizeDivLXL.style.visibility = 'visible';
+                sizeDivLXL.style.position = 'relative';
+            }
+        }
+
+        // Initial check
+        toggleSizeDiv();
+
+        // Add event listeners for change
+        menCategory.addEventListener('change', toggleSizeDiv);
+        womenCategory.addEventListener('change', toggleSizeDiv);
+    });
 
         // Attach the function to each radio button's change event
         document.querySelectorAll('input[name="gender"]').forEach(radio => {

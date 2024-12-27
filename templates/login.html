@@ -520,12 +520,17 @@
                                             <label for="CustomerPassword">Password</label>
                                             <input type="password" name="customer[password]" id="CustomerPassword"
                                                 class="" required>
+                                                <label>
+                                                    <input type="checkbox" name="tearm" class="checkbox" value="tearm"
+                                                        required="">
+                                                    I agree with the <a href="../static/images/collection/FashionHolics-TermsandConditions.pdf" target="_blank"> terms and conditions</a>
+                                                </label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="text-center col-12 col-sm-12 col-md-12 col-lg-12">
-                                        <input type="submit" class="btn mb-3" value="Sign In">
+                                        <input type="submit" id="loginsubmit" class="btn mb-3" value="Sign In">
                                         <p class="mb-4">
                                             <a href="/forgot-password" id="RecoverPassword" class="login-hover">Forgot your password?</a> &nbsp; | &nbsp;
                                             <a href="/register" id="customer_register_link" class="login-hover">Create
@@ -585,8 +590,9 @@
                                     <!-- <li><a href="#">Request Personal Data</a></li>
                                     <li><a href="#">FAQ's</a></li> -->
                                     <li><a href="/contactus">Contact Us</a></li>
-                                    <li><a href="../static/images/collection/Fashion_Holics_Return_Policy.pdf" target="_blank">Orders and Returns</a></li>
-                                    <!-- <li><a href="#">Support Center</a></li> -->
+                                    <li><a href="../static/images/collection/FashionHolics_Return_Policy.pdf" target="_blank">Orders and Returns Policy</a></li>
+                                    <li><a href="../static/images/collection/FashionHolics-PrivacyPolicy.pdf" target="_blank">Privacy Policy</a></li>
+                                    <li><a href="../static/images/collection/FashionHolics-TermsandConditions.pdf" target="_blank">Terms and Conditions</a></li>                                    <!-- <li><a href="#">Support Center</a></li> -->
                                 </ul>
                             </div>
                             <div class="col-12 col-sm-12 col-md-3 col-lg-3 contact-box">
@@ -618,6 +624,17 @@
                 </div>
             </div>
         </footer>
+        <script>
+    document.getElementById('loginsubmit').addEventListener('click', function (event) {
+            // Check if the checkbox is checked
+            var checkbox = document.querySelector('input[name="tearm"]');
+            if (!checkbox.checked) {
+                // Prevent the redirect if checkbox is not checked
+                event.preventDefault();
+                alert("You must agree with the terms and conditions to proceed.");
+            }
+        });
+        </script>
         <!--End Footer-->
         <!--Scoll Top-->
         <span id="site-scroll"><i class="icon anm anm-angle-up-r"></i></span>

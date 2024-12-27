@@ -623,7 +623,7 @@ def login():
     print("------------next page----------------------")
     print(next_page)
     if request.method == 'POST':
-        identifier = request.form['customer[identifier]']  # This can be email or phone
+        identifier = request.form['customer[identifier]'].lower()  # This can be email or phone
         password = request.form['customer[password]']
         
         # Connect to the database
@@ -828,7 +828,7 @@ def adduser():
     if request.method == 'POST':
         firstname = request.form['firstname']
         lastname = request.form['lastname']
-        email = request.form['email']
+        email = request.form['email'].lower()
         phone = request.form['phone']
         password = request.form['password']
 
@@ -1488,12 +1488,12 @@ def productadddb():
     gender = request.form.get('gender')
     size = request.form.getlist('size')
     print(size)
-    color = request.form.getlist('color')
-    coloroption = request.form.getlist('coloroptions')
-    vendor = request.form.get('vendor')
+    color = request.form['color'].capitalize()
+    coloroption = ','.join([color.strip().capitalize() for color in request.form['coloroptions'].split(',')])
+    vendor = request.form['vendor'].capitalize()
     sizes = ','.join(size)
-    colors = ','.join(color)
-    coloroptions = ','.join(coloroption)
+    # colors = ','.join(color)
+    # coloroptions = ','.join(coloroption)
     input1 = request.files['input1']
     input2 = request.files['input2']
     input3 = request.files['input3']
@@ -1532,7 +1532,7 @@ def productadddb():
 
     connection = sqlite3.connect('product.db')
     my_cursor = connection.cursor()
-    my_cursor.execute("INSERT INTO products (name, description, color, price, per1, per2, per3, sku, quantity, category, gender, size, img1, img2, img3, img4, img5, vendor, coloroptions, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)", (productname, description, colors, baseprice, discountpercentage1, discountpercentage2, discountpercentage3, sku, quantity, productcategory, gender, sizes, input1, input2, input3, input4, input5, vendor, coloroptions))
+    my_cursor.execute("INSERT INTO products (name, description, color, price, per1, per2, per3, sku, quantity, category, gender, size, img1, img2, img3, img4, img5, vendor, coloroptions, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)", (productname, description, color, baseprice, discountpercentage1, discountpercentage2, discountpercentage3, sku, quantity, productcategory, gender, sizes, input1, input2, input3, input4, input5, vendor, coloroption))
     connection.commit()
     connection.close()
     return redirect(url_for('shopfullwidth'))

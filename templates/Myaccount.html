@@ -754,7 +754,7 @@
                                     </div>
                                     <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                         <label for="pincode">Pincode <span class="required-f">*</span></label>
-                                        <input type="text" id="pincode" name="pincode"
+                                        <input type="text" id="pincode" name="pincode" pattern="\d{6}"
                                             value="{{ address_data[6] if address_data else '' }}" required
                                             oninput="fetchLocationDetails()">
                                     </div>
@@ -882,8 +882,9 @@
                                         <!-- <li><a href="#">Request Personal Data</a></li>
                                         <li><a href="#">FAQ's</a></li> -->
                                         <li><a href="/contactus">Contact Us</a></li>
-                                        <li><a href="../static/images/collection/Fashion_Holics_Return_Policy.pdf"
-                                                target="_blank">Orders and Returns</a></li>
+                                        <li><a href="../static/images/collection/FashionHolics_Return_Policy.pdf" target="_blank">Orders and Returns Policy</a></li>
+                                        <li><a href="../static/images/collection/FashionHolics-PrivacyPolicy.pdf" target="_blank">Privacy Policy</a></li>
+                                        <li><a href="../static/images/collection/FashionHolics-TermsandConditions.pdf" target="_blank">Terms and Conditions</a></li>
                                         <!-- <li><a href="#">Support Center</a></li> -->
                                     </ul>
                                 </div>
