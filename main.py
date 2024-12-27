@@ -645,7 +645,7 @@ def login():
                 # Successful login
                 session['logged_in'] = True
                 session['user_email'] = user[2]  # Assuming email is in the 3rd column
-                session['is_admin'] = user[2] == 'yash2505bhoite@gmail.com' and password == 'admin'  # Set admin flag
+                session['is_admin'] = user[2] == 'fashionholics23@gmail.com' and password == 'admin'  # Set admin flag
 
                 return redirect(next_page)  # Redirect to the original page
             else:
@@ -776,7 +776,7 @@ def myaccount():
 
     conn.close()
 
-    return render_template('myaccount.html', order_items=order_items, address_data=address_data, cart_count=cart_count)
+    return render_template('Myaccount.html', order_items=order_items, address_data=address_data, cart_count=cart_count)
 
 
 
