@@ -1609,3 +1609,37 @@
     margin-top: 20px;
   }
 }
+
+
+@media (max-width: 475px) {
+  .cart__header th,
+  .cart__row td {
+      font-size: 12px;
+  }
+
+  .cart__meta,
+  .cart__meta1-text {
+      font-size: 10px;
+  }
+
+  .cart__row {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .cart__image-wrapper,
+  .cart__meta {
+      width: 100%;
+  }
+
+  .cart__update-wrapper,
+  .cart__price-wrapper,
+  .cart-price,
+  .cart__remove {
+      width: 100%;
+      text-align: left;
+  }
+  .tabprice, .tabqty{
+    padding: 10px 0 8px 40px !important;
+  }
+}

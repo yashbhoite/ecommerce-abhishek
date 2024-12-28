@@ -128,14 +128,15 @@ def get_product_details(product_id):
     
     # Fetch the product name using SKU
     name = cursor.execute("SELECT name FROM products WHERE sku = ?", (product_id,)).fetchone()
-    
+    gender = cursor.execute("SELECT gender FROM products WHERE sku = ?", (product_id,)).fetchone()
+
     if not name:
         conn.close()
         return jsonify({"message": "Product not found"}), 404
 
     # Fetch sizes, colors, and SKUs for products with the same name
     products = cursor.execute(
-        "SELECT sku, size, color, quantity FROM products WHERE name = ?", (name[0],)
+        "SELECT sku, size, color, quantity FROM products WHERE name = ? and gender=?", (name[0],gender[0])
     ).fetchall()
     conn.close()
     print("-----------------------------pros---------------------------------------")
@@ -149,7 +150,14 @@ def get_product_details(product_id):
             'M': 3,
             'L': 4,
             'XL': 5,
-            'XXL': 6
+            'XXL': 6,
+            '6': 1,
+            '7': 2,
+            '8': 3,
+            '9': 4,
+            '10': 5,
+            '11': 6,
+            '12': 7
         }
 
         color_size_map = {}
@@ -1659,6 +1667,20 @@ def productinfo(id):
             stock = stock[3]
         elif selected_size == 'XL':
             stock = stock[4]
+        elif selected_size == '6':
+            stock = stock[0]
+        elif selected_size == '7':
+            stock = stock[1]
+        elif selected_size == '8':
+            stock = stock[2]
+        elif selected_size == '9':
+            stock = stock[3]
+        elif selected_size == '10':
+            stock = stock[4]
+        elif selected_size == '11':
+            stock = stock[5]
+        elif selected_size == '12':
+            stock = stock[6]
         else:
             stock = stock[5]
     else:
@@ -2097,7 +2119,7 @@ def place_order():
                     qty_list = list(map(int, current_qty[0].split(',')))
 
                     # Get the index for the current size
-                    size_index = {'XS': 0, 'S': 1, 'M': 2, 'L': 3, 'XL': 4, 'XXL': 5}.get(selected_size)
+                    size_index = {'XS': 0, 'S': 1, 'M': 2, 'L': 3, 'XL': 4, 'XXL': 5,'6': 0,'7': 1,'8': 2,'9': 3,'10': 4,'11': 5,'12': 6}.get(selected_size)
                     print("-----------------------------------------size-index-----------------------------------------")
                     print(size_index)
                     if size_index is not None:
@@ -2127,7 +2149,9 @@ def place_order():
                 qty_list = list(map(int, current_qty[0].split(',')))
 
                 # Get the index for the current size
-                size_index = {'XS': 0, 'S': 1, 'M': 2, 'L': 3, 'XL': 4, 'XXL': 5}.get(selected_size)
+                size_index = {'XS': 0, 'S': 1, 'M': 2, 'L': 3, 'XL': 4, 'XXL': 5,'6': 0,'7': 1,'8': 2,'9': 3,'10': 4,'11': 5,'12': 6}.get(selected_size)
+
+                
                 if size_index is not None:
                     # Decrease the quantity for the selected size
                     qty_list[size_index] -= quantity_to_decrease

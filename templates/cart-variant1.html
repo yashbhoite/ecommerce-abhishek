@@ -511,9 +511,10 @@
                                 <table>
                                     <thead class="cart__header">
                                         <tr>
-                                            <th colspan="2" class="text-center">Product</th>
-                                            <th class="text-center">Price</th>
-                                            <th class="text-center">Quantity</th>
+                                            <th class="text-center">Image</th>
+                                            <th class="text-center">Product</th>
+                                            <th class="text-center tabprice">Price</th>
+                                            <th class="text-center tabqty">Quantity</th>
                                             <th class="text-right">Total</th>
                                             <th class="action">&nbsp;</th>
                                         </tr>
@@ -814,6 +815,32 @@
                     .catch(error => console.error('Error:', error));
             });
         });
+
+        document.addEventListener("DOMContentLoaded", function () {
+    function updateTableHeaders() {
+        // Get the screen width
+        const screenWidth = window.innerWidth;
+
+        // Select the table headers
+        const priceHeader = document.querySelector(".tabprice");
+        const qtyHeader = document.querySelector(".tabqty");
+
+        // Update innerHTML based on screen width
+        if (screenWidth <= 476) {
+            if (priceHeader) priceHeader.innerHTML = "₹";
+            if (qtyHeader) qtyHeader.innerHTML = "Qty";
+        } else {
+            if (priceHeader) priceHeader.innerHTML = "Price";
+            if (qtyHeader) qtyHeader.innerHTML = "Quantity";
+        }
+    }
+
+    // Run on page load
+    updateTableHeaders();
+
+    // Run on window resize
+    window.addEventListener("resize", updateTableHeaders);
+});
     </script>
     
     <script>
