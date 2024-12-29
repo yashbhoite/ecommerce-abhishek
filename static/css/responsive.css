@@ -1382,9 +1382,9 @@
     float: none;
   }
 
-  .hero {
+  .hero-parallax {
     height: 200px;
-    display: none;
+    display: none !important;
   }
 
   .image-banner-3 {
