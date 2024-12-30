@@ -236,7 +236,7 @@
 	// Full Size Banner on the Any Screen
 	$(window).resize(function() {
 		var bodyheight = $(this).height() - 20;
-		$(".sliderFull .bg-size").height(bodyheight);
+		
 	}).resize();
 	
 	/*-----------------------------------------
