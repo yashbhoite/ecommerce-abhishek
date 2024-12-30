@@ -1415,7 +1415,7 @@ textarea:-ms-input-placeholder {
 }
 .slideshow .slide {
   position: relative;
-  height: 400px;
+  height: 400px !important;
 }
 .slideshow .wrap-caption.center {
   max-width: 1200px;
@@ -1524,7 +1524,10 @@ textarea:-ms-input-placeholder {
   z-index: 3;
 }
 .slideshow .slick-slide img {
-  /* width: 100%; */
+  width: 100%;
+}
+.bg-size{
+  height: 400px !important;
 }
 .slideshow .slick-prev,
 .slideshow .slick-next {
