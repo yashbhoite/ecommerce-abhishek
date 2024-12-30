@@ -1526,9 +1526,7 @@ textarea:-ms-input-placeholder {
 .slideshow .slick-slide img {
   width: 100%;
 }
-.bg-size{
-  height: 400px !important;
-}
+
 .slideshow .slick-prev,
 .slideshow .slick-next {
   line-height: normal;

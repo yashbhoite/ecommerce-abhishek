@@ -10494,7 +10494,7 @@ a .icon-rotate-90:before {
 .slick-slide {
   display: none;
   float: left;
-  height: 400px;
+  /* height: 400px; */
   min-height: 1px;
 }
 [dir="rtl"] .slick-slide {
