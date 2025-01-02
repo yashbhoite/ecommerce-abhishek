@@ -1,7 +1,7 @@
 import razorpay
 from email import message
 from unicodedata import name
-from flask import flash,Flask, redirect, render_template, request, url_for, session, jsonify
+from flask import flash,Flask, redirect, render_template, request, url_for, session, jsonify, send_from_directory
 import requests
 import smtplib
 import sqlite3
@@ -33,8 +33,8 @@ os.makedirs(VIDEO_FOLDER, exist_ok=True)
 
 
 def send_password_reset_email(email, temp_password):
-    sender_email = "sharmakartik1103@gmail.com"
-    sender_password = "iggp hkmj olvh xtfr"
+    sender_email = "fashionholics23@gmail.com"
+    sender_password = "uhvq dujm czsv umhr"
     subject = "Password Reset Request"
     message = f"Your temporary password is: {temp_password}\nPlease login and reset your password."
 
@@ -75,6 +75,26 @@ discount_ranges = {
 def get_random_discount():
     return random.randint(5, 10)
 
+
+@app.route('/termsandconditions')
+def terms_and_conditions():
+    # Serve the PDF file from the static directory
+    return send_from_directory('static/images/collection', 'FashionHolics-TermsandConditions.pdf', as_attachment=False)
+
+@app.route('/returnspolicy')
+def returns_policy():
+    # Serve the Orders and Returns Policy PDF
+    return send_from_directory('static/images/collection', 'FashionHolics_Return_Policy.pdf', as_attachment=False)
+
+@app.route('/shippinganddelivery')
+def shipping_and_delivery():
+    # Serve the Orders and Returns Policy PDF
+    return send_from_directory('static/images/collection', 'FashionHolics-ShippingDelivery.pdf', as_attachment=False)
+
+@app.route('/privacypolicy')
+def privacy_policy():
+    # Serve the Privacy Policy PDF
+    return send_from_directory('static/images/collection', 'FashionHolics-PrivacyPolicy.pdf', as_attachment=False)
 
 @app.route('/add-to-cart-combo/<string:product_id>', methods=['POST'])
 def add_to_cart_combo(product_id):
@@ -584,8 +604,8 @@ def send_message():
 
     SMTP_SERVER = "smtp.gmail.com"
     SMTP_PORT = 587
-    GMAIL_USER = "sharmakartik1103@gmail.com"
-    GMAIL_PASSWORD = "iggp hkmj olvh xtfr"
+    GMAIL_USER = "fashionholics23@gmail.com"
+    GMAIL_PASSWORD = "uhvq dujm czsv umhr"
     # Get form data
     name = request.form['name']
     email = request.form['email']
@@ -653,7 +673,7 @@ def login():
                 # Successful login
                 session['logged_in'] = True
                 session['user_email'] = user[2]  # Assuming email is in the 3rd column
-                session['is_admin'] = user[2] == 'fashionholics23@gmail.com' and password == 'admin'  # Set admin flag
+                session['is_admin'] = user[2] == 'fashionholics23@gmail.com' and password == 'Fashion@23'  # Set admin flag
 
                 return redirect(next_page)  # Redirect to the original page
             else:
@@ -680,7 +700,7 @@ def forgot_password():
         
         if user:
             # Generate a temporary password or reset token
-            temp_password = "Temp1234"  # Replace this with a more secure random generator
+            temp_password = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))  # Replace this with a more secure random generator
             # Update the database with the temporary password
             conn = sqlite3.connect('product.db')
             cursor = conn.cursor()
@@ -809,8 +829,8 @@ def send_verification_code():
     verification_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
     
     # Mock email sending (replace this with actual email sending logic)
-    sender_email = "sharmakartik1103@gmail.com"
-    sender_password = "iggp hkmj olvh xtfr"
+    sender_email = "fashionholics23@gmail.com"
+    sender_password = "uhvq dujm czsv umhr"
     subject = "Email Verification Code"
     message = f"Your verification code is: {verification_code}"
 
@@ -1153,8 +1173,8 @@ def update_order_status():
         try:
             smtp_server = 'smtp.gmail.com'
             smtp_port = 587
-            sender_email = "sharmakartik1103@gmail.com"
-            sender_password = "iggp hkmj olvh xtfr"
+            sender_email = "fashionholics23@gmail.com"
+            sender_password = "uhvq dujm czsv umhr"
 
             msg = MIMEMultipart()
             msg['From'] = sender_email
@@ -1234,8 +1254,8 @@ def update_return_status():
         try:
             smtp_server = 'smtp.gmail.com'
             smtp_port = 587
-            sender_email = "sharmakartik1103@gmail.com"
-            sender_password = "iggp hkmj olvh xtfr"
+            sender_email = "fashionholics23@gmail.com"
+            sender_password = "uhvq dujm czsv umhr"
 
             msg = MIMEMultipart()
             msg['From'] = sender_email
@@ -2175,9 +2195,9 @@ def place_order():
     try:
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587
-        sender_email = "sharmakartik1103@gmail.com"
-        sender_password = "iggp hkmj olvh xtfr"
-        recipient_email = "sharmakartik1103@gmail.com"
+        sender_email = "fashionholics23@gmail.com"
+        sender_password = "uhvq dujm czsv umhr"
+        recipient_email = "fashionholics23@gmail.com"
         
         msg = MIMEMultipart()
         msg['From'] = sender_email
@@ -2266,9 +2286,9 @@ def request_return():
     try:
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587
-        sender_email = "sharmakartik1103@gmail.com"
-        sender_password = "iggp hkmj olvh xtfr"
-        recipient_email = "sharmakartik1103@gmail.com"
+        sender_email = "fashionholics23@gmail.com"
+        sender_password = "uhvq dujm czsv umhr"
+        recipient_email = "fashionholics23@gmail.com"
 
         msg = MIMEMultipart()
         msg['From'] = sender_email
@@ -2321,9 +2341,9 @@ def cancel_order():
         try:
             smtp_server = 'smtp.gmail.com'
             smtp_port = 587
-            sender_email = "sharmakartik1103@gmail.com"
-            sender_password = "iggp hkmj olvh xtfr"
-            recipient_email = "sharmakartik1103@gmail.com"
+            sender_email = "fashionholics23@gmail.com"
+            sender_password = "uhvq dujm czsv umhr"
+            recipient_email = "fashionholics23@gmail.com"
 
             msg = MIMEMultipart()
             msg['From'] = sender_email
