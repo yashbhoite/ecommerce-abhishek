@@ -1787,7 +1787,9 @@ document.getElementById('addToCartBtn').addEventListener('click', function (even
             enableInput();
             currentLevel = 'level1';
             document.getElementById('options').style.display = 'none';
-            document.getElementById('submitBid').style.display = 'none';
+            document.getElementById('submitBid').style.display = 'block';
+            document.getElementById('bidInput').value = '';
+            document.getElementById('bidInput').style.display = 'block';
 
             return;
           }
@@ -1836,7 +1838,21 @@ document.getElementById('addToCartBtn').addEventListener('click', function (even
 
                 scrollToBottom(); // Scroll to the bottom after the message
                 return; // Stop execution and prevent the request
-              } else {
+              }
+              else if (newMessage.textContent.includes("🎉 Deal Locked! You've got it! Ready to secure your pick with an easy payment? 🛒💳")) {
+                document.getElementById('accept').disabled = false;
+                document.getElementById('decline').disabled = false;
+
+                // Enable the user to resubmit their bid
+                document.getElementById('bidInput').style.display = 'none';
+                document.getElementById('submitBid').style.display = 'none';
+                document.getElementById('options').style.display = 'block'; // Hide the options
+
+                scrollToBottom(); // Scroll to the bottom after the message
+                return; // Stop execution and prevent the request
+              } 
+               
+              else {
                 // Re-enable the "Yes" and "No" buttons if a valid bid message was shown
                 document.getElementById('accept').disabled = false;
                 document.getElementById('decline').disabled = false;
