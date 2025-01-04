@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Cancellation and Refund</title>
+    <meta name="description" content="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="../static/css/plugins.css">
+    <!-- Bootstap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/responsive.css">
+</head>
+
+<body class="contact-template page-template">
+    <div class="pageWrapper">
+        <!--Search Form Drawer-->
+        <div class="search">
+            <div class="search__form">
+                <form class="search-bar__form" action="#">
+                    <button class="go-btn search__button" type="submit"><i class="icon anm anm-search-l"></i></button>
+                    <input class="search__input" type="search" name="q" value="" placeholder="Search entire store..."
+                        aria-label="Search" autocomplete="off">
+                </form>
+                <button type="button" class="search-trigger close-btn"><i class="icon anm anm-times-l"></i></button>
+            </div>
+        </div>
+        <!--End Search Form Drawer-->
+        <!--Top Header-->
+        <div class="top-header" style="background-color: #081525;">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <!-- Centered Tagline Section -->
+                    <div class="col-sm-12 col-md-4 offset-md-4 text-center top-headerdiv">
+                        <p class="top-header_middle-text" style="color: #deb992;">Effortless Style. Redefined for You.
+                        </p>
+                    </div>
+                    <!-- Right Aligned Login and Create Account -->
+                    <div class="col-sm-12 col-md-4 text-right accountlogo">
+                        <span class="user-menu d-block d-lg-none">
+                            <i class="anm anm-user-al" aria-hidden="true" style="color: #deb992;"></i>
+                        </span>
+                        <ul class="customer-links list-inline mb-0">
+                            {% if session['logged_in'] %}
+                            <!-- User is logged in -->
+                            {% if session['is_admin'] %}
+                            <li class="list-inline-item"><a href="/wishlist" target="_blank"
+                                    style="color: #deb992; font-weight: 500;">Admin</a></li>
+                            {% endif %}
+                            <li class="list-inline-item" style="display: none;"><a href="/login"
+                                    style="color: #deb992; font-weight: 500;">Login</a></li>
+                            <li class="list-inline-item" style="display: none;"><a href="/register"
+                                    style="color: #deb992; font-weight: 500;">Create Account</a></li>
+
+                            <!-- Show "My Account" and "Logout" when logged in -->
+                            <li class="list-inline-item"><a href="/myaccount"
+                                    style="color: #deb992; font-weight: 500;">My
+                                    Account</a></li>
+                            <li class="list-inline-item"><a href="/logout"
+                                    style="color: #deb992; font-weight: 500;">Logout</a></li>
+                            {% else %}
+                            <!-- User is not logged in -->
+                            <li class="list-inline-item" style="display: none;"><a href="/wishlist" target="_blank"
+                                    style="color: #deb992; font-weight: 500;">Admin</a></li>
+                            <li class="list-inline-item"><a href="/login"
+                                    style="color: #deb992; font-weight: 500;">Login</a></li>
+                            <li class="list-inline-item"><a href="/register"
+                                    style="color: #deb992; font-weight: 500;">Create Account</a></li>
+                            <li class="list-inline-item" style="display: none;"><a href="/myaccount"
+                                    style="color: #deb992; font-weight: 500; display: none;">My Account</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Top Header-->
+        <!--Header-->
+        <div class="header-wrap classicHeader animated d-flex">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <!--Desktop Logo-->
+                    <div class="logo col-md-2 col-lg-2 d-none d-lg-block">
+                        <a href="/">
+                            <div style="display: flex;align-items: center;">
+                                <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics"
+                                    title="FashionHolics" />
+                                <h3
+                                    style="color: #deb992;font-family: Poppins, Helvetica, Tahoma, Arial, serif;font-weight: 600;margin-bottom: 0px;white-space: nowrap;font-size: 1vw;">
+                                    FASHION HOLICS</h3>
+                            </div>
+                        </a>
+
+                    </div>
+                    <!--End Desktop Logo-->
+                    <div class="col-2 col-sm-3 col-md-3 col-lg-8"
+                        style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                        <div class="d-block d-lg-none">
+                            <button type="button"
+                                class="btn--link site-header__menu js-mobile-nav-toggle mobile-nav--open">
+                                <i class="icon anm anm-times-l" style="color: #deb992;"></i>
+                                <i class="anm anm-bars-r" style="color: #deb992;"></i>
+                            </button>
+                        </div>
+                        <!--Desktop Menu-->
+                        <nav class="grid__item" id="AccessibleNav"><!-- for mobile -->
+                            <ul id="siteNav" class="site-nav medium center hidearrow">
+                                {% if session['logged_in'] %}
+                                <li class="lvl1 parent megamenu"><a href="/">Home <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i
+                                            class="anm anm-angle-down-l"></i></a>
+                                    <div class="megamenu style4">
+                                        <ul class="grid grid--uniform mmWrapper">
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Top Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Tshirts"
+                                                            class="site-nav lvl-2">T-Shirts</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Shirts"
+                                                            class="site-nav lvl-2">Shirts</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Jackets&Hoodies"
+                                                            class="site-nav lvl-2">Jackets & Hoodies</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Sweaters&Sweatshirts"
+                                                            class="site-nav lvl-2">Sweaters & Sweatshirts</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Bottom Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Jeans&Trousers"
+                                                            class="site-nav lvl-2">Jeans & Trousers<span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Shorts&Chinos"
+                                                            class="site-nav lvl-2">Shorts & Chinos</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Foot Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Sneakers&CasualShoes"
+                                                            class="site-nav lvl-2">Sneakers & Casual Shoes<span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth/FormalShoes"
+                                                            class="site-nav lvl-2">Formal Shoes</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Sandals&Slippers"
+                                                            class="site-nav lvl-2">Sandals & Slippers</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i
+                                            class="anm anm-angle-down-l"></i></a>
+                                    <div class="megamenu style4">
+                                        <ul class="grid grid--uniform mmWrapper">
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Top Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopwomen/Tops"
+                                                            class="site-nav lvl-2">Tops</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen/Dresses"
+                                                            class="site-nav lvl-2">Dresses</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen/Sweaters"
+                                                            class="site-nav lvl-2">Sweaters</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen/Jackets&Coats"
+                                                            class="site-nav lvl-2">Jackets & Coats</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Bottom Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopwomen/Jeans&Pants"
+                                                            class="site-nav lvl-2">Jeans & Pants
+                                                            <!-- <span class="lbl nm_label3">Hot</span></a></li> -->
+                                                    <li class="lvl-2"><a href="/shopwomen/Skirts&Shorts"
+                                                            class="site-nav lvl-2">Skirts & Shorts</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Footwear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopwomen/Flats&Sandals"
+                                                            class="site-nav lvl-2">Flats & Sandals<span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen/Heels&Wedges"
+                                                            class="site-nav lvl-2">Heels & Wedges</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen/Sneakers&CasualShoes"
+                                                            class="site-nav lvl-2">Sneakers & Casual Shoes</a></li>
+
+                                                </ul>
+                                            </li>
+                                            <!-- <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                    class="site-nav lvl-1">Sportswear</a>
+                                <ul class="subLinks">
+                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Sports
+                                            Bra</a></li>
+                                    <li class="lvl-2"><a href="/shopwomen"
+                                            class="site-nav lvl-2">Leggings</a></li>
+                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Tank
+                                            Tops</a></li>
+                                    <li class="lvl-2"><a href="/shopwomen"
+                                            class="site-nav lvl-2">Running Shorts</a></li>
+                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Track
+                                            Jackets</a></li>
+                                </ul>
+                            </li> -->
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="lvl1 parent megamenu"><a href="/">Kids <span
+                                            style="background-color: red;border-radius: 5px; padding: 1px;">Coming
+                                            soon!</span><i class="anm anm-angle-down-l"></i></a>
+
+                                </li>
+                                <!-- <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li> -->
+
+                                <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                <li class="lvl1 parent dropdown"><a href="/aboutus">About Us <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                <li class="lvl1 parent dropdown"><a href="/myaccount">My Account <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                {% else %}
+                                <li class="lvl1 parent megamenu"><a href="/">Home <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i
+                                            class="anm anm-angle-down-l"></i></a>
+                                    <div class="megamenu style4">
+                                        <ul class="grid grid--uniform mmWrapper">
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Top Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Tshirts"
+                                                            class="site-nav lvl-2">T-Shirts</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Shirts"
+                                                            class="site-nav lvl-2">Shirts</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Jackets&Hoodies"
+                                                            class="site-nav lvl-2">Jackets & Hoodies</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Sweaters&Sweatshirts"
+                                                            class="site-nav lvl-2">Sweaters & Sweatshirts</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Bottom Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Jeans&Trousers"
+                                                            class="site-nav lvl-2">Jeans & Trousers<span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Shorts&Chinos"
+                                                            class="site-nav lvl-2">Shorts & Chinos</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Foot Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Sneakers&CasualShoes"
+                                                            class="site-nav lvl-2">Sneakers & Casual Shoes<span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth/FormalShoes"
+                                                            class="site-nav lvl-2">Formal Shoes</a></li>
+                                                    <li class="lvl-2"><a href="/shopfullwidth/Sandals&Slippers"
+                                                            class="site-nav lvl-2">Sandals & Slippers</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i
+                                            class="anm anm-angle-down-l"></i></a>
+                                    <div class="megamenu style4">
+                                        <ul class="grid grid--uniform mmWrapper">
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Top Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopwomen/Tops"
+                                                            class="site-nav lvl-2">Tops</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen/Dresses"
+                                                            class="site-nav lvl-2">Dresses</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen/Sweaters"
+                                                            class="site-nav lvl-2">Sweaters</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen/Jackets&Coats"
+                                                            class="site-nav lvl-2">Jackets & Coats</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Bottom Wear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopwomen/Jeans&Pants"
+                                                            class="site-nav lvl-2">Jeans & Pants
+                                                            <!-- <span class="lbl nm_label3">Hot</span></a></li> -->
+                                                    <li class="lvl-2"><a href="/shopwomen/Skirts&Shorts"
+                                                            class="site-nav lvl-2">Skirts & Shorts</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                                    class="site-nav lvl-1">Footwear</a>
+                                                <ul class="subLinks">
+                                                    <li class="lvl-2"><a href="/shopwomen/Flats&Sandals"
+                                                            class="site-nav lvl-2">Flats & Sandals<span
+                                                                class="lbl nm_label3">Hot</span></a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen/Heels&Wedges"
+                                                            class="site-nav lvl-2">Heels & Wedges</a></li>
+                                                    <li class="lvl-2"><a href="/shopwomen/Sneakers&CasualShoes"
+                                                            class="site-nav lvl-2">Sneakers & Casual Shoes</a></li>
+
+                                                </ul>
+                                            </li>
+                                            <!-- <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                                    class="site-nav lvl-1">Sportswear</a>
+                                <ul class="subLinks">
+                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Sports
+                                            Bra</a></li>
+                                    <li class="lvl-2"><a href="/shopwomen"
+                                            class="site-nav lvl-2">Leggings</a></li>
+                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Tank
+                                            Tops</a></li>
+                                    <li class="lvl-2"><a href="/shopwomen"
+                                            class="site-nav lvl-2">Running Shorts</a></li>
+                                    <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Track
+                                            Jackets</a></li>
+                                </ul>
+                            </li> -->
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="lvl1 parent megamenu"><a href="/">Kids <span
+                                            style="background-color: red;border-radius: 5px; padding: 1px;">Coming
+                                            soon!</span><i class="anm anm-angle-down-l"></i></a>
+
+                                </li>
+                                <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
+
+                                <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                <li class="lvl1 parent dropdown"><a href="/aboutus">About Us <i
+                                            class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                <li class="lvl1 parent dropdown"><a href="/myaccount" style="display: none;">My Account
+                                        <i class="anm anm-angle-down-l"></i></a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                        <!--End Desktop Menu-->
+                    </div>
+                    <!--Mobile Logo-->
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 d-block d-lg-none mobile-logo">
+                        <div class="logo moblog">
+                            <a href="/">
+                                <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics"
+                                    title="FashionHolics" />
+
+                            </a>
+                            <h3
+                                style="color: #deb992;font-family: Poppins, Helvetica, Tahoma, Arial, serif;font-weight: 600;margin-bottom: 0px;white-space: nowrap;font-size: 2.5vw;">
+                                FASHION HOLICS</h3>
+                        </div>
+
+                    </div>
+                    <!--Mobile Logo-->
+                    <div class="col-4 col-sm-3 col-md-3 col-lg-2">
+                        <div class="site-cart">
+                            <a href="/cart" title="Cart">
+                                <i class="anm anm-bag-l" style="color: #deb992; font-size: 22px !important;"></i>
+                                <span id="CartCount" class="site-header__cart-count" data-cart-render="item_count"
+                                    style="color: #deb992; font-size: medium;">{{ cart_count }}</span>
+                            </a>
+
+                        </div>
+                        <!-- <div class="site-header__search">
+                            <button type="button" class="search-trigger"><i class="icon anm anm-search-l"></i></button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Header-->
+        <!--Mobile Menu-->
+        <div class="mobile-nav-wrapper" role="navigation">
+            <div class="closemobileMenu"><i class="icon anm anm-times-l pull-right"></i> Close Menu</div>
+            <ul id="MobileNav" class="mobile-nav">
+                {% if session['logged_in'] %}
+                <li class="lvl1 parent megamenu"><a href="/">Home</a>
+
+                </li>
+
+
+                <li><a href="/shopfullwidth" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
+                    <ul>
+                        <li><a href="/shopfullwidth/Shirts" class="site-nav">Shirts</a></li>
+                        <li><a href="/shopfullwidth/Tshirts" class="site-nav">Tshirts</a></li>
+                        <li><a href="/shopfullwidth/Jeans&Trousers" class="site-nav">Jeans & Trousers</a></li>
+                        <li><a href="/shopfullwidth/Jackets&Hoodies" class="site-nav">Jackets & Hoodies</a></li>
+                        <li><a href="/shopfullwidth/Sweaters&Sweatshirts" class="site-nav">Sweaters & Sweatshirts</a>
+                        </li>
+                        <li><a href="/shopfullwidth/Shorts&Chinos" class="site-nav">Shorts & Chinos</a></li>
+                        <li><a href="/shopfullwidth/Sneakers&CasualShoes" class="site-nav">Sneakers & Casual Shoes</a>
+                        </li>
+                        <li><a href="/shopfullwidth/FormalShoes" class="site-nav">Formal Shoes</a></li>
+                        <li><a href="/shopfullwidth/Sandals&Slippers" class="site-nav">Sandals & Slippers</a></li>
+                    </ul>
+                </li>
+
+
+
+                <li><a href="/shopwomen" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
+
+                    <ul>
+                        <li><a href="/shopwomen/Tops" class="site-nav">Tops</a></li>
+                        <li><a href="/shopwomen/Dresses" class="site-nav">Dresses</a></li>
+                        <li><a href="/shopwomen/Jeans&Pants" class="site-nav">Jeans & Pants</a></li>
+                        <li><a href="/shopwomen/Skirts&Shorts" class="site-nav">Skirts & Shorts</a></li>
+                        <li><a href="/shopwomen/Sweaters" class="site-nav">Sweaters</a></li>
+                        <li><a href="/shopwomen/Jackets&Coats" class="site-nav">Jackets & Coats</a></li>
+                        <li><a href="/shopwomen/Flats&Sandals" class="site-nav">Flats & Sandals</a></li>
+                        <li><a href="/shopwomen/Heels&Wedges" class="site-nav">Heels & Wedges</a></li>
+                        <li><a href="/shopwomen/Sneakers&CasualShoes" class="site-nav">Sneakers & Casual Shoes</a></li>
+                    </ul>
+                </li>
+                <li class="lvl1 parent megamenu"><a href="/">Kids <span
+                            style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
+                            class="anm anm-angle-down-l"></i></a>
+
+                </li>
+
+                <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
+                </li>
+
+                <li class="lvl1 parent dropdown"><a href="/myaccount">My Account</a>
+                </li>
+
+                {% else %}
+
+                <li class="lvl1 parent megamenu"><a href="/">Home</a>
+
+                </li>
+
+
+                <li><a href="/shopfullwidth" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
+                    <ul>
+                        <li><a href="/shopfullwidth/Shirts" class="site-nav">Shirts</a></li>
+                        <li><a href="/shopfullwidth/Tshirts" class="site-nav">Tshirts</a></li>
+                        <li><a href="/shopfullwidth/Jeans&Trousers" class="site-nav">Jeans & Trousers</a></li>
+                        <li><a href="/shopfullwidth/Jackets&Hoodies" class="site-nav">Jackets & Hoodies</a></li>
+                        <li><a href="/shopfullwidth/Sweaters&Sweatshirts" class="site-nav">Sweaters & Sweatshirts</a>
+                        </li>
+                        <li><a href="/shopfullwidth/Shorts&Chinos" class="site-nav">Shorts & Chinos</a></li>
+                        <li><a href="/shopfullwidth/Sneakers&CasualShoes" class="site-nav">Sneakers & Casual Shoes</a>
+                        </li>
+                        <li><a href="/shopfullwidth/FormalShoes" class="site-nav">Formal Shoes</a></li>
+                        <li><a href="/shopfullwidth/Sandals&Slippers" class="site-nav">Sandals & Slippers</a></li>
+                    </ul>
+                </li>
+
+
+
+
+                <li><a href="/shopwomen" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
+
+                    <ul>
+                        <li><a href="/shopwomen/Tops" class="site-nav">Tops</a></li>
+                        <li><a href="/shopwomen/Dresses" class="site-nav">Dresses</a></li>
+                        <li><a href="/shopwomen/Jeans&Pants" class="site-nav">Jeans & Pants</a></li>
+                        <li><a href="/shopwomen/Skirts&Shorts" class="site-nav">Skirts & Shorts</a></li>
+                        <li><a href="/shopwomen/Sweaters" class="site-nav">Sweaters</a></li>
+                        <li><a href="/shopwomen/Jackets&Coats" class="site-nav">Jackets & Coats</a></li>
+                        <li><a href="/shopwomen/Flats&Sandals" class="site-nav">Flats & Sandals</a></li>
+                        <li><a href="/shopwomen/Heels&Wedges" class="site-nav">Heels & Wedges</a></li>
+                        <li><a href="/shopwomen/Sneakers&CasualShoes" class="site-nav">Sneakers & Casual Shoes</a></li>
+                    </ul>
+                </li>
+                <li class="lvl1 parent megamenu"><a href="/">Kids <span
+                            style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
+                            class="anm anm-angle-down-l"></i></a>
+
+                </li>
+
+
+                <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
+                </li>
+
+                <li class="list-inline-item"><a href="/myaccount"
+                        style="color: #deb992; font-weight: 500; display: none;">My Account</a>
+                </li>
+                {% endif %}
+
+            </ul>
+
+            <!-- <li class="lvl1 parent dropdown"><a href="Myaccount.html">My Account</a>
+                </li> -->
+
+        </div>
+        <!--End Mobile Menu-->
+
+        <!--Body Content-->
+        <div id="page-content">
+            <!--Page Title-->
+            <div class="page section-header text-center">
+                <div class="page-title" style="margin-top: 5%;">
+                    <div class="wrapper" style="margin-top: 80px;">
+                        <h1 class="page-width"
+                            style="background-color: #deb992; color: #081525; font-weight: 500; font-size: x-large;">
+                            CANCELLATION AND REFUND</h1>
+                    </div>
+                </div>
+            </div>
+            <!--End Page Title-->
+
+            <div class="container" style="margin-top: 3%;">
+                <h3 style="color: #869ba9; line-height: 30px; text-align: justify;">
+                    At Fashion Holics, we want you to be completely satisfied with your purchase. If for any reason
+                    you're not happy with your order, we offer a cancellation, refund and return policy under the following conditions:
+                    <ol style="margin-left: 16px; margin-top: 10px; text-align: justify;">
+                        <li>
+                            <span style="color: #deb992; font-size: large;">Order Cancellations</span>
+                            <br>
+                            Order Confirmation: Once you place an order, you will receive an order confirmation email.
+                            This
+                            does not mean your order has been accepted. We reserve the right to cancel or reject an
+                            order at
+                            our discretion. <br>
+                            Cancellation Window: You may cancel your order anytime before the order status is changed to
+                            "Shipping". <br>
+                            After Confirmation: Once your order status is updated to "Confirmed" and moved to the
+                            shipping
+                            process, cancellations are no longer permitted. <br>
+                            If you need to cancel an order, please do so promptly while it’s still in the <span
+                                style="color: #deb992;"> "Placed"</span> or <span
+                                style="color: #deb992;">"Confirmed"</span>
+                            status. After the order is <span style="color: #deb992;">Shipped </span>, we are unable to
+                            accommodate cancellations.
+                        </li>
+                        <li style="margin-top: 10px;">
+                            <span style="color: #deb992; font-size: large;">Refunds</span> <br>
+                            Once your return is processed and approved, a refund will be issued to the original payment
+                            method. Please allow 7-10 business days for the refund to appear in your account, depending
+                            on
+                            your payment provider.
+                        </li>
+                        <li style="margin-top: 10px;">
+                            <span style="color: #deb992; font-size: large;">Eligibility for Return</span> <br>
+                            Returns will only be accepted if the buyer requests a return within 36 hours of receiving
+                            the
+                            product. <br>
+                            Returns are only accepted for the following reasons: <br>
+                            <span style="color: #deb992;">Damaged or Defective Products:</span> If the item is damaged
+                            or defective upon arrival. <br>
+                            <span style="color: #deb992;">Size Issues:</span> If the product size is incorrect (please
+                            ensure you check the size chart before ordering).
+
+                        </li>
+                        <li style="margin-top: 10px;">
+                            <span style="color: #deb992; font-size: large;">Return Process</span>
+                            <br>
+                            To initiate a return, please contact our customer service team within 36 hours of receiving
+                            your order. You can reach us at Email - fashionholics23@gmail.com , Phone - or through our
+                            contact page. <br>
+                            Provide your order number, a description of the issue, and photos (if applicable) of the
+                            product showing any damage or size discrepancy.
+                        </li>
+                        <li style="margin-top: 10px;">
+                            <span style="color: #deb992; font-size: large;">Conditions for Return</span> <br>
+                            The product must be returned in its original, unused condition with all tags and packaging
+                            intact. <br>
+                            For size issues, you may be offered a size exchange or a refund depending on availability.
+                            <br>
+                            Shipping fees for returns are the responsibility of the buyer unless the product was damaged
+                            or
+                            defective upon arrival.
+                        </li>
+                        <li style="margin-top: 10px;">
+                            <span style="color: #deb992; font-size: large;">Non-Returnable Items</span> <br>
+                            Items that have been worn or washed cannot be returned unless they meet the criteria for
+                            damaged or defective products.
+                        </li>
+                    </ol>
+                    We strive to provide high-quality products and excellent customer service. If you have any
+                    questions
+                    or concerns about our return policy, feel free to contact us. Thank you for shopping at Fashion
+                    Holics!
+                </h3>
+
+            </div>
+
+        </div>
+        <!--End Body Content-->
+
+        <!--Footer-->
+        <footer id="footer">
+
+
+            <div class="site-footer">
+
+                <div class="container">
+                    <hr>
+                    <!--Footer Links-->
+                    <div class="footer-top">
+
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                                <h4 class="h4">Quick Shop</h4>
+                                <ul>
+                                    <li><a href="/shopwomen">Women</a></li>
+                                    <li><a href="/shopfullwidth">Men</a></li>
+                                    <li><a href="#">Kids</a></li>
+                                    <!-- <li><a href="#">Footwear</a></li> -->
+                                </ul>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                                <h4 class="h4">Informations</h4>
+                                <ul>
+                                    <li><a href="/aboutus">About us</a></li>
+                                    <!-- <li><a href="#">Careers</a></li>
+                            <li><a href="#">Privacy policy</a></li>
+                            <li><a href="#">Terms &amp; condition</a></li> -->
+                                    <li><a href="/myaccount">My Account</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                                <h4 class="h4">Customer Services</h4>
+                                <ul>
+
+                                    <li><a href="/contactus">Contact Us</a></li>
+                                    <li><a href="/returnspolicy" target="_blank">Orders and Returns Policy</a></li>
+                                    <li><a href="/shippinganddelivery" target="_blank">Shipping and Delivery</a></li>
+                                    <li><a href="/privacypolicy" target="_blank">Privacy Policy</a></li>
+                                    <li><a href="/termsandconditions" target="_blank">Terms and Conditions</a></li>
+
+                                </ul>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 contact-box">
+                                <h4 class="h4">Contact Us</h4>
+                                <ul class="addressFooter">
+                                    <li><i class="icon anm anm-map-marker-al" style="color: #deb992 !important;"></i>
+                                        <p>55 Gallaxy Enque,<br>2568 steet, 23568 NY</p>
+                                    </li>
+                                    <li class="phone"><i class="icon anm anm-phone-s"
+                                            style="color: #deb992 !important; "></i>
+                                        <p>+91 90762 61066</p>
+                                    </li>
+                                    <li class="email"><i class="icon anm anm-envelope-l"
+                                            style="color: #deb992 !important; "></i>
+                                        <p>fashionholics23@gmail.com</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Footer Links-->
+                    <hr>
+                    <div class="footer-bottom">
+
+                        <p class="text-center" style="font-size: medium; font-weight: 500; color: #1ba098;">Designed By
+                            Websharks</p>
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--End Footer-->
+        <!--Scoll Top-->
+        <span id="site-scroll"><i class="icon anm anm-angle-up-r"></i></span>
+        <!--End Scoll Top-->
+
+        <!-- Including Jquery -->
+        <script src="../static/js/vendor/jquery-3.3.1.min.js"></script>
+        <script src="../static/js/vendor/jquery.cookie.js"></script>
+        <script src="../static/js/vendor/modernizr-3.6.0.min.js"></script>
+        <script src="../static/js/vendor/wow.min.js"></script>
+        <!-- Including Javascript -->
+        <script src="../static/js/bootstrap.min.js"></script>
+        <script src="../static/js/plugins.js"></script>
+        <script src="../static/js/popper.min.js"></script>
+        <script src="../static/js/lazysizes.js"></script>
+        <script src="../static/js/main.js"></script>
+    </div>
+
+    {% if message %}
+    <script>
+        alert("{{ message }}");
+    </script>
+    {% endif %}
+
+
+</body>
+
+</html>

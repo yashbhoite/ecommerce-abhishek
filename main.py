@@ -79,22 +79,22 @@ def get_random_discount():
 @app.route('/termsandconditions')
 def terms_and_conditions():
     # Serve the PDF file from the static directory
-    return send_from_directory('static/images/collection', 'FashionHolics-TermsandConditions.pdf', as_attachment=False)
+    return render_template('termsandconditions.html')
 
 @app.route('/returnspolicy')
 def returns_policy():
     # Serve the Orders and Returns Policy PDF
-    return send_from_directory('static/images/collection', 'FashionHolics_Return_Policy.pdf', as_attachment=False)
+    return render_template('cancellationandrefund.html')
 
 @app.route('/shippinganddelivery')
 def shipping_and_delivery():
     # Serve the Orders and Returns Policy PDF
-    return send_from_directory('static/images/collection', 'FashionHolics-ShippingDelivery.pdf', as_attachment=False)
+    return render_template('shippinganddelivery.html')
 
 @app.route('/privacypolicy')
 def privacy_policy():
     # Serve the Privacy Policy PDF
-    return send_from_directory('static/images/collection', 'FashionHolics-PrivacyPolicy.pdf', as_attachment=False)
+    return render_template('privacypolicy.html')
 
 @app.route('/add-to-cart-combo/<string:product_id>', methods=['POST'])
 def add_to_cart_combo(product_id):

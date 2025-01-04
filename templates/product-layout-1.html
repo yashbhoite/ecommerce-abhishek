@@ -892,7 +892,7 @@
                 <div class="product-description rte">
                   {% for line in description %}
             {% if ':' in line %}
-                <h2>{{ line.split(':')[0] }}</h2>
+                <h3>{{ line.split(':')[0] }}</h3>
                 <p>{{ line.split(':', 1)[1].strip() }}</p>
             {% else %}
                 <p>{{ line }}</p>
