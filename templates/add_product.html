@@ -143,7 +143,7 @@
                 <div class="col-md-6 col-lg-6 section" style="width: 565px !important;">
                     <h3>General Information</h3>
                     <label for="productname">Product Name</label>
-                    <input type="text" id="productname" name="productname" value="{{ product[0] if product else '' }}">
+                    <input type="text" id="productname" name="productname" value="{{ product[0] if product else '' }}" required>
                     <label for="description">Description</label>
                     <textarea id="description" name="description"
                         rows="4">{{ product[1] if product else '' }}</textarea>
@@ -217,37 +217,37 @@
                         <div class="col-lg-6 col-md-6">
                             <label for="base-price">Base Price</label>
                             <input type="number" id="base-price" name="base-price"
-                                value="{{ product[3] if product else '' }}">
+                                value="{{ product[3] if product else '' }}" required>
                         </div>
 
                         <div class="col-lg-6 col-md-6">
                             <label for="discountpercentage1">Discount Percentage 1(%)</label>
                             <input type="text" id="discountpercentage1" name="discountpercentage1"
                                 value="{{ product[4] if product else '' }}" 
-                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');" placeholder="5-10">
+                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');" placeholder="5-10" required>
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <label for="discountpercentage2">Discount Percentage 2(%)</label>
                             <input type="text" id="discountpercentage2" name="discountpercentage2"
                                 value="{{ product[5] if product else '' }}" 
-                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');" placeholder="10-15">
+                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');" placeholder="10-15" required>
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <label for="discountpercentage3">Discount Percentage 3(%)</label>
                             <input type="text" id="discountpercentage3" name="discountpercentage3"
                                 value="{{ product[6] if product else '' }}" 
-                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');" placeholder="15-20">
+                                oninput="this.value = this.value.replace(/[^0-9-]/g, '');" placeholder="15-20" required>
                         </div>
 
                         <div class="col-lg-6 col-md-6">
                             <label for="sku">SKU</label>
-                            <input type="number" id="sku" name="sku" value="{{ product[7] if product else '' }}">
+                            <input type="number" id="sku" name="sku" value="{{ product[7] if product else '' }}" required>
                         </div>
 
                         <div class="col-lg-6 col-md-6">
                             <label for="quantity">Stock quantity</label>
                             <input type="text" id="quantity" name="quantity" placeholder="0,0,0,0,0,0" pattern="[0-9,]*"
-                                value="{{ product[8] if product else '' }}"  oninput="this.value = this.value.replace(/[^0-9,]/g, '');">
+                                value="{{ product[8] if product else '' }}"  oninput="this.value = this.value.replace(/[^0-9,]/g, '');" required>
                         </div>
 
                     </div>
@@ -333,15 +333,15 @@
                     </div>
                     <label for="product-tags" style="margin-top: 10px;">Color</label>
                     <div class="tags">
-                        <input type="text" name="color" id="tag1" value="{{product[2]}}">
+                        <input type="text" name="color" id="tag1" value="{{product[2]}}" required>
                     </div>
                     <label for="product-tags" style="margin-top: 10px;">Color Options:-</label>
                     <div class="tags">
-                        <input type="text" name="coloroptions"  id="tag1" value="{{product[18]}}">
+                        <input type="text" name="coloroptions"  id="tag1" value="{{product[18]}}" required>
                     </div>
                     <label for="product-tags" style="margin-top: 10px;">Vendors</label>
                     <div class="tags">
-                        <input type="text" name="vendor" id="tag1" value="{{product[17]}}">
+                        <input type="text" name="vendor" id="tag1" value="{{product[17]}}" required>
                     </div>
 
 
