@@ -12,6 +12,7 @@ checkou
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Favicon -->
 <!-- <link rel="shortcut icon" href="../static/images/favicon.png" /> -->
+<link rel="icon" href="../static/images/logo/faviconblack.png" type="image/png">
 <!-- Plugins CSS -->
 <link rel="stylesheet" href="../static/css/plugins.css">
 <!-- Bootstap CSS -->
@@ -641,7 +642,7 @@ checkou
                                         </tr>
                                         <tr>
                                             <td colspan="5" class="text-right">Total</td>
-                                            <td>₹{{grand_total}}</td>
+                                            <td id="grand-total">₹{{grand_total}}</td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -856,146 +857,155 @@ checkou
 <script>
 
     // Function to fetch city data (city, pincodes, state)
-// Function to fetch city data (city, pincodes, state) from Geonames API
-// Function to fetch city data (city, pincodes) from Geonames API
-async function fetchLocationDetails() {
-    const pincode = document.getElementById("pincode").value;
+    // Function to fetch city data (city, pincodes, state) from Geonames API
+    // Function to fetch city data (city, pincodes) from Geonames API
+    async function fetchLocationDetails() {
+        const pincode = document.getElementById("pincode").value;
 
-    // Validate Pincode length
-    if (pincode.length === 6) {
-        try {
-            // Fetch data from the Postal PIN Code API
-            const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
-            const data = await response.json();
+        // Validate Pincode length
+        if (pincode.length === 6) {
+            try {
+                // Fetch data from the Postal PIN Code API
+                const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
+                const data = await response.json();
 
-            if (data[0].Status === "Success" && data[0].PostOffice) {
-                const postOffice = data[0].PostOffice[0]; // Take the first matching Post Office
+                if (data[0].Status === "Success" && data[0].PostOffice) {
+                    const postOffice = data[0].PostOffice[0]; // Take the first matching Post Office
 
-                // Populate the city and state fields
-                document.getElementById("city").value = postOffice.District || "";
-                document.getElementById("state").value = postOffice.State || "";
-            } else {
-                alert("No details found for this Pincode.");
-                document.getElementById("city").value = "";
-                document.getElementById("state").value = "";
+                    // Populate the city and state fields
+                    document.getElementById("city").value = postOffice.District || "";
+                    document.getElementById("state").value = postOffice.State || "";
+                } else {
+                    alert("No details found for this Pincode.");
+                    document.getElementById("city").value = "";
+                    document.getElementById("state").value = "";
+                }
+            } catch (error) {
+                console.error("Error fetching location details:", error);
+                alert("Something went wrong while fetching location details.");
             }
-        } catch (error) {
-            console.error("Error fetching location details:", error);
-            alert("Something went wrong while fetching location details.");
+        } else if (pincode.length > 6) {
+            alert("Pincode should be exactly 6 digits.");
         }
-    } else if (pincode.length > 6) {
-        alert("Pincode should be exactly 6 digits.");
     }
-}
 
 
 
 
     document.getElementById('placeOrderBtn').addEventListener('click', function (event) {
-    event.preventDefault();
-    // COD: Submit directly to /place-order without Razorpay
-    const submitButton = document.getElementById('placeOrderBtn'); // assuming your button has this id
-    const loader = document.getElementById('loader'); // assuming your loader element has this id
+        event.preventDefault();
+        // COD: Submit directly to /place-order without Razorpay
+        const submitButton = document.getElementById('placeOrderBtn'); // assuming your button has this id
+        const loader = document.getElementById('loader'); // assuming your loader element has this id
 
-    // Disable the button and show the loader while the request is processing
-    submitButton.style.display= "none";
-    loader.style.display = "block";
-    // Validate address form fields
-    const firstname = document.getElementById('firstname').value.trim();
-    const lastname = document.getElementById('lastname').value.trim();
-    const mobile = document.getElementById('mobile').value.trim();
-    const address = document.getElementById('address').value.trim();
-    const city = document.getElementById('city').value.trim();
-    const state = document.getElementById('state').value.trim();
-    const pincode = document.getElementById('pincode').value.trim();
-    
-    if (!firstname || !lastname || !mobile || !address || !city || !state || !pincode) {
-        alert('Please confirm the address before placing the order.');
-        return;
-    }
+        // Disable the button and show the loader while the request is processing
+        submitButton.style.display = "none";
+        loader.style.display = "block";
+        // Validate address form fields
+        const firstname = document.getElementById('firstname').value.trim();
+        const lastname = document.getElementById('lastname').value.trim();
+        const mobile = document.getElementById('mobile').value.trim();
+        const address = document.getElementById('address').value.trim();
+        const city = document.getElementById('city').value.trim();
+        const state = document.getElementById('state').value.trim();
+        const pincode = document.getElementById('pincode').value.trim();
 
-    // Check selected payment method
-    const paymentMethod = document.querySelector('input[name="payment_method"]:checked');
-    if (!paymentMethod) {
-        alert('Please select a payment method.');
-        return;
-    }
+        if (!firstname || !lastname || !mobile || !address || !city || !state || !pincode) {
+            alert('Please confirm the address before placing the order.');
+            return;
+        }
 
-    const paymentType = paymentMethod.value;  // "COD" or "Online"
-    const formData = new FormData(document.getElementById('addressForm'));
+        // Check selected payment method
+        const paymentMethod = document.querySelector('input[name="payment_method"]:checked');
+        if (!paymentMethod) {
+            alert('Please select a payment method.');
+            return;
+        }
 
-    // Collect cart data
-    const cartItems = [];
-    const tableRows = document.querySelectorAll('#cartTable tbody tr');
-    tableRows.forEach(row => {
-        cartItems.push({
-            productname: row.cells[0].textContent.trim(),
-            size: row.cells[2].textContent.trim(),
-            color: row.cells[3].textContent.trim(),
-            quantity: row.cells[4].textContent.trim(),
-            totalprice: row.cells[5].textContent.replace('₹', '').trim()
+        const paymentType = paymentMethod.value;  // "COD" or "Online"
+        const formData = new FormData(document.getElementById('addressForm'));
+
+        // Collect cart data
+        const cartItems = [];
+        const tableRows = document.querySelectorAll('#cartTable tbody tr');
+        tableRows.forEach(row => {
+            cartItems.push({
+                productname: row.cells[0].textContent.trim(),
+                size: row.cells[2].textContent.trim(),
+                color: row.cells[3].textContent.trim(),
+                quantity: row.cells[4].textContent.trim(),
+                totalprice: row.cells[5].textContent.replace('₹', '').trim()
+            });
         });
-    });
-    formData.append('cart_items', JSON.stringify(cartItems));
-    formData.append('payment_method', paymentType);
+        formData.append('cart_items', JSON.stringify(cartItems));
+        formData.append('payment_method', paymentType);
 
-    if (paymentType === 'COD') {
+        if (paymentType === 'COD') {
 
 
-    fetch('/place-order', { method: 'POST', body: formData })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Order placed successfully!');
-                window.location.href = '/';
-            } else {
-                alert('Error placing order: ' + data.message);
+            fetch('/place-order', { method: 'POST', body: formData })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Order placed successfully!');
+                        window.location.href = '/';
+                    } else {
+                        alert('Error placing order: ' + data.message);
+                    }
+                })
+                .finally(() => {
+                    // Re-enable the button and hide the loader
+                    submitButton.disabled = false;
+                    loader.style.display = "none";
+                });
+        }
+        else {
+            // Online: Proceed with Razorpay payment
+            // Fetch the grand total using the unique ID
+            const grandTotalElement = document.querySelector('#grand-total');
+            const grandTotal = grandTotalElement.textContent.replace('₹', '').trim();
+
+            // Ensure the value is a valid number
+            if (isNaN(grandTotal) || grandTotal <= 0) {
+                alert('Invalid grand total amount. Please try again.');
+                return;
             }
-        })
-        .finally(() => {
-            // Re-enable the button and hide the loader
-            submitButton.disabled = false;
-            loader.style.display = "none";
-        });
-}
- else {
-        // Online: Proceed with Razorpay payment
-        fetch('/create-order', { method: 'POST', headers: { 'Content-Type': 'application/json' } })
-            .then(response => response.json())
-            .then(data => {
-                const options = {
-                    "key": data.key_id,
-                    "amount": data.amount,
-                    "currency": data.currency,
-                    "name": "Your Store Name",
-                    "order_id": data.razorpay_order_id,
-                    "handler": function (response) {
-                        formData.append('razorpay_payment_id', response.razorpay_payment_id);
-                        formData.append('razorpay_order_id', response.razorpay_order_id);
+            fetch('/create-order', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ amount: grandTotal }) })
+                .then(response => response.json())
+                .then(data => {
+                    const options = {
+                        "key": data.key_id,
+                        "amount": data.amount,
+                        "currency": data.currency,
+                        "name": "FashionHolics",
+                        "order_id": data.razorpay_order_id,
+                        "handler": function (response) {
+                            formData.append('razorpay_payment_id', response.razorpay_payment_id);
+                            formData.append('razorpay_order_id', response.razorpay_order_id);
 
-                        fetch('/place-order', { method: 'POST', body: formData })
-                            .then(saveResponse => saveResponse.json())
-                            .then(saveData => {
-                                if (saveData.success) {
-                                    alert('Order placed successfully!');
-                                    window.location.href = '/';
-                                } else {
-                                    alert('Error saving order: ' + saveData.message);
-                                }
-                            });
-                    },
-                    "prefill": {
-                        "name": `${firstname} ${lastname}`,
-                        "contact": mobile
-                    },
-                    "theme": { "color": "#3399cc" }
-                };
-                const rzp1 = new Razorpay(options);
-                rzp1.open();
-            })
-            .catch(error => console.error('Error:', error));
-    }
-});
+                            fetch('/place-order', { method: 'POST', body: formData })
+                                .then(saveResponse => saveResponse.json())
+                                .then(saveData => {
+                                    if (saveData.success) {
+                                        alert('Order placed successfully!');
+                                        window.location.href = '/';
+                                    } else {
+                                        alert('Error saving order: ' + saveData.message);
+                                    }
+                                });
+                        },
+                        "prefill": {
+                            "name": `${firstname} ${lastname}`,
+                            "contact": mobile
+                        },
+                        "theme": { "color": "#3399cc" }
+                    };
+                    const rzp1 = new Razorpay(options);
+                    rzp1.open();
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    });
 
 </script>
 

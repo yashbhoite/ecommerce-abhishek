@@ -10,6 +10,7 @@
   <meta name="description" content="description" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Favicon -->
+  <link rel="icon" href="../static/images/logo/faviconblack.png" type="image/png">
   <!-- Plugins CSS -->
   <link rel="stylesheet" href="../static/css/plugins.css" />
   <!-- Bootstap CSS -->
@@ -696,11 +697,21 @@
 
                 </div>
                 <div class="product-single__description rte">
-                  <ul>
+                  <!-- <ul>
                     <li>
                       {{name[1]}}
                     </li>
-                  </ul>
+                  </ul> -->
+                  {% for line in description %}
+                  {% if ':' in line %}
+                  <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0; margin-right: 10px;">{{ line.split(':')[0] }}</h3>
+                    <p style="margin: 0;">{{ line.split(':', 1)[1].strip() }}</p>
+                </div>
+                  {% else %}
+                      <p>{{ line }}</p>
+                  {% endif %}
+              {% endfor %}
                 </div>
                 <!-- <div id="quantity_message">
                     Hurry! Only <span class="items">4</span> left in stock.

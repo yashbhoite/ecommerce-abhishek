@@ -2374,10 +2374,13 @@ def cancel_order():
 @app.route('/create-order', methods=['POST'])
 def create_order():
     import razorpay
-    client = razorpay.Client(auth=("rzp_test_TswE6aK7d5KSvI", "iBZrxVF76YTwnUA1GL9etnDg"))
+    
+    data = request.get_json()
+    grand_total = float(data.get('amount', 0))  # Get amount from the frontend
 
     # Set a static amount (100 paise = 1 INR) for the test order
-    payment_amount = 100  # Amount in paise
+    payment_amount = int(grand_total * 100)  # Convert to paise
+    client = razorpay.Client(auth=("rzp_live_pbpN1J1ReCP7eK", "qKZ2tLPDN6DpQhuOE2MNm1DE"))
 
     # Create Razorpay order with fixed amount
     order = client.order.create({
@@ -2387,7 +2390,7 @@ def create_order():
     })
 
     return jsonify({
-        "key_id": "rzp_test_TswE6aK7d5KSvI",
+        "key_id": "rzp_live_pbpN1J1ReCP7eK",
         "amount": order["amount"],
         "currency": order["currency"],
         "razorpay_order_id": order["id"]
@@ -2397,7 +2400,7 @@ def create_order():
 @app.route('/verify-payment', methods=['POST'])
 def verify_payment():
     data = request.get_json()
-    client = razorpay.Client(auth=("rzp_test_TswE6aK7d5KSvI", "iBZrxVF76YTwnUA1GL9etnDg"))
+    client = razorpay.Client(auth=("rzp_live_pbpN1J1ReCP7eK", "qKZ2tLPDN6DpQhuOE2MNm1DE"))
     
     try:
         # Verify signature
