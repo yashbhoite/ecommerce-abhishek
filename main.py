@@ -211,7 +211,7 @@ def get_product_details(product_id):
                 color_options_map[primary_color] = colors[1:]
             
             # Generate SKU link
-            sku_links.append(f"http://127.0.0.1:5000/product/{sku}")
+            sku_links.append(f"https://www.fashionholics.in/product/{sku}")
 
         # Include SKU links and the reverse color mapping
         return jsonify({
@@ -234,6 +234,8 @@ def bid():
     level = request.json.get('level', 'level1')
     path = request.json.get('path')
     price = request.json.get('price')
+    language = request.json.get('language', 'en')  # Default to English
+
     
     # Extract product number from the path
     match = re.search(r"/product/(\d+)", path)
@@ -263,9 +265,26 @@ def bid():
     print(level2_price)
     print(level3_price)
     # Handle bid for each level
+   # Messages in English and Hindi
+    messages = {
+        'en': {
+            'level1': "🎉 Deal Locked! You've got it! Ready to secure your pick with an easy payment? 🛒💳",
+            'level2': f"💥 Score Big! Grab TWO stylish pieces at just ₹ {level2_price} per item! Perfectly paired, ultra-trendy, and comfy – time to elevate your style game. 👗👕✨ Are you in for this awesome deal?",
+            'level3': f"🚨 Last Chance Alert! 🚨 Snag this exclusive deal – ₹ {level3_price} discount on your favorite pick! 🔥 Don't let it slip away. Ready to claim it?",
+            'low_bid': "Thanks for your bid! You're almost there. How about tweaking your offer slightly to unlock a killer deal? The treasure is just within reach!"
+        },
+         "hi": {
+            "level1": "🎉 Deal locked! Apne pick ko secure karne ke liye ready hai? 🛒💳",
+            "level2": f"💥 Bada score! ₹ {level2_price} per item ke liye do stylish pieces le lo! Perfectly paired aur trendy look ke liye ready ho? 👗👕✨",
+            "level3": f"🚨 Last chance alert! 🚨 Apne favorite pick par ₹ {level3_price} discount le lo! 🔥 Abhi claim karein?",
+            "low_bid": "Shukriya! Aap lagbhag wahin hain. Thoda aur offer badhaye aur ek killer deal unlock karein!"
+        }
+    }
+
+    # Handle bid for each level
     if level == 'level1' and bid_amount >= level1_price:
         return jsonify({
-            "message": f"🎉 Deal Locked! You've got it! Ready to secure your pick with an easy payment? 🛒💳",
+            "message": messages[language]['level1'],
             "status": "level1",
             "level2_price": level2_price,
             "level3_price": level3_price,
@@ -273,19 +292,15 @@ def bid():
         })
     elif level == 'level2' and bid_amount >= level2_price:
         return jsonify({
-            "message": f"💥 Score Big! Grab TWO stylish pieces at just ₹ {level2_price} per item! Perfectly paired, ultra-trendy, and comfy – time to elevate your style game. 👗👕✨ Are you in for this awesome deal?",
+            "message": messages[language]['level2'],
             "status": "level2",
             "level2_price": level2_price,
             "level3_price": level3_price,
-            "second_product_details": {
-                "sizes": discount[0][3].split(','),
-                "colors": discount[0][4].split(',')
-            },
             "disable_bid": True
         })
     elif level == 'level3' and bid_amount >= level3_price:
         return jsonify({
-            "message": f"🚨 Last Chance Alert! 🚨 Snag this exclusive deal – ₹ {level3_price} discount on your favorite pick! 🔥 Don't let it slip away. Ready to claim it?",
+            "message": messages[language]['level3'],
             "status": "level3",
             "level2_price": level2_price,
             "level3_price": level3_price,
@@ -293,14 +308,12 @@ def bid():
         })
     else:
         return jsonify({
-            "message": "Thanks for your bid! You're almost there. How about tweaking your offer slightly to unlock a killer deal? The treasure is just within reach!",
+            "message": messages[language]['low_bid'],
             "status": "level3",
             "level2_price": level2_price,
             "level3_price": level3_price,
             "disable_bid": level != 'level3'
         })
-
-
 
              
         

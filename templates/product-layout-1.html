@@ -830,6 +830,10 @@
                   <div class="chat-header">
                     <h3>Chatbot</h3>
                     <button id="closeChat">X</button>
+                    <select id="languageSwitcher" style="color: #081525;border: none;background-color: #deb992;border: 1px solid #081525;">
+                      <option value="en" selected>English</option>
+                      <option value="hi">Hindi</option>
+                    </select>
                   </div>
                   <div class="chat-content" id="chatContent"  data-logged-in="{{ 'true' if session.get('logged_in') else 'false' }}"></div>
                   <div class="chat-input">
@@ -1811,10 +1815,12 @@ document.getElementById('addToCartBtn').addEventListener('click', function (even
         });
 
         function sendBid(bidAmount, level, path, price, size) {
+          const language = document.getElementById('languageSwitcher').value;
+
           fetch('/bid', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ bidAmount, level, path, price, size })
+            body: JSON.stringify({ bidAmount, level, path, price, size,language })
           })
             .then(response => response.json())
             .then(data => {
