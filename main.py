@@ -2441,4 +2441,4 @@ def verify_payment():
 if(__name__) == '__main__':
     if not os.path.exists(app.config['upload_folder']):
         os.makedirs(app.config['upload_folder'])
-    app.run(debug=True)
+    app.run(debug=False)
