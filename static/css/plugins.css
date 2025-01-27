@@ -11026,9 +11026,11 @@ img.mfp-img {
   overflow: hidden;
 }
 .pswp__img {
-  position: absolute;
-  width: auto;
-  height: auto;
+  position: absolute; 
+  /* width: auto; */
+  height: auto !important;
+  aspect-ratio: 4 / 5 !important;
+  object-fit: cover !important;
   top: 0;
   left: 0;
 }

@@ -16,6 +16,8 @@ import string
 import re
 from datetime import datetime, timedelta
 from uuid import uuid4
+import logging
+from logging.handlers import RotatingFileHandler
 
 
 
@@ -29,7 +31,12 @@ ALLOWED_VIDEO_EXTENSIONS = {'mp4', 'avi', 'mov', 'mkv'}
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 os.makedirs(VIDEO_FOLDER, exist_ok=True)
 
+log_handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=1)
+log_handler.setLevel(logging.INFO)
+log_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+log_handler.setFormatter(log_formatter)
 
+app.logger.addHandler(log_handler)
 
 
 def send_password_reset_email(email, temp_password):
