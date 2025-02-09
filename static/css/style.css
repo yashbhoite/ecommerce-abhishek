@@ -7308,7 +7308,7 @@ border-radius:8px;
 
 .chat-content {
   padding: 10px;
-  max-height: 250px; /* Increases max-height to allow more content */
+  max-height: 190px; /* Increases max-height to allow more content */
   overflow-y: auto;
   /* border-bottom: 1px solid #ddd; */
   background-color: #081525;

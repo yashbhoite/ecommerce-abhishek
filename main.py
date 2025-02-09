@@ -275,16 +275,16 @@ def bid():
    # Messages in English and Hindi
     messages = {
         'en': {
-            'level1': "🎉 Deal Locked! You've got it! Ready to secure your pick with an easy payment? 🛒💳",
+            'level1': "Congratulations! 🎉 Your bid has been accepted. Thank you for shopping with FashionHolics—enjoy your new purchase! 🛍️ Add item to cart?",
             'level2': f"💥 Score Big! Grab TWO stylish pieces at just ₹ {level2_price} per item! Perfectly paired, ultra-trendy, and comfy – time to elevate your style game. 👗👕✨ Are you in for this awesome deal?",
             'level3': f"🚨 Last Chance Alert! 🚨 Snag this exclusive deal – ₹ {level3_price} discount on your favorite pick! 🔥 Don't let it slip away. Ready to claim it?",
-            'low_bid': "Thanks for your bid! You're almost there. How about tweaking your offer slightly to unlock a killer deal? The treasure is just within reach!"
+            'low_bid': "Your bid is a bit too low! 🚀 Increase it slightly to get a better chance at securing this deal."
         },
          "hi": {
-            "level1": "🎉 Deal locked! Apne pick ko secure karne ke liye ready hai? 🛒💳",
+            "level1": "Badhai ho! 🎉 Aapka bid accept ho gaya. Ab chill maro, FashionHolics ke saath smart shopping ho gayi! 😍, Item Cart me daale?",
             "level2": f"💥 Bada score! ₹ {level2_price} per item ke liye do stylish pieces le lo! Perfectly paired aur trendy look ke liye ready ho? 👗👕✨",
             "level3": f"🚨 Last chance alert! 🚨 Apne favorite pick par ₹ {level3_price} discount le lo! 🔥 Abhi claim karein?",
-            "low_bid": "Shukriya! Aap lagbhag wahin hain. Thoda aur offer badhaye aur ek killer deal unlock karein!"
+            "low_bid": "Arre yaar, thoda aur badao apna bid! Thoda adjust karoge toh deal pakki ho sakti hai. 😃"
         }
     }
 

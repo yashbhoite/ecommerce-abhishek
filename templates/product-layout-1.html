@@ -77,31 +77,28 @@
               <!-- User is logged in -->
               {% if session['is_admin'] %}
               <li class="list-inline-item"><a href="/wishlist" target="_blank"
-                      style="color: #deb992; font-weight: 500;">Admin</a></li>
+                  style="color: #deb992; font-weight: 500;">Admin</a></li>
               {% endif %}
               <li class="list-inline-item" style="display: none;"><a href="/login"
-                      style="color: #deb992; font-weight: 500;">Login</a></li>
+                  style="color: #deb992; font-weight: 500;">Login</a></li>
               <li class="list-inline-item" style="display: none;"><a href="/register"
-                      style="color: #deb992; font-weight: 500;">Create Account</a></li>
+                  style="color: #deb992; font-weight: 500;">Create Account</a></li>
 
               <!-- Show "My Account" and "Logout" when logged in -->
-              <li class="list-inline-item"><a href="/myaccount"
-                      style="color: #deb992; font-weight: 500;">My
-                      Account</a></li>
-              <li class="list-inline-item"><a href="/logout"
-                      style="color: #deb992; font-weight: 500;">Logout</a></li>
+              <li class="list-inline-item"><a href="/myaccount" style="color: #deb992; font-weight: 500;">My
+                  Account</a></li>
+              <li class="list-inline-item"><a href="/logout" style="color: #deb992; font-weight: 500;">Logout</a></li>
               {% else %}
               <!-- User is not logged in -->
               <li class="list-inline-item" style="display: none;"><a href="/wishlist" target="_blank"
-                      style="color: #deb992; font-weight: 500;">Admin</a></li>
-              <li class="list-inline-item"><a href="/login"
-                      style="color: #deb992; font-weight: 500;">Login</a></li>
-              <li class="list-inline-item"><a href="/register"
-                      style="color: #deb992; font-weight: 500;">Create Account</a></li>
+                  style="color: #deb992; font-weight: 500;">Admin</a></li>
+              <li class="list-inline-item"><a href="/login" style="color: #deb992; font-weight: 500;">Login</a></li>
+              <li class="list-inline-item"><a href="/register" style="color: #deb992; font-weight: 500;">Create
+                  Account</a></li>
               <li class="list-inline-item" style="display: none;"><a href="/myaccount"
-                      style="color: #deb992; font-weight: 500; display: none;">My Account</a></li>
+                  style="color: #deb992; font-weight: 500; display: none;">My Account</a></li>
               {% endif %}
-          </ul>
+            </ul>
           </div>
         </div>
       </div>
@@ -114,14 +111,15 @@
           <!--Desktop Logo-->
           <div class="logo col-md-2 col-lg-2 d-none d-lg-block">
             <a href="/">
-               <div style="display: flex;align-items: center;">
-                <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics" 
-                        title="FashionHolics" />
-            <h3 style="color: #deb992;font-family: Poppins, Helvetica, Tahoma, Arial, serif;font-weight: 600;margin-bottom: 0px;white-space: nowrap;font-size: 1vw;">FASHION HOLICS</h3>
-        </div>  
+              <div style="display: flex;align-items: center;">
+                <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics" title="FashionHolics" />
+                <h3
+                  style="color: #deb992;font-family: Poppins, Helvetica, Tahoma, Arial, serif;font-weight: 600;margin-bottom: 0px;white-space: nowrap;font-size: 1vw;">
+                  FASHION HOLICS</h3>
+              </div>
             </a>
-   
-        </div>
+
+          </div>
           <!--End Desktop Logo-->
           <div class="col-2 col-sm-3 col-md-3 col-lg-8">
             <div class="d-block d-lg-none">
@@ -134,87 +132,75 @@
             <nav class="grid__item" id="AccessibleNav"><!-- for mobile -->
               <ul id="siteNav" class="site-nav medium center hidearrow">
                 {% if session['logged_in'] %}
-                <li class="lvl1 parent megamenu"><a href="/">Home <i
-                            class="anm anm-angle-down-l"></i></a>
+                <li class="lvl1 parent megamenu"><a href="/">Home <i class="anm anm-angle-down-l"></i></a>
                 </li>
-                <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i
-                    class="anm anm-angle-down-l"></i></a>
-            <div class="megamenu style4">
-                <ul class="grid grid--uniform mmWrapper">
-                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                            class="site-nav lvl-1">Top Wear</a>
+                <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i class="anm anm-angle-down-l"></i></a>
+                  <div class="megamenu style4">
+                    <ul class="grid grid--uniform mmWrapper">
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Top Wear</a>
                         <ul class="subLinks">
-                            <li class="lvl-2"><a href="/shopfullwidth/Tshirts"
-                                    class="site-nav lvl-2">T-Shirts</a></li>
-                            <li class="lvl-2"><a href="/shopfullwidth/Shirts"
-                                    class="site-nav lvl-2">Shirts</a></li>
-                            <li class="lvl-2"><a href="/shopfullwidth/Jackets&Hoodies"
-                                    class="site-nav lvl-2">Jackets & Hoodies</a></li>
-                            <li class="lvl-2"><a href="/shopfullwidth/Sweaters&Sweatshirts"
-                                    class="site-nav lvl-2">Sweaters & Sweatshirts</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Tshirts" class="site-nav lvl-2">T-Shirts</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Shirts" class="site-nav lvl-2">Shirts</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Jackets&Hoodies" class="site-nav lvl-2">Jackets &
+                              Hoodies</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Sweaters&Sweatshirts"
+                              class="site-nav lvl-2">Sweaters & Sweatshirts</a></li>
                         </ul>
-                    </li>
-                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                            class="site-nav lvl-1">Bottom Wear</a>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Bottom Wear</a>
                         <ul class="subLinks">
-                            <li class="lvl-2"><a href="/shopfullwidth/Jeans&Trousers"
-                                    class="site-nav lvl-2">Jeans & Trousers<span
-                                        class="lbl nm_label3">Hot</span></a></li>
-                            <li class="lvl-2"><a href="/shopfullwidth/Shorts&Chinos"
-                                    class="site-nav lvl-2">Shorts & Chinos</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Jeans&Trousers" class="site-nav lvl-2">Jeans &
+                              Trousers<span class="lbl nm_label3">Hot</span></a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Shorts&Chinos" class="site-nav lvl-2">Shorts &
+                              Chinos</a></li>
                         </ul>
-                    </li>
-                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                            class="site-nav lvl-1">Foot Wear</a>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Foot Wear</a>
                         <ul class="subLinks">
-                            <li class="lvl-2"><a href="/shopfullwidth/Sneakers&CasualShoes"
-                                    class="site-nav lvl-2">Sneakers & Casual Shoes<span
-                                        class="lbl nm_label3">Hot</span></a></li>
-                            <li class="lvl-2"><a href="/shopfullwidth/FormalShoes"
-                                    class="site-nav lvl-2">Formal Shoes</a></li>
-                            <li class="lvl-2"><a href="/shopfullwidth/Sandals&Slippers"
-                                    class="site-nav lvl-2">Sandals & Slippers</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Sneakers&CasualShoes"
+                              class="site-nav lvl-2">Sneakers & Casual Shoes<span class="lbl nm_label3">Hot</span></a>
+                          </li>
+                          <li class="lvl-2"><a href="/shopfullwidth/FormalShoes" class="site-nav lvl-2">Formal Shoes</a>
+                          </li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Sandals&Slippers" class="site-nav lvl-2">Sandals &
+                              Slippers</a></li>
                         </ul>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i
-            class="anm anm-angle-down-l"></i></a>
-    <div class="megamenu style4">
-        <ul class="grid grid--uniform mmWrapper">
-            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                    class="site-nav lvl-1">Top Wear</a>
-                <ul class="subLinks">
-                    <li class="lvl-2"><a href="/shopwomen/Tops" class="site-nav lvl-2">Tops</a></li>
-                    <li class="lvl-2"><a href="/shopwomen/Dresses" class="site-nav lvl-2">Dresses</a></li>
-                    <li class="lvl-2"><a href="/shopwomen/Sweaters"
-                            class="site-nav lvl-2">Sweaters</a></li>
-                    <li class="lvl-2"><a href="/shopwomen/Jackets&Coats"
-                            class="site-nav lvl-2">Jackets & Coats</a></li>
-                </ul>
-            </li>
-            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                    class="site-nav lvl-1">Bottom Wear</a>
-                <ul class="subLinks">
-                    <li class="lvl-2"><a href="/shopwomen/Jeans&Pants" class="site-nav lvl-2">Jeans & Pants
-                            <!-- <span class="lbl nm_label3">Hot</span></a></li> -->
-                    <li class="lvl-2"><a href="/shopwomen/Skirts&Shorts" class="site-nav lvl-2">Skirts & Shorts</a></li>
-                </ul>
-            </li>
-            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                    class="site-nav lvl-1">Footwear</a>
-                <ul class="subLinks">
-                    <li class="lvl-2"><a href="/shopwomen/Flats&Sandals"
-                            class="site-nav lvl-2">Flats & Sandals<span
-                                class="lbl nm_label3">Hot</span></a></li>
-                    <li class="lvl-2"><a href="/shopwomen/Heels&Wedges"
-                            class="site-nav lvl-2">Heels & Wedges</a></li>
-                    <li class="lvl-2"><a href="/shopwomen/Sneakers&CasualShoes" class="site-nav lvl-2">Sneakers & Casual Shoes</a></li>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i class="anm anm-angle-down-l"></i></a>
+                  <div class="megamenu style4">
+                    <ul class="grid grid--uniform mmWrapper">
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Top Wear</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopwomen/Tops" class="site-nav lvl-2">Tops</a></li>
+                          <li class="lvl-2"><a href="/shopwomen/Dresses" class="site-nav lvl-2">Dresses</a></li>
+                          <li class="lvl-2"><a href="/shopwomen/Sweaters" class="site-nav lvl-2">Sweaters</a></li>
+                          <li class="lvl-2"><a href="/shopwomen/Jackets&Coats" class="site-nav lvl-2">Jackets &
+                              Coats</a></li>
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Bottom Wear</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopwomen/Jeans&Pants" class="site-nav lvl-2">Jeans & Pants
+                              <!-- <span class="lbl nm_label3">Hot</span></a></li> -->
+                          <li class="lvl-2"><a href="/shopwomen/Skirts&Shorts" class="site-nav lvl-2">Skirts &
+                              Shorts</a></li>
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Footwear</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopwomen/Flats&Sandals" class="site-nav lvl-2">Flats &
+                              Sandals<span class="lbl nm_label3">Hot</span></a></li>
+                          <li class="lvl-2"><a href="/shopwomen/Heels&Wedges" class="site-nav lvl-2">Heels & Wedges</a>
+                          </li>
+                          <li class="lvl-2"><a href="/shopwomen/Sneakers&CasualShoes" class="site-nav lvl-2">Sneakers &
+                              Casual Shoes</a></li>
 
-                </ul>
-            </li>
-            <!-- <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                        </ul>
+                      </li>
+                      <!-- <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
                     class="site-nav lvl-1">Sportswear</a>
                 <ul class="subLinks">
                     <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Sports
@@ -229,12 +215,12 @@
                             Jackets</a></li>
                 </ul>
             </li> -->
-        </ul>
-    </div>
-</li>
+                    </ul>
+                  </div>
+                </li>
                 <li class="lvl1 parent megamenu"><a href="/">Kids <span
-                            style="background-color: red;border-radius: 5px; padding: 1px;">Coming
-                            soon!</span><i class="anm anm-angle-down-l"></i></a>
+                      style="background-color: red;border-radius: 5px; padding: 1px;">Coming
+                      soon!</span><i class="anm anm-angle-down-l"></i></a>
 
                 </li>
                 <!-- <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i
@@ -242,96 +228,83 @@
                 </li> -->
 
                 <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
-                            class="anm anm-angle-down-l"></i></a>
+                      class="anm anm-angle-down-l"></i></a>
                 </li>
-                <li class="lvl1 parent dropdown"><a href="/aboutus">About Us <i
-                    class="anm anm-angle-down-l"></i></a>
+                <li class="lvl1 parent dropdown"><a href="/aboutus">About Us <i class="anm anm-angle-down-l"></i></a>
                 </li>
                 <li class="lvl1 parent dropdown"><a href="/myaccount">My Account <i
-                            class="anm anm-angle-down-l"></i></a>
+                      class="anm anm-angle-down-l"></i></a>
                 </li>
                 {% else %}
-                <li class="lvl1 parent megamenu"><a href="/">Home <i
-                            class="anm anm-angle-down-l"></i></a>
+                <li class="lvl1 parent megamenu"><a href="/">Home <i class="anm anm-angle-down-l"></i></a>
                 </li>
-                <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i
-                    class="anm anm-angle-down-l"></i></a>
-            <div class="megamenu style4">
-                <ul class="grid grid--uniform mmWrapper">
-                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                            class="site-nav lvl-1">Top Wear</a>
+                <li class="lvl1 parent megamenu"><a href="/shopfullwidth">Men<i class="anm anm-angle-down-l"></i></a>
+                  <div class="megamenu style4">
+                    <ul class="grid grid--uniform mmWrapper">
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Top Wear</a>
                         <ul class="subLinks">
-                            <li class="lvl-2"><a href="/shopfullwidth/Tshirts"
-                                    class="site-nav lvl-2">T-Shirts</a></li>
-                            <li class="lvl-2"><a href="/shopfullwidth/Shirts"
-                                    class="site-nav lvl-2">Shirts</a></li>
-                            <li class="lvl-2"><a href="/shopfullwidth/Jackets&Hoodies"
-                                    class="site-nav lvl-2">Jackets & Hoodies</a></li>
-                            <li class="lvl-2"><a href="/shopfullwidth/Sweaters&Sweatshirts"
-                                    class="site-nav lvl-2">Sweaters & Sweatshirts</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Tshirts" class="site-nav lvl-2">T-Shirts</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Shirts" class="site-nav lvl-2">Shirts</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Jackets&Hoodies" class="site-nav lvl-2">Jackets &
+                              Hoodies</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Sweaters&Sweatshirts"
+                              class="site-nav lvl-2">Sweaters & Sweatshirts</a></li>
                         </ul>
-                    </li>
-                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                            class="site-nav lvl-1">Bottom Wear</a>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Bottom Wear</a>
                         <ul class="subLinks">
-                            <li class="lvl-2"><a href="/shopfullwidth/Jeans&Trousers"
-                                    class="site-nav lvl-2">Jeans & Trousers<span
-                                        class="lbl nm_label3">Hot</span></a></li>
-                            <li class="lvl-2"><a href="/shopfullwidth/Shorts&Chinos"
-                                    class="site-nav lvl-2">Shorts & Chinos</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Jeans&Trousers" class="site-nav lvl-2">Jeans &
+                              Trousers<span class="lbl nm_label3">Hot</span></a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Shorts&Chinos" class="site-nav lvl-2">Shorts &
+                              Chinos</a></li>
                         </ul>
-                    </li>
-                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                            class="site-nav lvl-1">Foot Wear</a>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Foot Wear</a>
                         <ul class="subLinks">
-                            <li class="lvl-2"><a href="/shopfullwidth/Sneakers&CasualShoes"
-                                    class="site-nav lvl-2">Sneakers & Casual Shoes<span
-                                        class="lbl nm_label3">Hot</span></a></li>
-                            <li class="lvl-2"><a href="/shopfullwidth/FormalShoes"
-                                    class="site-nav lvl-2">Formal Shoes</a></li>
-                            <li class="lvl-2"><a href="/shopfullwidth/Sandals&Slippers"
-                                    class="site-nav lvl-2">Sandals & Slippers</a></li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Sneakers&CasualShoes"
+                              class="site-nav lvl-2">Sneakers & Casual Shoes<span class="lbl nm_label3">Hot</span></a>
+                          </li>
+                          <li class="lvl-2"><a href="/shopfullwidth/FormalShoes" class="site-nav lvl-2">Formal Shoes</a>
+                          </li>
+                          <li class="lvl-2"><a href="/shopfullwidth/Sandals&Slippers" class="site-nav lvl-2">Sandals &
+                              Slippers</a></li>
                         </ul>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i
-            class="anm anm-angle-down-l"></i></a>
-    <div class="megamenu style4">
-        <ul class="grid grid--uniform mmWrapper">
-            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                    class="site-nav lvl-1">Top Wear</a>
-                <ul class="subLinks">
-                    <li class="lvl-2"><a href="/shopwomen/Tops" class="site-nav lvl-2">Tops</a></li>
-                    <li class="lvl-2"><a href="/shopwomen/Dresses" class="site-nav lvl-2">Dresses</a></li>
-                    <li class="lvl-2"><a href="/shopwomen/Sweaters"
-                            class="site-nav lvl-2">Sweaters</a></li>
-                    <li class="lvl-2"><a href="/shopwomen/Jackets&Coats"
-                            class="site-nav lvl-2">Jackets & Coats</a></li>
-                </ul>
-            </li>
-            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                    class="site-nav lvl-1">Bottom Wear</a>
-                <ul class="subLinks">
-                    <li class="lvl-2"><a href="/shopwomen/Jeans&Pants" class="site-nav lvl-2">Jeans & Pants
-                            <!-- <span class="lbl nm_label3">Hot</span></a></li> -->
-                    <li class="lvl-2"><a href="/shopwomen/Skirts&Shorts" class="site-nav lvl-2">Skirts & Shorts</a></li>
-                </ul>
-            </li>
-            <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
-                    class="site-nav lvl-1">Footwear</a>
-                <ul class="subLinks">
-                    <li class="lvl-2"><a href="/shopwomen/Flats&Sandals"
-                            class="site-nav lvl-2">Flats & Sandals<span
-                                class="lbl nm_label3">Hot</span></a></li>
-                    <li class="lvl-2"><a href="/shopwomen/Heels&Wedges"
-                            class="site-nav lvl-2">Heels & Wedges</a></li>
-                    <li class="lvl-2"><a href="/shopwomen/Sneakers&CasualShoes" class="site-nav lvl-2">Sneakers & Casual Shoes</a></li>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="lvl1 parent megamenu"><a href="/shopwomen">Women<i class="anm anm-angle-down-l"></i></a>
+                  <div class="megamenu style4">
+                    <ul class="grid grid--uniform mmWrapper">
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Top Wear</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopwomen/Tops" class="site-nav lvl-2">Tops</a></li>
+                          <li class="lvl-2"><a href="/shopwomen/Dresses" class="site-nav lvl-2">Dresses</a></li>
+                          <li class="lvl-2"><a href="/shopwomen/Sweaters" class="site-nav lvl-2">Sweaters</a></li>
+                          <li class="lvl-2"><a href="/shopwomen/Jackets&Coats" class="site-nav lvl-2">Jackets &
+                              Coats</a></li>
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Bottom Wear</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopwomen/Jeans&Pants" class="site-nav lvl-2">Jeans & Pants
+                              <!-- <span class="lbl nm_label3">Hot</span></a></li> -->
+                          <li class="lvl-2"><a href="/shopwomen/Skirts&Shorts" class="site-nav lvl-2">Skirts &
+                              Shorts</a></li>
+                        </ul>
+                      </li>
+                      <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Footwear</a>
+                        <ul class="subLinks">
+                          <li class="lvl-2"><a href="/shopwomen/Flats&Sandals" class="site-nav lvl-2">Flats &
+                              Sandals<span class="lbl nm_label3">Hot</span></a></li>
+                          <li class="lvl-2"><a href="/shopwomen/Heels&Wedges" class="site-nav lvl-2">Heels & Wedges</a>
+                          </li>
+                          <li class="lvl-2"><a href="/shopwomen/Sneakers&CasualShoes" class="site-nav lvl-2">Sneakers &
+                              Casual Shoes</a></li>
 
-                </ul>
-            </li>
-            <!-- <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
+                        </ul>
+                      </li>
+                      <!-- <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#"
                     class="site-nav lvl-1">Sportswear</a>
                 <ul class="subLinks">
                     <li class="lvl-2"><a href="/shopwomen" class="site-nav lvl-2">Sports
@@ -346,48 +319,48 @@
                             Jackets</a></li>
                 </ul>
             </li> -->
-        </ul>
-    </div>
-</li>
+                    </ul>
+                  </div>
+                </li>
                 <li class="lvl1 parent megamenu"><a href="/">Kids <span
-                    style="background-color: red;border-radius: 5px; padding: 1px;">Coming
-                    soon!</span><i class="anm anm-angle-down-l"></i></a>
+                      style="background-color: red;border-radius: 5px; padding: 1px;">Coming
+                      soon!</span><i class="anm anm-angle-down-l"></i></a>
 
-        </li>
-                <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i
-                            class="anm anm-angle-down-l"></i></a>
+                </li>
+                <li class="lvl1 parent dropdown"><a href="#">New Arrivals <i class="anm anm-angle-down-l"></i></a>
                 </li>
 
                 <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us <i
-                            class="anm anm-angle-down-l"></i></a>
+                      class="anm anm-angle-down-l"></i></a>
                 </li>
-                <li class="lvl1 parent dropdown"><a href="/aboutus">About Us <i
-                    class="anm anm-angle-down-l"></i></a>
+                <li class="lvl1 parent dropdown"><a href="/aboutus">About Us <i class="anm anm-angle-down-l"></i></a>
                 </li>
                 <li class="lvl1 parent dropdown"><a href="/myaccount" style="display: none;">My Account
-                        <i class="anm anm-angle-down-l"></i></a>
+                    <i class="anm anm-angle-down-l"></i></a>
                 </li>
                 {% endif %}
-            </ul>
+              </ul>
             </nav>
             <!--End Desktop Menu-->
           </div>
           <div class="col-6 col-sm-6 col-md-6 col-lg-2 d-block d-lg-none mobile-logo">
             <div class="logo moblog">
-                <a href="/">
-                    <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics" 
-                            title="FashionHolics" />
-                            
-                </a>
-                <h3 style="color: #deb992;font-family: Poppins, Helvetica, Tahoma, Arial, serif;font-weight: 600;margin-bottom: 0px;white-space: nowrap;font-size: 2.5vw;">FASHION HOLICS</h3>  
+              <a href="/">
+                <img src="../static/images/logo/newlogo.png" width="80px" alt="FashionHolics" title="FashionHolics" />
+
+              </a>
+              <h3
+                style="color: #deb992;font-family: Poppins, Helvetica, Tahoma, Arial, serif;font-weight: 600;margin-bottom: 0px;white-space: nowrap;font-size: 2.5vw;">
+                FASHION HOLICS</h3>
             </div>
-           
-        </div>
+
+          </div>
           <div class="col-4 col-sm-3 col-md-3 col-lg-2">
             <div class="site-cart">
               <a href="/cart" title="Cart">
                 <i class="anm anm-bag-l" style="color: #deb992; font-size: 22px !important;"></i>
-                <span id="CartCount" class="site-header__cart-count" data-cart-render="item_count" style="color: #deb992; font-size: medium;">{{ cart_count }}</span>
+                <span id="CartCount" class="site-header__cart-count" data-cart-render="item_count"
+                  style="color: #deb992; font-size: medium;">{{ cart_count }}</span>
               </a>
               <!--Minicart Popup-->
               <!-- <div id="header-cart" class="block block-cart">
@@ -472,40 +445,41 @@
 
 
         <li><a href="/shopfullwidth" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
-            <ul>
-                <li><a href="/shopfullwidth/Shirts" class="site-nav">Shirts</a></li>
-                <li><a href="/shopfullwidth/Tshirts" class="site-nav">Tshirts</a></li>
-                <li><a href="/shopfullwidth/Jeans&Trousers" class="site-nav">Jeans & Trousers</a></li>
-                <li><a href="/shopfullwidth/Jackets&Hoodies" class="site-nav">Jackets & Hoodies</a></li>
-                <li><a href="/shopfullwidth/Sweaters&Sweatshirts" class="site-nav">Sweaters & Sweatshirts</a></li>
-                <li><a href="/shopfullwidth/Shorts&Chinos" class="site-nav">Shorts & Chinos</a></li>
-                <li><a href="/shopfullwidth/Sneakers&CasualShoes" class="site-nav">Sneakers & Casual Shoes</a></li>
-                <li><a href="/shopfullwidth/FormalShoes" class="site-nav">Formal Shoes</a></li>
-                <li><a href="/shopfullwidth/Sandals&Slippers" class="site-nav">Sandals & Slippers</a></li>
-            </ul>
+          <ul>
+            <li><a href="/shopfullwidth/Shirts" class="site-nav">Shirts</a></li>
+            <li><a href="/shopfullwidth/Tshirts" class="site-nav">Tshirts</a></li>
+            <li><a href="/shopfullwidth/Jeans&Trousers" class="site-nav">Jeans & Trousers</a></li>
+            <li><a href="/shopfullwidth/Jackets&Hoodies" class="site-nav">Jackets & Hoodies</a></li>
+            <li><a href="/shopfullwidth/Sweaters&Sweatshirts" class="site-nav">Sweaters & Sweatshirts</a></li>
+            <li><a href="/shopfullwidth/Shorts&Chinos" class="site-nav">Shorts & Chinos</a></li>
+            <li><a href="/shopfullwidth/Sneakers&CasualShoes" class="site-nav">Sneakers & Casual Shoes</a></li>
+            <li><a href="/shopfullwidth/FormalShoes" class="site-nav">Formal Shoes</a></li>
+            <li><a href="/shopfullwidth/Sandals&Slippers" class="site-nav">Sandals & Slippers</a></li>
+          </ul>
         </li>
 
 
 
         <li><a href="/shopwomen" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
-            
-            <ul>
-                          <li><a href="/shopwomen/Tops" class="site-nav">Tops</a></li>
-                          <li><a href="/shopwomen/Dresses" class="site-nav">Dresses</a></li>
-                          <li><a href="/shopwomen/Jeans&Pants" class="site-nav">Jeans & Pants</a></li>
-                          <li><a href="/shopwomen/Skirts&Shorts" class="site-nav">Skirts & Shorts</a></li>
-                          <li><a href="/shopwomen/Sweaters" class="site-nav">Sweaters</a></li>
-                          <li><a href="/shopwomen/Jackets&Coats" class="site-nav">Jackets & Coats</a></li>
-                          <li><a href="/shopwomen/Flats&Sandals" class="site-nav">Flats & Sandals</a></li>
-                          <li><a href="/shopwomen/Heels&Wedges" class="site-nav">Heels & Wedges</a></li>
-                          <li><a href="/shopwomen/Sneakers&CasualShoes" class="site-nav">Sneakers & Casual Shoes</a></li>
-                      </ul>
-                  </li>
-                  <li class="lvl1 parent megamenu"><a href="/">Kids <span style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
-                    class="anm anm-angle-down-l"></i></a>
-           
+
+          <ul>
+            <li><a href="/shopwomen/Tops" class="site-nav">Tops</a></li>
+            <li><a href="/shopwomen/Dresses" class="site-nav">Dresses</a></li>
+            <li><a href="/shopwomen/Jeans&Pants" class="site-nav">Jeans & Pants</a></li>
+            <li><a href="/shopwomen/Skirts&Shorts" class="site-nav">Skirts & Shorts</a></li>
+            <li><a href="/shopwomen/Sweaters" class="site-nav">Sweaters</a></li>
+            <li><a href="/shopwomen/Jackets&Coats" class="site-nav">Jackets & Coats</a></li>
+            <li><a href="/shopwomen/Flats&Sandals" class="site-nav">Flats & Sandals</a></li>
+            <li><a href="/shopwomen/Heels&Wedges" class="site-nav">Heels & Wedges</a></li>
+            <li><a href="/shopwomen/Sneakers&CasualShoes" class="site-nav">Sneakers & Casual Shoes</a></li>
+          </ul>
         </li>
-     
+        <li class="lvl1 parent megamenu"><a href="/">Kids <span
+              style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
+              class="anm anm-angle-down-l"></i></a>
+
+        </li>
+
 
         <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
         </li>
@@ -521,50 +495,52 @@
 
 
         <li><a href="/shopfullwidth" class="site-nav">Men<i class="anm anm-plus-l"></i></a>
-            <ul>
-                <li><a href="/shopfullwidth/Shirts" class="site-nav">Shirts</a></li>
-                <li><a href="/shopfullwidth/Tshirts" class="site-nav">Tshirts</a></li>
-                <li><a href="/shopfullwidth/Jeans&Trousers" class="site-nav">Jeans & Trousers</a></li>
-                <li><a href="/shopfullwidth/Jackets&Hoodies" class="site-nav">Jackets & Hoodies</a></li>
-                <li><a href="/shopfullwidth/Sweaters&Sweatshirts" class="site-nav">Sweaters & Sweatshirts</a></li>
-                <li><a href="/shopfullwidth/Shorts&Chinos" class="site-nav">Shorts & Chinos</a></li>
-                <li><a href="/shopfullwidth/Sneakers&CasualShoes" class="site-nav">Sneakers & Casual Shoes</a></li>
-                <li><a href="/shopfullwidth/FormalShoes" class="site-nav">Formal Shoes</a></li>
-                <li><a href="/shopfullwidth/Sandals&Slippers" class="site-nav">Sandals & Slippers</a></li>
-            </ul>
+          <ul>
+            <li><a href="/shopfullwidth/Shirts" class="site-nav">Shirts</a></li>
+            <li><a href="/shopfullwidth/Tshirts" class="site-nav">Tshirts</a></li>
+            <li><a href="/shopfullwidth/Jeans&Trousers" class="site-nav">Jeans & Trousers</a></li>
+            <li><a href="/shopfullwidth/Jackets&Hoodies" class="site-nav">Jackets & Hoodies</a></li>
+            <li><a href="/shopfullwidth/Sweaters&Sweatshirts" class="site-nav">Sweaters & Sweatshirts</a></li>
+            <li><a href="/shopfullwidth/Shorts&Chinos" class="site-nav">Shorts & Chinos</a></li>
+            <li><a href="/shopfullwidth/Sneakers&CasualShoes" class="site-nav">Sneakers & Casual Shoes</a></li>
+            <li><a href="/shopfullwidth/FormalShoes" class="site-nav">Formal Shoes</a></li>
+            <li><a href="/shopfullwidth/Sandals&Slippers" class="site-nav">Sandals & Slippers</a></li>
+          </ul>
         </li>
 
 
 
 
         <li><a href="/shopwomen" class="site-nav">Women<i class="anm anm-plus-l"></i></a>
-            
-            <ul>
-                <li><a href="/shopwomen/Tops" class="site-nav">Tops</a></li>
-                <li><a href="/shopwomen/Dresses" class="site-nav">Dresses</a></li>
-                <li><a href="/shopwomen/Jeans&Pants" class="site-nav">Jeans & Pants</a></li>
-                <li><a href="/shopwomen/Skirts&Shorts" class="site-nav">Skirts & Shorts</a></li>
-                <li><a href="/shopwomen/Sweaters" class="site-nav">Sweaters</a></li>
-                <li><a href="/shopwomen/Jackets&Coats" class="site-nav">Jackets & Coats</a></li>
-                <li><a href="/shopwomen/Flats&Sandals" class="site-nav">Flats & Sandals</a></li>
-                <li><a href="/shopwomen/Heels&Wedges" class="site-nav">Heels & Wedges</a></li>
-                <li><a href="/shopwomen/Sneakers&CasualShoes" class="site-nav">Sneakers & Casual Shoes</a></li>
-            </ul>
-                  </li>
-        <li class="lvl1 parent megamenu"><a href="/">Kids <span style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
-            class="anm anm-angle-down-l"></i></a>
-   
-</li>
+
+          <ul>
+            <li><a href="/shopwomen/Tops" class="site-nav">Tops</a></li>
+            <li><a href="/shopwomen/Dresses" class="site-nav">Dresses</a></li>
+            <li><a href="/shopwomen/Jeans&Pants" class="site-nav">Jeans & Pants</a></li>
+            <li><a href="/shopwomen/Skirts&Shorts" class="site-nav">Skirts & Shorts</a></li>
+            <li><a href="/shopwomen/Sweaters" class="site-nav">Sweaters</a></li>
+            <li><a href="/shopwomen/Jackets&Coats" class="site-nav">Jackets & Coats</a></li>
+            <li><a href="/shopwomen/Flats&Sandals" class="site-nav">Flats & Sandals</a></li>
+            <li><a href="/shopwomen/Heels&Wedges" class="site-nav">Heels & Wedges</a></li>
+            <li><a href="/shopwomen/Sneakers&CasualShoes" class="site-nav">Sneakers & Casual Shoes</a></li>
+          </ul>
+        </li>
+        <li class="lvl1 parent megamenu"><a href="/">Kids <span
+              style="background-color: red;border-radius: 5px; padding: 1px;">Coming soon!</span><i
+              class="anm anm-angle-down-l"></i></a>
+
+        </li>
 
 
         <li class="lvl1 parent dropdown"><a href="/contactus">Contact Us</a>
         </li>
 
-        <li class="list-inline-item"><a href="/myaccount" style="color: #deb992; font-weight: 500; display: none;">My Account</a>
+        <li class="list-inline-item"><a href="/myaccount" style="color: #deb992; font-weight: 500; display: none;">My
+            Account</a>
         </li>
         {% endif %}
 
-    </ul>
+      </ul>
       <!-- <li class="lvl1 parent dropdown"><a href="Myaccount.html">My Account</a>
         </li> -->
 
@@ -636,7 +612,8 @@
                     <div class="zoompro-span">
                       <img class="blur-up lazyload zoompro" id="productimage"
                         data-zoom-image="../static/images/pics/{{name[12]}}" alt=""
-                        src="../static/images/pics/{{name[12]}}" style="height: auto;aspect-ratio: 4 / 5;object-fit: cover;"/>
+                        src="../static/images/pics/{{name[12]}}"
+                        style="height: auto;aspect-ratio: 4 / 5;object-fit: cover;" />
                     </div>
 
                     <div class="product-buttons">
@@ -707,11 +684,11 @@
                   <div style="display: flex; align-items: center; margin-bottom: 10px;">
                     <h3 style="margin: 0; margin-right: 10px;">{{ line.split(':')[0] }}</h3>
                     <p style="margin: 0;">{{ line.split(':', 1)[1].strip() }}</p>
-                </div>
+                  </div>
                   {% else %}
-                      <p>{{ line }}</p>
+                  <p>{{ line }}</p>
                   {% endif %}
-              {% endfor %}
+                  {% endfor %}
                 </div>
                 <!-- <div id="quantity_message">
                     Hurry! Only <span class="items">4</span> left in stock.
@@ -825,17 +802,19 @@
                   </button>
                 </div>
 
-                
+
                 <div id="chatbot" class="chatbot">
                   <div class="chat-header">
                     <h3>Chatbot</h3>
                     <button id="closeChat">X</button>
-                    <select id="languageSwitcher" style="color: #081525;border: none;background-color: #deb992;border: 1px solid #081525;">
-                      <option value="en" selected>English</option>
+                    <select id="languageSwitcher"
+                      style="color: #081525;border: none;background-color: #deb992;border: 1px solid #081525;">
+                      <option value="en">English</option>
                       <option value="hi">Hindi</option>
                     </select>
                   </div>
-                  <div class="chat-content" id="chatContent"  data-logged-in="{{ 'true' if session.get('logged_in') else 'false' }}"></div>
+                  <div class="chat-content" id="chatContent"
+                    data-logged-in="{{ 'true' if session.get('logged_in') else 'false' }}"></div>
                   <div class="chat-input">
                     <input type="number" id="bidInput" placeholder="Enter your bid amount">
                     <button id="submitBid">Submit</button>
@@ -849,11 +828,11 @@
 
                 </div>
 
-                
+
                 <p class="shippingMsg" style="margin-top: 60px;">
                   <i class="fa fa-clock-o" aria-hidden="true" style="color: #081525;"></i> ESTIMATED
                   DELIVERY BETWEEN <b id="fromDate">5 to 8 Days</b>
-              
+
                 </p>
                 <!-- <div class="userViewMsg" data-user="20" data-time="11000">
                     <i class="fa fa-users" aria-hidden="true"></i>
@@ -870,7 +849,7 @@
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                   <ul class="display-table store-info">
-                  
+
                     <li class="display-table-cell">
                       <i class="icon anm anm-dollar-sign-r" style="color: #081525;"></i>
                       <h5 style="color: #081525;">Money Guarantee</h5>
@@ -906,13 +885,13 @@
               <div id="tab1" class="tab-content">
                 <div class="product-description rte">
                   {% for line in description %}
-            {% if ':' in line %}
-                <h3>{{ line.split(':')[0] }}</h3>
-                <p>{{ line.split(':', 1)[1].strip() }}</p>
-            {% else %}
-                <p>{{ line }}</p>
-            {% endif %}
-        {% endfor %}
+                  {% if ':' in line %}
+                  <h3>{{ line.split(':')[0] }}</h3>
+                  <p>{{ line.split(':', 1)[1].strip() }}</p>
+                  {% else %}
+                  <p>{{ line }}</p>
+                  {% endif %}
+                  {% endfor %}
                 </div>
               </div>
 
@@ -920,20 +899,20 @@
                 <div id="shopify-product-reviews">
                   <div class="spr-container">
                     <span class="product-review" id="review-summaries" data-avg-rating="{{ avg_rating }}"
-                        data-review-count="{{ review_count }}">
-                        <a class="reviewLink">
-                          <i class="font-13 fa fa-star"></i>
-                          <i class="font-13 fa fa-star"></i>
-                          <i class="font-13 fa fa-star"></i>
-                          <i class="font-13 fa fa-star-o"></i>
-                          <i class="font-13 fa fa-star-o"></i>
-                        </a>
-                        <span class="spr-summary-actions-togglereviews">
-                          Based on <span id="review-count">{{ review_count }}</span> reviews
-                        </span>
+                      data-review-count="{{ review_count }}">
+                      <a class="reviewLink">
+                        <i class="font-13 fa fa-star"></i>
+                        <i class="font-13 fa fa-star"></i>
+                        <i class="font-13 fa fa-star"></i>
+                        <i class="font-13 fa fa-star-o"></i>
+                        <i class="font-13 fa fa-star-o"></i>
+                      </a>
+                      <span class="spr-summary-actions-togglereviews">
+                        Based on <span id="review-count">{{ review_count }}</span> reviews
                       </span>
+                    </span>
                     <div class="spr-content">
-                      
+
 
                       <div class="spr-reviews">
                         {% for review in reviews %}
@@ -1074,10 +1053,10 @@
               <div id="tab4" class="tab-content">
                 <p>At <b>Fashion Holics</b>, we want you to be completely satisfied with your purchase. If for any
                   reason you're not happy with your order, we offer a return policy under the following conditions:</p>
-                  <h4>Cancellation Policies</h4>
-                  <ul>
-                    <li>Once a product has been shipped, cancellation is no longer permitted.</li>
-                  </ul>
+                <h4>Cancellation Policies</h4>
+                <ul>
+                  <li>Once a product has been shipped, cancellation is no longer permitted.</li>
+                </ul>
                 <h4>Eligibility for Return</h4>
 
                 <ul>
@@ -1157,11 +1136,13 @@
                   <a href="/product/{{product[7]}}">
                     <!-- image -->
                     <img class="primary blur-up lazyload" data-src="../static/images/pics/{{product[12]}}"
-                      src="../static/images/pics/{{product[12]}}" alt="image" title="product" style="height: auto;aspect-ratio: 4 / 5;object-fit: cover;"/>
+                      src="../static/images/pics/{{product[12]}}" alt="image" title="product"
+                      style="height: auto;aspect-ratio: 4 / 5;object-fit: cover;" />
                     <!-- End image -->
                     <!-- Hover image -->
                     <img class="hover blur-up lazyload" data-src="../static/images/pics/{{product[13]}}"
-                      src="../static/images/pics/{{product[13]}}" alt="image" title="product" style="height: auto;aspect-ratio: 4 / 6;object-fit: cover;"/>
+                      src="../static/images/pics/{{product[13]}}" alt="image" title="product"
+                      style="height: auto;aspect-ratio: 4 / 6;object-fit: cover;" />
                     <!-- End hover image -->
                     <!-- product label -->
                     <!-- <div class="product-labels rectangular">
@@ -1175,10 +1156,10 @@
                   <!-- Start product button -->
                   <form class="variants add" onclick="window.location.href='/product/{{product[7]}}'" method="post">
                     <button class="btn btn-addto-cart" type="button" tabindex="0">
-                     View More
+                      View More
                     </button>
                   </form>
-                 
+
                   <!-- end product button -->
                 </div>
                 <!-- end product image -->
@@ -1266,73 +1247,71 @@
 
 
       <div class="site-footer">
-  
-          <div class="container">
-              <hr>
-              <!--Footer Links-->
-              <div class="footer-top">
-  
-                  <div class="row">
-                      <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
-                          <h4 class="h4">Quick Shop</h4>
-                          <ul>
-                              <li><a href="/shopwomen">Women</a></li>
-                              <li><a href="/shopfullwidth">Men</a></li>
-                              <li><a href="#">Kids</a></li>
-                              <li><a href="#">Footwear</a></li>
-                          </ul>
-                      </div>
-                      <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
-                          <h4 class="h4">Informations</h4>
-                          <ul>
-                              <li><a href="/aboutus">About us</a></li>
-                              <!-- <li><a href="#">Careers</a></li>
+
+        <div class="container">
+          <hr>
+          <!--Footer Links-->
+          <div class="footer-top">
+
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                <h4 class="h4">Quick Shop</h4>
+                <ul>
+                  <li><a href="/shopwomen">Women</a></li>
+                  <li><a href="/shopfullwidth">Men</a></li>
+                  <li><a href="#">Kids</a></li>
+                  <li><a href="#">Footwear</a></li>
+                </ul>
+              </div>
+              <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                <h4 class="h4">Informations</h4>
+                <ul>
+                  <li><a href="/aboutus">About us</a></li>
+                  <!-- <li><a href="#">Careers</a></li>
                               <li><a href="#">Privacy policy</a></li>
                               <li><a href="#">Terms &amp; condition</a></li> -->
-                              <li><a href="/myaccount">My Account</a></li>
-                          </ul>
-                      </div>
-                      <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
-                          <h4 class="h4">Customer Services</h4>
-                          <ul>
-
-                            <li><a href="/contactus">Contact Us</a></li>
-                            <li><a href="/returnspolicy" target="_blank">Orders and Returns Policy</a></li>
-                            <li><a href="/shippinganddelivery" target="_blank">Shipping and Delivery</a></li>
-                            <li><a href="/privacypolicy" target="_blank">Privacy Policy</a></li>
-                            <li><a href="/termsandconditions" target="_blank">Terms and Conditions</a></li>
-
-                        </ul>
-                      </div>
-                      <div class="col-12 col-sm-12 col-md-3 col-lg-3 contact-box">
-                          <h4 class="h4">Contact Us</h4>
-                          <ul class="addressFooter">
-                              <li><i class="icon anm anm-map-marker-al" style="color: #deb992 !important;"></i>
-                                  <p>55 Gallaxy Enque,<br>2568 steet, 23568 NY</p>
-                              </li>
-                              <li class="phone"><i class="icon anm anm-phone-s"
-                                      style="color: #deb992 !important; "></i>
-                                  <p>+91 123456789</p>
-                              </li>
-                              <li class="email"><i class="icon anm anm-envelope-l"
-                                      style="color: #deb992 !important; "></i>
-                                  <p>sales@yousite.com</p>
-                              </li>
-                          </ul>
-                      </div>
-                  </div>
+                  <li><a href="/myaccount">My Account</a></li>
+                </ul>
               </div>
-              <!--End Footer Links-->
-              <hr>
-              <div class="footer-bottom">
-  
-                  <p class="text-center" style="font-size: medium; font-weight: 500; color: #1ba098;">Designed By
-                      Websharks</p>
-  
+              <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                <h4 class="h4">Customer Services</h4>
+                <ul>
+
+                  <li><a href="/contactus">Contact Us</a></li>
+                  <li><a href="/returnspolicy" target="_blank">Orders and Returns Policy</a></li>
+                  <li><a href="/shippinganddelivery" target="_blank">Shipping and Delivery</a></li>
+                  <li><a href="/privacypolicy" target="_blank">Privacy Policy</a></li>
+                  <li><a href="/termsandconditions" target="_blank">Terms and Conditions</a></li>
+
+                </ul>
               </div>
+              <div class="col-12 col-sm-12 col-md-3 col-lg-3 contact-box">
+                <h4 class="h4">Contact Us</h4>
+                <ul class="addressFooter">
+                  <li><i class="icon anm anm-map-marker-al" style="color: #deb992 !important;"></i>
+                    <p>55 Gallaxy Enque,<br>2568 steet, 23568 NY</p>
+                  </li>
+                  <li class="phone"><i class="icon anm anm-phone-s" style="color: #deb992 !important; "></i>
+                    <p>+91 123456789</p>
+                  </li>
+                  <li class="email"><i class="icon anm anm-envelope-l" style="color: #deb992 !important; "></i>
+                    <p>sales@yousite.com</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
+          <!--End Footer Links-->
+          <hr>
+          <div class="footer-bottom">
+
+            <p class="text-center" style="font-size: medium; font-weight: 500; color: #1ba098;">Designed By
+              Websharks</p>
+
+          </div>
+        </div>
       </div>
-  </footer>
+    </footer>
     <!--End Footer-->
     <!--Scoll Top-->
     <span id="site-scroll"><i class="icon anm anm-angle-up-r"></i></span>
@@ -1499,10 +1478,10 @@
     <script src="../static/js/vendor/photoswipe-ui-default.min.js"></script>
     <script>
 
-document.getElementById('addToCartBtn').addEventListener('click', function (event) {
-    // Prevent the form from submitting if needed (optional depending on form behavior)
-    alert('Item has been added to the cart!');
-});
+      document.getElementById('addToCartBtn').addEventListener('click', function (event) {
+        // Prevent the form from submitting if needed (optional depending on form behavior)
+        alert('Item has been added to the cart!');
+      });
 
 
       function updateSelection(productId, size) {
@@ -1613,20 +1592,20 @@ document.getElementById('addToCartBtn').addEventListener('click', function (even
         const price = "{{name[3]}}"; // Pass product ID to the JS
 
         document.getElementById('bidButton').addEventListener('click', () => {
-        // Get stock value from the data attribute
-        const stock = parseInt(document.getElementById('bidButton').getAttribute('data-stock'), 10);
+          // Get stock value from the data attribute
+          const stock = parseInt(document.getElementById('bidButton').getAttribute('data-stock'), 10);
 
-        // Check stock status in the JavaScript function
-        if (stock === 0) {
+          // Check stock status in the JavaScript function
+          if (stock === 0) {
             alert("Sorry, this item is out of stock!");
-        } else {
+          } else {
             // Reset to level 1 when chatbot opens
             currentLevel = 'level1';
             document.getElementById('chatbot').style.display = 'block';
             document.getElementById('chatContent').innerHTML = ''; // Clear previous messages
             enableInput();
-        }
-    });
+          }
+        });
 
         document.getElementById('closeChat').addEventListener('click', () => {
           document.getElementById('chatbot').style.display = 'none';
@@ -1657,29 +1636,29 @@ document.getElementById('addToCartBtn').addEventListener('click', function (even
           document.getElementById('options').style.display = 'none';
 
           if (currentLevel === 'level1' || currentLevel === 'level3') {
-    // Retrieve the login status from the data attribute
-    const isLoggedIn = document.getElementById('chatContent').getAttribute('data-logged-in') === 'true';
+            // Retrieve the login status from the data attribute
+            const isLoggedIn = document.getElementById('chatContent').getAttribute('data-logged-in') === 'true';
 
-    if (isLoggedIn) {
-        document.getElementById('chatContent').innerHTML += `
+            if (isLoggedIn) {
+              document.getElementById('chatContent').innerHTML += `
             <p>Great! You have accepted the offer.</p>
             <button id="addToCartButton">Add to Cart</button>
         `;
 
-        document.getElementById('addToCartButton').addEventListener('click', () => {
-            const bidAmount = document.getElementById('bidInput').value;
-            const selectedSize = document.querySelector('input[name="productsize"]:checked').value;
-            addToCart(productId, bidAmount, selectedSize);
-        });
-    } else {
-      const currentPage = window.location.href; // Get the current page's URL
-        document.getElementById('chatContent').innerHTML += `
+              document.getElementById('addToCartButton').addEventListener('click', () => {
+                const bidAmount = document.getElementById('bidInput').value;
+                const selectedSize = document.querySelector('input[name="productsize"]:checked').value;
+                addToCart(productId, bidAmount, selectedSize);
+              });
+            } else {
+              const currentPage = window.location.href; // Get the current page's URL
+              document.getElementById('chatContent').innerHTML += `
             <p>Great! You have accepted the offer.</p>
     <p>Please <a href="/login?next=${encodeURIComponent(currentPage)}">login</a> to see the 'Add to Cart' button.</p>
         `;
-    }
-}
- else if (currentLevel === 'level2') {
+            }
+          }
+          else if (currentLevel === 'level2') {
             try {
               // Fetch product details from the backend
               const response = await fetch(`/product-details/${productId}`);
@@ -1826,7 +1805,7 @@ document.getElementById('addToCartBtn').addEventListener('click', function (even
           fetch('/bid', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ bidAmount, level, path, price, size,language })
+            body: JSON.stringify({ bidAmount, level, path, price, size, language })
           })
             .then(response => response.json())
             .then(data => {
@@ -1837,7 +1816,8 @@ document.getElementById('addToCartBtn').addEventListener('click', function (even
               scrollToBottom();
 
               // Check if the message is the one that indicates a low bid
-              if (newMessage.textContent.includes("Thanks for your bid! You're almost there. How about tweaking your offer slightly to unlock a killer deal? The treasure is just within reach!")) {
+              if (newMessage.textContent.includes("Your bid is a bit too low! 🚀 Increase it slightly to get a better chance at securing this deal.")
+               || newMessage.textContent.includes("Arre yaar, thoda aur badao apna bid! Thoda adjust karoge toh deal pakki ho sakti hai. 😃")) {
                 // Disable bid submission buttons to avoid repeated submission
                 document.getElementById('accept').disabled = true;
                 document.getElementById('decline').disabled = true;
@@ -1850,7 +1830,7 @@ document.getElementById('addToCartBtn').addEventListener('click', function (even
                 scrollToBottom(); // Scroll to the bottom after the message
                 return; // Stop execution and prevent the request
               }
-              else if (newMessage.textContent.includes("You must log in to submit a bid.")) {
+              else if (newMessage.textContent.includes("Login now to save your deal and add your favorite items to the cart before they’re gone! 🔒🛒")) {
                 document.getElementById('accept').disabled = true;
                 document.getElementById('decline').disabled = true;
 
@@ -1862,7 +1842,8 @@ document.getElementById('addToCartBtn').addEventListener('click', function (even
                 scrollToBottom(); // Scroll to the bottom after the message
                 return; // Stop execution and prevent the request
               }
-              else if (newMessage.textContent.includes("🎉 Deal Locked! You've got it! Ready to secure your pick with an easy payment? 🛒💳")) {
+              else if (newMessage.textContent.includes("Congratulations! 🎉 Your bid has been accepted. Thank you for shopping with FashionHolics—enjoy your new purchase! 🛍️ Add item to cart?")
+                    || newMessage.textContent.includes("Badhai ho! 🎉 Aapka bid accept ho gaya. Ab chill maro, Fashion_Holics ke saath smart shopping ho gayi! 😍, Item Cart me daale?")  ) {
                 document.getElementById('accept').disabled = false;
                 document.getElementById('decline').disabled = false;
 
@@ -1873,8 +1854,8 @@ document.getElementById('addToCartBtn').addEventListener('click', function (even
 
                 scrollToBottom(); // Scroll to the bottom after the message
                 return; // Stop execution and prevent the request
-              } 
-               
+              }
+
               else {
                 // Re-enable the "Yes" and "No" buttons if a valid bid message was shown
                 document.getElementById('accept').disabled = false;
@@ -2051,35 +2032,40 @@ document.getElementById('addToCartBtn').addEventListener('click', function (even
     }
   </script>
 
-<script>
-  // Ensure DOM is loaded before running the script
-  document.addEventListener("DOMContentLoaded", function () {
-    const reviewSummary = document.getElementById("review-summaries");
-    const avgRating = parseFloat(reviewSummary.dataset.avgRating);
-    const reviewCount = parseInt(reviewSummary.dataset.reviewCount, 10);
+  <script>
+    // Ensure DOM is loaded before running the script
+    document.addEventListener("DOMContentLoaded", function () {
+      const reviewSummary = document.getElementById("review-summaries");
+      const avgRating = parseFloat(reviewSummary.dataset.avgRating);
+      const reviewCount = parseInt(reviewSummary.dataset.reviewCount, 10);
 
-    // Update stars dynamically based on the average rating
-    const starsContainer = reviewSummary.querySelector(".reviewLink");
-    starsContainer.innerHTML = generateStars(avgRating);
+      // Update stars dynamically based on the average rating
+      const starsContainer = reviewSummary.querySelector(".reviewLink");
+      starsContainer.innerHTML = generateStars(avgRating);
 
-    // Update review count
-    document.getElementById("review-count").textContent = reviewCount;
-  });
+      // Update review count
+      document.getElementById("review-count").textContent = reviewCount;
+    });
 
-  // Function to generate star icons based on rating
-  function generateStars(rating) {
-    const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 >= 0.5 ? 1 : 0;
-    const emptyStars = 5 - fullStars - halfStar;
+    // Function to generate star icons based on rating
+    function generateStars(rating) {
+      const fullStars = Math.floor(rating);
+      const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+      const emptyStars = 5 - fullStars - halfStar;
 
-    return (
-      '<i class="font-13 fa fa-star"></i>'.repeat(fullStars) +
-      (halfStar ? '<i class="font-13 fa fa-star-half-o"></i>' : '') +
-      '<i class="font-13 fa fa-star-o"></i>'.repeat(emptyStars)
-    );
-  }
-</script>
+      return (
+        '<i class="font-13 fa fa-star"></i>'.repeat(fullStars) +
+        (halfStar ? '<i class="font-13 fa fa-star-half-o"></i>' : '') +
+        '<i class="font-13 fa fa-star-o"></i>'.repeat(emptyStars)
+      );
+    }
+  </script>
 
+  <!-- <script>
+    document.getElementById("languageSwitcher").addEventListener("change", function () {
+      location.reload(); // Reloads the page
+    });
+  </script> -->
 
 </body>
 
