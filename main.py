@@ -3,6 +3,7 @@ from email import message
 from unicodedata import name
 from flask import flash,Flask, redirect, render_template, request, url_for, session, jsonify, send_from_directory
 import requests
+import urllib.parse
 import smtplib
 import sqlite3
 import uuid as uuid
@@ -106,7 +107,15 @@ def privacy_policy():
 @app.route('/add-to-cart-combo/<string:product_id>', methods=['POST'])
 def add_to_cart_combo(product_id):
     if 'user_email' not in session:
-        return jsonify({"success": False, "message": "You need to log in first."})
+         # Store combo details in session before redirecting to login
+        session['combo_details'] = {
+            'product_id': product_id,
+            'productprice': request.form.get('productprice'),
+            'productsize': request.form.get('productsize'),
+            'secondProductSize': request.form.get('secondProductSize'),
+            'productcolor': request.form.get('productcolor')
+        }
+        return jsonify({"success": False, "message": "You need to log in first.", "redirect": "/login?next=/add-to-cart-combo"})
 
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
@@ -617,11 +626,24 @@ def update_cart_item():
 
 @app.route('/remove-from-cart/<productname>/<productsize>/<productcolor>', methods=['GET'])
 def remove_from_cart(productname, productsize, productcolor):
+    if 'user_email' not in session:
+        return redirect(url_for('login'))
+    
+    user_email = session['user_email']
+    
+    # Decode productname to avoid URL encoding issues
+    decoded_productname = urllib.parse.unquote(productname)
+
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM cart WHERE productname = ? AND productsize = ? AND productcolor = ?", (productname, productsize, productcolor))
+    
+    # Ensure deletion is also filtered by user_email
+    cursor.execute("DELETE FROM cart WHERE productname = ? AND productsize = ? AND productcolor = ? AND user_email = ?", 
+                   (decoded_productname, productsize, productcolor, user_email))
+    
     conn.commit()
     conn.close()
+    
     return redirect(url_for('cart'))
 
 @app.route('/clear-cart', methods=['GET'])
@@ -744,7 +766,70 @@ def login():
                 session['user_email'] = user[2]  # Assuming email is in the 3rd column
                 session['is_admin'] = user[2] == 'fashionholics23@gmail.com' and password == 'Fashion@23'  # Set admin flag
 
-                return redirect(next_page)  # Redirect to the original page
+                # Check if there are stored bid details
+                if 'bid_details' in session:
+                    bid_details = session.pop('bid_details')
+                    # Add the item to the cart
+                    conn = sqlite3.connect('product.db')
+                    cursor = conn.cursor()
+                    productdetails = cursor.execute(
+                        "SELECT name, price, size, img1, color FROM products WHERE sku=?", (bid_details['productId'],)
+                    ).fetchall()
+
+                    productname = productdetails[0][0]
+                    productprice = float(bid_details['bidAmount'])
+                    productsize = bid_details['selectedSize']
+                    productquantity = 1
+                    productimage = f"../static/images/pics/{productdetails[0][3]}"
+                    productcolor = productdetails[0][4]
+                    user_email = session['user_email']
+
+                    totalprice = productprice * productquantity
+
+                    cursor.execute(
+                        '''INSERT INTO cart 
+                           (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor, user_email) 
+                           VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
+                        (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor, user_email)
+                    )
+                    conn.commit()
+                    conn.close()
+
+                # Check if there are stored combo details
+                if 'combo_details' in session:
+                    combo_details = session.pop('combo_details')
+                    conn = sqlite3.connect('product.db')
+                    cursor = conn.cursor()
+                    productdetails = cursor.execute(
+                        "SELECT name, price, size, img1, color FROM products WHERE sku=?", (combo_details['product_id'],)
+                    ).fetchall()
+
+                    productimage = f"../static/images/pics/{productdetails[0][3]}"
+                    productname = productdetails[0][0]
+                    productprice = float(combo_details['productprice'])
+                    productsize = combo_details['productsize']
+                    productcolor = productdetails[0][4]
+                    user_email = session['user_email']
+                    second_product_size = combo_details['secondProductSize']
+                    second_product_color = combo_details['productcolor']
+                    second_product_name = productname
+                    second_product_price = float(combo_details['productprice'])  
+                    combined_product_name = f"{productname}, {second_product_name}"
+                    combined_product_size = f"{productsize}, {second_product_size}"
+                    combined_product_price = productprice + second_product_price
+                    combined_product_color = f"{productcolor}, {second_product_color}"
+
+                    cursor.execute(
+                        '''INSERT INTO cart 
+                           (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor, user_email) 
+                           VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
+                        (productimage, combined_product_name, combined_product_size, productprice, 2, combined_product_price, combined_product_color, user_email)
+                    )
+
+                    conn.commit()
+                    conn.close()
+
+                return redirect(next_page)
             else:
                 # Incorrect password
                 return render_template('login.html', identifier=identifier, message="Password is incorrect.")
@@ -753,6 +838,16 @@ def login():
             return redirect(url_for('register', message="Account does not exist. Please create an account."))
 
     return render_template('login.html')
+
+@app.route('/store-bid-details', methods=['POST'])
+def store_bid_details():
+    data = request.json
+    session['bid_details'] = {
+        'productId': data['productId'],
+        'bidAmount': data['bidAmount'],
+        'selectedSize': data['selectedSize']
+    }
+    return jsonify({"status": "success"})
 
 
 @app.route('/forgot-password', methods=['GET', 'POST'])

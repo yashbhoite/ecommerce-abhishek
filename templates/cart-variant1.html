@@ -563,7 +563,7 @@
                                                 <div><span class="money">{{ item[5] }}</span></div>
                                             </td>
                                             <td class="text-center small--hide">
-                                                <a href="/remove-from-cart/{{ item[1] }}/{{ item[2] }}/{{ item[6] }}"
+                                                <a href="{{ url_for('remove_from_cart', productname=item[1]|replace(' ', '%20'), productsize=item[2], productcolor=item[6]) }}"
                                                     class="btn btn--secondary cart__remove" title="Remove item">
                                                     <i class="icon icon anm anm-times-l"></i>
                                                 </a>
