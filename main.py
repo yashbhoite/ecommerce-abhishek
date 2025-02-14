@@ -3,6 +3,7 @@ from email import message
 from unicodedata import name
 from flask import flash,Flask, redirect, render_template, request, url_for, session, jsonify, send_from_directory
 import requests
+import urllib.parse
 import smtplib
 import sqlite3
 import uuid as uuid
@@ -106,7 +107,15 @@ def privacy_policy():
 @app.route('/add-to-cart-combo/<string:product_id>', methods=['POST'])
 def add_to_cart_combo(product_id):
     if 'user_email' not in session:
-        return jsonify({"success": False, "message": "You need to log in first."})
+         # Store combo details in session before redirecting to login
+        session['combo_details'] = {
+            'product_id': product_id,
+            'productprice': request.form.get('productprice'),
+            'productsize': request.form.get('productsize'),
+            'secondProductSize': request.form.get('secondProductSize'),
+            'productcolor': request.form.get('productcolor')
+        }
+        return jsonify({"success": False, "message": "You need to log in first.", "redirect": "/login?next=/add-to-cart-combo"})
 
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
@@ -235,15 +244,23 @@ def get_product_details(product_id):
 
 
 
+from flask import session  # Import session to track user attempts
+
 @app.route('/bid', methods=['POST'])
 def bid():
+    # Initialize low_bid_count if it doesn't exist
+    if 'low_bid_count' not in session:
+        session['low_bid_count'] = 0
+    print("bid count===========================")
+    print(session['low_bid_count'])
+
+    # Extract data from the request
     bid_amount = int(request.json['bidAmount'])
-    level = request.json.get('level', 'level1')
+    level = request.json.get('level', 'level1')  # Default to level1
     path = request.json.get('path')
     price = request.json.get('price')
     language = request.json.get('language', 'en')  # Default to English
 
-    
     # Extract product number from the path
     match = re.search(r"/product/(\d+)", path)
     if match:
@@ -255,6 +272,7 @@ def bid():
     discount = cursor.execute("SELECT per1, per2, per3, size, color FROM products WHERE sku = ?", (number,)).fetchall()
     conn.close()
 
+    # Parse discount ranges
     level1low, level1high = map(int, discount[0][0].split('-'))
     level2low, level2high = map(int, discount[0][1].split('-'))
     level3low, level3high = map(int, discount[0][2].split('-'))
@@ -268,47 +286,89 @@ def bid():
     level1_price = int(price) - int(int(price) * level1dis / 100)
     level2_price = int(price) - int(int(price) * level2dis / 100)
     level3_price = int(price) - int(int(price) * level3dis / 100)
-    print(level1_price)
-    print(level2_price)
-    print(level3_price)
-    # Handle bid for each level
-   # Messages in English and Hindi
+
+    # Messages in English and Hindi
     messages = {
         'en': {
-            'level1': "Congratulations! 🎉 Your bid has been accepted. Thank you for shopping with FashionHolics—enjoy your new purchase! 🛍️ Add item to cart?",
-            'level2': f"💥 Score Big! Grab TWO stylish pieces at just ₹ {level2_price} per item! Perfectly paired, ultra-trendy, and comfy – time to elevate your style game. 👗👕✨ Are you in for this awesome deal?",
-            'level3': f"🚨 Last Chance Alert! 🚨 Snag this exclusive deal – ₹ {level3_price} discount on your favorite pick! 🔥 Don't let it slip away. Ready to claim it?",
+            'level1': f"Congratulations! 🎉 Your bid has been accepted. Get it at ₹{level1_price} Thank you for shopping with FashionHolics—enjoy your new purchase! 🛍️ Add item to cart? Click 'Yes' to accept the offer or 'No' to reject it.",
+            'level1_noprice': f"Congratulations! 🎉 Your bid has been accepted. Thank you for shopping with FashionHolics—enjoy your new purchase! 🛍️ Add item to cart? Click 'Yes' to accept the offer or 'No' to reject it.",
+            'level2': f"💥 Score Big! Grab TWO stylish pieces at just ₹{level2_price} per item! Perfectly paired, ultra-trendy, and comfy – time to elevate your style game. 👗👕✨ Are you in for this awesome deal? Click 'Yes' to accept, 'No' to pass.",
+            'level3': f"🚨 Last Chance Alert! 🚨 Snag this exclusive deal – ₹{level3_price} discount on your favorite pick! 🔥 Don't let it slip away. Ready to claim it? Click 'Yes' to grab it or 'No' to skip.",
             'low_bid': "Your bid is a bit too low! 🚀 Increase it slightly to get a better chance at securing this deal."
         },
-         "hi": {
-            "level1": "Badhai ho! 🎉 Aapka bid accept ho gaya. Ab chill maro, FashionHolics ke saath smart shopping ho gayi! 😍, Item Cart me daale?",
-            "level2": f"💥 Bada score! ₹ {level2_price} per item ke liye do stylish pieces le lo! Perfectly paired aur trendy look ke liye ready ho? 👗👕✨",
-            "level3": f"🚨 Last chance alert! 🚨 Apne favorite pick par ₹ {level3_price} discount le lo! 🔥 Abhi claim karein?",
+        "hi": {
+            "level1": f"Badhai ho! 🎉 Aapka bid accept ho gaya. ye product lijiye sirf ₹{level1_price} Ab chill maro, FashionHolics ke saath smart shopping ho gayi! 😍, Item Cart me daale? 'Haan' dabakar offer lo ya 'Nahi' dabakar reject karo.",
+            "level1_noprice": f"Badhai ho! 🎉 Aapka bid accept ho gaya. Ab chill maro, FashionHolics ke saath smart shopping ho gayi! 😍, Item Cart me daale? 'Haan' dabakar offer lo ya 'Nahi' dabakar reject karo.",
+            "level2": f"💥 Bada score! ₹{level2_price} per item ke liye do stylish pieces le lo! Perfectly paired aur trendy look ke liye ready ho? 👗👕✨ 'Haan' dabakar accept karo ya 'Nahi' dabakar pass karo.",
+            "level3": f"🚨 Last chance alert! 🚨 Apne favorite pick par ₹{level3_price} discount le lo! 🔥 Abhi claim karein? 'Haan' dabakar grab karein ya 'Nahi' dabakar skip karein.",
             "low_bid": "Arre yaar, thoda aur badao apna bid! Thoda adjust karoge toh deal pakki ho sakti hai. 😃"
         }
     }
 
-    # Handle bid for each level
-    if level == 'level1' and bid_amount >= level1_price:
+    # Check if the bid is below level1_price
+    if bid_amount < level1_price:
+        session['low_bid_count'] += 1
+    else:
+        session['low_bid_count'] = 0  # Reset if bid is valid
+
+    # If low_bid_count reaches 3, force level1 offer
+    if session['low_bid_count'] >= 3 and level=="level1":
         return jsonify({
             "message": messages[language]['level1'],
             "status": "level1",
+            "level1_price": level1_price,
+            "level2_price": level2_price,
+            "level3_price": level3_price,
+            "disable_bid": True,
+            "low_bid": True  
+        })
+    if session['low_bid_count'] >= 3 and level=="level2":
+        return jsonify({
+            "message": messages[language]['level2'],
+            "status": "level2",
+            "level1_price": level1_price,
+            "level2_price": level2_price,
+            "level3_price": level3_price,
+            "disable_bid": True
+        })
+    if session['low_bid_count'] >= 3 and level=="level3":
+        session['low_bid_count'] = 0  # Reset after forcing level1
+        return jsonify({
+            "message": messages[language]['level3'],
+            "status": "level3",
+            "level1_price": level1_price,
+            "level2_price": level2_price,
+            "level3_price": level3_price,
+            "disable_bid": True
+        })
+
+    # Handle bid for each level
+    if level == 'level1' and bid_amount >= level1_price:
+        session['low_bid_count'] = 0  # Reset after successful bid
+        return jsonify({
+            "message": messages[language]['level1_noprice'],
+            "status": "level1",
+            "level1_price": level1_price,
             "level2_price": level2_price,
             "level3_price": level3_price,
             "disable_bid": True
         })
     elif level == 'level2' and bid_amount >= level2_price:
+        session['low_bid_count'] = 0  
         return jsonify({
             "message": messages[language]['level2'],
             "status": "level2",
+            "level1_price": level1_price,
             "level2_price": level2_price,
             "level3_price": level3_price,
             "disable_bid": True
         })
     elif level == 'level3' and bid_amount >= level3_price:
+        session['low_bid_count'] = 0  
         return jsonify({
             "message": messages[language]['level3'],
             "status": "level3",
+            "level1_price": level1_price,
             "level2_price": level2_price,
             "level3_price": level3_price,
             "disable_bid": False
@@ -317,11 +377,12 @@ def bid():
         return jsonify({
             "message": messages[language]['low_bid'],
             "status": "level3",
+            "level1_price": level1_price,
             "level2_price": level2_price,
             "level3_price": level3_price,
             "disable_bid": level != 'level3'
         })
-
+        
              
         
 
@@ -568,11 +629,24 @@ def update_cart_item():
 
 @app.route('/remove-from-cart/<productname>/<productsize>/<productcolor>', methods=['GET'])
 def remove_from_cart(productname, productsize, productcolor):
+    if 'user_email' not in session:
+        return redirect(url_for('login'))
+    
+    user_email = session['user_email']
+    
+    # Decode productname to avoid URL encoding issues
+    decoded_productname = urllib.parse.unquote(productname)
+
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM cart WHERE productname = ? AND productsize = ? AND productcolor = ?", (productname, productsize, productcolor))
+    
+    # Ensure deletion is also filtered by user_email
+    cursor.execute("DELETE FROM cart WHERE productname = ? AND productsize = ? AND productcolor = ? AND user_email = ?", 
+                   (decoded_productname, productsize, productcolor, user_email))
+    
     conn.commit()
     conn.close()
+    
     return redirect(url_for('cart'))
 
 @app.route('/clear-cart', methods=['GET'])
@@ -695,7 +769,70 @@ def login():
                 session['user_email'] = user[2]  # Assuming email is in the 3rd column
                 session['is_admin'] = user[2] == 'fashionholics23@gmail.com' and password == 'Fashion@23'  # Set admin flag
 
-                return redirect(next_page)  # Redirect to the original page
+                # Check if there are stored bid details
+                if 'bid_details' in session:
+                    bid_details = session.pop('bid_details')
+                    # Add the item to the cart
+                    conn = sqlite3.connect('product.db')
+                    cursor = conn.cursor()
+                    productdetails = cursor.execute(
+                        "SELECT name, price, size, img1, color FROM products WHERE sku=?", (bid_details['productId'],)
+                    ).fetchall()
+
+                    productname = productdetails[0][0]
+                    productprice = float(bid_details['bidAmount'])
+                    productsize = bid_details['selectedSize']
+                    productquantity = 1
+                    productimage = f"../static/images/pics/{productdetails[0][3]}"
+                    productcolor = productdetails[0][4]
+                    user_email = session['user_email']
+
+                    totalprice = productprice * productquantity
+
+                    cursor.execute(
+                        '''INSERT INTO cart 
+                           (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor, user_email) 
+                           VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
+                        (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor, user_email)
+                    )
+                    conn.commit()
+                    conn.close()
+
+                # Check if there are stored combo details
+                if 'combo_details' in session:
+                    combo_details = session.pop('combo_details')
+                    conn = sqlite3.connect('product.db')
+                    cursor = conn.cursor()
+                    productdetails = cursor.execute(
+                        "SELECT name, price, size, img1, color FROM products WHERE sku=?", (combo_details['product_id'],)
+                    ).fetchall()
+
+                    productimage = f"../static/images/pics/{productdetails[0][3]}"
+                    productname = productdetails[0][0]
+                    productprice = float(combo_details['productprice'])
+                    productsize = combo_details['productsize']
+                    productcolor = productdetails[0][4]
+                    user_email = session['user_email']
+                    second_product_size = combo_details['secondProductSize']
+                    second_product_color = combo_details['productcolor']
+                    second_product_name = productname
+                    second_product_price = float(combo_details['productprice'])  
+                    combined_product_name = f"{productname}, {second_product_name}"
+                    combined_product_size = f"{productsize}, {second_product_size}"
+                    combined_product_price = productprice + second_product_price
+                    combined_product_color = f"{productcolor}, {second_product_color}"
+
+                    cursor.execute(
+                        '''INSERT INTO cart 
+                           (productimage, productname, productsize, productprice, productquantity, totalprice, productcolor, user_email) 
+                           VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
+                        (productimage, combined_product_name, combined_product_size, productprice, 2, combined_product_price, combined_product_color, user_email)
+                    )
+
+                    conn.commit()
+                    conn.close()
+
+                return redirect(next_page)
             else:
                 # Incorrect password
                 return render_template('login.html', identifier=identifier, message="Password is incorrect.")
@@ -704,6 +841,16 @@ def login():
             return redirect(url_for('register', message="Account does not exist. Please create an account."))
 
     return render_template('login.html')
+
+@app.route('/store-bid-details', methods=['POST'])
+def store_bid_details():
+    data = request.json
+    session['bid_details'] = {
+        'productId': data['productId'],
+        'bidAmount': data['bidAmount'],
+        'selectedSize': data['selectedSize']
+    }
+    return jsonify({"status": "success"})
 
 
 @app.route('/forgot-password', methods=['GET', 'POST'])
@@ -1649,6 +1796,7 @@ def delete_product(sku):
 
 @app.route('/product/<string:id>')
 def productinfo(id):
+    session['low_bid_count'] = 0
     logged_in = session.get('logged_in', False)
     selected_size = request.args.get('size')  # Capture the size from query params
     print("------------captured size---------------------")
@@ -2448,4 +2596,4 @@ def verify_payment():
 if(__name__) == '__main__':
     if not os.path.exists(app.config['upload_folder']):
         os.makedirs(app.config['upload_folder'])
-    app.run(debug=False)
+    app.run(debug=True)

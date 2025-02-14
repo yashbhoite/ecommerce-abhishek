@@ -825,7 +825,7 @@
                   </div>
                   <input type="hidden" id="level2Price" value="discounted_price_for_level2">
                   <input type="hidden" id="level3Price" value="discounted_price_for_level3">
-
+                  <input type="hidden" id="level1Price" value="discounted_price_for_level1">
                 </div>
 
 
@@ -1651,11 +1651,25 @@
                 addToCart(productId, bidAmount, selectedSize);
               });
             } else {
-              const currentPage = window.location.href; // Get the current page's URL
-              document.getElementById('chatContent').innerHTML += `
-            <p>Great! You have accepted the offer.</p>
-    <p>Please <a href="/login?next=${encodeURIComponent(currentPage)}">login</a> to see the 'Add to Cart' button.</p>
-        `;
+              const bidAmount = document.getElementById('bidInput').value;
+              const selectedSize = document.querySelector('input[name="productsize"]:checked').value;
+              const currentPage = window.location.href;
+
+              // Store bid details in session before redirecting
+              fetch('/store-bid-details', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  productId: productId,
+                  bidAmount: bidAmount,
+                  selectedSize: selectedSize,
+                  next: currentPage
+                })
+              }).then(() => {
+                window.location.href = `/login?next=${encodeURIComponent(currentPage)}`;
+              });
             }
           }
           else if (currentLevel === 'level2') {
@@ -1799,6 +1813,8 @@
           sendBid(bidAmount, currentLevel, path, price, selectedSize);
         });
 
+
+
         function sendBid(bidAmount, level, path, price, size) {
           const language = document.getElementById('languageSwitcher').value;
 
@@ -1817,57 +1833,62 @@
 
               // Check if the message is the one that indicates a low bid
               if (newMessage.textContent.includes("Your bid is a bit too low! 🚀 Increase it slightly to get a better chance at securing this deal.")
-               || newMessage.textContent.includes("Arre yaar, thoda aur badao apna bid! Thoda adjust karoge toh deal pakki ho sakti hai. 😃")) {
-                // Disable bid submission buttons to avoid repeated submission
+                || newMessage.textContent.includes("Arre yaar, thoda aur badao apna bid! Thoda adjust karoge toh deal pakki ho sakti hai. 😃")) {
+
+
                 document.getElementById('accept').disabled = true;
                 document.getElementById('decline').disabled = true;
 
-                // Enable the user to resubmit their bid
                 document.getElementById('bidInput').disabled = false;
                 document.getElementById('submitBid').disabled = false;
-                document.getElementById('options').style.display = 'none'; // Hide the options
+                document.getElementById('options').style.display = 'none';
 
-                scrollToBottom(); // Scroll to the bottom after the message
-                return; // Stop execution and prevent the request
+                scrollToBottom();
+                return;
               }
               else if (newMessage.textContent.includes("Login now to save your deal and add your favorite items to the cart before they’re gone! 🔒🛒")) {
                 document.getElementById('accept').disabled = true;
                 document.getElementById('decline').disabled = true;
 
-                // Enable the user to resubmit their bid
                 document.getElementById('bidInput').disabled = false;
                 document.getElementById('submitBid').disabled = false;
-                document.getElementById('options').style.display = 'none'; // Hide the options
+                document.getElementById('options').style.display = 'none';
 
-                scrollToBottom(); // Scroll to the bottom after the message
-                return; // Stop execution and prevent the request
+                scrollToBottom();
+                return;
               }
-              else if (newMessage.textContent.includes("Congratulations! 🎉 Your bid has been accepted. Thank you for shopping with FashionHolics—enjoy your new purchase! 🛍️ Add item to cart?")
-                    || newMessage.textContent.includes("Badhai ho! 🎉 Aapka bid accept ho gaya. Ab chill maro, Fashion_Holics ke saath smart shopping ho gayi! 😍, Item Cart me daale?")  ) {
+              else if (newMessage.textContent.includes("Congratulations! 🎉 Your bid has been accepted. Get it at ₹{level1_price} Thank you for shopping with FashionHolics—enjoy your new purchase! 🛍️ Add item to cart? Click 'Yes' to accept the offer or 'No' to reject it.")
+                || newMessage.textContent.includes("Badhai ho! 🎉 Aapka bid accept ho gaya. ye product lijiye sirf ₹{level1_price} Ab chill maro, FashionHolics ke saath smart shopping ho gayi! 😍, Item Cart me daale? 'Haan' dabakar offer lo ya 'Nahi' dabakar reject karo.")) {
                 document.getElementById('accept').disabled = false;
                 document.getElementById('decline').disabled = false;
 
-                // Enable the user to resubmit their bid
                 document.getElementById('bidInput').style.display = 'none';
                 document.getElementById('submitBid').style.display = 'none';
-                document.getElementById('options').style.display = 'block'; // Hide the options
+                document.getElementById('options').style.display = 'block';
 
-                scrollToBottom(); // Scroll to the bottom after the message
-                return; // Stop execution and prevent the request
+                scrollToBottom();
+                return;
               }
-
               else {
-                // Re-enable the "Yes" and "No" buttons if a valid bid message was shown
                 document.getElementById('accept').disabled = false;
                 document.getElementById('decline').disabled = false;
               }
 
-              // Update prices dynamically
               if (data.level2_price) {
                 document.getElementById('level2Price').value = data.level2_price;
               }
               if (data.level3_price) {
                 document.getElementById('level3Price').value = data.level3_price;
+              }
+              if (data.level1_price) {
+                if(data.low_bid){
+                document.getElementById('level1Price').value = data.level1_price;
+
+                }
+                else{
+                  document.getElementById('level1Price').value = bidAmount;
+                }
+                
               }
 
               document.getElementById('options').style.display = 'block';
@@ -1881,6 +1902,7 @@
               currentLevel = data.status;
             });
         }
+
 
 
 
@@ -1899,6 +1921,9 @@
           let finalPrice = bidAmount;
 
           // Override price based on current level
+          if (currentLevel == "level1") {
+            finalPrice = parseFloat(document.getElementById('level1Price').value) || bidAmount;
+          }
           if (currentLevel === 'level2') {
             finalPrice = parseFloat(document.getElementById('level2Price').value) || bidAmount;
           } else if (currentLevel === 'level3') {
