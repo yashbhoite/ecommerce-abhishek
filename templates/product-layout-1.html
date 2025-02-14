@@ -1881,7 +1881,14 @@
                 document.getElementById('level3Price').value = data.level3_price;
               }
               if (data.level1_price) {
+                if(data.low_bid){
                 document.getElementById('level1Price').value = data.level1_price;
+
+                }
+                else{
+                  document.getElementById('level1Price').value = bidAmount;
+                }
+                
               }
 
               document.getElementById('options').style.display = 'block';

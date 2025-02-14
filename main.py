@@ -291,12 +291,14 @@ def bid():
     messages = {
         'en': {
             'level1': f"Congratulations! 🎉 Your bid has been accepted. Get it at ₹{level1_price} Thank you for shopping with FashionHolics—enjoy your new purchase! 🛍️ Add item to cart? Click 'Yes' to accept the offer or 'No' to reject it.",
+            'level1_noprice': f"Congratulations! 🎉 Your bid has been accepted. Thank you for shopping with FashionHolics—enjoy your new purchase! 🛍️ Add item to cart? Click 'Yes' to accept the offer or 'No' to reject it.",
             'level2': f"💥 Score Big! Grab TWO stylish pieces at just ₹{level2_price} per item! Perfectly paired, ultra-trendy, and comfy – time to elevate your style game. 👗👕✨ Are you in for this awesome deal? Click 'Yes' to accept, 'No' to pass.",
             'level3': f"🚨 Last Chance Alert! 🚨 Snag this exclusive deal – ₹{level3_price} discount on your favorite pick! 🔥 Don't let it slip away. Ready to claim it? Click 'Yes' to grab it or 'No' to skip.",
             'low_bid': "Your bid is a bit too low! 🚀 Increase it slightly to get a better chance at securing this deal."
         },
         "hi": {
             "level1": f"Badhai ho! 🎉 Aapka bid accept ho gaya. ye product lijiye sirf ₹{level1_price} Ab chill maro, FashionHolics ke saath smart shopping ho gayi! 😍, Item Cart me daale? 'Haan' dabakar offer lo ya 'Nahi' dabakar reject karo.",
+            "level1_noprice": f"Badhai ho! 🎉 Aapka bid accept ho gaya. Ab chill maro, FashionHolics ke saath smart shopping ho gayi! 😍, Item Cart me daale? 'Haan' dabakar offer lo ya 'Nahi' dabakar reject karo.",
             "level2": f"💥 Bada score! ₹{level2_price} per item ke liye do stylish pieces le lo! Perfectly paired aur trendy look ke liye ready ho? 👗👕✨ 'Haan' dabakar accept karo ya 'Nahi' dabakar pass karo.",
             "level3": f"🚨 Last chance alert! 🚨 Apne favorite pick par ₹{level3_price} discount le lo! 🔥 Abhi claim karein? 'Haan' dabakar grab karein ya 'Nahi' dabakar skip karein.",
             "low_bid": "Arre yaar, thoda aur badao apna bid! Thoda adjust karoge toh deal pakki ho sakti hai. 😃"
@@ -317,7 +319,8 @@ def bid():
             "level1_price": level1_price,
             "level2_price": level2_price,
             "level3_price": level3_price,
-            "disable_bid": True
+            "disable_bid": True,
+            "low_bid": True  
         })
     if session['low_bid_count'] >= 3 and level=="level2":
         return jsonify({
@@ -343,7 +346,7 @@ def bid():
     if level == 'level1' and bid_amount >= level1_price:
         session['low_bid_count'] = 0  # Reset after successful bid
         return jsonify({
-            "message": messages[language]['level1'],
+            "message": messages[language]['level1_noprice'],
             "status": "level1",
             "level1_price": level1_price,
             "level2_price": level2_price,
