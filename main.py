@@ -311,8 +311,8 @@ def bid():
     else:
         session['low_bid_count'] = 0  # Reset if bid is valid
 
-    # If low_bid_count reaches 3, force level1 offer
-    if session['low_bid_count'] >= 3 and level=="level1":
+    # If low_bid_count reaches 2, force level1 offer
+    if session['low_bid_count'] >= 2 and level=="level1":
         return jsonify({
             "message": messages[language]['level1'],
             "status": "level1",
@@ -322,7 +322,7 @@ def bid():
             "disable_bid": True,
             "low_bid": True  
         })
-    if session['low_bid_count'] >= 3 and level=="level2":
+    if session['low_bid_count'] >= 2 and level=="level2":
         return jsonify({
             "message": messages[language]['level2'],
             "status": "level2",
@@ -331,7 +331,7 @@ def bid():
             "level3_price": level3_price,
             "disable_bid": True
         })
-    if session['low_bid_count'] >= 3 and level=="level3":
+    if session['low_bid_count'] >= 2 and level=="level3":
         session['low_bid_count'] = 0  # Reset after forcing level1
         return jsonify({
             "message": messages[language]['level3'],
