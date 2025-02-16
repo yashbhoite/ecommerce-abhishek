@@ -134,6 +134,17 @@ wishlist
                                                     </span></button>
                                             </span>
                                         </div>
+                                        <div class="col-lg-1 col-sm-6 col-md-3 display-table-cell footer-newsletter" style="margin-left: 30px;">
+
+
+                                            <!-- <input type="text" class="input-group__field newsletter__input" name="text" value="" placeholder="Search for orders" required=""> -->
+                                            <span class="input-group__btn">
+                                                <button type="submit" class="btn newsletter__submit" name="commit"
+                                                    onclick="showDelivered()" id="returnBtn"><span
+                                                        class="newsletter__submit-text--large">Delivered Orders
+                                                    </span></button>
+                                            </span>
+                                        </div>
                                         <div class="col-lg-1 col-sm-6 col-md-3 display-table-cell footer-newsletter" style="margin-left: 27px;">
 
 
@@ -538,6 +549,65 @@ wishlist
                 </div>
             </div>
 
+            <div class="container" id="DeliverTable" style="display: none;">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
+                        <h2 style="color: #deb992;">Delivered Orders</h2>
+
+                        <form action="#">
+                            <div class="wishlist-table table-content table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="stock-status text-center alt-font">Date</th>
+                                            <th class="product-name text-center alt-font">Customer name</th>
+                                            <th class="product-price text-center alt-font">Phone No.</th>
+                                            <th class="product-subtotal text-center alt-font">Email</th>
+                                            <th class="product-name alt-font text-center">Product Details</th>
+                                            <th class="product-name alt-font text-center">Billing Address</th>
+                                            <th class="product-price text-center alt-font">Order Value</th>
+                                            <th class="product-price text-center alt-font">Order ID</th>
+                                            <th class="stock-status text-center alt-font">Payment Method</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for order in deliver %}
+                                        <tr>
+                                            <td class="product-thumbnail text-center">
+                                                {{order[17]}}
+                                            </td>
+                                            <td class="product-remove text-center" valign="middle">{{order[0]}}
+                                                {{order[1]}}</td>
+                                            <td class="product-thumbnail text-center">
+                                                {{order[3]}}
+                                            </td>
+                                            <td class="product-name text-center">{{order[2]}}</td>
+                                            <td class="text-center">
+                                                {{order[10]}} (Size: {{order[11]}}, Color: {{order[12]}}, Qty:
+                                                {{order[13]}})
+                                            </td>
+                                            <td class="stock text-center">
+                                                <span class="in-stock">{{order[15]}}, {{order[4]}}, {{order[5]}},
+                                                    {{order[6]}}</span>
+                                            </td>
+                                            <td class="product-subtotal text-center"> ₹ {{order[14]}}</td>
+                                            <td class="product-subtotal text-center">{{order[8]}}</td>
+                                            <td class="product-subtotal text-center">{{order[7]}}</td>
+
+
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div class="container" id="ReelTable" style="display: none;">
                 <p>Reels</p>
                 <form action="/videoadddb" method="POST" enctype="multipart/form-data">
@@ -674,6 +744,7 @@ wishlist
             document.getElementById("orderHistoryTable").style.display = "none";
             document.getElementById("returnTable").style.display = "none";
             document.getElementById("CancelTable").style.display = "none";
+            document.getElementById("DeliverTable").style.display = "none";
         }
         function showReels() {
             document.getElementById("editProductTable").style.display = "none";
@@ -681,6 +752,7 @@ wishlist
             document.getElementById("returnTable").style.display = "none";
             document.getElementById("CancelTable").style.display = "none";
             document.getElementById("ReelTable").style.display = "block";
+            document.getElementById("DeliverTable").style.display = "none";
         }
 
         function showOrderHistory() {
@@ -688,6 +760,7 @@ wishlist
             document.getElementById("orderHistoryTable").style.display = "block";
             document.getElementById("returnTable").style.display = "none";
             document.getElementById("CancelTable").style.display = "none";
+            document.getElementById("DeliverTable").style.display = "none";
         }
 
         function showReturnHistory() {
@@ -695,12 +768,21 @@ wishlist
             document.getElementById("orderHistoryTable").style.display = "none";
             document.getElementById("returnTable").style.display = "block";
             document.getElementById("CancelTable").style.display = "none";
+            document.getElementById("DeliverTable").style.display = "none";
         }
         function showCancelled() {
             document.getElementById("editProductTable").style.display = "none";
             document.getElementById("orderHistoryTable").style.display = "none";
             document.getElementById("returnTable").style.display = "none";
             document.getElementById("CancelTable").style.display = "block";
+            document.getElementById("DeliverTable").style.display = "none";
+        }
+        function showDelivered() {
+            document.getElementById("editProductTable").style.display = "none";
+            document.getElementById("orderHistoryTable").style.display = "none";
+            document.getElementById("returnTable").style.display = "none";
+            document.getElementById("CancelTable").style.display = "none";
+            document.getElementById("DeliverTable").style.display = "block";
         }
     </script>
 

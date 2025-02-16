@@ -244,7 +244,7 @@ def get_product_details(product_id):
 
 
 
-from flask import session  # Import session to track user attempts
+
 
 @app.route('/bid', methods=['POST'])
 def bid():
@@ -961,6 +961,15 @@ def myaccount():
     """, (email,))
     address_data = cursor.fetchone()  # Fetch a single record
 
+    # If no address is found, fetch details from the users table
+    if not address_data:
+        cursor.execute("""
+            SELECT email, firstname, lastname, phone, '' AS address, '' AS city, '' AS pincode, '' AS state, '' AS country
+            FROM users
+            WHERE email = ?
+        """, (email,))
+        address_data = cursor.fetchone()  # Fetch a single record
+
     if email:
         # Query to count items in the cart for the logged-in user
         cursor.execute("SELECT COUNT(*) FROM cart WHERE user_email = ?", (email,))
@@ -1095,8 +1104,25 @@ def wishlist():
         grand
     FROM 
         orders o
+    WHERE 
+        status != 'Delivered'
+        AND NOT (
+            status = 'Cancelled' 
+            AND DATE(
+                STRFTIME('%Y-%m-%d', 
+                    SUBSTR(cancel, 7, 4) || '-' ||  -- Year
+                    SUBSTR(cancel, 4, 2) || '-' ||  -- Month
+                    SUBSTR(cancel, 1, 2)           -- Day
+                )
+            ) < DATE('now', '-20 days')
+        )
     ORDER BY 
-        timestamp DESC
+        STRFTIME('%Y-%m-%d %H:%M:%S', 
+             SUBSTR(timestamp, 7, 4) || '-' ||  -- Year
+             SUBSTR(timestamp, 4, 2) || '-' ||  -- Month
+             SUBSTR(timestamp, 1, 2) || ' ' ||  -- Day
+             SUBSTR(timestamp, 12)              -- Time
+    ) DESC;
     """).fetchall()
 
     # Group orders by razorpay_order_id
@@ -1140,7 +1166,45 @@ def wishlist():
     WHERE 
         status = 'Cancelled'
     ORDER BY
-        cancel DESC
+        STRFTIME('%Y-%m-%d %H:%M:%S', 
+             SUBSTR(cancel, 7, 4) || '-' ||  -- Year
+             SUBSTR(cancel, 4, 2) || '-' ||  -- Month
+             SUBSTR(cancel, 1, 2) || ' ' ||  -- Day
+             SUBSTR(cancel, 12)              -- Time
+    ) DESC;
+    """).fetchall()
+
+    deliver = my_cursor.execute("""
+    SELECT 
+        firstname,
+        lastname,
+        email,
+        mobile,
+        city,
+        state,
+        pincode,
+        payment_info,
+        razorpay_order_id,
+        razorpay_payment_id,
+        productname,
+        size,
+        color,
+        quantity,
+        totalprice,
+        address,
+        status,
+        cancel
+    FROM 
+        orders
+    WHERE 
+        status = 'Delivered'
+    ORDER BY
+        STRFTIME('%Y-%m-%d %H:%M:%S', 
+             SUBSTR(timestamp, 7, 4) || '-' ||  -- Year
+             SUBSTR(timestamp, 4, 2) || '-' ||  -- Month
+             SUBSTR(timestamp, 1, 2) || ' ' ||  -- Day
+             SUBSTR(timestamp, 12)              -- Time
+    ) DESC;
     """).fetchall()
 
     print(orders)  # For debugging purposes
@@ -1209,7 +1273,7 @@ def wishlist():
     connection.commit()
     connection.close()
     
-    return render_template("wishlist.html", grouped_orders=grouped_orders_list, product=product, return_requests=return_requests, cancel=cancel,placed_count=placed_count, 
+    return render_template("wishlist.html", grouped_orders=grouped_orders_list, product=product, return_requests=return_requests, cancel=cancel, deliver=deliver, placed_count=placed_count, 
                            shipped_count=shipped_count, 
                            delivered_count=delivered_count, 
                            cancelled_count=cancelled_count, 
@@ -2154,17 +2218,39 @@ def update_address():
     conn = sqlite3.connect('product.db')
     cursor = conn.cursor()
 
-  # Update address in useradr table
-    cursor.execute('''
-        UPDATE useradr 
-        SET firstname = ?, lastname = ?, mobile = ?, address = ?, city = ?, pincode = ?, state = ?, country = ?
-        WHERE email = ?
-    ''', (firstname, lastname, mobile, address, city, pincode, state, country, email))
+    try:
+        # Check if the email exists in useradr table
+        cursor.execute("SELECT email FROM useradr WHERE email = ?", (email,))
+        address_exists = cursor.fetchone()
 
-    conn.commit()
-    conn.close()
+        if address_exists:
+            # Update address in useradr table
+            cursor.execute('''
+                UPDATE useradr 
+                SET firstname = ?, lastname = ?, mobile = ?, address = ?, city = ?, pincode = ?, state = ?, country = ?
+                WHERE email = ?
+            ''', (firstname, lastname, mobile, address, city, pincode, state, country, email))
+        else:
+            # If email does not exist in useradr, update the email in the users table based on mobile
+            cursor.execute("SELECT email FROM users WHERE phone = ?", (mobile,))
+            user_exists = cursor.fetchone()
+            user_exists = session['user_email']
 
-    return jsonify({'success': True, 'message': 'Address updated successfully'})
+            if user_exists:
+                cursor.execute("UPDATE users SET email = ? WHERE phone = ?", (email, mobile))
+                session.pop('user_email', None)  # Logout the user by clearing the session
+            else:
+                return jsonify({'success': False, 'message': 'Mobile number not found in users table'})
+
+        conn.commit()
+        return jsonify({'success': True, 'message': 'Address updated successfully'})
+
+    except Exception as e:
+        conn.rollback()
+        return jsonify({'success': False, 'message': 'Error updating address', 'error': str(e)})
+    
+    finally:
+        conn.close()
 
 
 @app.route('/userdetails', methods=['POST'])
