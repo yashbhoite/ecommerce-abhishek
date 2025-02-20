@@ -290,14 +290,14 @@ def bid():
     # Messages in English and Hindi
     messages = {
         'en': {
-            'level1': f"Congratulations! 🎉 Your bid has been accepted. Get it at ₹{level1_price} Thank you for shopping with FashionHolics—enjoy your new purchase! 🛍️ Add item to cart? Click 'Yes' to accept the offer or 'No' to reject it.",
+            'level1': f"Great news! 🎉 While your bid wasn’t accepted, we have a special offer just for you. You can grab this item now for just ₹{level1_price}! 🎁 Don't miss this chance to save. 🛍 Would you like to add it to your cart? Click 'Yes' to accept or 'No' to reject.",
             'level1_noprice': f"Congratulations! 🎉 Your bid has been accepted. Thank you for shopping with FashionHolics—enjoy your new purchase! 🛍️ Add item to cart? Click 'Yes' to accept the offer or 'No' to reject it.",
             'level2': f"💥 Score Big! Grab TWO stylish pieces at just ₹{level2_price} per item! Perfectly paired, ultra-trendy, and comfy – time to elevate your style game. 👗👕✨ Are you in for this awesome deal? Click 'Yes' to accept, 'No' to pass.",
             'level3': f"🚨 Last Chance Alert! 🚨 Snag this exclusive deal – ₹{level3_price} discount on your favorite pick! 🔥 Don't let it slip away. Ready to claim it? Click 'Yes' to grab it or 'No' to skip.",
             'low_bid': "Your bid is a bit too low! 🚀 Increase it slightly to get a better chance at securing this deal."
         },
         "hi": {
-            "level1": f"Badhai ho! 🎉 Aapka bid accept ho gaya. ye product lijiye sirf ₹{level1_price} Ab chill maro, FashionHolics ke saath smart shopping ho gayi! 😍, Item Cart me daale? 'Haan' dabakar offer lo ya 'Nahi' dabakar reject karo.",
+            "level1": f"Acchi khabar! 🎉 Aapki bid accept nahi hui, lekin hum aapke liye ek special offer lekar aaye hain. Ab aap is item ko sirf ₹{level1_price} me le sakte hain! 🎁 Yeh mauka haath se mat jane dein. 🛍 Kya aap ise apne cart me add karna chahenge? Offer accept karne ke liye 'Yes' dabayein, warna 'No' par click karein.",
             "level1_noprice": f"Badhai ho! 🎉 Aapka bid accept ho gaya. Ab chill maro, FashionHolics ke saath smart shopping ho gayi! 😍, Item Cart me daale? 'Haan' dabakar offer lo ya 'Nahi' dabakar reject karo.",
             "level2": f"💥 Bada score! ₹{level2_price} per item ke liye do stylish pieces le lo! Perfectly paired aur trendy look ke liye ready ho? 👗👕✨ 'Haan' dabakar accept karo ya 'Nahi' dabakar pass karo.",
             "level3": f"🚨 Last chance alert! 🚨 Apne favorite pick par ₹{level3_price} discount le lo! 🔥 Abhi claim karein? 'Haan' dabakar grab karein ya 'Nahi' dabakar skip karein.",
