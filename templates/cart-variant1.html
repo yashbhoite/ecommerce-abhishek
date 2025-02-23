@@ -622,23 +622,23 @@
                                     <div class="row border-bottom pb-2 forall">
                                         <span class="col-12 col-sm-6 cart__subtotal-title">Subtotal</span>
                                         <span class="col-12 col-sm-6 text-right">
-                                            <span class="money ">₹{{ subtotal }}   (Total Items: {{total_quantity}})</span> <!-- Display dynamic subtotal -->
+                                            <span class="money ">(Total Items: {{total_quantity}})   ₹{{ subtotal }}</span> <!-- Display dynamic subtotal -->
                                             <!-- <p style="margin-top: 5px; color: #869ba9;"><i></i></p> -->
                                         </span>
                                         
                                     </div>
                                     <div class="row border-bottom pb-2 pt-2 formob d-flex" style="justify-content: space-between;padding: 0px 10px;">
                                         <div class=" cart__subtotal-title">Subtotal</div>
-                                        <div class="formobtext text-right">₹{{ subtotal }}   (Total Items: {{total_quantity}})</div>
+                                        <div class="formobtext text-right">(Total Items: {{total_quantity}}) ₹{{ subtotal }}</div>
                                     </div>
 
                                     <div class="row border-bottom pb-2 pt-2 forall">
                                         <span class="col-12 col-sm-6 cart__subtotal-title">Shipping</span>
-                                        <span class="col-12 col-sm-6 text-right">₹{{ shipping_charges }}</span>
+                                        <span class="col-12 col-sm-6 text-right">(Free Delivery) ₹{{ shipping_charges }}</span>
                                     </div>
                                     <div class="row border-bottom pb-2 pt-2 formob d-flex" style="justify-content: space-between;padding: 0px 10px;">
                                         <div class=" cart__subtotal-title">Shipping</div>
-                                        <div class="formobtext text-right">₹{{ shipping_charges }}</div>
+                                        <div class="formobtext text-right">(Free Delivery) ₹{{ shipping_charges }}</div>
                                     </div>
 
                                     <div class="row border-bottom pb-2 pt-2 forall">
@@ -653,7 +653,7 @@
                                         <div class=" cart__subtotal-title">Grand Total</div>
                                         <div class="formobtext text-right"> ₹{{ grand_total }}</div>
                                     </div>
-                                    <div class="cart__shipping">Shipping &amp; taxes calculated at checkout</div>
+                                    <div class="cart__shipping">Taxes calculated at checkout</div>
                                     <p class="cart_tearm">
                                         <label>
                                             <input type="checkbox" name="tearm" class="checkbox" value="tearm"

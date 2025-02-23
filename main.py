@@ -460,7 +460,7 @@ def cart():
     # Set shipping charges and calculate grand total
     cursor.execute("SELECT SUM(productquantity) FROM cart WHERE user_email = ?", (user_email,))
     total_quantity = cursor.fetchone()[0] or 0
-    shipping_charges = 40 if total_quantity <= 3 else 70
+    shipping_charges = 0 if total_quantity <= 3 else 0
     grand_total = subtotal + shipping_charges
 
     conn.close()
@@ -2082,7 +2082,7 @@ def checkout():
     # Set shipping charges and calculate grand total
     cursor.execute("SELECT SUM(productquantity) FROM cart WHERE user_email = ?", (user_email,))
     total_quantity = cursor.fetchone()[0] or 0
-    shipping_charges = 40 if total_quantity <= 3 else 70
+    shipping_charges = 0 if total_quantity <= 3 else 0
     grand_total = subtotal + shipping_charges
 
     conn.close()
@@ -2186,7 +2186,7 @@ def confirm_address():
     # Set shipping charges and calculate grand total
     cursor.execute("SELECT SUM(productquantity) FROM cart WHERE user_email = ?", (email,))
     total_quantity = cursor.fetchone()[0] or 0
-    shipping_charges = 40 if total_quantity <= 3 else 70
+    shipping_charges = 0 if total_quantity <= 3 else 0
     grand_total = subtotal + shipping_charges
 
     conn.commit()
@@ -2269,7 +2269,7 @@ def userdetails():
     subtotal = 0
     cursor.execute("SELECT SUM(productquantity) FROM cart WHERE user_email = ?", (email,))
     total_quantity = cursor.fetchone()[0] or 0
-    shipping_charges = 40 if total_quantity <= 3 else 70
+    shipping_charges = 0 if total_quantity <= 3 else 0
 
     # Check if the user with the provided email and password exists in users table
     truepass = cursor.execute("SELECT password FROM users WHERE email = ?", (email,)).fetchone()
@@ -2350,7 +2350,7 @@ def place_order():
     # Set shipping charges and calculate grand total
     cursor.execute("SELECT SUM(productquantity) FROM cart WHERE user_email = ?", (user_email,))
     total_quantity = cursor.fetchone()[0] or 0
-    shipping_charges = 40 if total_quantity <= 3 else 70
+    shipping_charges = 0 if total_quantity <= 3 else 0
     grand_total = subtotal + shipping_charges
 
 
@@ -2677,9 +2677,7 @@ def verify_payment():
 
 
 
-
-
 if(__name__) == '__main__':
     if not os.path.exists(app.config['upload_folder']):
         os.makedirs(app.config['upload_folder'])
-    app.run(debug=True)
+    app.run(debug=False)
