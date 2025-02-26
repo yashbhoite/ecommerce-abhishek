@@ -1,55 +1,4 @@
-2025-02-19 08:39:27,377 - ERROR - Exception on /productadddb [POST]
-Traceback (most recent call last):
-  File "/home/username/fashionholics/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/username/fashionholics/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/username/fashionholics/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/username/fashionholics/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/username/fashionholics/main.py", line 1794, in productadddb
-    my_cursor.execute("INSERT INTO products (name, description, color, price, per1, per2, per3, sku, quantity, category, gender, size, img1, img2, img3, img4, img5, vendor, coloroptions, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)", (productname, description, color, baseprice, discountpercentage1, discountpercentage2, discountpercentage3, sku, quantity, productcategory, gender, sizes, input1, input2, input3, input4, input5, vendor, coloroption))
-sqlite3.OperationalError: database is locked
-2025-02-20 06:47:51,192 - ERROR - Exception on /product [GET]
-Traceback (most recent call last):
-  File "/home/username/fashionholics/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/username/fashionholics/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/username/fashionholics/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/username/fashionholics/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/username/fashionholics/main.py", line 994, in product
-    return render_template('product-layout-1.html', productname=productname, productprice=productprice, message=message)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/username/fashionholics/venv/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
-    return _render(app, template, context)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/username/fashionholics/venv/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
-    rv = template.render(context)
-         ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/username/fashionholics/venv/lib/python3.12/site-packages/jinja2/environment.py", line 1304, in render
-    self.environment.handle_exception()
-  File "/home/username/fashionholics/venv/lib/python3.12/site-packages/jinja2/environment.py", line 939, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/home/username/fashionholics/templates/product-layout-1.html", line 572, in top-level template code
-    <a data-image="../static/images/pics/{{name[12]}}"
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/username/fashionholics/venv/lib/python3.12/site-packages/jinja2/environment.py", line 468, in getitem
-    return obj[argument]
-           ~~~^^^^^^^^^^
-jinja2.exceptions.UndefinedError: 'name' is undefined
-2025-02-20 23:06:53,754 - ERROR - Exception on /product/26 [GET]
+2025-02-25 01:36:51,127 - ERROR - Exception on /product/26 [GET]
 Traceback (most recent call last):
   File "/home/username/fashionholics/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -67,7 +16,7 @@ Traceback (most recent call last):
     coloroptions_str = my_cursor.execute("Select coloroptions from products where name=?", (productname[0],)).fetchone()
                                                                                             ~~~~~~~~~~~^^^
 TypeError: 'NoneType' object is not subscriptable
-2025-02-21 23:24:05,943 - ERROR - Exception on /product/26 [GET]
+2025-02-25 05:44:00,573 - ERROR - Exception on /product/33 [GET]
 Traceback (most recent call last):
   File "/home/username/fashionholics/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -85,7 +34,7 @@ Traceback (most recent call last):
     coloroptions_str = my_cursor.execute("Select coloroptions from products where name=?", (productname[0],)).fetchone()
                                                                                             ~~~~~~~~~~~^^^
 TypeError: 'NoneType' object is not subscriptable
-2025-02-22 01:12:59,411 - ERROR - Exception on /product/26 [GET]
+2025-02-25 06:25:28,565 - ERROR - Exception on /product/22 [GET]
 Traceback (most recent call last):
   File "/home/username/fashionholics/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -103,7 +52,7 @@ Traceback (most recent call last):
     coloroptions_str = my_cursor.execute("Select coloroptions from products where name=?", (productname[0],)).fetchone()
                                                                                             ~~~~~~~~~~~^^^
 TypeError: 'NoneType' object is not subscriptable
-2025-02-23 00:32:57,915 - ERROR - Exception on /product/26 [GET]
+2025-02-26 06:18:33,211 - ERROR - Exception on /product/22 [GET]
 Traceback (most recent call last):
   File "/home/username/fashionholics/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
